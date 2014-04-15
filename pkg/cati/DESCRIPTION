@@ -1,0 +1,11 @@
+Package: cati
+Type: Package
+Title: Community Assembly by Traits: Individuals and beyond
+Version: 0.6
+Date: 2014-04-14
+Author: Adrien Taudiere, Cyrille Violle with contribution of Francois Munoz
+Maintainer: Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>
+Depends: R (>= 3.0.2), ape, nlme, e1071, moments, lattice, rasterVis, hypervolume, mice, ade4
+Description: A package for community assembly testing in particular using individuals traits values. 
+License: GPL (>=2)
+URL: http://r-forge.r-project.org/projects/cati/
