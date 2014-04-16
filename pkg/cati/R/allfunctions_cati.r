@@ -1629,7 +1629,7 @@ barplot.decomp_whithin<-function(height, resume=TRUE, ...) {
 			res[,i]<-plot.trait.flex(x[[i]], plot.res=FALSE, cumul=TRUE, beside=T, ...)
 		}  
 		colnames(res)<-x$traits
-		barplot(res)
+		barplot(res, beside=T)
 		legend("topright", c("Turnover", "Intraspec.", "Covariation"), fill=c(gray.colors(3)) )
 	}
 	
