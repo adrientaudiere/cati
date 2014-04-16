@@ -106,23 +106,30 @@
 	\item{$T_IC.IR}{Observed ratio between variance of individuals in communities and individuals in the region}
 	\item{$T_PC.PR}{Observed ratio between variance of populations in communities and individuals in the region}
 	
-	\item{$var_IP}{variance of individuals in populations}    
-	\item{$var_PC}{variance of populations in communities}
-	\item{$var_CR}{variance of communities in the region}
-	\item{$var_IC}{variance of individuals in communities}
-	\item{$var_PR}{variance of populations in the region}
-	\item{$var_IR}{variance of individuals in the region}
+	\item{$variances$var_IP}{variance of individuals in populations}    
+	\item{$variances$var_PC}{variance of populations in communities}
+	\item{$variances$var_CR}{variance of communities in the region}
+	\item{$variances$var_IC}{variance of individuals in communities}
+	\item{$variances$var_PR}{variance of populations in the region}
+	\item{$variances$var_IR}{variance of individuals in the region}
+	    
+	\item{$variances$var_IP_nm1}{variance of individuals in populations in null model 1}    
+	\item{$variances$var_PC_nm3}{variance of populations in communities in null model 3}
+	\item{$variances$var_IC_nm1}{variance of communities in the region in null model 1}
+	\item{$variances$var_IC_nm2}{variance of individuals in communities in null model 2}
+	\item{$variances$var_PR_nm3}{variance of populations in the region in null model 3}
+	\item{$variances$var_IR_nm2}{variance of individuals in the region in null model 2}
 	
 	\item{$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
 	\item{$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
 	\item{$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
 	
-	\item{$pval_T_IP.IC.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed < T_IP.IC simulated}
-	\item{$pval_T_IC.IR.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed < T_IC.IR simulated}
-	\item{$pval_T_PC.PR.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed < T_PC.PR simulated}
-	\item{$pval_T_IP.IC.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed > T_IP.IC simulated}
-	\item{$pval_T_IC.IR.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed > T_IC.IR simulated}
-	\item{$pval_T_PC.PR.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed > T_PC.PR simulated}
+	\item{$pval$T_IP.IC.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed < T_IP.IC simulated}
+	\item{$pval$T_IC.IR.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed < T_IC.IR simulated}
+	\item{$pval$T_PC.PR.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed < T_PC.PR simulated}
+	\item{$pval$T_IP.IC.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed > T_IP.IC simulated}
+	\item{$pval$T_IC.IR.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed > T_IC.IR simulated}
+	\item{$pval$T_PC.PR.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed > T_PC.PR simulated}
 }
 
 \references{
