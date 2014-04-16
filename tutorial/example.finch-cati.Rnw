@@ -553,9 +553,9 @@ my.ckey <- list(col=my.theme$regions$col)
 Plot the p-value or the ses values using the function \code(levelplot).
 
 <<dev='pdf'>>=
-levelplot(t(rbind(res.finch$pval_T_IP.IC.inf,
-                  res.finch$pval_T_IC.IR.inf, 
-                  res.finch$pval_T_PC.PR.inf)), 
+levelplot(t(rbind(res.finch$pval$T_IP.IC.inf,
+                  res.finch$pval$T_IC.IR.inf, 
+                  res.finch$pval$T_PC.PR.inf)), 
           colorkey=my.ckey, par.settings=my.theme,border="black")
 @
 
