@@ -83,6 +83,7 @@ install.packages("C:/Users/taudiere/Dropbox/cati_0.4.zip", repos=NULL)
 library(cati, warn.conflicts = FALSE)
 data(finch.ind)
 
+#Save default parameters
 oldpar<-par(no.readonly = TRUE)
 @
 
@@ -231,6 +232,7 @@ barplot.decomp_whithin(res.decomp)
 
 par(mfrow=c(2,2))
 barplot.decomp_whithin(res.decomp, resume=F)
+par(mfrow=c(1,1))
 @
 
 
@@ -503,6 +505,46 @@ attributes(ses.listofindex(as.listofindex(list(res.sum.1))))
 \newpage
 A more interesting example using the function \code(hypervolume) from the package ... hypervolume.  We show here several results which differe in there factor that delimit the group to calculate different hypervolume (argument "byfactor"). 
 
+First, let's try the hypervolume function one finch data.
+<<dev='pdf'>>=
+hv<-hypervolume(traits.finch.mice, 
+                reps=100,bandwidth=0.2, 
+                verbose=F, warnings=F)
+plot(hv)
+@
+
+Now, we can do the same analysis for each species.
+
+<<dev='pdf'>>=
+hv.list<-new("HypervolumeList")
+hv.list2<-list()
+
+for(i in 1: length(table(sp.finch))) {
+  hv.list2[[i]]<-hypervolume(traits.finch.mice[sp.finch==levels(sp.finch)[i], ], 
+                reps=1000,bandwidth=0.2, 
+                verbose=F, warnings=F)
+}
+
+hv.list@HVList<-hv.list2
+require(adegenet)
+colorhv<-transp(funky(nlevels(sp.finch)), alpha=0.8)
+
+plot(hv.list, colors=colorhv, darkfactor=0.8)
+plot(hv.list, colors=colorhv, darkfactor=0.8, showdata=F, npmax = 200, cex.random =1)
+ 
+summary(hv.list)
+ 
+@
+
+The standard example of the hypervolume package also use finch data but at the species level.
+
+<<dev='pdf'>>=
+
+demo('finch', package='hypervolume')
+ 
+@
+
+
 <<result='hide'>>=
 hv.1<-com.index.multi(traits.finch.mice, 
                           index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, 
@@ -553,9 +595,9 @@ my.ckey <- list(col=my.theme$regions$col)
 Plot the p-value or the ses values using the function \code(levelplot).
 
 <<dev='pdf'>>=
-levelplot(t(rbind(res.finch$pval_T_IP.IC.inf,
-                  res.finch$pval_T_IC.IR.inf, 
-                  res.finch$pval_T_PC.PR.inf)), 
+levelplot(t(rbind(res.finch$pval$T_IP.IC.inf,
+                  res.finch$pval$T_IC.IR.inf, 
+                  res.finch$pval$T_PC.PR.inf)), 
           colorkey=my.ckey, par.settings=my.theme,border="black")
 @
 
