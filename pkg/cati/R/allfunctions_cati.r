@@ -1379,7 +1379,7 @@ plot.listofindex<-function(x, type="normal", col.index=c("red","purple","green")
 					
 					points(mean(res[[eval(namesindex[i])]]$ses[s,], na.rm=T), (1:nindex)[i], col="red", pch=16)
 					
-					text(1, (1:nindex)[i]+0.3, namesindex[i], cex=0.8,  pos=4, font=2)
+					text(1, (1:nindex)[i]+0.3, namesindex[i], cex=cex.text,  pos=4, font=2)
 									
 					chh <- par()$cxy[ 2 ]  ##  character height
 					text(res[[eval(namesindex[i])]]$ses[s,], chh + rep( (1:nindex)[i], length(res[[eval(namesindex[i])]]$ses[s,]) ), namestraits, cex=cex.text, srt=srt.text,)

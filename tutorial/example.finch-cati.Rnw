@@ -231,6 +231,7 @@ barplot.decomp_whithin(res.decomp)
 
 par(mfrow=c(2,2))
 barplot.decomp_whithin(res.decomp, resume=F)
+par(mfrow=c(1,1))
 @
 
 
@@ -241,10 +242,10 @@ barplot.decomp_whithin(res.decomp, resume=F)
 <<results='hide'>>=
 vec<- seq(1,length(sp.finch)*2, by=2)
 genus<-as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[vec])
-fact<-cbind(sites=as.factor(as.vector(ind.plot.finch)), 
+fact<-cbind(genus=as.factor(genus),  
             species=as.factor(as.vector(sp.finch)),
-            genus=as.factor(genus))
- 
+            sites=as.factor(as.vector(ind.plot.finch)))
+
 res.partvar.finch<-partvar(traits=traits.finch, factors=fact)
  
 res.partvar.finch
@@ -253,10 +254,15 @@ res.partvar.finch
 
 <<dev='pdf', fig.width=3.5, fig.height=3.5, fig.align='center'>>=
 par(mfrow=c(2,2), mai=c(0.2,0.2,0.2,0.2))
-pie_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
+colors<-c(rgb(102,167,0,  maxColorValue = 255), 
+          rgb(185,210,0,  maxColorValue = 255), 
+          rgb(98,174,255,  maxColorValue = 255),
+          rgb(158,30,240,  maxColorValue = 255))
+ 
+pie_partvar(res.partvar.finch, col=colors)
 par(oldpar)
 
-bar_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"),
+bar_partvar(res.partvar.finch, col=colors,
             leg=TRUE)
 @
 
@@ -584,9 +590,42 @@ levelplot(t(rbind(ses.list[[1]]$ses>ses.list[[1]]$ses.sup,
                   ses.list[[3]]$ses>ses.list[[3]]$ses.sup,
                   ses.list[[4]]$ses>ses.list[[4]]$ses.sup)),
           colorkey=my.ckey, par.settings=my.theme,border="black")
+ 
+
 @
 
 
+<<dev='pdf'>>=
+obj1<-t(rbind(ses.list[[1]]$ses>ses.list[[1]]$ses.sup, 
+              ses.list[[2]]$ses>ses.list[[2]]$ses.sup,
+              ses.list[[3]]$ses>ses.list[[3]]$ses.sup,
+              ses.list[[4]]$ses>ses.list[[4]]$ses.sup))
+
+obj2<-t(rbind(ses.list[[5]]$ses>ses.list[[5]]$ses.sup, 
+              ses.list[[6]]$ses>ses.list[[6]]$ses.sup,
+              ses.list[[7]]$ses>ses.list[[7]]$ses.sup,
+              ses.list[[8]]$ses>ses.list[[8]]$ses.sup))
+
+levelplot(rbind(obj1, obj2),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+ 
+ 
+obj1.ses<-t(rbind(ses.list[[1]]$ses, 
+              ses.list[[2]]$ses,
+              ses.list[[3]]$ses,
+              ses.list[[4]]$ses))
+
+obj2.ses<-t(rbind(ses.list[[5]]$ses, 
+              ses.list[[6]]$ses,
+              ses.list[[7]]$ses,
+              ses.list[[8]]$ses))
+ 
+levelplot(rbind(obj1.ses, obj2.ses),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+@
+
+
+ 
 <<dev='pdf', fig.width=6, fig.height=2>>=
 ses.list.multi<-ses.listofindex(list.ind.multi)
 
