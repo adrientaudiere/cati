@@ -262,13 +262,23 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
     res$T_IP.IC<-T_IP.IC
     res$T_IC.IR<-T_IC.IR
     res$T_PC.PR<-T_PC.PR
-    res$var_IP<-var_IP
-    res$var_PC<-var_PC
-    res$var_CR<-var_CR
-	res$var_IC<-var_IC
-    res$var_PR<-var_PR
-    res$var_IR<-var_IR
-	
+    
+    res$variances<-list()
+    
+    res$variances$var_IP<-var_IP
+    res$variances$var_PC<-var_PC
+    res$variances$var_CR<-var_CR
+	res$variances$var_IC<-var_IC
+    res$variances$var_PR<-var_PR
+    res$variances$var_IR<-var_IR
+    
+    res$variances$var_IP_nm1<-var_IP_nm1
+    res$variances$var_PC_nm3<-var_PC_nm3
+    res$variances$var_IC_nm1<-var_IC_nm1
+	res$variances$var_IC_nm2<-var_IC_nm2
+    res$variances$var_PR_nm3<-var_PR_nm3
+    res$variances$var_IR_nm2<-var_IR_nm2
+    	
 	if(is.numeric(nperm)){	 
 		res$T_IP.IC_nm<-T_IP.IC_nm1
        	res$T_IC.IR_nm<-T_IC.IR_nm2
@@ -321,13 +331,15 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
 		rownames(p.valueT_IC.IR.inf)<-levels(Tplosp)
 		rownames(p.valueT_PC.PR.inf)<-levels(Tplosp)
 		
-		res$pval_T_IP.IC.inf<-p.valueT_IP.IC.inf
-		res$pval_T_IC.IR.inf<-p.valueT_IC.IR.inf
-		res$pval_T_PC.PR.inf<-p.valueT_PC.PR.inf
+		res$pval<-list()
 		
-		res$pval_T_IP.IC.sup<-p.valueT_IP.IC.sup
-		res$pval_T_IC.IR.sup<-p.valueT_IC.IR.sup
-		res$pval_T_PC.PR.sup<-p.valueT_PC.PR.sup
+		res$pval$T_IP.IC.inf<-p.valueT_IP.IC.inf
+		res$pval$T_IC.IR.inf<-p.valueT_IC.IR.inf
+		res$pval$T_PC.PR.inf<-p.valueT_PC.PR.inf
+		
+		res$pval$T_IP.IC.sup<-p.valueT_IP.IC.sup
+		res$pval$T_IC.IR.sup<-p.valueT_IC.IR.sup
+		res$pval$T_PC.PR.sup<-p.valueT_PC.PR.sup
 	}
 	else{}
 	
@@ -647,7 +659,7 @@ summary.Tstats<-function(object, val.quant=c(0.025,0.975), type="all") {
 	#________________________________________
 	else if(type=="p.value"){
 		summ.Tstats <-matrix("H0 not rejected",nrow=6, ncol=dim(cond.T_IP.IC.inf)[2])
-		summ.Tstats <- rbind(tstats$pval_T_IP.IC.inf, tstats$pval_T_IP.IC.sup , tstats$pval_T_IC.IR.inf, tstats$pval_T_IC.IR.sup , tstats$pval_T_PC.PR.inf, tstats$pval_T_PC.PR.sup)
+		summ.Tstats <- rbind(tstats$pval$T_IP.IC.inf, tstats$pval$T_IP.IC.sup , tstats$pval$T_IC.IR.inf, tstats$pval$T_IC.IR.sup , tstats$pval$T_PC.PR.inf, tstats$pval$T_PC.PR.sup)
 		rownames(summ.Tstats)<-c(paste(rep("T_IP.IC.inf",dim(tstats$T_IP.IC)[1]), rownames(tstats$T_IP.IC)), paste(rep("T_IP.IC.sup",dim(tstats$T_IP.IC)[1]), rownames(tstats$T_IP.IC)), paste(rep("T_IC.IR.inf",dim(tstats$T_IP.IC)[1]), rownames(tstats$T_IP.IC)), paste(rep("T_IC.IR.sup",dim(tstats$T_IP.IC)[1]), rownames(tstats$T_IP.IC)), paste(rep("T_PC.PR.inf",dim(tstats$T_IP.IC)[1]), rownames(tstats$T_IP.IC)), paste(rep("T_PC.PR.sup",dim(tstats$T_IP.IC)[1]), rownames(tstats$T_IP.IC)))
 		colnames(summ.Tstats) <- colnames(tstats$T_IP.IC)
 	}
@@ -660,7 +672,7 @@ summary.Tstats<-function(object, val.quant=c(0.025,0.975), type="all") {
 		#__________
 		##p.value
 		summ.Tstats$p.value <-matrix("H0 not rejected", nrow=6, ncol=dim(cond.T_IP.IC.inf)[2])
-		summ.Tstats$p.value <- rbind(tstats$pval_T_IP.IC.inf, tstats$pval_T_IP.IC.sup , tstats$pval_T_IC.IR.inf, tstats$pval_T_IC.IR.sup , tstats$pval_T_PC.PR.inf, tstats$pval_T_PC.PR.sup)
+		summ.Tstats$p.value <- rbind(tstats$pval$T_IP.IC.inf, tstats$pval$T_IP.IC.sup , tstats$pval$T_IC.IR.inf, tstats$pval$T_IC.IR.sup , tstats$pval$T_PC.PR.inf, tstats$pval$T_PC.PR.sup)
 	
 		#__________
 		##percent
