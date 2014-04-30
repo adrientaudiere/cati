@@ -8,7 +8,7 @@
 	Computing observed T-statistics (T for Traits) and null expectations.
 }
 \description{
-	Computing observed T-statistics (T for Traits) as three ratios of variance, namely T_IP.IC, T_IC.IR and T_PC.PR. This function can also return the distribution of this three statistics under null models.
+	Computing observed T-statistics (T for Traits) as three ratios of variance, namely T_IP.IC, T_IC.IR and T_PC.PR. This function can also return the distribution of these three statistics under null models.
 }
 
 \usage{
