@@ -2,11 +2,11 @@
 \alias{CVNND}
 
 \title{
-	Coefficient of variation of the nearest neigbourhood (CVNND)
+	Coefficient of variation of the nearest neigbourhood distance (CVNND)
 }
 
 \description{
-	Coefficient of variation of the nearest neigbourhood (CVNND). Internal use for other function.
+	Coefficient of variation of the nearest neigbourhood distance (CVNND). Internal use for other function.
 }
 
 \usage{
@@ -35,7 +35,6 @@ CVNND(trait, div_range= FALSE)
 }
 
 \author{
-	Vincent Jung
 	Adrien Taudiere
 }
 
@@ -52,5 +51,5 @@ CVNND(trait, div_range= FALSE)
 
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+
