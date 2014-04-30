@@ -2,11 +2,11 @@
 \alias{plot_dens}
 
 \title{
-	Plot function to represent density of traits values
+	Plot function to represent density of trait values
 }
 
 \description{
-	Plot function to represent density of traits values
+	Plot function to represent density of trait values
 }
 
 \usage{
@@ -15,15 +15,15 @@
 
 \arguments{
 	\item{traits}{
-		Traits matrix with traits in column.
+		Matrix of traits with traits in column.
 	}
 	
 	\item{var.1}{
-		The first variable define the division of each plots, in most case either a vector of species or sites names.
+		The first variable defines the division of each plots, in most case either a vector of species or name of sites.
 	}
 	
 	\item{var.2}{
-		The second variable define the division by color, in most case either a vector of species or sites names.
+		The second variable define the division by color, in most case either a vector of species or name of sites.
 	}
 	
 	\item{col.dens}{
@@ -31,7 +31,7 @@
 	}
 	
 	\item{plot.ask}{
-		Logical value; ask for ploting the next plot or not.
+		Logical value; ask for plotting the next plot or not.
 	}
 	
 	\item{ylim.cex}{
@@ -82,7 +82,7 @@
 \examples{	
 	data(finch.ind)
 	
-	#Plot the distribution of traits values for populations, species, sites and regional scales. First, let try the distribution for all populations of Darwin finches.
+	#Plot the distribution of trait values for populations, species, sites and regional scales. First, let try the distribution for all populations of Darwin finches.
 	
 	par(mfrow=c(4,4), cex=0.5)
 	plot_dens(traits.finch, sp.finch, ind.plot.finch, ylim.cex=3, plot.ask=FALSE, multipanel=FALSE, leg=FALSE)
@@ -98,7 +98,7 @@
 	plot_dens(traits.finch, rep("region", times=dim(traits.finch)[1]), sp.finch, ylim.cex=6, plot.ask=FALSE, leg=FALSE)
 	
 	
-	#You can also plot trait distribution for all sites without regard on species attributes
+	#You can also plot trait distribution for all sites without taking into account species identity
 	plot_dens(traits.finch, rep("toutes_sp", times=dim(traits.finch)[1]), ind.plot.finch, ylim.cex=3, plot.ask=FALSE)
 	par(mfrow=c(4,4), cex=0.5)
 }
@@ -106,5 +106,5 @@
 
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

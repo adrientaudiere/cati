@@ -5,7 +5,7 @@
 }
 
 \description{
-	Calcul standardized effect size and confidence interval for a matrix of statistics and the associate null model express as a list or as an array. Internal function use by other functions of the package. You can transpose the observed matrix to represent either the SES by traits or by plots. Warnings, to detect automatically the correspondance between dimension of observed matrix and null model list or array, observed matrix need to have different number of rows and columns.
+	Calcul standardized effect size and confidence interval for a matrix of statistics and the related null model expressed as a list or as an array. Internal function use by other functions of the package. You can transpose the observed matrix to represent either the SES by traits or by plots. Warnings, to detect automatically the correspondence between dimension of observed matrix and null model list or array, observed matrix needs to have different numbers of rows and columns.
 }
 
 \usage{
@@ -18,7 +18,7 @@
 	}
 	
 	\item{nullmodel}{
-		Either a list or an array of three (two for a vector of observed values) dimensions corresponding to the null model permutation. 
+		Either a list or an array of three (two for a vector of observed values) dimensions corresponding to the null model permutations. 
 	}
 	
 	\item{val.quant}{
@@ -65,5 +65,5 @@
 
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+
