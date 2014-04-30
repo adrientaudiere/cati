@@ -6,7 +6,7 @@
 }
 
 \description{
-	The Rao function computes alpha, gamma and beta-components for taxonomic, functional and phylogenetic diversity with the Rao index. The script integrates two functions: "Qdecomp", by Villeger & Mouillot (J Ecol, 2008) modify by Wilfried Thuiller, and "disc", by S. Pavoine, in the package ade4. For a regional assemblage of C local communities gamma = mean(alpha) + beta, where: gamma is the diversity of the regional pool alpha are the diversities of the local communities beta is the turn over between local communities diversity is estimated with the Rao quadratic entropy index (Rao 1982)
+	The Rao function computes alpha, gamma and beta-components for taxonomic, functional and phylogenetic diversity with the Rao index. The script integrates two functions: "Qdecomp", by Villeger & Mouillot (J Ecol, 2008) modified by Wilfried Thuiller, and "disc", by S. Pavoine, in the package ade4. For a regional assemblage of C local communities gamma = mean(alpha) + beta, where: gamma is the diversity of the regional pool, alpha is the diversity of the local community and beta is the turn over between local communities diversity is estimated with the Rao quadratic entropy index (Rao 1982)
 } 
 	
 \usage{
@@ -31,16 +31,16 @@
 	}
 	
 	\item{Jost}{
-		Defining if the correction Jost correction is applied (this paper and Jost 2007)
+		Defining if the Jost correction is applied (Jost 2007)
 	}
 	
 	\item{structure}{
-		A data frame containing the name of the group to which samples belong see
+		A data frame containing the name of the group to which samples belong see de Bello et al, 2011 for more details.
 	}
 }
 
 \details{
-	NA are not allowed in 'locabrel<-abundances/ablocist'. NA are automatically replaced by 0 in 'sample'. This function use the function "Qdecomp" by Sébastien Villéger & David Mouillot (J Ecol, 2008) modify by Wilfried Thuiller and the function disc originally from Sandrine Pavoine.
+	NA are not allowed in 'locabrel<-abundances/ablocist'. NA are automatically replaced by 0 in 'sample'. This function use the function "Qdecomp" by Sebastien Villeger & David Mouillot (J Ecol, 2008) modified by Wilfried Thuiller and the function disc originally proposed by Sandrine Pavoine.
 
 }
 
@@ -48,22 +48,34 @@
 	The results are organized for Taxonomic diversity ($TD), Functional diversity ($FD) and phylogenetical diversity ($PD). Beta and gamma diversities are calculated for the whole data set and for each pair of samples ("Pairwise_samples"):
 	
 	$Richness_per_plot(number of species per sample)
+	
 	$Relative_abundance (species relative abundances per plot)
+	
 	$Pi (species regional relative abundance)
+	
 	$Wc (weigthing factor),                               
+	
 	$Mean_Alpha (mean aplpha diversity; for taxonomic diversity the Simpson index is calculated)                                   
+	
 	$Alpha (alpha diversity for each sample; for taxonomic diversity the Simpson index is calculated)                                       
+	
 	$Gamma (gamma diversity; for taxonomic diversity the Simpson index is calculated)                                      
+	
 	$Beta_add (Gamma-Mean_Alpha)                                          
+	
 	$Beta_prop (Beta_add*100/Gamma)                                                         
+	
 	$Pairwise_samples$Alpha (mean alpha for each pair of samples)                        
+	
 	$Pairwise_samples$Gamma (gamma for each pair of samples)
+	
 	$Pairwise_samples$Beta_add (beta for each pair of samples as Gamma-Mean_Alpha)  
+	
 	$Pairwise_samples$Beta_prop (beta for each pair of samples as Beta_add*100/Gamma) 
 }
 
 \references{
-	De Bello, Francesco, Sandra Lavorel, Cécile H. Albert, Wilfried Thuiller, Karl Grigulis, Jiri Dolezal, stepan Janecek, et Jan Leps. 2011. Quantifying the relevance of intraspecific trait variability for functional diversity: Intraspecific variability in functional diversity. Methods in Ecology and Evolution 2 : 163-174. 
+	De Bello, Francesco, Sandra Lavorel, Cécile H. Albert, Wilfried Thuiller, Karl Grigulis, Jiri Dolezal, stepan Janecek, et Jan Leps. 2011. Quantifying the relevance of intraspecific trait variability for functional diversity: Intraspecific variability in functional diversity. Methods in Ecology and Evolution 2: 163-174. 
 }
 
 \author{
@@ -114,7 +126,7 @@
 	barplot(cbind(c(witRao.w, betRao.w), c(witRao, betRao)), names.arg =c("abundance" ,"presence"), legend.text=c("within species", "between species"), ylab="Rao", ylim=c(0,10))
 	
 	
-	#We can do this analysis for each trait separately. First we need to remplace (or exclude) NA values. For this example, we use the package mice to complete the data.
+	#We can do this analysis for each trait separately. First we need to replace (or exclude) NA values. For this example, we use the package mice to complete the data.
 	
 	comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
 	
@@ -140,5 +152,5 @@
 	barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)), names.arg = colnames(traits.finch),legend.text=c("within species", "between species"), ylab="Rao", ylim=c(0,1.5))	
 }
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

@@ -19,7 +19,7 @@
 	}
 	
 	\item{variable}{
-		The variable to plot standardized effect size of index.
+		The variable against standardized effect sizes are plotted.
 	}
 	
 	\item{ylab}{
@@ -35,7 +35,7 @@
 	}
 	
 	\item{resume}{
-		Logical value; resume=FALSE by default; Simplify the plot by ploting the mean and standard error for index value of multiple traits
+		Logical value; resume=FALSE by default; Simplify the plot by plotting the mean and standard error for index value of multiple traits
 	}
 	
 	\item{multipanel}{
@@ -73,7 +73,7 @@
 	species.richness<-table(ind.plot.finch)
 	plot_ses.var(as.listofindex(list(res.finch)), species.richness, multipanel=FALSE)
 
-	#Same plot with \code(resume=TRUE).
+	#Same plot with resume=TRUE.
 	
 	par(mfrow=c(2,2))
 	plot_ses.var(as.listofindex(list(res.finch)), species.richness, resume=TRUE, multipanel=FALSE)
@@ -81,5 +81,5 @@
 }
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

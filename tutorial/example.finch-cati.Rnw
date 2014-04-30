@@ -22,8 +22,9 @@
 
 \title{Illustrating package cati (Community Assembly by Traits: Individuals and beyond) using Darwin finches data}
 \author{Adrien Taudiere
-  \thanks{\texttt{adrien.taudiere@cefe.cnrs.fr}}
+\thanks{\texttt{adrien.taudiere@cefe.cnrs.fr}}
 }
+
 \affil{{\footnotesize EPHE \\CEFE - Centre d'Ecologie Fonctionnelle et Evolutive}}
 
 \date{\today}
@@ -38,7 +39,7 @@
 
 \selectlanguage{english}
 
- <<include=FALSE>>=
+ <<include=FALSE, eval=FALSE>>=
 opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE, warning=FALSE, fig.show="asis")
 @
 
@@ -75,7 +76,7 @@ opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE
 %%%%%%%%%%%%%%%%
 
 <<results='hide'>>= 
-install.packages("C:/Users/taudiere/Dropbox/cati_0.4.zip", repos=NULL)
+install.packages("C:/Users/taudiere/Desktop/cati/pkg/cati_0.6.zip", repos=NULL)
 #install.packages("cati", repos="http://R-Forge.R-project.org")
 @
 
@@ -110,6 +111,7 @@ plot_dens(traits.finch, sp.finch,
 \newpage
 
 Then we can inverse the second and the third arguments to plot the distribution for all finches species. 
+
 <<dev='pdf'>>=
 par(mfrow=c(5,5), cex=0.5)
 plot_dens(traits.finch, ind.plot.finch, 
@@ -225,13 +227,13 @@ barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)),
 \subsection{Decomposition of within/among species variances}
 
 <<dev='pdf', fig.width=3.5, fig.height=3.5, fig.align='center'>>=
-res.decomp<-decomp_whithin(traits=traits.finch, sp=sp.finch, 
+res.decomp<-decomp_within(traits=traits.finch, sp=sp.finch, 
                            ind.plot=ind.plot.finch, print=FALSE)
 
-barplot.decomp_whithin(res.decomp)
+barplot.decomp_within(res.decomp)
 
 par(mfrow=c(2,2))
-barplot.decomp_whithin(res.decomp, resume=F)
+barplot.decomp_within(res.decomp, resume=F)
 par(mfrow=c(1,1))
 @
 
@@ -319,7 +321,7 @@ attributes(res.finch)
 Tstats class is associated to S3 methods plot, barplot and summary
 
 <<dev='pdf', fig.width=6, fig.height=6, fig.align='center'>>=
-plot(res.finch)
+plot(res.finch, ylim=c(0,2))
 @
 <<dev='pdf', fig.width=6, fig.height=6, fig.align='center'>>=
 par(mfrow=c(2,2))
@@ -405,7 +407,7 @@ funct<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))",
          "tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
 
 ##Null model 1 is trivial for this function
-##because randomisation is whithin community only
+##because randomisation is within community only
  
 res.finch.ind_mn1<-com.index(traits=traits.finch, index=funct, sp=sp.finch,
                              nullmodels=c(1,1,1,1), ind.plot=ind.plot.finch,
@@ -430,20 +432,20 @@ sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), split="_")
                     function(x) x[3])
 
 #We use the precedent list of function "funct"
-funct.whithIV<-funct
+funct.withIV<-funct
 
 fact<-unlist(sites_bypop)
-funct.whithoutIV<-c("tapply(x, fact, function(x) mean(x, na.rm=T))",
+funct.withoutIV<-c("tapply(x, fact, function(x) mean(x, na.rm=T))",
                     "tapply(x, fact, function(x) kurtosis(x, na.rm=T))",
                     "tapply(x, fact, function(x) max(x, na.rm=T)-min(x, na.rm=T))", 
                     "tapply(x, fact, function(x) CVNND(x))")
 
 
-res.finch.whithIV<-com.index(traits=traits.finch, index=funct.whithIV,
+res.finch.withIV<-com.index(traits=traits.finch, index=funct.withIV,
                              sp=sp.finch, nullmodels=c(2,2,2,2),
                              ind.plot=ind.plot.finch, nperm=9, print=FALSE)
 
-res.finch.whithoutIV<-com.index(traits=traits.finch, index=funct.whithoutIV, 
+res.finch.withoutIV<-com.index(traits=traits.finch, index=funct.withoutIV, 
                              sp=sp.finch, nullmodels=c(3,3,3,3), 
                              ind.plot=ind.plot.finch, nperm=9, print=FALSE)
 @
@@ -453,14 +455,14 @@ res.finch.whithoutIV<-com.index(traits=traits.finch, index=funct.whithoutIV,
 
 We can also represent T-statistics and custom index thanks to the \code(plot.listofindex) function.
 <<dev='pdf'>>=
-list.ind<-list(res.finch.whithIV, res.finch.whithoutIV ,res.finch)
+list.ind<-list(res.finch.withIV, res.finch.withoutIV, res.finch)
 namesindex.i.l1=c("mean", "kurtosis", "range", "CVNND",
                   "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
                   "T_IP.IC", "T_IC.IR", "T_PC.PR")
 
 i.l1<-as.listofindex(list.ind, namesindex=namesindex.i.l1)                                 
 
- class(i.l1)
+class(i.l1)
 
 par(mfrow=c(2,3))
 plot(i.l1,type="bytraits", bysites=TRUE)
@@ -686,5 +688,35 @@ levelplot(t(as.matrix(ses.list.multi[[3]]$ses)),
 
 @
 
+To finish, a multivariate analysis of 
 
+<<dev='pdf'>>=
+require(ade4)
+require(adegenet)
+ 
+ matfordudi<-matrix(nrow=length(colMeans(ses.list[[i]]$ses)), ncol=length(names(ses.list)))
+ for(i in 1: length(names(ses.list))){
+   matfordudi[,i]<-colMeans(ses.list[[i]]$ses)
+ }
+ colnames(matfordudi)<-names(ses.list)
+ rownames(matfordudi)<-colnames(traits.finch)
+ 
+ matfordudi2<-matrix(nrow=length(as.vector(ses.list[[1]]$ses)), ncol=length(names(ses.list)))
+ for(i in 1: length(names(ses.list))){
+   matfordudi2[,i]<-as.vector(ses.list[[i]]$ses)
+ }
+ colnames(matfordudi2)<-names(ses.list)
+ 
+res.dudi<-dudi.pca(t(matfordudi), scan=F, nf=2) 
+s.corcircle(res.dudi$co)
+s.label(res.dudi$li, add.plot=t)
+ 
+res.dudi2<-dudi.pca(matfordudi2, scan=F, nf=2) 
+scatter(res.dudi2)
+s.corcircle(res.dudi2$co)
+s.class(res.dudi2$li, as.factor(c(rep("WingL",6), rep("BeakH",6), rep("UBeakL",6), rep("N.UBkL",6))), col=funky(4))
+s.class(res.dudi2$li, as.factor(rep(c("DMaj","EspHd","FlorChrl","GnovTwr","MrchBndl","SCruInde"),4 )), col=funky(6))
+ 
+@
+ 
 \end{document}
