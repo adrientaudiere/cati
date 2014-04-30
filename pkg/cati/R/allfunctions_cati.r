@@ -2,7 +2,7 @@
 #______________#______________#______________#______________#______________#______________#______________#______________
 #__partvar
 
-# traits is the traits matrix and factors are the nested factors to take into account in the partition of variance
+# traits is the Matrix of traits and factors are the nested factors to take into account in the partition of variance
 partvar<-function(traits, factors, printprogress=TRUE){
 	
 	traits<-as.matrix(traits)
@@ -13,11 +13,11 @@ partvar<-function(traits, factors, printprogress=TRUE){
 	colnames(res)<-colnames(traits)
 	
 	if(!is.null(colnames(factors)))
-		{rownames(res)<-c(colnames(factors), "whithin")
+		{rownames(res)<-c(colnames(factors), "within")
 	} 
 	
 	else {
-		rownames(res)<-c(paste("factor",1:(nfactors),sep=""),  "whithin") ; colnames(factors)<-c(paste("factor", 1:(nfactors),sep="")) 
+		rownames(res)<-c(paste("factor",1:(nfactors),sep=""),  "within") ; colnames(factors)<-c(paste("factor", 1:(nfactors),sep="")) 
 	} 
 	
 	attach(as.data.frame(factors))
@@ -37,7 +37,7 @@ partvar<-function(traits, factors, printprogress=TRUE){
 	print(res)
 }
 
-#Pie of variance partitionning
+#Pie of variance partitioning
 pie_partvar<-function(partvar, col.pie=NA){
 	nfactors <- nrow(partvar)
 	ntraits  <- ncol(partvar)
@@ -46,7 +46,7 @@ pie_partvar<-function(partvar, col.pie=NA){
 	}
 }
 
-#barplot of variance partitionning
+#barplot of variance partitioning
 bar_partvar<-function(partvar,  col.bar=NA, leg=FALSE){
 	
 	oldpar<-par(no.readonly = TRUE)
@@ -76,7 +76,7 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
 	#6 variances: I: individual, P: population, C: community, R: region
 	#IP; IC; IR; PC; PR; CR
 	
-	#Ttraits is the matrix of individual traits, ind_plot is the name of the plot in which the individu is (factor type), and sp is the species name of each individual
+	#Ttraits is the matrix of individual traits, ind_plot is the name of the plot in which the individual is (factor type), and sp is the species name of each individual
 	
 	names_sp_ind_plot<-as.factor(paste(sp, ind_plot, sep="@")) 
 	Tplosp=unlist(strsplit(levels(names_sp_ind_plot),split="@"))[2*(1:nlevels(names_sp_ind_plot))]; names(Tplosp)=levels(names_sp_ind_plot);
@@ -150,7 +150,7 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
 		if(printprogress==T){print("creating null models")}
 		
 		#________________________________________
-		#modèle nul 1: permutation des valeurs de traits des individus dans la communauté   
+		#modèle nul 1: permutations des valeurs de traits des individus dans la communauté   
 		for (t in 1: ncol(Ttraits)){
 			Ttraits.nm1[[t]]<-list()
 			for(s in 1:  nlevels(ind_plot)) {
@@ -167,7 +167,7 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
 		}
 		
 		#________________________________________
-		#modèle nul 2: permutation des valeurs de traits des individus de la région    
+		#modèle nul 2: permutations des valeurs de traits des individus de la région    
 		for (t in 1: ncol(Ttraits)){
 			Ttraits.nm2[[t]]<-list()
 			for(s in 1:  nlevels(ind_plot)) {
@@ -181,7 +181,7 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
 		}
 		
 		#________________________________________  
-		#modèle nul 3: permutation des espèces au niveau de la région   
+		#modèle nul 3: permutations des espèces au niveau de la région   
 		Ttraits_by_sp<-apply(Ttraits,2,function(x) tapply(x,names_sp_ind_plot,mean))  
 		Ttraits_by_pop<-Ttraits_by_sp[match(names_sp_ind_plot,rownames(Ttraits_by_sp)),]
 		#Ttraits_by_sp<-aggregate(Ttraits, by = list(names_sp_ind_plot), mean, na.rm = T)[,-1] 
@@ -541,7 +541,7 @@ plot.Tstats<-function(x, val.quant=c(0.025,0.975), col.Tstats=c("red","purple","
 	par(mar=c(5, 4, 4, 2) + 0.1) #return to default parameter
 }
 
-### Function to summarize traits and community which show a significative difference between observed and simulated value
+### Function to summarize traits and community which show a significant difference between observed and simulated value
 summary.Tstats<-function(object, val.quant=c(0.025,0.975), type="all") {
 	
 	tstats<-object
@@ -785,9 +785,9 @@ barplot.Tstats<-function(height, val.quant=c(0.025,0.975), col.Tstats=c("red","p
 #Calcul of statistics (e.g. mean, range, CVNND and kurtosis) to test community assembly using null models
 #For each statistic this function return observed value and correspondant Null distribution
 #This function implement three null models which keep unchanged the number of individual per community
-#Models 1 correspond to randomization of individual values whithin community
-#Models 2 correspond to randomization of individual values whithin region
-#Models 3 correspond to randomization of population values whithin region
+#Models 1 correspond to randomization of individual values within community
+#Models 2 correspond to randomization of individual values within region
+#Models 3 correspond to randomization of population values within region
 
 #In most case, model 1 and 2 correspond to index at the individual level and the model 3 to index at the species (or any other aggregate variable like genus or family) level
 
@@ -819,7 +819,7 @@ com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, i
 		
 		if(sum(nullmodels==1)>0){
 			#________________________________________
-			#modèle nul 1: permutation des valeurs de traits des individus dans la communauté   
+			#modèle nul 1: permutations des valeurs de traits des individus dans la communauté   
 			
 			traits.nm1<-list()
 			
@@ -843,7 +843,7 @@ com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, i
 		
 		if(sum(nullmodels==2)>0){	
 			#________________________________________
-			#modèle nul 2: permutation des valeurs de traits des individus de la région    
+			#modèle nul 2: permutations des valeurs de traits des individus de la région    
 			traits.nm2<-list()
 			
 			for (t in 1: ntr){	
@@ -866,7 +866,7 @@ com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, i
 		
 		if(sum(nullmodels==3)>0){
 			#________________________________________  
-			#modèle nul 3: permutation des espèces au niveau de la région   
+			#modèle nul 3: permutations des espèces au niveau de la région   
 			traits.nm3<-list()
 			traits_by_sp<-apply(traits,2,function(x) tapply(x,name_sp_sites,mean, na.rm=T))  
 			traits_by_pop<-traits_by_sp[match(name_sp_sites,rownames(traits_by_sp)),]
@@ -1042,7 +1042,7 @@ com.index.multi<-function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 		
 		if(sum(nullmodels==1)>0){
 			#________________________________________
-			#modèle nul 1: permutation des valeurs de traits des individus dans la communauté   
+			#modèle nul 1: permutations des valeurs de traits des individus dans la communauté   
 			
 			traits.nm1<-list()
 			
@@ -1066,7 +1066,7 @@ com.index.multi<-function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 		
 		if(sum(nullmodels==2)>0){	
 			#________________________________________
-			#modèle nul 2: permutation des valeurs de traits des individus de la région    
+			#modèle nul 2: permutations des valeurs de traits des individus de la région    
 			traits.nm2<-list()
 			
 			for (t in 1: ntr){	
@@ -1089,7 +1089,7 @@ com.index.multi<-function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 		
 		if(sum(nullmodels==3)>0){
 			#________________________________________  
-			#modèle nul 3: permutation des espèces au niveau de la région   
+			#modèle nul 3: permutations des espèces au niveau de la région   
 			traits.nm3<-list()
 			traits_by_sp<-apply(traits,2,function(x) tapply(x,name_sp_sites,mean, na.rm=T))  
 			traits_by_pop<-traits_by_sp[match(name_sp_sites,rownames(traits_by_sp)),]
@@ -1247,7 +1247,7 @@ as.listofindex<-function(x, namesindex=NULL) {
 	
 	for(l in 1: nlist){
 		if(inherits(x[[l]], "Tstats")) {
-			for(i in c(1,10,2,11,3,12) ){
+			for(i in c(1,5,2,6,3,7) ){
 				res<-c(res, list(x[[l]][[i]]))
 			}
 		}
@@ -1286,7 +1286,7 @@ as.listofindex<-function(x, namesindex=NULL) {
 #e.g. index.list<-list(T_IP.IC=res.finch$T_IP.IC, T_IP.IC_nm=res.finch$T_IP.IC_nm, T_PC.PR=res.finch$T_PC.PR, T_PC.PR_nm=res.finch$T_PC.PR_nm)
 #observed matrix of values need to be of the same dimension
 #You can transpose the observed matrix to represent either the ses by traits or by plots
-plot.listofindex<-function(x, type="normal", col.index=c("red","purple","green"), add.conf=TRUE, color.cond=TRUE, val.quant=c(0.025,0.975), grid.v=TRUE, grid.h=TRUE, xlim=NULL, ylim=NULL, cex.text =0.8, plot.ask=FALSE, srt.text=90, bysites=FALSE,...){
+plot.listofindex<-function(x, type="normal", col.index=c("red","purple","green"), add.conf=TRUE, color.cond=TRUE, val.quant=c(0.025,0.975), grid.v=TRUE, grid.h=TRUE, xlim=NULL, ylim=NULL, cex.text =0.8, plot.ask=FALSE, srt.text=90, bysite=FALSE,...){
 	#possible type = "simple",  "simple_range", "normal" , "barplot" and "bytraits"
 	index.list<-x
 	
@@ -1352,9 +1352,9 @@ plot.listofindex<-function(x, type="normal", col.index=c("red","purple","green")
 		
 		if(is.logical(color.cond)) {color.cond=c("blue","orange")}
 			
-		if(bysites==T){
+		if(bysite==T){
 			
-			if(length(unique(ncom))!=1){stop("if type = bytrait and bysites = T, all index need the same number of community")}
+			if(length(unique(ncom))!=1){stop("if type = bytrait and bysite = T, all index need the same number of community")}
 			
 			for (s in 1: ncom[1]){
 				plot(mean(res[[eval(namesindex.all[1])]]$ses[s,], na.rm=T),(1:nindex)[1] ,bty="n", cex.lab=0.8, yaxt="n", xlab=paste("SES", namescommunity[s]), ylim=ylim, xlim=xlim, pch=16, type="n", ...)
@@ -1389,8 +1389,8 @@ plot.listofindex<-function(x, type="normal", col.index=c("red","purple","green")
 		}
 		
 		
-		else if(bysites==F){
-			if(length(unique(ntr))!=1){stop("if type = bytrait and bysites = F, all index need the same number of traits")}
+		else if(bysite==F){
+			if(length(unique(ntr))!=1){stop("if type = bytrait and bysite = F, all index need the same number of traits")}
 			
 			for (t in 1: ntr[1]){
 								
@@ -1592,7 +1592,7 @@ plot.listofindex<-function(x, type="normal", col.index=c("red","purple","green")
 #______________#______________#______________#______________#______________#______________#______________#______________
 #__ Decomposition of variance
 
-decomp_whithin<-function(traits=NULL , formula=~ 1, ind.plot=NULL, sp=NULL, printprogress=TRUE, ...) {
+decomp_within<-function(traits=NULL , formula=~ 1, ind.plot=NULL, sp=NULL, printprogress=TRUE, ...) {
 	
 	form.string<-deparse(substitute(formula))
 	
@@ -1625,11 +1625,11 @@ decomp_whithin<-function(traits=NULL , formula=~ 1, ind.plot=NULL, sp=NULL, prin
 	}
 	
 	decomp$traits<-namestraits
-	class(decomp) <-"decomp_whithin"
+	class(decomp) <-"decomp_within"
 	return(decomp)
 }
 
-barplot.decomp_whithin<-function(height, resume=TRUE, ...) { 
+barplot.decomp_within<-function(height, resume=TRUE, ...) { 
 	
 	x<-height
 	
@@ -1910,7 +1910,7 @@ plot.trait.flex <-  function(x, plot.total = FALSE, use.percentage = TRUE, plot.
 #__ Other plotting functions
 
 ### Function to represent correlations between Tstats
-plot_cor.Tstats<-function(tstats=NULL, val.quant=c(0.025,0.975), add.text=FALSE, bysites=FALSE, col.obj=NULL, plot.ask=TRUE, multipanel=TRUE, ...) {
+plot_cor.Tstats<-function(tstats=NULL, val.quant=c(0.025,0.975), add.text=FALSE, bysite=FALSE, col.obj=NULL, plot.ask=TRUE, multipanel=TRUE, ...) {
 	
 	oldpar<-par(no.readonly = TRUE)
 	par(ask=plot.ask)
@@ -1941,7 +1941,7 @@ plot_cor.Tstats<-function(tstats=NULL, val.quant=c(0.025,0.975), add.text=FALSE,
 	cond.T_PC.PR.sup<-ses.T_PC.PR>ses.T_PC.PR.sup
 	
 	#________________________________________
-	if(bysites==F){
+	if(bysite==F){
 		
 		if(is.null(col.obj)) {col.obj<-rainbow(dim(tstats$T_IP.IC)[2])}
 		else{}
@@ -2010,7 +2010,7 @@ plot_cor.Tstats<-function(tstats=NULL, val.quant=c(0.025,0.975), add.text=FALSE,
 	}
 
 	#________________________________________
-	else if(bysites==T){
+	else if(bysite==T){
 	
 		if(is.null(col.obj)) {col.obj<-rainbow(dim(tstats$T_IP.IC)[1])}
 		else{}
@@ -2420,7 +2420,7 @@ ses<-function(obs=NULL, nullmodel=NULL, val.quant=c(0.025,0.975) ){
 	}
 	
 	if(dim(obs)[1]==dim(obs)[2]) {
-		warnings("Observed matrix have the same number of rows and columns. The function is not able to detect automatically the correspondance between dimension of observed matrix and null model. You need to be sure that the null model is in the form of an array whithin the first and second dimension corresespond respectively to the first and second dimension of the observed matrix and the third dimension correspond to permutation")
+		warnings("Observed matrix have the same number of rows and columns. The function is not able to detect automatically the correspondance between dimension of observed matrix and null model. You need to be sure that the null model is in the form of an array within the first and second dimension corresespond respectively to the first and second dimension of the observed matrix and the third dimension correspond to permutations")
 		cond=c(1,2)
 	}
 	
