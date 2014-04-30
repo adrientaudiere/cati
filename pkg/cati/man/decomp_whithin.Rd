@@ -1,30 +1,30 @@
-\name{decomp_whithin}
-\alias{decomp_whithin}
-\alias{barplot.decomp_whithin}
+\name{decomp_within}
+\alias{decomp_within}
+\alias{barplot.decomp_within}
 
 \title{
-	Variance decomposition for multiple traits
+	Variance partitioning for multiple traits
 }
 
 \description{
-	This function decomposes the variation in community trait composition into three sources – (i) the intraspecific trait variability, (ii) the
+	This function decomposes the variation in community trait composition into three sources: (i) the intraspecific trait variability, (ii) the
 	variability due to species turnover and (iii) their covariation is also separated. This decomposition is computed for the whole variation in the trait
-	values and, The formula specified, across the contribution of various explanatory variables considered in the model. Barplot.decomp_whithin allow to plot the result of the decomposition.
+	values and, The formula specified, across the contribution of various explanatory variables considered in the model. Barplot.decomp_within allow to plot the result of the decomposition.
 }
 
 \usage{
-	decomp_whithin(traits = NULL, formula = ~1, ind.plot = NULL, sp = NULL, printprogress = TRUE, ...)
+	decomp_within(traits = NULL, formula = ~1, ind.plot = NULL, sp = NULL, printprogress = TRUE, ...)
 	
-	\method{barplot}{decomp_whithin}(height, resume = TRUE, \dots)
+	\method{barplot}{decomp_within}(height, resume = TRUE, \dots)
 }
 
 \arguments{
 	\item{traits}{
-		Traits matrix with traits in column
+		Matrix of traits with traits in column
 	}
 	
 	\item{height}{
-		An object of class decomp_whithin obtain by the function decomp_whithin.
+		An object of class decomp_within obtain by the function decomp_within.
 	}
 	
 	\item{formula}{
@@ -32,11 +32,11 @@
 	}
 
 	\item{ind.plot}{
-		Factor defining the name of the plot in which the individu is. 
+		Factor defining the name of the plot (site or community) in which the individual is. 
 	}
 	
 	\item{sp}{
-		Factor defining the species which the individu belong to.
+		Factor defining the species which the individual belong to.
 	}
 
 	\item{printprogress}{
@@ -56,7 +56,7 @@
 }
 
 \value{
-	An object of class "decomp_whithin".
+	An object of class "decomp_within".
 }
 
 \references{
@@ -72,21 +72,21 @@
 }
 
 \seealso{
-	\code{\link{barplot.decomp_whithin}};
+	\code{\link{barplot.decomp_within}};
 	\code{\link{trait.flex.anova}}
 }
 
 \examples{
 	data(finch.ind)
 	
-	res.decomp<-decomp_whithin(traits=traits.finch, sp=sp.finch, ind.plot=ind.plot.finch, print=FALSE)
+	res.decomp<-decomp_within(traits=traits.finch, sp=sp.finch, ind.plot=ind.plot.finch, print=FALSE)
 	
-	barplot.decomp_whithin(res.decomp)
+	barplot.decomp_within(res.decomp)
 	
 	par(mfrow=c(2,2))
-	barplot.decomp_whithin(res.decomp, resume=FALSE)
+	barplot.decomp_within(res.decomp, resume=FALSE)
 	par(mfrow=c(1,1))
 }
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

@@ -2,15 +2,15 @@
 \alias{plot_cor.Tstats}
 
 \title{
-	Plot relation between T-statistics
+	Plot the bivariate relationships between T-statistics
 }
 
 \description{
-	Plot relation between the three T-statistics namely T_IP/IC, T_IC.IR and T_PC.PR.
+	Plot the bivariate relationships between the three T-statistics namely T_IP.IC, T_IC.IR and T_PC.PR.
 }
 
 \usage{
-	plot_cor.Tstats(tstats = NULL, val.quant = c(0.025, 0.975), add.text= FALSE, bysites= FALSE, col.obj = NULL, plot.ask = TRUE, multipanel = TRUE, ...)
+	plot_cor.Tstats(tstats = NULL, val.quant = c(0.025, 0.975), add.text= FALSE, bysite= FALSE, col.obj = NULL, plot.ask = TRUE, multipanel = TRUE, ...)
 }
 
 \arguments{
@@ -19,15 +19,15 @@
 	}
 	
 	\item{val.quant}{		
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vector of length 2, giving the quantile to calculate confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{add.text}{
 		Logical value; Add text or not.
 	}
 	
-	\item{bysites}{
-		Logical value; plot by sites or by traits. 
+	\item{bysite}{
+		Logical value; plot per site or by traits. 
 	}
 	
 	\item{col.obj}{
@@ -76,12 +76,12 @@
 	data(finch.ind)
 	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, nperm=9)
 	
-	plot_cor.Tstats(res.finch, bysites = FALSE)
-	plot_cor.Tstats(res.finch, bysites = TRUE)
+	plot_cor.Tstats(res.finch, bysite = FALSE)
+	plot_cor.Tstats(res.finch, bysite = TRUE)
 }
 
 
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

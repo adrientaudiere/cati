@@ -4,11 +4,11 @@
 \alias{plot.trait.flex}
 
 \title{
-	Variance decomposition for one trait.
+	Variance decomposition for a given trait
 }
 
 \description{
-	This function decomposes the variation in community trait composition into three sources – (i) the intraspecific trait variability, (ii) the
+	This function decomposes variation of trait values within a community into three sources: (i) the intraspecific trait variability, (ii) the
 	variability due to species turnover and (iii) their covariation is also separated. This decomposition is computed for the whole variation in the trait
 	values and, The formula specified, across the contribution of various explanatory variables considered in the model. S3 method plot summarizes graphically the decomposition of trait variation, obtained with the trait.flex.anova function. Print is an other S3 method for object of class trait.flex.
 }
@@ -93,5 +93,5 @@
 \examples{
 }
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+
