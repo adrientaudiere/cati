@@ -15,15 +15,15 @@
 
 \arguments{
 	\item{traits}{
-		Individual Traits matrix with traits in columns.
+		Individual Matrix of traits with traits in columns.
 	}
 	
 	\item{ind.plot}{
-		Factor defining the name of the plot in which the individu is.
+		Factor defining the name of the plot in which the individual is.
 	}
 	
 	\item{sp}{
-		Factor defining the species which the individu belong to.
+		Factor defining the species which the individual belong to.
 	}
 	
 	\item{col.ind}{
@@ -47,11 +47,11 @@
 	}
 	
 	\item{p.val}{
-		Choosen p.value to print significative linear relationship. Argument past to the lm funtion internally.
+		Choosen p.value to print significant linear relationship using linear model. Argument past to the lm funtion internally.
 	}
 	
 	\item{min.ind.signif}{
-		Minimum individual to print significative linear relationship.
+		Minimum individual to print significant linear relationship.
 	}
 	
 	\item{multipanel}{
@@ -59,15 +59,15 @@
 	}
 	
 	\item{col.nonsignif.lm}{
-		Color for non significative linear relationship.
+		Color for non significant linear relationship.
 	}
 	
 	\item{col.signif.lm}{
-		Color for significative linear relationship.
+		Color for significant linear relationship.
 	}
 	
 	\item{silent}{
-		Logical value, if resume=FALSE dot not print warnings argument.
+		Logical value, if resume=FALSE do not print warnings argument.
 	}
 }
 
@@ -109,5 +109,5 @@
 }
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

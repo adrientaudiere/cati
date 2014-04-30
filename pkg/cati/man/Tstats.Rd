@@ -5,10 +5,10 @@
 \alias{summary.Tstats}
 
 \title{
-	Calcul observed T-statistics (T for Traits) and null expectations.
+	Computing observed T-statistics (T for Traits) and null expectations.
 }
 \description{
-	Calcul observed T-statistics (T for Traits) as three ratios of variance, namely T_IP.IC, T_IC.IR and T_PC.PR. This function can also return the distribution of this three statistics under null models.
+	Computing observed T-statistics (T for Traits) as three ratios of variance, namely T_IP.IC, T_IC.IR and T_PC.PR. This function can also return the distribution of this three statistics under null models.
 }
 
 \usage{
@@ -22,19 +22,19 @@
 
 \arguments{
 	\item{Ttraits}{
-		Individual Traits matrix with traits in columns.
+		Individual Matrix of traits with traits in columns.
 	}
 	
 	\item{ind_plot}{
-		Factor defining the name of the plot in which the individu is.
+		Factor defining the name of the plot in which the individual is.
 	}
 	
 	\item{sp}{
-		Factor defining the species which the individu belong to.
+		Factor defining the species which the individual belong to.
 	}
 	
 	\item{nperm}{
-		Number of permutation. If NULL, only observed values are returned; 
+		Number of permutations. If NULL, only observed values are returned; 
 	}
 	
 	\item{printprogress}{
@@ -42,7 +42,9 @@
 	}
 	
 	\item{p.value}{
-		Logical value; calcul p-value or not.
+		Logical value; calcul p-value or not. p-value are here defined as: (x+1)/y 
+		
+		with x the number of null values greater or lesser than the observed value and y the total number of null values. 
 	}
 	
 	\item{x}{
@@ -86,15 +88,15 @@
 \details{
 	S3 method plot:
 	-Normal type plot means, standard deviations, ranges and confidence intervals of T-statistics.
-	-Color_cond type plot T-statistics for each site and traits with color for significative values and grey for non signifivative ones. 
+	-Color_cond type plot T-statistics for each site and traits with color for significant values and grey for non signifivative ones. 
 	-Simple_sd type plot means, standard deviations and confidence intervals of T-statistics
 	-Simple type plot T-statistics for each site and traits and the mean confidence intervals by traits
 	-Barplot type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
 	
 	S3 method summary:
-	-Binary type only test if a T-statistics is significatively different from the null expectation for each traits.
-	-Percent type determine the percentage of sites were the T-statistics is significatively different from the null expectation for each traits. Asterix shows global significance of the test.
-	-P-value type determine the p-value (two unilateral tests) of the T-statistics for each traits and sites.
+	-Binary type only test if a T-statistics is significatively different from the null expectation for each trait.
+	-Percent type determine the percentage of sites were the T-statistics is significatively different from the null expectation for each trait. Asterix shows global significance of the test.
+	-P-value type determine the p-value (two unilateral tests) of the T-statistics for each trait and sites.
 	-Site type allows to know in which sites T-statistics deviate from the null expectation.
 	-All type do all the precedent type of summary.
 }
@@ -106,19 +108,19 @@
 	\item{$T_IC.IR}{Observed ratio between variance of individuals in communities and individuals in the region}
 	\item{$T_PC.PR}{Observed ratio between variance of populations in communities and individuals in the region}
 	
-	\item{$variances$var_IP}{variance of individuals in populations}    
-	\item{$variances$var_PC}{variance of populations in communities}
-	\item{$variances$var_CR}{variance of communities in the region}
-	\item{$variances$var_IC}{variance of individuals in communities}
-	\item{$variances$var_PR}{variance of populations in the region}
-	\item{$variances$var_IR}{variance of individuals in the region}
+	\item{$variances$var_IP}{variance of individuals within populations}    
+	\item{$variances$var_PC}{variance of populations within communities}
+	\item{$variances$var_CR}{variance of communities within the region}
+	\item{$variances$var_IC}{variance of individuals within communities}
+	\item{$variances$var_PR}{variance of populations within the region}
+	\item{$variances$var_IR}{variance of individuals within the region}
 	    
-	\item{$variances$var_IP_nm1}{variance of individuals in populations in null model 1}    
-	\item{$variances$var_PC_nm3}{variance of populations in communities in null model 3}
-	\item{$variances$var_IC_nm1}{variance of communities in the region in null model 1}
-	\item{$variances$var_IC_nm2}{variance of individuals in communities in null model 2}
-	\item{$variances$var_PR_nm3}{variance of populations in the region in null model 3}
-	\item{$variances$var_IR_nm2}{variance of individuals in the region in null model 2}
+	\item{$variances$var_IP_nm1}{variance of individuals within populations in null model 1}    
+	\item{$variances$var_PC_nm3}{variance of populations within communities in null model 3}
+	\item{$variances$var_IC_nm1}{variance of communities within the region in null model 1}
+	\item{$variances$var_IC_nm2}{variance of individuals within communities in null model 2}
+	\item{$variances$var_PR_nm3}{variance of populations within the region in null model 3}
+	\item{$variances$var_IR_nm2}{variance of individuals within the region in null model 2}
 	
 	\item{$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
 	\item{$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
@@ -192,5 +194,5 @@
 
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

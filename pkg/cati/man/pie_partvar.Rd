@@ -2,11 +2,11 @@
 \alias{pie_partvar}
 
 \title{
-	Pie plot of variance partitionning.
+	Pie plot of variance partitioning.
 }
 
 \description{
-	Plot pies of the partition of variance calculate with the function partvar.
+	Plot pies of the partitioning of variance calculated using the function partvar.
 }
 
 \usage{
@@ -60,5 +60,5 @@
 
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

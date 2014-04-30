@@ -1,11 +1,11 @@
 \name{bar_partvar}
 \alias{bar_partvar}
 \title{
-	Barplot of variance partitionning
+	Barplot of variance partitioning
 }
 
 \description{
-	Plot bars of the partition of variance calculate with the function partvar.
+	Bars plot of the partitioning of variance calculated using the function partvar.
 }
 
 \usage{
@@ -14,15 +14,15 @@
 
 \arguments{
 	\item{partvar}{
-	The result of the partvar function.
+		The result of the partvar function.
 	}
 	
 	\item{col.bar}{
-	Vector of color for bar
+		Vector of colors of bars 
 	}
 	
 	\item{leg}{
-	Logical value; print legend or not.
+		Logical value; print legend or not.
 	}	
 }
 
@@ -65,5 +65,5 @@
 }
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

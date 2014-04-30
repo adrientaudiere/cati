@@ -6,21 +6,21 @@
 }
 
 \description{
-	Plot community assembly index and confidence intervals using a list of index. S3 method fot class listofindex.
+	Plot community assembly index and confidence intervals using a list of index. S3 method for class listofindex.
 }
 
 \usage{
-	plot.listofindex(x, type = "normal", col.index = c("red", "purple", "green"), add.conf = TRUE, color.cond = TRUE, val.quant = c(0.025, 0.975), grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, cex.text = 0.8, plot.ask = FALSE, srt.text = 90, bysites = FALSE, ...)
+	plot.listofindex(x, type = "normal", col.index = c("red", "purple", "green"), add.conf = TRUE, color.cond = TRUE, val.quant = c(0.025, 0.975), grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, cex.text = 0.8, plot.ask = FALSE, srt.text = 90, bysite = FALSE, ...)
 }
 
 \arguments{
 
 	\item{x}{
-		A list of index and the associate null models obtain thanks to the as.listofindex function.
+		A list of index and related null models obtained from to the as.listofindex function.
 	}
 	
 	\item{type}{
-		Type of plot. Possible type = "simple", "simple_range", "normal", "barplot" and a very different one: "bytraits".
+		Type of plot. Possible type = "simple", "simple_range", "normal", "barplot" and "bytraits".
 	}
 	
 	\item{col.index}{
@@ -36,7 +36,7 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calculate confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{grid.v}{
@@ -60,15 +60,15 @@
 	}
 	
 	\item{plot.ask}{
-		Logical value; ask for ploting the next plot or not.
+		Logical value; ask for plotting the next plot or not.
 	}
 	
 	\item{srt.text}{
 		Degree of rotation for text.
 	}
 	
-	\item{bysites}{
-		Logical value; plot by sites or by traits. 
+	\item{bysite}{
+		Logical value; plot per site or by traits. 
 	}
 	
 	\item{\dots}{
@@ -103,5 +103,5 @@
 }
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+
