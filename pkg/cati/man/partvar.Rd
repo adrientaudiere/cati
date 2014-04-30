@@ -15,11 +15,11 @@
 
 \arguments{
 	\item{traits}{
-		Traits matrix with traits in column
+		Matrix of traits with traits in column
 	}
   
 	\item{factors}{
-		A matrix of factors with the first column correspond to the higher level factor, the second row the second higher level factor and so on.  
+		A matrix of factors with the first column corresponds to the higher level factor, the second row the second higher level factor and so on.  
 	}
 	
 	\item{printprogress}{
@@ -69,5 +69,5 @@
 
 
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+

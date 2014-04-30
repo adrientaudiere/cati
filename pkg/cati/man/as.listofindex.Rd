@@ -5,7 +5,7 @@
 }
 
 \description{
-	Transform index result in a list of index. Useful to use the functions plot.listofindex (S3 method) and ses.listofindex.
+	Transform various results from functions Tstast, com.index or com.index.multi in a list of index. Useful to use the functions plot.listofindex (S3 method) and ses.listofindex.
 }
 
 \usage{
@@ -18,7 +18,7 @@
 	}
 	
 	\item{namesindex}{
-		Optionnal, the names of index in the same order than in x.
+		Optionnal, the names of index in the same order as in x.
 	}
 }
 
@@ -26,7 +26,7 @@
 }
 
 \value{
-	A list of observed and corresponding nullmodel value in the forme "list(index1, null model index1, index2, null model index2 ...)"
+	A list of observed values and corresponding 'null' values (i.e. produced by null models) in the form "list(index1, null model index1, index2, null model index2 ...)"
 }
 
 \references{
@@ -47,5 +47,5 @@
 \examples{
 }
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+
