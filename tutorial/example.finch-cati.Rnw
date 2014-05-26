@@ -76,7 +76,7 @@ opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE
 %%%%%%%%%%%%%%%%
 
 <<results='hide'>>= 
-install.packages("C:/Users/taudiere/Desktop/cati/pkg/cati_0.6.zip", repos=NULL)
+install.packages("C:/Users/taudiere/Desktop/cati/pkg/cati_0.7.zip", repos=NULL)
 #install.packages("cati", repos="http://R-Forge.R-project.org")
 @
 
@@ -451,6 +451,7 @@ res.finch.withoutIV<-com.index(traits=traits.finch, index=funct.withoutIV,
 @
 
 
+
 \newpage
 
 We can also represent T-statistics and custom index thanks to the \code(plot.listofindex) function.
@@ -586,6 +587,37 @@ ses.list.multi<-ses.listofindex(list.ind.multi)
 plot(list.ind.multi)
 plot(list.ind.multi, xlim=c(-200,20))
 @
+
+
+
+
+Villéger metrics.
+
+<<>>=
+require("geometry")
+ 
+FA<-as.character("FA")
+funct<-c("round(convhulln(x,FA)$vol,6)")
+
+##Null model 1 is trivial for this function
+##because randomisation is within community only
+Fdis.finch<-com.index.multi(traits.finch.mice, 
+                          index=funct,
+                          by.factor=ind.plot.finch, nullmodels=c(2,2),
+                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+
+list.ind.multi2<-as.listofindex(list(hv.3, Fdis.finch))
+
+ses.list.multi2<-ses.listofindex(list.ind.multi2)
+@
+
+<<dev='pdf', fig.width=4, fig.height=4>>=
+plot(list.ind.multi2)
+@
+
+@
+
+
 
 
 \section{Others graphics functions}
