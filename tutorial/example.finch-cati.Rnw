@@ -465,7 +465,7 @@ i.l1<-as.listofindex(list.ind, namesindex=namesindex.i.l1)
 class(i.l1)
 
 par(mfrow=c(2,3))
-plot(i.l1,type="bytraits", bysites=TRUE)
+plot(i.l1,type="bytraits", bysite=TRUE)
 
 par(mfrow=c(2,2))
 plot(i.l1,type="bytraits")
