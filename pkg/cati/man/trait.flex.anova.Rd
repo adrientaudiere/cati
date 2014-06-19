@@ -21,11 +21,11 @@
 
 \arguments{
 	\item{formula}{
-		The formula parameter must be a one-sided formula, i.e. starting with a tilde ( ~ ) character. The response variable is specified by the next two arguments, specif.avg and const.avg. 
+		The formula parameter must be a one-sided formula, i.e. starting with a tilde character. The response variable is specified by the next two arguments, specif.avg and const.avg. 
 	}
 	
 	\item{specif.avg}{
-		Vector with community trait composition values for a single trait. It is calculated from trait values specific to each community (i.e. trait values for individual species are ‘specific’ to each plot, or habitat, where the species is found)
+		Vector with community trait composition values for a single trait. It is calculated from trait values specific to each community (i.e. trait values for individual species are 'specific' to each plot, or habitat, where the species is found)
 	}
 	
 	\item{const.avg}{
@@ -41,7 +41,7 @@
 	}
 	
 	\item{use.percentage}{
-		Logical value; if TRUE the individual plotted sources of trait variation are shown as percentages of the total variation, on 0–100 scale.
+		Logical value; if TRUE the individual plotted sources of trait variation are shown as percentages of the total variation, on 0-100 scale.
 	}
 	
 	\item{plot.covar}{
@@ -66,7 +66,7 @@
 }
 
 \details{
-	The formula parameter must be a one-sided formula, i.e. starting with a tilde ( ~ ) character. The response variable is specified by the next two arguments, specif.avg and const.avg. 
+	The formula parameter must be a one-sided formula, i.e. starting with a tilde character. The response variable is specified by the next two arguments, specif.avg and const.avg. 
 }
 
 \value{

@@ -10,7 +10,7 @@
 }
 
 \usage{
-	plot.listofindex(x, type = "normal", col.index = c("red", "purple", "green"), add.conf = TRUE, color.cond = TRUE, val.quant = c(0.025, 0.975), grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, cex.text = 0.8, plot.ask = FALSE, srt.text = 90, bysite = FALSE, ...)
+	\method{plot}{listofindex}(x, type = "normal", col.index = c("red", "purple", "green"), add.conf = TRUE, color.cond = TRUE, val.quant = c(0.025, 0.975), grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, cex.text = 0.8, plot.ask = FALSE, srt.text = 90, bysite = FALSE, ...)
 }
 
 \arguments{

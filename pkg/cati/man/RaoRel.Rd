@@ -6,7 +6,7 @@
 }
 
 \description{
-	The Rao function computes alpha, gamma and beta-components for taxonomic, functional and phylogenetic diversity with the Rao index. The script integrates two functions: "Qdecomp", by Villeger & Mouillot (J Ecol, 2008) modified by Wilfried Thuiller, and "disc", by S. Pavoine, in the package ade4. For a regional assemblage of C local communities gamma = mean(alpha) + beta, where: gamma is the diversity of the regional pool, alpha is the diversity of the local community and beta is the turn over between local communities diversity is estimated with the Rao quadratic entropy index (Rao 1982)
+	The Rao function computes alpha, gamma and beta-components for taxonomic, functional and phylogenetic diversity with the Rao index. The script integrates two functions: "Qdecomp", by Villeger et Mouillot (J Ecol, 2008) modified by Wilfried Thuiller, and "disc", by S. Pavoine, in the package ade4. For a regional assemblage of C local communities gamma = mean(alpha) + beta, where: gamma is the diversity of the regional pool, alpha is the diversity of the local community and beta is the turn over between local communities diversity is estimated with the Rao quadratic entropy index (Rao 1982)
 } 
 	
 \usage{
@@ -40,7 +40,7 @@
 }
 
 \details{
-	NA are not allowed in 'locabrel<-abundances/ablocist'. NA are automatically replaced by 0 in 'sample'. This function use the function "Qdecomp" by Sebastien Villeger & David Mouillot (J Ecol, 2008) modified by Wilfried Thuiller and the function disc originally proposed by Sandrine Pavoine.
+	NA are not allowed in "locabrel<-abundances/ablocist". NA are automatically replaced by 0 in "sample". This function use the function "Qdecomp" by Sebastien Villeger & David Mouillot (J Ecol, 2008) modified by Wilfried Thuiller and the function disc originally proposed by Sandrine Pavoine.
 
 }
 
@@ -75,7 +75,7 @@
 }
 
 \references{
-	De Bello, Francesco, Sandra Lavorel, Cécile H. Albert, Wilfried Thuiller, Karl Grigulis, Jiri Dolezal, stepan Janecek, et Jan Leps. 2011. Quantifying the relevance of intraspecific trait variability for functional diversity: Intraspecific variability in functional diversity. Methods in Ecology and Evolution 2: 163-174. 
+	De Bello, Francesco, Sandra Lavorel, Cecile H. Albert, Wilfried Thuiller, Karl Grigulis, Jiri Dolezal, stepan Janecek, et Jan Leps. 2011. Quantifying the relevance of intraspecific trait variability for functional diversity: Intraspecific variability in functional diversity. Methods in Ecology and Evolution 2: 163-174. 
 }
 
 \author{
@@ -109,7 +109,7 @@
 	totRao
 	
 	
-	#Now let's take the abundance to calculate Rao diversity.
+	#Now let"s take the abundance to calculate Rao diversity.
 	
 	res.rao.w<-RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, weight=TRUE, Jost=FALSE, structure=NULL)
 	
