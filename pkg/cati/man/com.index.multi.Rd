@@ -92,7 +92,10 @@
 	names_sp_ind_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep="_")) 
 
 	####
-	#For most multivariate functions we need to replace (or exclude) NA values. For this example, we use the package mice to complete the data.
+	#For most multivariate functions we need to replace (or exclude)
+	#NA values.
+	
+	#For this example, we use the package mice to complete the data.
 	
 	comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
 	
@@ -109,7 +112,10 @@
 	attributes(ses.listofindex(as.listofindex(res.sum.1)))
 	
 	####
-	#A more interesting example using the function hypervolume from the package hypervolume.  We show here several results which differe in there factor that delimit the group to calculate different hypervolume (argument by_factor). 
+	#A more interesting example using the function hypervolume 
+	#from the package hypervolume. 
+	#We show here several results which differe in there factor 
+	#that delimit the group to calculate different hypervolume (argument by_factor). 
 
 	res.hv.1<-com.index.multi(traits.finch.mice, index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, warnings=FALSE)@Volume))"), by.factor=rep(1,length(names_sp_ind_plot)), nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
 	res.hv.2<-com.index.multi(traits.finch.mice, index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, warnings=FALSE)@Volume))"), by.factor=names_sp_ind_plot, nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)

@@ -82,23 +82,32 @@
 \examples{	
 	data(finch.ind)
 	
-	#Plot the distribution of trait values for populations, species, sites and regional scales. First, let try the distribution for all populations of Darwin finches.
+	#Plot the distribution of trait values for populations, 
+	#species, sites and regional scales. 
+	
+	#First, let try the distribution for all populations of Darwin finches.
 	
 	par(mfrow=c(4,4), cex=0.5)
 	plot_dens(traits.finch, sp.finch, ind.plot.finch, ylim.cex=3, plot.ask=FALSE, multipanel=FALSE, leg=FALSE)
 	par(mfrow=c(1,1), cex=1)
 	
-	#Then we can inverse the second and the third arguments to plot the distribution for all finches species. 
+	
+	#Then we can inverse the second and the third arguments 
+	#to plot the distribution for all finches species. 
 	
 	par(mfrow=c(4,4), cex=0.5)
 	plot_dens(traits.finch, ind.plot.finch, sp.finch, ylim.cex=8, plot.ask=FALSE, multipanel=FALSE, leg=FALSE)
 	par(mfrow=c(1,1), cex=1)
 	
+	
 	#You can also plot trait distribution for all species in the region
+	
 	plot_dens(traits.finch, rep("region", times=dim(traits.finch)[1]), sp.finch, ylim.cex=6, plot.ask=FALSE, leg=FALSE)
 	
 	
-	#You can also plot trait distribution for all sites without taking into account species identity
+	#You can also plot trait distribution for all sites
+	#without taking into account species identity
+	
 	plot_dens(traits.finch, rep("toutes_sp", times=dim(traits.finch)[1]), ind.plot.finch, ylim.cex=3, plot.ask=FALSE)
 	par(mfrow=c(4,4), cex=0.5)
 }

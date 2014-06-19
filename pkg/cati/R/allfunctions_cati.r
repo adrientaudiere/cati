@@ -34,6 +34,8 @@ partvar<-function(traits, factors, printprogress=TRUE){
 	
 	on.exit(expr = attach(as.data.frame(factors)))
 	class(res)<-"partvar"
+	detach(as.data.frame(factors))
+	
 	print(res)
 }
 
@@ -545,9 +547,9 @@ plot.Tstats<-function(x, val.quant=c(0.025,0.975), col.Tstats=c("red","purple","
 }
 
 ### Function to summarize traits and community which show a significant difference between observed and simulated value
-summary.Tstats<-function(object, val.quant=c(0.025,0.975), type="all") {
+summary_Tstats<-function(x, val.quant=c(0.025,0.975), type="all") {
 	
-	tstats<-object
+	tstats<-x
 	#________________________________________
 	ses.T_IP.IC<-(tstats$T_IP.IC-apply(tstats$T_IP.IC_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(tstats$T_IP.IC_nm, c(3,2), function(x) sd(x, na.rm=T))
 	ses.T_IC.IR<-(tstats$T_IC.IR-apply(tstats$T_IC.IR_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(tstats$T_IC.IR_nm, c(3,2), function(x) sd(x, na.rm=T))
@@ -798,6 +800,10 @@ com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, i
 	
 	nindex<-length(index)
 	
+	if(length(nullmodels)==1){
+		nullmodels<-rep(nullmodels,times=nindex)
+	}	
+	
 	if(is.null(namesindex)) {  namesindex<-index }
 	ntr<-dim(traits)[2]
 	namestraits<-colnames(traits)
@@ -1018,6 +1024,10 @@ com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, i
 com.index.multi<-function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, nperm=99, printprogress=TRUE){
 	
 	nindex<-length(index)
+	
+	if(length(nullmodels)==1){
+		nullmodels<-rep(nullmodels,times=nindex)
+	}	
 	
 	if(is.null(namesindex)) {  namesindex<-index }
 	ntr<-dim(traits)[2]
@@ -1291,6 +1301,14 @@ as.listofindex<-function(x, namesindex=NULL) {
 #You can transpose the observed matrix to represent either the ses by traits or by plots
 plot.listofindex<-function(x, type="normal", col.index=c("red","purple","green"), add.conf=TRUE, color.cond=TRUE, val.quant=c(0.025,0.975), grid.v=TRUE, grid.h=TRUE, xlim=NULL, ylim=NULL, cex.text =0.8, plot.ask=FALSE, srt.text=90, bysite=FALSE,...){
 	#possible type = "simple",  "simple_range", "normal" , "barplot" and "bytraits"
+	
+	if(!inherits(x, "listofindex")) {
+		if(inherits(x[[1]], "Tstats") | inherits(x[[2]], "com.index")  | inherits(x[[3]], "com.index.multi")) {
+			x<-as.listofindex(x)
+		}	
+		else{stop("x must be a list of objects of class Tstats, com.index or com.index.multi")}
+	}
+	
 	index.list<-x
 	
 	oldpar<-par(no.readonly = TRUE)
@@ -2207,7 +2225,7 @@ plot_dens<-function(traits=NULL, var.1=NULL, var.2=NULL, col.dens=NULL, plot.ask
 
 # Ackerly & Cornwell 2007
 # Plot populations values against species values
-plot_sp_pop<-function(traits=NULL, ind.plot=NULL, sp=NULL, col.ind =	rgb(0.5,0.5,0.5,0.5), col.pop=NULL, col.sp=NULL, col.site=NULL, resume=FALSE, p.val=0.05, min.ind.signif=10 , multipanel=TRUE, col.nonsignif.lm=rgb(0,0,0,0.5), col.signif.lm=rgb(1,0.1,0.1,0.8), silent=FALSE) {
+plot_sp_pop<-function(traits=NULL, ind.plot=NULL, sp=NULL, col.ind = rgb(0.5,0.5,0.5,0.5), col.pop=NULL, col.sp=NULL, col.site=NULL, resume=FALSE, p.val=0.05, min.ind.signif=10 , multipanel=TRUE, col.nonsignif.lm=rgb(0,0,0,0.5), col.signif.lm=rgb(1,0.1,0.1,0.8), silent=FALSE) {
 
 	ntr<-dim(traits)[2]
 	namestraits<-colnames(traits)
@@ -2365,6 +2383,176 @@ plot_sp_pop<-function(traits=NULL, ind.plot=NULL, sp=NULL, col.ind =	rgb(0.5,0.5
 
 }
 
+
+
+# Plot populations values against environmental variable(s)
+plot_sp_var<-function(traits=NULL, ind.plot=NULL, sp=NULL, variable = NULL, col.ind = rgb(0.5,0.5,0.5,0.5), col.pop=NULL, col.sp=NULL, col.site=NULL, resume=FALSE, p.val=0.05, min.ind.signif=10 , multipanel=TRUE, col.nonsignif.lm=rgb(0,0,0,0.5), col.signif.lm=rgb(1,0.1,0.1,0.8), silent=FALSE) {
+	
+	ntr<-dim(traits)[2]
+	namestraits<-colnames(traits)
+	
+	traits<-traits[order(ind.plot),]
+	ind.plot<-ind.plot[order(ind.plot)]
+	sp<-sp[order(ind.plot)]
+	
+	name_sp_sites=paste(sp, ind.plot, sep="_")
+	comm<-t(table(ind.plot,1:length(ind.plot)))
+	
+	S = colSums(comm>0)
+	ncom=length(S)
+
+	
+	plotsp=unlist(strsplit(levels(as.factor(name_sp_sites)),split="_"))[seq(3,3*nlevels(as.factor(name_sp_sites)), by=3)]
+	#plosp is the plot in wich the population is
+	plotind=unlist(strsplit(name_sp_sites,split="_"))[seq(3,3*length(name_sp_sites), by=3)]
+	spplot=paste(unlist(strsplit(levels(as.factor(name_sp_sites)),split="_"))[seq(1,3*nlevels(as.factor(name_sp_sites)), by=3)], unlist(strsplit(levels(as.factor(name_sp_sites)),split="_"))[seq(2,3*nlevels(as.factor(name_sp_sites)), by=3)], sep="_")
+	
+	traits_by_pop<-apply(traits,2,function(x) tapply(x, name_sp_sites,mean, na.rm=T))  
+	
+	traits_by_sites<-variable
+	
+	if(is.vector(traits_by_sites)){
+		traits_by_sites<-matrix(rep(traits_by_sites, times=ntr), ncol=ntr)
+	}
+	
+	interm.for.names<-apply(traits,2,function(x) tapply(x, ind.plot,mean, na.rm=T)) 
+	colnames(traits_by_sites)<-colnames(interm.for.names)
+	
+	rownames(traits_by_sites)<-rownames(interm.for.names)
+	
+	
+	
+	if(multipanel){
+		par(mfrow = c(sqrt(ntr), sqrt(ntr)) )
+	}
+  
+	
+	if(is.null(col.sp)){
+		col.sp<-rainbow(nlevels(sp))
+	}
+	
+	if(length(col.sp)<nlevels(sp)){
+		col.sp<-rep(col.sp ,length.out=nlevels(sp))
+	}
+	
+	if(is.null(col.pop)){
+		col.pop<-col.sp[match(spplot, levels(sp))]
+	}
+	
+	if(is.null(col.site)){
+		col.site<-rep(rgb(0.1, 0.1, 0.1 , 0.8),ncom)
+	}
+	
+	if(!resume){
+		for(t in 1:ntr){
+			x.ind<-traits_by_sites[match(plotind,rownames(traits_by_sites)),t]
+			y.ind<-traits[,t]
+			plot(x.ind, y.ind, pch=16, col=col.ind, cex=0.5)
+			
+			x.pop<-traits_by_sites[match(plotsp,rownames(traits_by_sites)),t]
+			y.pop<-traits_by_pop[,t]
+			points(x.pop, y.pop, pch=16,  col=col.pop)
+					
+			for(s in 1:nlevels(sp)){
+				
+				try( interm<-lm(y.pop[spplot==levels(sp)[s]] ~ x.pop[spplot==levels(sp)[s]]), silent = silent)  
+				
+				options(warn=-1)
+				if(class(try( interm<-lm(y.pop[spplot==levels(sp)[s]] ~ x.pop[spplot==levels(sp)[s]]), silent = silent)) =="lm"){
+					if(!is.na(summary(interm)$coefficient[,4])){
+						if(summary(interm)$coefficients[2,4]<p.val & length(interm$fitted.values)>min.ind.signif){
+							lty.lm=1
+							lwd.lm=3
+							color.lm<-col.signif.lm
+						}
+						else{		
+							lty.lm=0
+							lwd.lm=0
+						}
+						options(warn=0)
+					}
+				
+				   
+					else{
+						lty.lm=3
+						lwd.lm=1
+						color.lm<-col.nonsignif.lm
+					}
+			
+					if(!is.na(interm$coefficient[2])){
+						lines(interm$model[,2] , interm$fitted.values, lty=lty.lm, lwd=lwd.lm, col=color.lm )
+					}
+				}
+			}
+			
+			options(warn=-1)
+			
+			try( interm2<-lm(traits_by_sites[match(plotsp,rownames(traits_by_sites)),t] ~ traits_by_pop[,t]), silent = silent)
+			
+			color.lm2<-col.nonsignif.lm
+			
+			if(class(try(lm(traits_by_sites[match(plotsp,rownames(traits_by_sites)),t] ~ traits_by_pop[,t]), silent = silent)) =="lm"){
+				if(!is.na(summary(interm2)$coefficient[,4])){
+					if(summary(interm2)$coefficients[2,4]<p.val & length(interm2$fitted.values)>min.ind.signif){
+						color.lm2<-col.signif.lm
+					}
+					else{}
+					options(warn=0)
+				}
+			}
+			
+			
+			points(tapply( traits_by_pop[,t], plotsp ,mean, na.rm=T) ~ tapply(traits_by_sites[match(plotsp,rownames(traits_by_sites)),t], plotsp ,mean, na.rm=T) , col=col.site, pch="*", cex=3)
+		
+			points(tapply( traits_by_pop[,t], spplot ,mean, na.rm=T) ~ tapply(traits_by_sites[match(plotsp,rownames(traits_by_sites)),t], spplot ,mean, na.rm=T) , col=col.sp, pch=16, cex=1.5)
+			abline(try(lm( traits_by_sites[match(plotsp,rownames(traits_by_sites)),t] ~ traits_by_pop[,t]), silent = silent) , lty=2, lwd=2, col=color.lm2)
+		
+		}
+	}
+	
+	if(resume){
+		for(t in 1:ntr){
+			x.pop<-traits_by_sites[match(plotsp,rownames(traits_by_sites)),t]
+			y.pop<-traits_by_pop[,t]
+			plot(x.pop, y.pop, pch=16,  col=col.pop)
+			abline(a=0, b=1, lty=3, lwd=2)
+					
+			for(s in 1:nlevels(sp)){
+				
+				try( interm<-lm(y.pop[spplot==levels(sp)[s]] ~ x.pop[spplot==levels(sp)[s]]), silent = silent)  
+				
+				options(warn=-1)
+				if(class(try( interm<-lm(y.pop[spplot==levels(sp)[s]] ~ x.pop[spplot==levels(sp)[s]]), silent = silent)) =="lm"){
+					if(!is.na(summary(interm)$coefficient[,4])){
+						if(summary(interm)$coefficients[2,4]<p.val & length(interm$fitted.values)>min.ind.signif){
+							lty.lm=1
+							lwd.lm=3
+						}
+						else{
+							lty.lm=0
+							lwd.lm=0
+						}
+						options(warn=0)
+					}
+				
+					else{
+						lty.lm=3
+						lwd.lm=1
+					}
+			
+					if(!is.na(interm$coefficient[2])){
+						lines(interm$model[,2] , interm$fitted.values, lty=lty.lm, lwd=lwd.lm, col=col.sp[s] )
+					}
+				}
+			}		
+			points(tapply( traits_by_pop[,t], spplot ,mean, na.rm=T) ~ tapply(traits_by_sites[match(plotsp,rownames(traits_by_sites)),t], spplot ,mean, na.rm=T) , col=col.sp, pch=16, cex=1.5)
+		}
+	}
+	
+	
+	par(mfrow = c(1, 1))
+
+}
 
 
 
@@ -2797,3 +2985,47 @@ RaoRel<-function(sample, dfunc, dphyl, weight=FALSE, Jost=FALSE, structure=NULL)
 
 
 
+
+
+#Function to plot result of observed indices values against null distribution
+#Use the function plot(as.randtest(x)) from ade4
+plot_randtest<-function(x, alter=c("greater", "less", "two-sided"), ...){
+	
+	if(!inherits(x, "listofindex")) {
+		if(inherits(x, "Tstats") | inherits(x, "com.index")  | inherits(x, "com.index.multi")) {
+			x<-as.listofindex(x)
+		}	
+		else{stop("x must be a list of objects of class Tstats, com.index or com.index.multi")}
+	}
+
+	index.list<-x
+	
+	oldpar<-par(no.readonly = TRUE)
+	
+	namesindex.all<-names(index.list)
+	nindex<-length(names(index.list))/2
+	namesindex<-names(index.list)[seq(1,nindex*2, by=2)]
+	namestraits<-colnames(index.list[[1]])
+	namescommunity<-rownames(index.list[[1]])
+		
+	ncom<-c()
+	ntr<-c()
+	for(i in seq(1, 2*nindex, by=2)){
+		ncom<-c(ncom,dim(as.matrix(index.list[[i]]))[1])
+		ntr<-c(ntr,dim(as.matrix(index.list[[i]]))[2])
+	}
+	
+	if(is.null(ncom)) {ncom<-dim(as.matrix(index.list[[1]]))[1]}
+	if(is.null(ntr)) {ntr<-dim(as.matrix(index.list[[1]]))[2]}
+	
+	if(is.null(ncom)) {ncom=1}
+	if(is.null(ntr)) {ntr=1}
+	
+	for (i in seq(1,nindex*2,by=2)){
+		for (t in 1:ntr[1]){
+			rt<-as.randtest(sim=index.list[[i+1]][t,,], obs=index.list[[i]][t], alter=alter)
+			plot(rt, main=paste(namesindex.all[i], namestraits[t], "p.value = ", round(rt$pvalue, digits = 5)), ...)
+		}
+	}
+
+}
