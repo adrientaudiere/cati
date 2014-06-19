@@ -2,17 +2,13 @@
 \alias{Tstats}
 \alias{barplot.Tstats}
 \alias{plot.Tstats}
-\alias{summary.Tstats}
+\alias{summary_Tstats}
 
 \title{
 	Computing observed T-statistics (T for Traits) and null expectations.
 }
 \description{
-<<<<<<< HEAD
 	Computing observed T-statistics (T for Traits) as three ratios of variance, namely T_IP.IC, T_IC.IR and T_PC.PR. This function can also return the distribution of this three statistics under null models.
-=======
-	Computing observed T-statistics (T for Traits) as three ratios of variance, namely T_IP.IC, T_IC.IR and T_PC.PR. This function can also return the distribution of these three statistics under null models.
->>>>>>> 88467fe8d079c9993926d322508c2ca7cd639888
 }
 
 \usage{
@@ -20,17 +16,17 @@
 	
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), col.Tstats = c("red", "purple", "green", "white"), ylim=NULL, \dots)
 	\method{plot}{Tstats}(x, val.quant = c(0.025, 0.975), col.Tstats = c("red", "purple", "green"), type = "normal", add.conf = TRUE, ylim=NULL, xlim=NULL, \dots)
-	\method{summary}{Tstats}(object, val.quant = c(0.025, 0.975), type = "all")
-
+	
+	summary_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 }
 
 \arguments{
 	\item{Ttraits}{
-<<<<<<< HEAD
+
 		Individual Matrix of traits with traits in columns. For one trait, use as.matrix().
-=======
+
 		Individual Matrix of traits with traits in columns.
->>>>>>> 88467fe8d079c9993926d322508c2ca7cd639888
+
 	}
 	
 	\item{ind_plot}{
@@ -63,9 +59,6 @@
 		An object of class Tstats.
 	}
 	
-	\item{object}{
-		An object of class Tstats.
-	}
 	
 	\item{val.quant}{
 		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
@@ -118,11 +111,11 @@
 	
 	\item{$T_IP.IC}{Observed ratio between variance of individuals in populations and individuals in communities}
 	\item{$T_IC.IR}{Observed ratio between variance of individuals in communities and individuals in the region}
-<<<<<<< HEAD
+
 	\item{$T_PC.PR}{Observed ratio between variance of populations in communities and populations in the region}
-=======
+
 	\item{$T_PC.PR}{Observed ratio between variance of populations in communities and individuals in the region}
->>>>>>> 88467fe8d079c9993926d322508c2ca7cd639888
+
 	
 	\item{$variances$var_IP}{variance of individuals within populations}    
 	\item{$variances$var_PC}{variance of populations within communities}
@@ -184,19 +177,19 @@
 	plot(res.finch, type="simple_sd")
 	plot(res.finch, type="barplot")
 	
-	attributes(summary(res.finch))
-	head(summary(res.finch)$p.value, 10)
+	attributes(summary_Tstats(res.finch))
+	head(summary_Tstats(res.finch)$p.value, 10)
 	
-	summary.Tstats(res.finch, type="binary")
-	summary.Tstats(res.finch, type="percent")
-	summary.Tstats(res.finch, type="site")
-	summary.Tstats(res.finch, type="p.value")
-	summary.Tstats(res.finch, type="all")
+	summary_Tstats(res.finch, type="binary")
+	summary_Tstats(res.finch, type="percent")
+	summary_Tstats(res.finch, type="site")
+	summary_Tstats(res.finch, type="p.value")
+	summary_Tstats(res.finch, type="all")
 	
 	barplot(res.finch)
 	
-	attributes(summary(res.finch))
-	head(summary(res.finch)$p.value, 10)
+	attributes(summary_Tstats(res.finch))
+	head(summary_Tstats(res.finch)$p.value, 10)
 	
 	#### An other way to see "ses values" of T-statistics
 	

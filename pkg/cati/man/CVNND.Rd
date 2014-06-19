@@ -10,7 +10,7 @@
 }
 
 \usage{
-CVNND(trait, div_range= FALSE)
+	CVNND(trait, div_range= FALSE)
 }
 
 \arguments{
@@ -46,7 +46,7 @@ CVNND(trait, div_range= FALSE)
 
 \examples{
 	data(finch.ind)
-	CVNND(traits.finch[,1])
+	#CVNND(traits.finch[,1])
 }
 
 

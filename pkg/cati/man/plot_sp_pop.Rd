@@ -96,12 +96,21 @@
 	data(finch.ind)
 	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE)
 
-	#If we change the value of the threshold (alpha=10\% instead of 5\% and the minimum individual to represent singificativity fixed to 3 instead of 10 by default) we can see some significant relationships.
+	#If we change the value of the threshold 
+	#(alpha=10\% instead of 5\% 
+	#and the minimum individual to represent significativity 
+	#fixed to 3 instead of 10 by default) 
+	#we can see some significant relationships.
 
 	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, p.val=0.1,  min.ind.signif=3, silent=TRUE)
 
 
-	#For a more simple figure, add the option resume=TRUE. Again if we change the value of the threshold (alpha=10\% instead of 5\% and the minimum individual to represent singificativity fixed to 3 instead of 10 by default) we can see some significant relationships.
+	#For a more simple figure, add the option resume=TRUE. 
+	#Again if we change the value of the threshold 
+	#(alpha=10\% instead of 5\% 
+	#and the minimum individual to represent significativity
+	# fixed to 3 instead of 10 by default) 
+	#we can see some significant relationships.
 
 	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, resume=TRUE, col.pop="grey")
 	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black")
