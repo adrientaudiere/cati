@@ -10,7 +10,9 @@
 }
 
 \usage{
-	com.index.multi(traits = NULL, index = NULL, by.factor = NULL, namesindex = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, nperm = 99, printprogress = TRUE)
+	com.index.multi(traits = NULL, index = NULL, by.factor = NULL, 
+	namesindex = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, 
+	nperm = 99, printprogress = TRUE)
 }
 
 \arguments{
@@ -52,10 +54,6 @@
 	}
 }
 
-\details{
-
-}
-
 \value{
 	A list of lists:
 	
@@ -70,14 +68,8 @@
 	\item{$namestraits}{Names of traits.}
 }
 
-\references{
-}
-
 \author{
 	Adrien Taudiere
-}
-
-\note{
 }
 
 \seealso{
@@ -105,9 +97,13 @@
 	traits.finch.mice<-complete(mice)
 	
 	####
-	#A simple example to illustrate the concept of the function com.index.multi
+	#A simple example to illustrate the concept of the function 
+	#com.index.multi
 	
-	res.sum.1<-com.index.multi(traits.finch, index=c("sum(scale(x), na.rm=TRUE)", "sum(x, na.rm=TRUE)"), by.factor=names_sp_ind_plot, nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=50, sp=sp.finch)
+	res.sum.1<-com.index.multi(traits.finch, 
+	index=c("sum(scale(x), na.rm=TRUE)", "sum(x, na.rm=TRUE)"), 
+	by.factor=names_sp_ind_plot, nullmodels=c(2,2), 
+	ind.plot=ind.plot.finch, nperm=50, sp=sp.finch)
 	
 	attributes(ses.listofindex(as.listofindex(res.sum.1)))
 	
@@ -115,12 +111,30 @@
 	#A more interesting example using the function hypervolume 
 	#from the package hypervolume. 
 	#We show here several results which differe in there factor 
-	#that delimit the group to calculate different hypervolume (argument by_factor). 
+	#that delimit the group to calculate different hypervolume 
+	#(argument by_factor). 
+	
+	require(hypervolume)
 
-	res.hv.1<-com.index.multi(traits.finch.mice, index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, warnings=FALSE)@Volume))"), by.factor=rep(1,length(names_sp_ind_plot)), nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
-	res.hv.2<-com.index.multi(traits.finch.mice, index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, warnings=FALSE)@Volume))"), by.factor=names_sp_ind_plot, nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
-	res.hv.3<-com.index.multi(traits.finch.mice, index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, warnings=FALSE)@Volume))"), by.factor=ind.plot.finch, nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
-	res.hv.4<-com.index.multi(traits.finch.mice, index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, warnings=FALSE)@Volume))"), by.factor=sp.finch, nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+	res.hv.1<-com.index.multi(traits.finch.mice, index=c("as.numeric
+	(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, 
+	warnings=FALSE)@Volume))"), by.factor=rep(1,length(names_sp_ind_plot)), 
+	nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+	
+	res.hv.2<-com.index.multi(traits.finch.mice, index=c("as.numeric
+	(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, 
+	warnings=FALSE)@Volume))"), by.factor=names_sp_ind_plot, 
+	nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+	
+	res.hv.3<-com.index.multi(traits.finch.mice, index=c("as.numeric
+	(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, 
+	warnings=FALSE)@Volume))"), by.factor=ind.plot.finch, 
+	nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+	
+	res.hv.4<-com.index.multi(traits.finch.mice, index=c("as.numeric
+	(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, 
+	warnings=FALSE)@Volume))"), by.factor=sp.finch, 
+	nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
 	
 	list.ind.multi<-as.listofindex(list(res.hv.2, res.hv.3, res.hv.4))
 	

@@ -27,21 +27,12 @@
 	}
 }
 
-\details{
-}
-
 \value{
 	None; used for the side-effect of producing a plot.
 }
 
-\references{
-}
-
 \author{
 	Adrien Taudiere
-}
-
-\note{
 }
 
 \seealso{
@@ -51,7 +42,12 @@
 
 \examples{
 	data(finch.ind)
-	res.partvar.finch<-partvar( traits=traits.finch, factors=cbind(as.factor(as.vector(ind.plot.finch)), as.factor(as.vector(sp.finch)), as.factor(as.vector(unlist(strsplit(as.vector(sp.finch),"_")) [seq(1,length(sp.finch)*2, by=2)])) ) )
+	
+	res.partvar.finch<-partvar( traits=traits.finch, 
+	factors=cbind(as.factor(as.vector(ind.plot.finch)), 
+	as.factor(as.vector(sp.finch)), 
+	as.factor(as.vector(unlist(strsplit(as.vector(sp.finch),"_")) 
+	[seq(1,length(sp.finch)*2, by=2)])) ) )
 	
 	pie_partvar(res.partvar.finch, col=c("red", "green", "blue"))
 

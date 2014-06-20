@@ -27,9 +27,6 @@
 
 }
 
-\details{
-}
-
 \value{
 	A list of three components:
 	\item{$ses}{Observed value of standardized effect size.}
@@ -37,17 +34,9 @@
 	\item{$ses.sup }{Upper limit of the confidence interval.}
 }
 
-\references{
-}
-
 \author{
 	Adrien Taudiere
 }
-
-\note{
-}
-
-
 
 \seealso{
 	\code{\link{plot.listofindex}};
@@ -57,7 +46,10 @@
 
 \examples{
 	data(finch.ind)
-	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, nperm=9)
+	
+	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, 
+	sp=sp.finch, nperm=9)
+	
 	ses(res.finch$T_IP.IC, res.finch$T_IP.IC_nm)
 	
 	ses(t(res.finch$T_IP.IC), res.finch$T_IP.IC_nm)

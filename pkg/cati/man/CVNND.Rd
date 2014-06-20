@@ -23,9 +23,6 @@
 	}
 }
 
-\details{
-}
-
 \value{
 	One value corresponding to the coefficient of variation of the nearest neigbourhood for the trait.
 }
@@ -38,15 +35,9 @@
 	Adrien Taudiere
 }
 
-\note{
-}
-
-\seealso{
-}
-
 \examples{
 	data(finch.ind)
-	#CVNND(traits.finch[,1])
+	CVNND(traits.finch[,1])
 }
 
 

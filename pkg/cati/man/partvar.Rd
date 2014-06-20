@@ -27,9 +27,6 @@
 	}
 }
 
-\details{
-}
-
 \value{
 	An object of class "partvar" corresponding to a matrix of variance values with traits in rows and nested factors in column.
 }
@@ -43,9 +40,6 @@
 	Julie Messier
 }
 
-\note{
-}
-
 \seealso{
 	\code{\link{pie_partvar}};
 	\code{\link{bar_partvar}}
@@ -54,8 +48,12 @@
 \examples{
 	data(finch.ind)
 
-	genus<-as.vector(unlist(strsplit(as.vector(sp.finch),"_")) [seq(1,length(sp.finch)*2, by=2)])
-	res.partvar.finch<-partvar(traits=traits.finch, factors=cbind(sites=as.factor(as.vector(ind.plot.finch)), species=as.factor(as.vector(sp.finch)), genus=as.factor(genus)))
+	genus<-as.vector(unlist(strsplit(as.vector(sp.finch),"_")) 
+	[seq(1,length(sp.finch)*2, by=2)])
+	
+	res.partvar.finch<-partvar(traits=traits.finch, 
+	factors=cbind(sites=as.factor(as.vector(ind.plot.finch)), 
+	species=as.factor(as.vector(sp.finch)), genus=as.factor(genus)))
 
 	res.partvar.finch
 	
@@ -64,7 +62,8 @@
 	pie_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
 	par(oldpar)
 
-	bar_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"), leg=TRUE)
+	bar_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"),
+	leg=TRUE)
 }
 
 

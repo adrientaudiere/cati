@@ -10,7 +10,9 @@
 }
 
 \usage{
-	plot_dens(traits=NULL, var.1=NULL, var.2=NULL, col.dens=NULL, plot.ask=TRUE, ylim.cex=1, cex.leg=0.8, polyg=TRUE, multipanel=TRUE, leg=TRUE)
+	plot_dens(traits=NULL, var.1=NULL, var.2=NULL, col.dens=NULL, 
+	plot.ask=TRUE, ylim.cex=1, cex.leg=0.8, polyg=TRUE, 
+	multipanel=TRUE, leg=TRUE)
 }
 
 \arguments{
@@ -57,23 +59,14 @@
 	
 }
 
-\details{
-}
-
 \value{
 	None; used for the side-effect of producing a plot.
 }
 
-\references{
-}
 
 \author{
 	Adrien Taudiere
 }
-
-\note{
-}
-
 
 \seealso{
 	\code{\link{plot_sp_pop}}
@@ -85,10 +78,14 @@
 	#Plot the distribution of trait values for populations, 
 	#species, sites and regional scales. 
 	
-	#First, let try the distribution for all populations of Darwin finches.
+	#First, let try the distribution for all populations 
+	#of Darwin finches.
 	
 	par(mfrow=c(4,4), cex=0.5)
-	plot_dens(traits.finch, sp.finch, ind.plot.finch, ylim.cex=3, plot.ask=FALSE, multipanel=FALSE, leg=FALSE)
+	
+	plot_dens(traits.finch, sp.finch, ind.plot.finch, ylim.cex=3, 
+	plot.ask=FALSE, multipanel=FALSE, leg=FALSE)
+	
 	par(mfrow=c(1,1), cex=1)
 	
 	
@@ -96,19 +93,25 @@
 	#to plot the distribution for all finches species. 
 	
 	par(mfrow=c(4,4), cex=0.5)
-	plot_dens(traits.finch, ind.plot.finch, sp.finch, ylim.cex=8, plot.ask=FALSE, multipanel=FALSE, leg=FALSE)
+	
+	plot_dens(traits.finch, ind.plot.finch, sp.finch, ylim.cex=8, 
+	plot.ask=FALSE, multipanel=FALSE, leg=FALSE)
+	
 	par(mfrow=c(1,1), cex=1)
 	
 	
 	#You can also plot trait distribution for all species in the region
 	
-	plot_dens(traits.finch, rep("region", times=dim(traits.finch)[1]), sp.finch, ylim.cex=6, plot.ask=FALSE, leg=FALSE)
+	plot_dens(traits.finch, rep("region", times=dim(traits.finch)[1]), 
+	sp.finch, ylim.cex=6, plot.ask=FALSE, leg=FALSE)
 	
 	
 	#You can also plot trait distribution for all sites
 	#without taking into account species identity
 	
-	plot_dens(traits.finch, rep("toutes_sp", times=dim(traits.finch)[1]), ind.plot.finch, ylim.cex=3, plot.ask=FALSE)
+	plot_dens(traits.finch, rep("toutes_sp", times=dim(traits.finch)[1]), 
+	ind.plot.finch, ylim.cex=3, plot.ask=FALSE)
+	
 	par(mfrow=c(4,4), cex=0.5)
 }
 

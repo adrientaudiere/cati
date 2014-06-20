@@ -10,7 +10,9 @@
 }
 
 \usage{
-	plot_cor.Tstats(tstats = NULL, val.quant = c(0.025, 0.975), add.text= FALSE, bysite= FALSE, col.obj = NULL, plot.ask = TRUE, multipanel = TRUE, ...)
+	plot_cor.Tstats(tstats = NULL, val.quant = c(0.025, 0.975), 
+	add.text= FALSE, bysite= FALSE, col.obj = NULL, plot.ask = TRUE, 
+	multipanel = TRUE, ...)
 }
 
 \arguments{
@@ -47,24 +49,13 @@
 	}
 }
 
-\details{
-}
-
 \value{
 	None; used for the side-effect of producing a plot.
-}
-
-\references{
 }
 
 \author{
 	Adrien Taudiere
 }
-
-\note{
-}
-
-
 
 \seealso{
 	\code{\link{Tstats}};
@@ -74,7 +65,8 @@
 
 \examples{
 	data(finch.ind)
-	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, nperm=9)
+	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, 
+	sp=sp.finch, nperm=9)
 	
 	plot_cor.Tstats(res.finch, bysite = FALSE)
 	plot_cor.Tstats(res.finch, bysite = TRUE)

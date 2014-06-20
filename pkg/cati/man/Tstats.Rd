@@ -12,10 +12,15 @@
 }
 
 \usage{
-	Tstats(Ttraits, ind_plot, sp, nperm = NULL, printprogress = TRUE, p.value = TRUE)
+	Tstats(Ttraits, ind_plot, sp, nperm = NULL, printprogress = TRUE, 
+	p.value = TRUE)
 	
-	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), col.Tstats = c("red", "purple", "green", "white"), ylim=NULL, \dots)
-	\method{plot}{Tstats}(x, val.quant = c(0.025, 0.975), col.Tstats = c("red", "purple", "green"), type = "normal", add.conf = TRUE, ylim=NULL, xlim=NULL, \dots)
+	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
+	col.Tstats = c("red", "purple", "green", "white"), ylim=NULL, \dots)
+	
+	\method{plot}{Tstats}(x, val.quant = c(0.025, 0.975), 
+	col.Tstats = c("red", "purple", "green"), type = "normal", 
+	add.conf = TRUE, ylim=NULL, xlim=NULL, \dots)
 	
 	summary_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 }
@@ -152,9 +157,6 @@
 	Cyrille Violle
 }
 
-\note{
-}
-
 \seealso{
 	\code{\link{com.index}};
 	\code{\link{com.index.multi}};
@@ -165,7 +167,10 @@
 
 \examples{
 	data(finch.ind)
-	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, nperm=9, print=FALSE)
+	
+	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, 
+	sp=sp.finch, nperm=9, print=FALSE)
+	
 	attributes(res.finch)
 
 	#Tstats class is associated to S3 methods plot, barplot and summary
@@ -194,11 +199,14 @@
 	#### An other way to see "ses values" of T-statistics
 	
 	# Custom theme (from rasterVis package)
+	require(rasterVis)
+	
 	my.theme <- BuRdTheme()
 	# Customize the colorkey
 	my.ckey <- list(col=my.theme$regions$col)
 	
-	levelplot(t(ses(res.finch$T_IP.IC,res.finch$T_IP.IC_nm)$ses), colorkey=my.ckey, par.settings=my.theme,border="black")
+	levelplot(t(ses(res.finch$T_IP.IC,res.finch$T_IP.IC_nm)$ses), 
+	colorkey=my.ckey, par.settings=my.theme,border="black")
 }
 
 

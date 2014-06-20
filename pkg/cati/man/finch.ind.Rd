@@ -26,19 +26,6 @@
 	See http://bioquest.org/birdd/morph.php for more information on database.
 }
 
-\value{	
-}
-
-\references{
-}
-
-
-\note{
-}
-
-\seealso{
-}
-
 \examples{
 	data(finch.ind)
 }

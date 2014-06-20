@@ -22,21 +22,12 @@
 	}
 }
 
-\details{
-}
-
 \value{
 	A list of observed values and corresponding "null" values (i.e. produced by null models) in the form "list(index1, null model index1, index2, null model index2 ...)"
 }
 
-\references{
-}
-
 \author{
 	Adrien Taudiere
-}
-
-\note{
 }
 
 \seealso{
@@ -49,9 +40,10 @@
 	oldpar<-par()
 	
 	####
-<<<<<<< HEAD
 	#The function com.index allow to choose your own function 
 	#(like mean, range, variance...) to calculate customize index.
+	
+	require(e1071)
 	
 	funct<-c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
 	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)" )
@@ -65,16 +57,22 @@
 	####
 	#We can represent Standardized Effect Size (ses) using the 
 	#function plot(as.listofindex(list1, list2, list3))
-=======
-	#The function com.index allow to choose your own function (like mean, range, variance...) to calculate customize index.
+
+	#The function com.index allow to choose your own function 
+	#(like mean, range, variance...) to calculate customize index.
 	
-	funct<-c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", "max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
-	res.finch.sp_mn2<-com.index(traits=traits.finch, index=funct, sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
-	res.finch.sp_mn3<-com.index(traits=traits.finch, index=funct, sp=sp.finch, nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+	funct<-c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
+	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
+	
+	res.finch.sp_mn2<-com.index(traits=traits.finch, index=funct, sp=sp.finch, 
+	nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+	
+	res.finch.sp_mn3<-com.index(traits=traits.finch, index=funct, sp=sp.finch, 
+	nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
 
 	####
-	#We can represent Standardized Effect Size (ses) using the function plot(as.listofindex(list1, list2, list3))
->>>>>>> b242242040b7445c6adab42f930e5d5466f00316
+	#We can represent Standardized Effect Size (ses) 
+	#using the function plot(as.listofindex(list1, list2, list3))
 	
 	list.ind2<-list(res.finch.sp_mn2, res.finch.sp_mn3)
 	index.list2<-as.listofindex(list.ind2)
