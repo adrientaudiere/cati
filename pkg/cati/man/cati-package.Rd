@@ -26,3 +26,15 @@
 	Adrien Taudiere; adrien.taudiere@cefe.cnrs.fr
 	Cyrille Violle
 }
+<<<<<<< HEAD
+=======
+
+\references{
+}
+
+\seealso{
+}
+
+\examples{
+}
+>>>>>>> 072f661c3b68190dcea4ba4f04ae358dad29dba0

@@ -60,10 +60,17 @@
 
 	#The function com.index allow to choose your own function 
 	#(like mean, range, variance...) to calculate customize index.
+<<<<<<< HEAD
 	
 	funct<-c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
 	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
 	
+=======
+	
+	funct<-c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
+	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
+	
+>>>>>>> 072f661c3b68190dcea4ba4f04ae358dad29dba0
 	res.finch.sp_mn2<-com.index(traits=traits.finch, index=funct, sp=sp.finch, 
 	nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
 	

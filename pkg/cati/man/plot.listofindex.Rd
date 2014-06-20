@@ -160,6 +160,11 @@
 	
 	traits.by.pop<-apply(traits.finch, 2 , function (x) 
 	tapply(x, name_sp_sites, mean , na.rm=TRUE))
+<<<<<<< HEAD
+	
+	sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), 
+	split="_"), function(x) x[3])
+=======
 	
 	sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), 
 	split="_"), function(x) x[3])
@@ -169,7 +174,22 @@
 	function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
 	function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
 	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+>>>>>>> 072f661c3b68190dcea4ba4f04ae358dad29dba0
 	
+	funct.withoutIV<-c("tapply(x, unlist(sites_bypop), 
+	function(x) mean(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
+	function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
+	function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
+	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+	
+<<<<<<< HEAD
+=======
+	funct.withIV<-c("tapply(x, ind.plot.finch, function(x) 
+	mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
+	kurtosis(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
+	max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
+	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+>>>>>>> 072f661c3b68190dcea4ba4f04ae358dad29dba0
 	
 	funct.withIV<-c("tapply(x, ind.plot.finch, function(x) 
 	mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
@@ -177,11 +197,18 @@
 	max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
 	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
 	
+<<<<<<< HEAD
 	
 	res.finch.withIV<-com.index(traits=traits.finch, index=funct.withIV, 
 	sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
 	nperm=9, print=FALSE)
 	
+=======
+	res.finch.withIV<-com.index(traits=traits.finch, index=funct.withIV, 
+	sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
+	nperm=9, print=FALSE)
+	
+>>>>>>> 072f661c3b68190dcea4ba4f04ae358dad29dba0
 	res.finch.withoutIV<-com.index(traits=traits.finch, index=funct.withoutIV, 
 	sp=sp.finch, nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, 
 	nperm=9, print=FALSE)
