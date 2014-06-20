@@ -52,8 +52,13 @@
 
 \examples{
 	data(finch.ind)
-	genus<-as.vector(unlist(strsplit(as.vector(sp.finch),"_")) [seq(1,length(sp.finch)*2, by=2)])
-	res.partvar.finch<-partvar(traits = traits.finch, factors = cbind(sites = as.factor(as.vector(ind.plot.finch)), species = as.factor(as.vector(sp.finch)), genus=as.factor(genus)))
+	genus<-as.vector(unlist(strsplit(as.vector(sp.finch),"_")) 
+	[seq(1,length(sp.finch)*2, by=2)])
+	
+	res.partvar.finch<-partvar(traits = traits.finch, factors = 
+	cbind(sites = as.factor(as.vector(ind.plot.finch)), 
+	species = as.factor(as.vector(sp.finch)), genus=as.factor(genus)))
+	
 	res.partvar.finch
 
 	oldpar<-par()
@@ -61,7 +66,8 @@
 	pie_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
 	par(oldpar)
 
-	bar_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"), leg=TRUE)
+	bar_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"), 
+	leg=TRUE)
 }
 
 

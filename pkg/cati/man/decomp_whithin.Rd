@@ -13,7 +13,8 @@
 }
 
 \usage{
-	decomp_within(traits = NULL, formula = ~1, ind.plot = NULL, sp = NULL, printprogress = TRUE, ...)
+	decomp_within(traits = NULL, formula = ~1, ind.plot = NULL, sp = NULL, 
+	printprogress = TRUE, ...)
 	
 	\method{barplot}{decomp_within}(height, resume = TRUE, \dots)
 }
@@ -79,7 +80,8 @@
 \examples{
 	data(finch.ind)
 	
-	res.decomp<-decomp_within(traits=traits.finch, sp=sp.finch, ind.plot=ind.plot.finch, print=FALSE)
+	res.decomp<-decomp_within(traits=traits.finch, sp=sp.finch, 
+	ind.plot=ind.plot.finch, print=FALSE)
 	
 	barplot.decomp_within(res.decomp)
 	

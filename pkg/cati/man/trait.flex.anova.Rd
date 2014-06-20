@@ -15,7 +15,11 @@
 
 \usage{
 	trait.flex.anova(formula, specif.avg, const.avg, ...)
-	\method{plot}{trait.flex}(x, plot.total= FALSE, use.percentage = TRUE, plot.covar= FALSE, cumul= FALSE, legend.pos = if (plot.total) "topleft" else "topright", plot.res = TRUE, ...)
+	\method{plot}{trait.flex}(x, plot.total= FALSE, use.percentage = TRUE, 
+	plot.covar= FALSE, cumul= FALSE, 
+	legend.pos = if (plot.total) "topleft" else "topright", 
+	plot.res = TRUE, ...)
+	
 	\method{print}{trait.flex}(x, ...)
 }
 
