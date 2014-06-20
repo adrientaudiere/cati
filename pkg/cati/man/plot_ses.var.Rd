@@ -10,7 +10,9 @@
 }
 
 \usage{
-	plot_ses.var(index.list, variable = NULL, ylab = "variable", color.traits = NULL, val.quant = c(0.025, 0.975), resume = FALSE, multipanel = TRUE)
+	plot_ses.var(index.list, variable = NULL, ylab = "variable", 
+	color.traits = NULL, val.quant = c(0.025, 0.975), resume = FALSE, 
+	multipanel = TRUE)
 }
 
 \arguments{
@@ -43,21 +45,12 @@
 	}
 }
 
-\details{
-}
-
 \value{
 	None; used for the side-effect of producing a plot.
 }
 
-\references{
-}
-
 \author{
 	Adrien Taudiere
-}
-
-\note{
 }
 
 \seealso{
@@ -67,16 +60,19 @@
 
 \examples{
 	data(finch.ind)
-	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, nperm=9)
+	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
+	nperm=9)
 
 	par(mfrow=c(2,2))
 	species.richness<-table(ind.plot.finch)
-	plot_ses.var(as.listofindex(list(res.finch)), species.richness, multipanel=FALSE)
+	plot_ses.var(as.listofindex(list(res.finch)), species.richness, 
+	multipanel=FALSE)
 
 	#Same plot with resume=TRUE.
 	
 	par(mfrow=c(2,2))
-	plot_ses.var(as.listofindex(list(res.finch)), species.richness, resume=TRUE, multipanel=FALSE)
+	plot_ses.var(as.listofindex(list(res.finch)), species.richness, 
+	resume=TRUE, multipanel=FALSE)
 	par(mfrow=c(1,1))
 }
 

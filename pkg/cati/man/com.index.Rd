@@ -10,7 +10,9 @@
 }
 
 \usage{
-	com.index(traits = NULL, index = NULL, namesindex = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, nperm = 99, printprogress = TRUE)
+	com.index(traits = NULL, index = NULL, namesindex = NULL, 
+	nullmodels = NULL, ind.plot = NULL, sp = NULL, nperm = 99, 
+	printprogress = TRUE)
 }
 
 \arguments{
@@ -29,6 +31,9 @@
 	
 	\item{nullmodels}{
 		A vector of values corresponding to null models tu use for each index. A value of 1 corresponds to a randomization of individual values within a given community. A value of 2 corresponds to randomization of individual values within region, ie within all the dataset. A value of 3 corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. For example, if nullmodels=c(1,2), the first index will be calculated on the null model 1 and the second index on the null model 2.
+		
+		If only one value is given, all the the null model will be determined by this value.
+		
 	}
 	
 	\item{ind.plot}{
@@ -73,14 +78,8 @@
 	\item{$namestraits}{Names of traits.}
 }
 
-\references{
-}
-
 \author{
 	Adrien Taudiere
-}
-
-\note{
 }
 
 \seealso{
@@ -97,9 +96,18 @@
 	#The function com.index allow to choose your own function 
 	#(like mean, range, variance...) to calculate customize index.
 	
-	funct<-c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", "max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
-	res.finch.sp_mn2<-com.index(traits=traits.finch, index=funct, sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
-	res.finch.sp_mn3<-com.index(traits=traits.finch, index=funct, sp=sp.finch, nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+	require(e1071)
+	
+	funct<-c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
+	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
+	
+	res.finch.sp_mn2<-com.index(traits=traits.finch, index=funct, 
+	sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
+	nperm=9, print=FALSE)
+	
+	res.finch.sp_mn3<-com.index(traits=traits.finch, index=funct, 
+	sp=sp.finch, nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, 
+	nperm=9, print=FALSE)
 
 	####
 	#We can represent Standardized Effect Size (ses)
@@ -116,13 +124,23 @@
 	#This allows to calcul index per site 
 	#for example using "tapply(x, sites, mean)".
 	
-	funct<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+	funct<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=TRUE))", 
+	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))", 
+	"tapply(x, ind.plot.finch, function(x) max(x, na.rm=TRUE) - 
+	min(x, na.rm=TRUE) )", "tapply(x, ind.plot.finch, function(x) 
+	CVNND(x))"  )
 	
 	
 	##Null model 1 is trivial for this function 
 	#because randomisation is within community only
-	res.finch.ind_mn1<-com.index(traits=traits.finch, index=funct, sp=sp.finch, nullmodels=c(1,1,1,1), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
-	res.finch.ind_mn2<-com.index(traits=traits.finch, index=funct, sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+	
+	res.finch.ind_mn1<-com.index(traits=traits.finch, index=funct, 
+	sp=sp.finch, nullmodels=c(1,1,1,1), ind.plot=ind.plot.finch, 
+	nperm=9, print=FALSE)
+	
+	res.finch.ind_mn2<-com.index(traits=traits.finch, index=funct, 
+	sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
+	nperm=9, print=FALSE)
 
 	
 	####
@@ -133,29 +151,48 @@
 	#and determine the site for each population (sites_bypop)
 
 	name_sp_sites=paste(sp.finch, ind.plot.finch, sep="_")
-	traits.by.pop<-apply(traits.finch, 2 , function (x) tapply(x, name_sp_sites, mean , na.rm=TRUE))
+	traits.by.pop<-apply(traits.finch, 2 , function (x) 
+	tapply(x, name_sp_sites, mean , na.rm=TRUE))
 	
-	sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), split="_"), function(x) x[3])
+	sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), 
+	split="_"), function(x) x[3])
 	
-	funct.withoutIV<-c("tapply(x, unlist(sites_bypop), function(x) mean(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", "tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+	funct.withoutIV<-c("tapply(x, unlist(sites_bypop), function(x) 
+	mean(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), function(x) 
+	kurtosis(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), function(x) 
+	max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
+	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
 	
 	
-	funct.withIV<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+	funct.withIV<-c("tapply(x, ind.plot.finch, function(x) 
+	mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
+	kurtosis(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
+	max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
+	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
 	
 	
-	res.finch.withIV<-com.index(traits=traits.finch, index=funct.withIV, sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+	res.finch.withIV<-com.index(traits=traits.finch, index=funct.withIV, 
+	sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
+	nperm=9, print=FALSE)
 	
-	res.finch.withoutIV<-com.index(traits=traits.finch, index=funct.withoutIV, sp=sp.finch, nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+	res.finch.withoutIV<-com.index(traits=traits.finch, index=funct.withoutIV, 
+	sp=sp.finch, nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, 
+	nperm=9, print=FALSE)
 	
 	
 	####
 	#We can also represent T-statistics and custom index thanks to
 	#the plot.listofindex function.
 	
-	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, nperm=9, print=FALSE)
+	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
+	nperm=9, print=FALSE)
 
 	list.ind<-list(res.finch.withIV, res.finch.withoutIV ,res.finch)
-	index.list1<-as.listofindex(list.ind, namesindex=c("mean", "kurtosis", "range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", "T_IP.IC", "T_IC.IR", "T_PC.PR"))
+	
+	index.list1<-as.listofindex(list.ind, namesindex=c("mean", "kurtosis", 
+	"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+	"T_IP.IC", "T_IC.IR", "T_PC.PR"))
+	
 	class(index.list1)
 	
 	par(mfrow=c(2,3))
