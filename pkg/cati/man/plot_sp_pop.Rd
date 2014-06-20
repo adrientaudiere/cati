@@ -10,7 +10,11 @@
 }
 
 \usage{
-	plot_sp_pop(traits = NULL, ind.plot = NULL, sp = NULL, col.ind = rgb(0.5, 0.5, 0.5, 0.5), col.pop = NULL, col.sp = NULL, col.site = NULL, resume= FALSE, p.val = 0.05, min.ind.signif = 10, multipanel = TRUE, col.nonsignif.lm = rgb(0, 0, 0, 0.5), col.signif.lm = rgb(1, 0.1, 0.1, 0.8), silent= FALSE)
+	plot_sp_pop(traits = NULL, ind.plot = NULL, sp = NULL, 
+	col.ind = rgb(0.5, 0.5, 0.5, 0.5), col.pop = NULL, col.sp = NULL, 
+	col.site = NULL, resume= FALSE, p.val = 0.05, min.ind.signif = 10, 
+	multipanel = TRUE, col.nonsignif.lm = rgb(0, 0, 0, 0.5), 
+	col.signif.lm = rgb(1, 0.1, 0.1, 0.8), silent= FALSE)
 }
 
 \arguments{
@@ -102,7 +106,8 @@
 	#fixed to 3 instead of 10 by default) 
 	#we can see some significant relationships.
 
-	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, p.val=0.1,  min.ind.signif=3, silent=TRUE)
+	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, p.val=0.1,  
+	min.ind.signif=3, silent=TRUE)
 
 
 	#For a more simple figure, add the option resume=TRUE. 
@@ -112,9 +117,15 @@
 	# fixed to 3 instead of 10 by default) 
 	#we can see some significant relationships.
 
-	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, resume=TRUE, col.pop="grey")
-	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black")
-	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black", p.val=0.1,  min.ind.signif=3)
+	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, 
+	resume=TRUE, col.pop="grey")
+	
+	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, 
+	resume=TRUE, col.pop="grey", col.sp="black")
+	
+	plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, 
+	resume=TRUE, col.pop="grey", col.sp="black", 
+	p.val=0.1,  min.ind.signif=3)
 }
 
 

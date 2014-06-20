@@ -46,7 +46,7 @@
 
 \examples{
 	data(finch.ind)
-	#CVNND(traits.finch[,1])
+	CVNND(traits.finch[,1])
 }
 
 
