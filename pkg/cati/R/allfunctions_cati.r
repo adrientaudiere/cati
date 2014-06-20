@@ -2387,7 +2387,11 @@ plot_sp_pop<-function(traits=NULL, ind.plot=NULL, sp=NULL, col.ind = rgb(0.5,0.5
 
 # Plot populations values against environmental variable(s)
 plot_sp_var<-function(traits=NULL, ind.plot=NULL, sp=NULL, variable = NULL, col.ind = rgb(0.5,0.5,0.5,0.5), col.pop=NULL, col.sp=NULL, col.site=NULL, resume=FALSE, p.val=0.05, min.ind.signif=10 , multipanel=TRUE, col.nonsignif.lm=rgb(0,0,0,0.5), col.signif.lm=rgb(1,0.1,0.1,0.8), silent=FALSE) {
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> b242242040b7445c6adab42f930e5d5466f00316
 	ntr<-dim(traits)[2]
 	namestraits<-colnames(traits)
 	
