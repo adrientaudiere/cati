@@ -12,7 +12,7 @@
 }
 
 \usage{
-	Tstats(Ttraits, ind_plot, sp, nperm = NULL, printprogress = TRUE, 
+	Tstats(Ttraits, ind_plot, sp, reg.pool=NULL, nperm = NULL, printprogress = TRUE, 
 	p.value = TRUE)
 	
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
@@ -27,11 +27,7 @@
 
 \arguments{
 	\item{Ttraits}{
-
 		Individual Matrix of traits with traits in columns. For one trait, use as.matrix().
-
-		Individual Matrix of traits with traits in columns.
-
 	}
 	
 	\item{ind_plot}{
@@ -41,6 +37,10 @@
 	\item{sp}{
 		Factor defining the species which the individual belong to.
 	}
+	
+	\item{reg.pool}{
+		Regional pool data for traits. If not informed, Ttraits is considere as the regional pool. This matrix need to be larger than Ttraits. Use only for null model 2.
+	}	
 	
 	\item{nperm}{
 		Number of permutations. If NULL, only observed values are returned; 
@@ -63,7 +63,6 @@
 	\item{height}{
 		An object of class Tstats.
 	}
-	
 	
 	\item{val.quant}{
 		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
@@ -207,6 +206,16 @@
 	
 	levelplot(t(ses(res.finch$T_IP.IC,res.finch$T_IP.IC_nm)$ses), 
 	colorkey=my.ckey, par.settings=my.theme,border="black")
+	
+	
+	#### Use a different regional pool than the binding of studied communities
+	
+	#create a random regional pool for the example
+	reg.p<-rbind(traits.finch, traits.finch[sample(1:2000,300),])
+
+	res.finch2<-Tstats(traits.finch, ind_plot=ind.plot.finch, 
+    sp=sp.finch, nperm=9, print=FALSE)	
+	
 }
 
 

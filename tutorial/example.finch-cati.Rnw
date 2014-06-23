@@ -54,7 +54,7 @@ opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE
 \maketitle
 
 \begin{abstract}
-  This vignette present the cati package (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
+  This vignette present the cati package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
 \end{abstract}
 
 
@@ -68,7 +68,7 @@ opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE
 %%%%%%%%%%%%%%%%
 \section{Introduction}
 %%%%%%%%%%%%%%%%
-
+  This vignette present the cati package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
 
 
 %%%%%%%%%%%%%%%%
