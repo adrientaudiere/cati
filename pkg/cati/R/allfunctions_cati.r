@@ -20,7 +20,10 @@ partvar<-function(traits, factors, printprogress=TRUE){
 		rownames(res)<-c(paste("factor",1:(nfactors),sep=""),  "within") ; colnames(factors)<-c(paste("factor", 1:(nfactors),sep="")) 
 	} 
 	
-	attach(as.data.frame(factors))
+	factors<-as.data.frame(factors)
+	
+	attach(factors)
+	on.exit(expr = detach(factors))
 	
 	for (t in 1 : ntraits) {
 		trait<-traits[,t]
@@ -32,9 +35,7 @@ partvar<-function(traits, factors, printprogress=TRUE){
 		else{}
 	}
 	
-	on.exit(expr = attach(as.data.frame(factors)))
 	class(res)<-"partvar"
-	detach(as.data.frame(factors))
 	
 	print(res)
 }
@@ -74,7 +75,7 @@ bar_partvar<-function(partvar,  col.bar=NA, leg=FALSE){
 #__Tstats
 
 ### Function to calcul Tstats 
-Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=TRUE){
+Tstats<-function(Ttraits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress=TRUE, p.value=TRUE){
 	#6 variances: I: individual, P: population, C: community, R: region
 	#IP; IC; IR; PC; PR; CR
 	
@@ -83,6 +84,9 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
 	names_sp_ind_plot<-as.factor(paste(sp, ind_plot, sep="@")) 
 	Tplosp=unlist(strsplit(levels(names_sp_ind_plot),split="@"))[2*(1:nlevels(names_sp_ind_plot))]; names(Tplosp)=levels(names_sp_ind_plot);
 	#Tplosp is the plot in wich the population is
+	
+	
+	
   
   
 	######################################## 
@@ -146,8 +150,12 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
 		T_IP.IC_nm1<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
 		T_IC.IR_nm2<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
 		T_PC.PR_nm3<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
-      
-       
+		
+		#Creation of the regional pool if not inform
+		if(is.null(reg.pool)) {
+			reg.pool<-Ttraits
+		}
+		  
 		#Creation of three null models 
 		if(printprogress==T){print("creating null models")}
 		
@@ -175,7 +183,7 @@ Tstats<-function(Ttraits, ind_plot, sp, nperm=NULL, printprogress=TRUE, p.value=
 			for(s in 1:  nlevels(ind_plot)) {
 				Ttraits.nm2[[t]][[s]]<-list()
 				for(i in 1:nperm){
-					perm_ind_plot2<-sample(Ttraits[, t], table(ind_plot)[s])
+					perm_ind_plot2<-sample(reg.pool[, t], table(ind_plot)[s])
 					Ttraits.nm2[[t]][[s]][[i]]<-perm_ind_plot2
 				}
 			}
@@ -796,7 +804,23 @@ barplot.Tstats<-function(height, val.quant=c(0.025,0.975), col.Tstats=c("red","p
 
 #In most case, model 1 and 2 correspond to index at the individual level and the model 3 to index at the species (or any other aggregate variable like genus or family) level
 
-com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, nperm=99, printprogress=TRUE){
+com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, com=NULL, reg.pool=NULL, nperm=99, printprogress=TRUE, ind.value=TRUE, type="count"){
+	
+	#If data are from species or population traits, this function transform this data in a suitable format for cati
+	if(!ind.value){
+		if(is.null(com)) {stop("if ind.value=FALSE, you need to replace arguments ind_plot by a community matrix 'com' ")}
+		
+		rownames(traits)<-sp
+		res.interm<-ab_to_ind(traits, com, type=type)
+	
+		traits<-res.interm$traits
+		sp<-res.interm$sp
+		ind.plot<-res.interm$ind.plot
+	}
+	
+	if(!is.null(ind.plot) & !is.null(com)){
+		warnings("If ind.plot and com are provide and ind.value=F, the function use only the argument com")
+	}
 	
 	nindex<-length(index)
 	
@@ -818,6 +842,16 @@ com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, i
 	
 	S = colSums(comm>0)
 	ncom=length(S)
+	
+	
+	#Creation of the regional pool if not inform
+	if(is.null(reg.pool)) {
+		reg.pool<-traits
+	}
+	
+	if(!is.null(reg.pool) & sum(nullmodels==2)==0) {
+		warnings("Custom regional pool'reg.pool' is only used in the case of null model 2")
+	}
 	
 	if(is.numeric(nperm)){
 		######################################### 
@@ -861,7 +895,7 @@ com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, i
 				
 				for(n in 1:nperm){
 					for(s in 1:  ncom) {
-						perm_ind.plot[[s]]<-sample(traits[, t], table(ind.plot)[s])
+						perm_ind.plot[[s]]<-sample(reg.pool[, t], table(ind.plot)[s])
 					}
 					
 					traits.nm2[[eval(namestraits[t])]][,n]<-unlist(perm_ind.plot)
@@ -1021,8 +1055,27 @@ com.index<-function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, i
 	return(com.index)
 }
 
-com.index.multi<-function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, nperm=99, printprogress=TRUE){
+com.index.multi<-function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, com=NULL, reg.pool=NULL, nperm=99, printprogress=TRUE, ind.value=TRUE, type="count"){
 	
+	names_sp_ind_plot<-as.factor(paste(sp, ind.plot, sep="@")) 
+	
+	#If data are from species or population traits, this function transform this data in a suitable format for cati
+	if(!ind.value){
+		if(is.null(com)) {stop("if ind.value=FALSE, you need to replace arguments ind_plot by a community matrix 'com' ")}
+		
+		rownames(traits)<-sp
+		res.interm<-ab_to_ind(traits, com, type=type)
+	
+		traits<-res.interm$traits
+		sp<-res.interm$sp
+		ind.plot<-res.interm$ind.plot
+	}
+	
+	if(!is.null(ind.plot) & !is.null(com)){
+		warnings("If ind.plot and com are provide and ind.value=F, the function use only the argument com")	
+	}
+	
+	####
 	nindex<-length(index)
 	
 	if(length(nullmodels)==1){
@@ -1045,6 +1098,15 @@ com.index.multi<-function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 	
 	S = colSums(comm>0)
 	ncom=length(S)
+	
+	#Creation of the regional pool if not inform
+	if(is.null(reg.pool)) {
+		reg.pool<-traits
+	}
+	
+	if(!is.null(reg.pool) & sum(nullmodels==2)==0) {
+		warnings("Custom regional pool'reg.pool' is only used in the case of null model 2")
+	}
 	
 	if(is.numeric(nperm)){
 		######################################### 
@@ -1088,7 +1150,7 @@ com.index.multi<-function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 				
 				for(n in 1:nperm){
 					for(s in 1:  ncom) {
-						perm_ind.plot[[s]]<-sample(traits[, t], table(ind.plot)[s])
+						perm_ind.plot[[s]]<-sample(reg.pool[, t], table(ind.plot)[s])
 					}
 					
 					traits.nm2[[eval(namestraits[t])]][,n]<-unlist(perm_ind.plot)
@@ -3027,5 +3089,54 @@ plot_randtest<-function(x, alter=c("greater", "less", "two-sided"), ...){
 			plot(rt, main=paste(namesindex.all[i], namestraits[t], "p.value = ", round(rt$pvalue, digits = 5)), ...)
 		}
 	}
+
+}
+
+
+
+#Replace a matrix with abundance of species and mean traits by pop in a pseudo-individual matrix
+#Each individual take therefore the value of the population 
+
+ab_to_ind<-function(traits, com, type="count"){
+	
+	if(nrow(traits) != nrow(com)){
+		stop("number of rows of traits and com need to be equal")
+	}
+	
+	#type is either count data or abundance
+	#transform abundance data to number of individual
+	
+	if(type=="abundance"){
+		if(min(com)<1){
+			com<-apply(com,2, function(x) x/min(x[x>0], na.rm=T))
+		}
+	}
+	
+	ntr<-ncol(traits)
+	
+	#number of individual to individual traits data
+	x2<-c()
+	x4<-c()
+	x6<-c()
+	for(i in 1 : nrow(com)){
+		x1<-matrix(rep(traits[i,], rowSums(com)[i]), nrow=ntr, ncol=rowSums(com)[i])
+		x2<-cbind(x2,x1)	
+		
+		x3<-rep(rownames(com)[i], rowSums(com)[i])
+		x4<-c(x4,x3)
+		
+		for(co in 1:ncol(com)){
+			x5<-rep(colnames(com)[co], com[i,co])
+			x6<-c(x5,x6)
+		}
+	}
+	
+	res<-list()
+	
+	res$traits<-data.frame(t(x2))
+	res$sp<-as.factor(x4)
+	res$ind.plot<-as.factor(x6)
+	
+	return(res)
 
 }
