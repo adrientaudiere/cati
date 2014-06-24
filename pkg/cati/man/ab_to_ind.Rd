@@ -22,7 +22,7 @@
 	}
 	
 	\item{type}{
-		Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one.
+		Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one. Using abundance type is EXPERIMENTAL. This function round abundance to fit count data. 
 	}
 }
 
