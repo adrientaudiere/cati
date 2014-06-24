@@ -12,7 +12,7 @@
 }
 
 \usage{
-	Tstats(Ttraits, ind_plot, sp, reg.pool=NULL, nperm = NULL, printprogress = TRUE, 
+	Tstats(traits, ind_plot, sp, reg.pool=NULL, nperm = NULL, printprogress = TRUE, 
 	p.value = TRUE)
 	
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
@@ -26,7 +26,7 @@
 }
 
 \arguments{
-	\item{Ttraits}{
+	\item{traits}{
 		Individual Matrix of traits with traits in columns. For one trait, use as.matrix().
 	}
 	
@@ -39,7 +39,7 @@
 	}
 	
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, Ttraits is considere as the regional pool. This matrix need to be larger than Ttraits. Use only for null model 2.
+		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger than traits. Use only for null model 2.
 	}	
 	
 	\item{nperm}{

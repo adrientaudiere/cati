@@ -50,7 +50,7 @@
 	}
 		
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, Ttraits is considere as the regional pool. This matrix need to be larger than Ttraits. Use only for null model 2.
+		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger than traits. Use only for null model 2.
 	}	
 	
 	\item{nperm}{
@@ -233,22 +233,22 @@
 	\dontrun{
 	
 		#create traits data at the species level
-		Ttraits_by_sp<-apply(traits.finch,2,function(x) tapply(x,sp.finch,
+		traits_by_sp<-apply(traits.finch,2,function(x) tapply(x,sp.finch,
 		function(x) mean(x, na.rm=T)))  
 		
 		#create traits data at the populational level
 		names_sp_ind_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep="@")) 
-		Ttraits_by_pop<-apply(traits.finch,2,function(x) tapply(x,names_sp_ind_plot, 
+		traits_by_pop<-apply(traits.finch,2,function(x) tapply(x,names_sp_ind_plot, 
 		function(x) mean(x, na.rm=T) ))  
 		
 		#create community data matrix at the species or populational level
 		w1<-table(sp.finch,ind.plot.finch)
 		dim(w1)
-		dim(Ttraits_by_sp)
+		dim(traits_by_sp)
 		
 		w2<-table(names_sp_ind_plot,ind.plot.finch)
 		dim(w2)
-		dim(Ttraits_by_pop)
+		dim(traits_by_pop)
 		
 		#Choose indices
 		require(e1071)
@@ -260,18 +260,18 @@
 		#################
 		#with species value
 		
-		res<-ab_to_ind(Ttraits_by_sp, w1)
+		res<-ab_to_ind(traits_by_sp, w1)
 		
-		com.index(Ttraits_by_sp, nullmodels=2, ind.value=FALSE, index=funct, 
-		sp=rownames(Ttraits_by_sp), com=w1, nperm=9)
+		com.index(traits_by_sp, nullmodels=2, ind.value=FALSE, index=funct, 
+		sp=rownames(traits_by_sp), com=w1, nperm=9)
 		
 		
 		#################
 		#with population value
-		res<-ab_to_ind(Ttraits_by_pop, w2)
-		sp.sp<-unlist(strsplit(rownames(Ttraits_by_pop),"@"))[seq(1,39*2,2)]
+		res<-ab_to_ind(traits_by_pop, w2)
+		sp.sp<-unlist(strsplit(rownames(traits_by_pop),"@"))[seq(1,39*2,2)]
 		
-		com.index(Ttraits_by_pop, nullmodels=2, ind.value=FALSE, index=funct, 
+		com.index(traits_by_pop, nullmodels=2, ind.value=FALSE, index=funct, 
 		sp=sp.sp, com=w2)
 		
 	}
