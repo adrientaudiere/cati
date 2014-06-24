@@ -3,6 +3,7 @@
 #__partvar
 
 # traits is the Matrix of traits and factors are the nested factors to take into account in the partition of variance
+
 partvar<-function(traits, factors, printprogress=TRUE){
 	
 	traits<-as.matrix(traits)
@@ -22,13 +23,10 @@ partvar<-function(traits, factors, printprogress=TRUE){
 	
 	factors<-as.data.frame(factors)
 	
-	attach(factors)
-	on.exit(expr = detach(factors))
-	
 	for (t in 1 : ntraits) {
 		trait<-traits[,t]
 		functionlme= paste('varcomp(lme(trait~1, random=~1|', paste(colnames(factors), collapse='/'), ",na.action=na.omit),1)", sep="")
-		res[,t]<-as.vector(eval(parse(text=functionlme)))
+		res[,t]<-as.vector(eval(parse(text=functionlme), envir=factors))
 		
 		if(printprogress==TRUE) 
 			{print(paste(round(t/ntraits*100, 2), "%", sep=" ")) }
@@ -39,6 +37,7 @@ partvar<-function(traits, factors, printprogress=TRUE){
 	
 	print(res)
 }
+
 
 #Pie of variance partitioning
 pie_partvar<-function(partvar, col.pie=NA){
@@ -75,48 +74,44 @@ bar_partvar<-function(partvar,  col.bar=NA, leg=FALSE){
 #__Tstats
 
 ### Function to calcul Tstats 
-Tstats<-function(Ttraits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress=TRUE, p.value=TRUE){
+Tstats<-function(traits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress=TRUE, p.value=TRUE){
 	#6 variances: I: individual, P: population, C: community, R: region
 	#IP; IC; IR; PC; PR; CR
 	
-	#Ttraits is the matrix of individual traits, ind_plot is the name of the plot in which the individual is (factor type), and sp is the species name of each individual
+	#traits is the matrix of individual traits, ind_plot is the name of the plot in which the individual is (factor type), and sp is the species name of each individual
 	
 	names_sp_ind_plot<-as.factor(paste(sp, ind_plot, sep="@")) 
 	Tplosp=unlist(strsplit(levels(names_sp_ind_plot),split="@"))[2*(1:nlevels(names_sp_ind_plot))]; names(Tplosp)=levels(names_sp_ind_plot);
 	#Tplosp is the plot in wich the population is
 	
-	
-	
-  
-  
 	######################################## 
 	####	Calcul of observed values	####
 	######################################## 
 
 	#________________________________________
 	#Objects creation
-	mean_IP<-matrix(nrow=nlevels(names_sp_ind_plot), ncol=ncol(Ttraits)); rownames(mean_IP)=levels(names_sp_ind_plot);
-	mean_PC<-matrix(nrow=nlevels(ind_plot), ncol=ncol(Ttraits))
-	var_IP<-matrix(nrow=nlevels(names_sp_ind_plot), ncol=ncol(Ttraits))
-	var_PC<-matrix(nrow=nlevels(ind_plot), ncol=ncol(Ttraits))
+	mean_IP<-matrix(nrow=nlevels(names_sp_ind_plot), ncol=ncol(traits)); rownames(mean_IP)=levels(names_sp_ind_plot);
+	mean_PC<-matrix(nrow=nlevels(ind_plot), ncol=ncol(traits))
+	var_IP<-matrix(nrow=nlevels(names_sp_ind_plot), ncol=ncol(traits))
+	var_PC<-matrix(nrow=nlevels(ind_plot), ncol=ncol(traits))
 	var_CR<-vector()
-	var_IC<-matrix(nrow=nlevels(ind_plot), ncol=ncol(Ttraits))
+	var_IC<-matrix(nrow=nlevels(ind_plot), ncol=ncol(traits))
 	var_PR<-vector()
 	var_IR<-vector()
-	T_IP.IC<-matrix(nrow=nlevels(ind_plot), ncol=ncol(Ttraits))
-	T_IC.IR<-matrix(nrow=nlevels(ind_plot), ncol=ncol(Ttraits))
-	T_PC.PR<-matrix(nrow=nlevels(ind_plot), ncol=ncol(Ttraits))
+	T_IP.IC<-matrix(nrow=nlevels(ind_plot), ncol=ncol(traits))
+	T_IC.IR<-matrix(nrow=nlevels(ind_plot), ncol=ncol(traits))
+	T_PC.PR<-matrix(nrow=nlevels(ind_plot), ncol=ncol(traits))
   
-	for (t in 1: ncol(Ttraits)){
-		mean_IP[,t]<-tapply(Ttraits[,t], names_sp_ind_plot  ,mean, na.rm=T)
+	for (t in 1: ncol(traits)){
+		mean_IP[,t]<-tapply(traits[,t], names_sp_ind_plot  ,mean, na.rm=T)
 		mean_PC[,t]<-tapply(mean_IP[,t], Tplosp , mean, na.rm=T)
 		
-		var_IP[,t]<-tapply(Ttraits[,t], names_sp_ind_plot, var, na.rm=T)
+		var_IP[,t]<-tapply(traits[,t], names_sp_ind_plot, var, na.rm=T)
 		var_PC[,t]<-tapply(mean_IP[,t], Tplosp  ,var, na.rm=T)
 		var_CR[t]<-var(mean_PC[,t], na.rm=T)
-		var_IC[,t]<-tapply(Ttraits[,t], ind_plot  ,var, na.rm=T)
+		var_IC[,t]<-tapply(traits[,t], ind_plot  ,var, na.rm=T)
 		var_PR[t]<-var(as.vector(mean_IP[,t]), na.rm=T)
-		var_IR[t]<-var(Ttraits[,t], na.rm=T)
+		var_IR[t]<-var(traits[,t], na.rm=T)
 		  
 		for(s in 1 : nlevels(ind_plot)){
 			T_IP.IC[s,t]<-mean(var_IP[grepl(levels(ind_plot)[s],Tplosp),t], na.rm=T)/var_IC[s,t]
@@ -133,27 +128,27 @@ Tstats<-function(Ttraits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress
 	
 	if(is.numeric(nperm)){
 		
-		var_IP_nm1<-array(dim=c(nperm,ncol(Ttraits),nrow=length(Tplosp)))
-		var_PC_nm3<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
-		var_IC_nm1<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
-		var_IC_nm2<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
-		var_PR_nm3<-array(dim=c(nperm,ncol(Ttraits)))
-		var_IR_nm2<-array(dim=c(nperm,ncol(Ttraits)))
+		var_IP_nm1<-array(dim=c(nperm,ncol(traits),nrow=length(Tplosp)))
+		var_PC_nm3<-array(dim=c(nperm,ncol(traits),nlevels(ind_plot)))
+		var_IC_nm1<-array(dim=c(nperm,ncol(traits),nlevels(ind_plot)))
+		var_IC_nm2<-array(dim=c(nperm,ncol(traits),nlevels(ind_plot)))
+		var_PR_nm3<-array(dim=c(nperm,ncol(traits)))
+		var_IR_nm2<-array(dim=c(nperm,ncol(traits)))
        
-		mean_IP_nm3<-array(dim=c(nperm,ncol(Ttraits),length(Tplosp)))
-		mean_PC_nm3<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
+		mean_IP_nm3<-array(dim=c(nperm,ncol(traits),length(Tplosp)))
+		mean_PC_nm3<-array(dim=c(nperm,ncol(traits),nlevels(ind_plot)))
        
-		Ttraits.nm1<-list()
-		Ttraits.nm2<-list()
-		Ttraits.nm3<-list()
+		traits.nm1<-list()
+		traits.nm2<-list()
+		traits.nm3<-list()
               
-		T_IP.IC_nm1<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
-		T_IC.IR_nm2<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
-		T_PC.PR_nm3<-array(dim=c(nperm,ncol(Ttraits),nlevels(ind_plot)))
+		T_IP.IC_nm1<-array(dim=c(nperm,ncol(traits),nlevels(ind_plot)))
+		T_IC.IR_nm2<-array(dim=c(nperm,ncol(traits),nlevels(ind_plot)))
+		T_PC.PR_nm3<-array(dim=c(nperm,ncol(traits),nlevels(ind_plot)))
 		
 		#Creation of the regional pool if not inform
 		if(is.null(reg.pool)) {
-			reg.pool<-Ttraits
+			reg.pool<-traits
 		}
 		  
 		#Creation of three null models 
@@ -161,51 +156,51 @@ Tstats<-function(Ttraits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress
 		
 		#________________________________________
 		#modèle nul 1: permutations des valeurs de traits des individus dans la communauté   
-		for (t in 1: ncol(Ttraits)){
-			Ttraits.nm1[[t]]<-list()
+		for (t in 1: ncol(traits)){
+			traits.nm1[[t]]<-list()
 			for(s in 1:  nlevels(ind_plot)) {
-				Ttraits.nm1[[t]][[s]]<-list()
+				traits.nm1[[t]][[s]]<-list()
 				for(i in 1:nperm){
-					if (length(Ttraits[ind_plot==levels(ind_plot)[s], t]) != 1) {
-						perm_ind_plot1<-sample(Ttraits[ind_plot==levels(ind_plot)[s], t], table(ind_plot)[s])
-						Ttraits.nm1[[t]][[s]][[i]]<-perm_ind_plot1
+					if (length(traits[ind_plot==levels(ind_plot)[s], t]) != 1) {
+						perm_ind_plot1<-sample(traits[ind_plot==levels(ind_plot)[s], t], table(ind_plot)[s])
+						traits.nm1[[t]][[s]][[i]]<-perm_ind_plot1
 					}
-					else {Ttraits.nm1[[t]][[s]][[i]]<-"NA"}
+					else {traits.nm1[[t]][[s]][[i]]<-"NA"}
 				}
 			} 
-			if(printprogress==T){print(paste(round(t/ncol(Ttraits)/3*100,2),"%")) } else {}
+			if(printprogress==T){print(paste(round(t/ncol(traits)/3*100,2),"%")) } else {}
 		}
 		
 		#________________________________________
 		#modèle nul 2: permutations des valeurs de traits des individus de la région    
-		for (t in 1: ncol(Ttraits)){
-			Ttraits.nm2[[t]]<-list()
+		for (t in 1: ncol(traits)){
+			traits.nm2[[t]]<-list()
 			for(s in 1:  nlevels(ind_plot)) {
-				Ttraits.nm2[[t]][[s]]<-list()
+				traits.nm2[[t]][[s]]<-list()
 				for(i in 1:nperm){
 					perm_ind_plot2<-sample(reg.pool[, t], table(ind_plot)[s])
-					Ttraits.nm2[[t]][[s]][[i]]<-perm_ind_plot2
+					traits.nm2[[t]][[s]][[i]]<-perm_ind_plot2
 				}
 			}
-			if(printprogress==T){print(paste(round(33.3+t/ncol(Ttraits)/3*100, 2),"%"))} else {}
+			if(printprogress==T){print(paste(round(33.3+t/ncol(traits)/3*100, 2),"%"))} else {}
 		}
 		
 		#________________________________________  
 		#modèle nul 3: permutations des espèces au niveau de la région   
-		Ttraits_by_sp<-apply(Ttraits,2,function(x) tapply(x,names_sp_ind_plot,mean))  
-		Ttraits_by_pop<-Ttraits_by_sp[match(names_sp_ind_plot,rownames(Ttraits_by_sp)),]
-		#Ttraits_by_sp<-aggregate(Ttraits, by = list(names_sp_ind_plot), mean, na.rm = T)[,-1] 
+		traits_by_sp<-apply(traits,2,function(x) tapply(x,names_sp_ind_plot,mean))  
+		traits_by_pop<-traits_by_sp[match(names_sp_ind_plot,rownames(traits_by_sp)),]
+		#traits_by_sp<-aggregate(traits, by = list(names_sp_ind_plot), mean, na.rm = T)[,-1] 
 				
-		for (t in 1: ncol(Ttraits)){
-			Ttraits.nm3[[t]]<-list()
+		for (t in 1: ncol(traits)){
+			traits.nm3[[t]]<-list()
 			for(s in 1:  nlevels(ind_plot)){
-				Ttraits.nm3[[t]][[s]]<-list()
+				traits.nm3[[t]][[s]]<-list()
 				for(i in 1:nperm){
-					perm_ind_plot3<-sample(Ttraits_by_pop, table(ind_plot)[s])
-					Ttraits.nm3[[t]][[s]][[i]]<-perm_ind_plot3
+					perm_ind_plot3<-sample(traits_by_pop, table(ind_plot)[s])
+					traits.nm3[[t]][[s]][[i]]<-perm_ind_plot3
 				}
 			} 
-			if(printprogress==T){print(paste(round(66.6+t/ncol(Ttraits)/3*100, 2),"%"))} else {}
+			if(printprogress==T){print(paste(round(66.6+t/ncol(traits)/3*100, 2),"%"))} else {}
 		}
 		
 		#________________________________________
@@ -217,29 +212,29 @@ Tstats<-function(Ttraits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress
 		if(printprogress==T){print("calcul of Tstats using null models")}
 		
 		yy<-length(names_sp_ind_plot)
-		for (t in 1: ncol(Ttraits)){
+		for (t in 1: ncol(traits)){
 			for(i in 1:nperm){ 
-				mean_IP_nm3[i,t,]<-tapply(unlist(Ttraits.nm3[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind_plot  ,function(x) mean(x, na.rm=T))
+				mean_IP_nm3[i,t,]<-tapply(unlist(traits.nm3[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind_plot  ,function(x) mean(x, na.rm=T))
 				mean_PC_nm3[i,t,]<-tapply(mean_IP_nm3[i,t,], Tplosp, mean, na.rm=T)
 			}
-			if(printprogress==T){print(paste(round(t/ncol(Ttraits)/3*100, 2),"%"))} else {}
+			if(printprogress==T){print(paste(round(t/ncol(traits)/3*100, 2),"%"))} else {}
 		} 
 		   
 		   
-		for (t in 1: ncol(Ttraits)){
+		for (t in 1: ncol(traits)){
 			for(i in 1:nperm){
-				var_IP_nm1[i,t,]<-tapply(unlist(Ttraits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind_plot  ,function(x) var(x, na.rm=T))
+				var_IP_nm1[i,t,]<-tapply(unlist(traits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind_plot  ,function(x) var(x, na.rm=T))
 				var_PC_nm3[i,t,]<-tapply(mean_IP_nm3[i,t,], Tplosp  ,var, na.rm=T)
-				var_IC_nm1[i,t,]<-tapply(unlist(Ttraits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], ind_plot  ,function(x) var(x, na.rm=T))
-				var_IC_nm2[i,t,]<-tapply(unlist(Ttraits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], ind_plot  ,function(x) var(x, na.rm=T))
+				var_IC_nm1[i,t,]<-tapply(unlist(traits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], ind_plot  ,function(x) var(x, na.rm=T))
+				var_IC_nm2[i,t,]<-tapply(unlist(traits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], ind_plot  ,function(x) var(x, na.rm=T))
 				var_PR_nm3[i,t]<-var(as.vector(mean_IP_nm3[i,t,]), na.rm=T)
-				var_IR_nm2[i,t]<-var(unlist(Ttraits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], na.rm=T)
+				var_IR_nm2[i,t]<-var(unlist(traits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], na.rm=T)
 			}
-			if(printprogress==T){print(paste(round(33.3+t/ncol(Ttraits)/3*100, 2),"%"))} else {}
+			if(printprogress==T){print(paste(round(33.3+t/ncol(traits)/3*100, 2),"%"))} else {}
 		}
 		 
 		   
-		for (t in 1: ncol(Ttraits)){
+		for (t in 1: ncol(traits)){
 			for(i in 1:nperm){
 				for(s in 1 : nlevels(ind_plot)){
 					T_IP.IC_nm1[i,t,s]<-mean(var_IP_nm1[i,t,grepl(levels(ind_plot)[s],Tplosp)], na.rm=T)/var_IC_nm1[i,t,s] 
@@ -247,19 +242,19 @@ Tstats<-function(Ttraits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress
 					T_PC.PR_nm3[i,t,s]<-var_PC_nm3[i,t,s]/var_PR_nm3[i,t]
 				}
 			} 
-			if(printprogress==T){print(paste(round(66.6+t/ncol(Ttraits)/3*100, 2),"%"))} else {}
+			if(printprogress==T){print(paste(round(66.6+t/ncol(traits)/3*100, 2),"%"))} else {}
 		}       
 		      
 	}#end of calcul of Tstats using null models
          
-	colnames(T_IP.IC)<-colnames(Ttraits)
-    colnames(T_IC.IR)<-colnames(Ttraits)
-    colnames(T_PC.PR)<-colnames(Ttraits)
+	colnames(T_IP.IC)<-colnames(traits)
+    colnames(T_IC.IR)<-colnames(traits)
+    colnames(T_PC.PR)<-colnames(traits)
   
 	if(is.numeric(nperm)){
-		colnames(T_IP.IC_nm1)<-colnames(Ttraits)
-		colnames(T_IC.IR_nm2)<-colnames(Ttraits)
-		colnames(T_PC.PR_nm3)<-colnames(Ttraits)
+		colnames(T_IP.IC_nm1)<-colnames(traits)
+		colnames(T_IC.IR_nm2)<-colnames(traits)
+		colnames(T_PC.PR_nm3)<-colnames(traits)
 	}
 	
 	rownames(T_IP.IC)<-levels(as.factor(Tplosp))
@@ -305,15 +300,15 @@ Tstats<-function(Ttraits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress
  	if(printprogress==T){print("calcul of p.value")}
  	
  	if(p.value==T){
-		p.valueT_IP.IC.sup<-matrix(ncol=ncol(Ttraits), nrow= nlevels(ind_plot))
-		p.valueT_IC.IR.sup<-matrix(ncol=ncol(Ttraits), nrow= nlevels(ind_plot))
-		p.valueT_PC.PR.sup<-matrix(ncol=ncol(Ttraits), nrow= nlevels(ind_plot))
+		p.valueT_IP.IC.sup<-matrix(ncol=ncol(traits), nrow= nlevels(ind_plot))
+		p.valueT_IC.IR.sup<-matrix(ncol=ncol(traits), nrow= nlevels(ind_plot))
+		p.valueT_PC.PR.sup<-matrix(ncol=ncol(traits), nrow= nlevels(ind_plot))
 		
-		p.valueT_IP.IC.inf<-matrix(ncol=ncol(Ttraits), nrow= nlevels(ind_plot))
-		p.valueT_IC.IR.inf<-matrix(ncol=ncol(Ttraits), nrow= nlevels(ind_plot))
-		p.valueT_PC.PR.inf<-matrix(ncol=ncol(Ttraits), nrow= nlevels(ind_plot))
+		p.valueT_IP.IC.inf<-matrix(ncol=ncol(traits), nrow= nlevels(ind_plot))
+		p.valueT_IC.IR.inf<-matrix(ncol=ncol(traits), nrow= nlevels(ind_plot))
+		p.valueT_PC.PR.inf<-matrix(ncol=ncol(traits), nrow= nlevels(ind_plot))
 		
-		for (t in 1: ncol(Ttraits)){
+		for (t in 1: ncol(traits)){
 			for(s in 1:  nlevels(ind_plot)){
  				p.valueT_IP.IC.sup[s,t]<-(sum(res$T_IP.IC[s,t]<res$T_IP.IC_nm[,t,s], na.rm=T)+1)/(1+length(res$T_IP.IC_nm[,t,s]))
  				p.valueT_IC.IR.sup[s,t]<-(sum(res$T_IC.IR[s,t]<res$T_IC.IR_nm[,t,s], na.rm=T)+1)/(1+length(res$T_IC.IR_nm[,t,s]))
@@ -325,17 +320,17 @@ Tstats<-function(Ttraits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogress
 			}
 		}	
 	    
-		colnames(p.valueT_IP.IC.sup)<-colnames(Ttraits)
-		colnames(p.valueT_IC.IR.sup)<-colnames(Ttraits)
-		colnames(p.valueT_PC.PR.sup)<-colnames(Ttraits)
+		colnames(p.valueT_IP.IC.sup)<-colnames(traits)
+		colnames(p.valueT_IC.IR.sup)<-colnames(traits)
+		colnames(p.valueT_PC.PR.sup)<-colnames(traits)
 		
 		rownames(p.valueT_IP.IC.sup)<-levels(Tplosp)
 		rownames(p.valueT_IC.IR.sup)<-levels(Tplosp)
 		rownames(p.valueT_PC.PR.sup)<-levels(Tplosp)
   	
-		colnames(p.valueT_IP.IC.inf)<-colnames(Ttraits)
-		colnames(p.valueT_IC.IR.inf)<-colnames(Ttraits)
-		colnames(p.valueT_PC.PR.inf)<-colnames(Ttraits)
+		colnames(p.valueT_IP.IC.inf)<-colnames(traits)
+		colnames(p.valueT_IC.IR.inf)<-colnames(traits)
+		colnames(p.valueT_PC.PR.inf)<-colnames(traits)
 		
 		rownames(p.valueT_IP.IC.inf)<-levels(Tplosp)
 		rownames(p.valueT_IC.IR.inf)<-levels(Tplosp)
@@ -3140,3 +3135,5 @@ ab_to_ind<-function(traits, com, type="count"){
 	return(res)
 
 }
+
+
