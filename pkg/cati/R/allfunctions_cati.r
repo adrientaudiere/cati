@@ -3100,10 +3100,11 @@ ab_to_ind<-function(traits, com, type="count"){
 	
 	#type is either count data or abundance
 	#transform abundance data to number of individual
+	#Using abundance type is EXPERIMENTAL. This function round abundance to fit count data.
 	
 	if(type=="abundance"){
 		if(min(com)<1){
-			com<-apply(com,2, function(x) x/min(x[x>0], na.rm=T))
+			com<-apply(com,2, function(x) round(x/min(x[x>0], na.rm=T), 1)*10 )
 		}
 	}
 	

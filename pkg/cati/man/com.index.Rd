@@ -66,7 +66,7 @@
 	}
 	
 	\item{type}{
-		Only if ind.value=FALSE. Either "count" or "abundance". Use abundance when one value or more in the com matrix are inferior to one. 
+		Only if ind.value=FALSE. Either "count" or "abundance". Use abundance when one value or more in the com matrix are inferior to one. Using abundance type is EXPERIMENTAL. This function round abundance to fit count data.
 	}
 	
 }
