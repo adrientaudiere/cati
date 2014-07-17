@@ -167,8 +167,13 @@
 \examples{
 	data(finch.ind)
 	
+<<<<<<< HEAD
 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9, print = FALSE)
+=======
+	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
+	sp=sp.finch, nperm=9, print=FALSE)
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	
 	attributes(res.finch)
 
@@ -211,10 +216,17 @@
 	#### Use a different regional pool than the binding of studied communities
 	
 	#create a random regional pool for the example
+<<<<<<< HEAD
 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
 
 	res.finch2 <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
     sp = sp.finch, nperm = 9, print = FALSE)	
+=======
+	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300),])
+
+	res.finch2 <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
+    sp=sp.finch, nperm=9, print=FALSE)	
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	
 }
 
