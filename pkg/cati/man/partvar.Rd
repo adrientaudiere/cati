@@ -1,16 +1,20 @@
 \name{partvar}
 \alias{partvar}
+\alias{barPartvar}
+\alias{piePartvar}
 
 \title{
 	Variance partitioning accross nested scales
 }
 
 \description{
-	Variance partitioning accross nested scales using a decomposition (varcomp function) of variance on restricted maximum likelihood (REML) method (lme function). See Messier et al. 2010 for more information. 
+	Variance partitioning accross nested scales using a decomposition (varcomp function) of variance on restricted maximum likelihood (REML) method (lme function). See Messier et al. 2010 for more information. barPartvar and piePartvar are associated plotting functions.
 }
 
 \usage{
 	partvar(traits, factors, printprogress = TRUE)
+	barPartvar(partvar, col.bar = NA, ...)
+	piePartvar(partvar, col.pie = NA, ...)
 }
 
 \arguments{
@@ -25,6 +29,22 @@
 	\item{printprogress}{
 		Logical value; print progress during the calcul or not.
 	}
+	
+	\item{partvar}{
+		The result of the partvar function.
+	}
+	
+	\item{col.bar}{
+		Vector of colors of bars 
+	}
+	
+	\item{\dots}{
+		Any additional arguments are passed to the pie function.
+	}
+	
+	\item{col.pie}{
+		Vector of color for pie.
+	}	
 }
 
 \value{
@@ -41,29 +61,28 @@
 }
 
 \seealso{
-	\code{\link{pie_partvar}};
-	\code{\link{bar_partvar}}
+	\code{\link{piePartvar}};
+	\code{\link{barPartvar}}
 }
 
 \examples{
 	data(finch.ind)
 
-	genus<-as.vector(unlist(strsplit(as.vector(sp.finch),"_")) 
+	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_")) 
 	[seq(1,length(sp.finch)*2, by=2)])
 	
-	res.partvar.finch<-partvar(traits=traits.finch, 
+	res.partvar.finch <- partvar(traits=traits.finch, 
 	factors=cbind(sites=as.factor(as.vector(ind.plot.finch)), 
 	species=as.factor(as.vector(sp.finch)), genus=as.factor(genus)))
 
 	res.partvar.finch
 	
-	oldpar<-par()
+	oldpar <- par()
 	par(mfrow=c(2,2), mai=c(0.2,0.2,0.2,0.2))
-	pie_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
+	piePartvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
 	par(oldpar)
 
-	bar_partvar(res.partvar.finch, col=c("red", "green", "blue", "purple"),
-	leg=TRUE)
+	barPartvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
 }
 
 
