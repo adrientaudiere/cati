@@ -42,13 +42,19 @@
 
 \examples{
 	data(finch.ind)
+<<<<<<< HEAD
 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
 	nperm = 9, print = FALSE)
+=======
+	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
+	nperm=9, print=FALSE)
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	
 	#Calcul of means by population (name_sp_site is a name of a population) 
 	#like in the function ComIndex and determine the site 
 	#for each population (sites_bypop)
 	
+<<<<<<< HEAD
 	name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
 	traits.by.pop <- apply(traits.finch, 2 , function (x) 
 	tapply(x, name_sp_sites, mean , na.rm = TRUE))
@@ -61,19 +67,39 @@
 	funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
 	function(x) mean(x, na.rm = TRUE))",
 	"tapply(x, unlist(sites_bypop), function(x) kurtosis(x, na.rm = TRUE))",
+=======
+	name_sp_sites=paste(sp.finch, ind.plot.finch,sep="_")
+	traits.by.pop <- apply(traits.finch, 2 , function (x) 
+	tapply(x, name_sp_sites, mean , na.rm=TRUE))
+	
+	require(e1071)
+	
+	sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep="_")
+	, split="_"), function(x) x[3])
+	
+	funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
+	function(x) mean(x, na.rm=TRUE))",
+	"tapply(x, unlist(sites_bypop), function(x) kurtosis(x, na.rm=TRUE))",
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	"tapply(x, unlist(sites_bypop), function(x) 
 	max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
 	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
 	
 	
 	funct.withIV <- c("tapply(x, ind.plot.finch, 
+<<<<<<< HEAD
 	function(x) mean(x, na.rm = TRUE))",
 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
+=======
+	function(x) mean(x, na.rm=TRUE))",
+	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))",
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	"tapply(x, ind.plot.finch, function(x) 
 	max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
 	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
 	
 	
+<<<<<<< HEAD
 	res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV,
 	sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, nperm = 9
 	, print = FALSE)
@@ -81,6 +107,15 @@
 	res.finch.withoutIV <- ComIndex(traits = traits.finch, 
 	index = funct.withoutIV, sp = sp.finch, nullmodels = c(3,3,3,3), 
 	ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+=======
+	res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV,
+	sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, nperm=9
+	, print=FALSE)
+	
+	res.finch.withoutIV <- ComIndex(traits=traits.finch, 
+	index=funct.withoutIV, sp=sp.finch, nullmodels=c(3,3,3,3), 
+	ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 
 
 	##Plot T-statistics and custom metrics thanks to 
@@ -88,7 +123,11 @@
 	
 	list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
 	index.list <- as.listofindex(list.ind, 
+<<<<<<< HEAD
 	namesindex = c("mean", "kurtosis", "range", "CVNND",
+=======
+	namesindex=c("mean", "kurtosis", "range", "CVNND",
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 				 "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop",
                  "T_IP.IC", "T_IC.IR", "T_PC.PR"))
 	
@@ -125,7 +164,11 @@
 
 	#For all metrics of the list of index
 	ses.list.levelplot <- c()
+<<<<<<< HEAD
 	for (i in 1: length(ses.list)){
+=======
+	for(i in 1: length(ses.list)){
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 		ses.list.levelplot <- rbind(ses.list.levelplot, ses.list[[i]]$ses)
 	}
 	

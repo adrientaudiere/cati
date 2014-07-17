@@ -181,7 +181,11 @@ Tstats <- function(traits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogres
 		#________________________________________  
 		#modèle nul 3: permutations des espèces au niveau de la région   
 		traits_by_sp <- apply(traits,2,function(x) tapply(x,names_sp_ind_plot,mean))  
+<<<<<<< HEAD
 		traits_by_pop <- traits_by_sp[match(names_sp_ind_plot,rownames(traits_by_sp)), ]
+=======
+		traits_by_pop <- traits_by_sp[match(names_sp_ind_plot,rownames(traits_by_sp)),]
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 		#traits_by_sp <- aggregate(traits, by = list(names_sp_ind_plot), mean, na.rm = T)[,-1] 
 				
 		for (t in 1: ncol(traits)){
@@ -207,8 +211,13 @@ Tstats <- function(traits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogres
 		yy <- length(names_sp_ind_plot)
 		for (t in 1: ncol(traits)){
 			for(i in 1:nperm){ 
+<<<<<<< HEAD
 				mean_IP_nm3[i,t, ] <- tapply(unlist(traits.nm3[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind_plot  ,function(x) mean(x, na.rm=T))
 				mean_PC_nm3[i,t, ] <- tapply(mean_IP_nm3[i,t, ], Tplosp, mean, na.rm=T)
+=======
+				mean_IP_nm3[i,t,] <- tapply(unlist(traits.nm3[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind_plot  ,function(x) mean(x, na.rm=T))
+				mean_PC_nm3[i,t,] <- tapply(mean_IP_nm3[i,t,], Tplosp, mean, na.rm=T)
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 			}
 			if (printprogress==T){print(paste(round(t/ncol(traits)/3*100, 2),"%"))} else {}
 		} 
@@ -216,11 +225,19 @@ Tstats <- function(traits, ind_plot, sp, reg.pool=NULL, nperm=NULL, printprogres
 		   
 		for (t in 1: ncol(traits)){
 			for(i in 1:nperm){
+<<<<<<< HEAD
 				var_IP_nm1[i,t, ] <- tapply(unlist(traits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind_plot  ,function(x) var(x, na.rm=T))
 				var_PC_nm3[i,t, ] <- tapply(mean_IP_nm3[i,t, ], Tplosp  ,var, na.rm=T)
 				var_IC_nm1[i,t, ] <- tapply(unlist(traits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], ind_plot  ,function(x) var(x, na.rm=T))
 				var_IC_nm2[i,t, ] <- tapply(unlist(traits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], ind_plot  ,function(x) var(x, na.rm=T))
 				var_PR_nm3[i,t] <- var(as.vector(mean_IP_nm3[i,t, ]), na.rm=T)
+=======
+				var_IP_nm1[i,t,] <- tapply(unlist(traits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind_plot  ,function(x) var(x, na.rm=T))
+				var_PC_nm3[i,t,] <- tapply(mean_IP_nm3[i,t,], Tplosp  ,var, na.rm=T)
+				var_IC_nm1[i,t,] <- tapply(unlist(traits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], ind_plot  ,function(x) var(x, na.rm=T))
+				var_IC_nm2[i,t,] <- tapply(unlist(traits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], ind_plot  ,function(x) var(x, na.rm=T))
+				var_PR_nm3[i,t] <- var(as.vector(mean_IP_nm3[i,t,]), na.rm=T)
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 				var_IR_nm2[i,t] <- var(unlist(traits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], na.rm=T)
 			}
 			if (printprogress==T){print(paste(round(33.3+t/ncol(traits)/3*100, 2),"%"))} else {}
@@ -602,6 +619,7 @@ summary_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
 	else if (type=="percent"){
 		
 		summ.Tstats  <- matrix("H0 not rejected",nrow=6, ncol=dim(cond.T_IP.IC.inf)[2])
+<<<<<<< HEAD
 		summ.Tstats[1, ] <- paste(round(colSums(cond.T_IP.IC.inf, na.rm=T)/colSums(!is.na(cond.T_IP.IC.inf)),2)*100, "%", sep="")
 		summ.Tstats[2, ] <- paste(round(colSums(cond.T_IP.IC.sup, na.rm=T)/colSums(!is.na(cond.T_IP.IC.sup)),2)*100, "%", sep="")
 		summ.Tstats[3, ] <- paste(round(colSums(cond.T_IC.IR.inf, na.rm=T)/colSums(!is.na(cond.T_IC.IR.inf)),2)*100, "%", sep="")
@@ -615,6 +633,21 @@ summary_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
 		summ.Tstats[4, ][cond.T_IC.IR.sup.mean] <- paste(round(colSums(cond.T_IC.IR.sup, na.rm=T)/colSums(!is.na(cond.T_IC.IR.sup)),2)[cond.T_IC.IR.sup.mean]*100, "%","*", sep="")
 		summ.Tstats[5, ][cond.T_PC.PR.inf.mean] <- paste(round(colSums(cond.T_PC.PR.inf, na.rm=T)/colSums(!is.na(cond.T_PC.PR.inf)),2)[cond.T_PC.PR.inf.mean]*100, "%","*", sep="")
 		summ.Tstats[6, ][cond.T_PC.PR.sup.mean] <- paste(round(colSums(cond.T_PC.PR.sup, na.rm=T)/colSums(!is.na(cond.T_PC.PR.sup)),2)[cond.T_PC.PR.sup.mean]*100, "%","*", sep="")	
+=======
+		summ.Tstats[1,] <- paste(round(colSums(cond.T_IP.IC.inf, na.rm=T)/colSums(!is.na(cond.T_IP.IC.inf)),2)*100, "%", sep="")
+		summ.Tstats[2,] <- paste(round(colSums(cond.T_IP.IC.sup, na.rm=T)/colSums(!is.na(cond.T_IP.IC.sup)),2)*100, "%", sep="")
+		summ.Tstats[3,] <- paste(round(colSums(cond.T_IC.IR.inf, na.rm=T)/colSums(!is.na(cond.T_IC.IR.inf)),2)*100, "%", sep="")
+		summ.Tstats[4,] <- paste(round(colSums(cond.T_IC.IR.sup, na.rm=T)/colSums(!is.na(cond.T_IC.IR.sup)),2)*100, "%", sep="")
+		summ.Tstats[5,] <- paste(round(colSums(cond.T_PC.PR.inf, na.rm=T)/colSums(!is.na(cond.T_PC.PR.inf)),2)*100, "%", sep="")
+		summ.Tstats[6,] <- paste(round(colSums(cond.T_PC.PR.sup, na.rm=T)/colSums(!is.na(cond.T_PC.PR.sup)),2)*100, "%", sep="")
+				
+		summ.Tstats[1,][cond.T_IP.IC.inf.mean] <- paste(round(colSums(cond.T_IP.IC.inf, na.rm=T)/colSums(!is.na(cond.T_IP.IC.inf)),2)[cond.T_IP.IC.inf.mean]*100, "%" ,"*", sep="")
+		summ.Tstats[2,][cond.T_IP.IC.sup.mean] <- paste(round(colSums(cond.T_IP.IC.sup, na.rm=T)/colSums(!is.na(cond.T_IP.IC.sup)),2)[cond.T_IP.IC.sup.mean]*100, "%" ,"*", sep="")
+		summ.Tstats[3,][cond.T_IC.IR.inf.mean] <- paste(round(colSums(cond.T_IC.IR.inf, na.rm=T)/colSums(!is.na(cond.T_IC.IR.inf)),2)[cond.T_IC.IR.inf.mean]*100, "%","*", sep="")
+		summ.Tstats[4,][cond.T_IC.IR.sup.mean] <- paste(round(colSums(cond.T_IC.IR.sup, na.rm=T)/colSums(!is.na(cond.T_IC.IR.sup)),2)[cond.T_IC.IR.sup.mean]*100, "%","*", sep="")
+		summ.Tstats[5,][cond.T_PC.PR.inf.mean] <- paste(round(colSums(cond.T_PC.PR.inf, na.rm=T)/colSums(!is.na(cond.T_PC.PR.inf)),2)[cond.T_PC.PR.inf.mean]*100, "%","*", sep="")
+		summ.Tstats[6,][cond.T_PC.PR.sup.mean] <- paste(round(colSums(cond.T_PC.PR.sup, na.rm=T)/colSums(!is.na(cond.T_PC.PR.sup)),2)[cond.T_PC.PR.sup.mean]*100, "%","*", sep="")	
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	
 		rownames(summ.Tstats) <- c("T_IP.IC.inf", "T_IP.IC.sup", "T_IC.IR.inf", "T_IC.IR.sup", "T_PC.PR.inf", "T_PC.PR.sup")
 		colnames(summ.Tstats) <- colnames(tstats$T_IP.IC)
@@ -678,6 +711,7 @@ summary_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
 		#__________
 		##percent
 		summ.Tstats$percent  <- matrix("H0 not rejected",nrow=6, ncol=dim(cond.T_IP.IC.inf)[2])
+<<<<<<< HEAD
 		summ.Tstats$percent[1, ] <- paste(round(colSums(cond.T_IP.IC.inf, na.rm=T)/colSums(!is.na(cond.T_IP.IC.inf)),2)*100, "%", sep="")
 		summ.Tstats$percent[2, ] <- paste(round(colSums(cond.T_IP.IC.sup, na.rm=T)/colSums(!is.na(cond.T_IP.IC.sup)),2)*100, "%", sep="")
 		summ.Tstats$percent[3, ] <- paste(round(colSums(cond.T_IC.IR.inf, na.rm=T)/colSums(!is.na(cond.T_IC.IR.inf)),2)*100, "%", sep="")
@@ -691,6 +725,21 @@ summary_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
 		summ.Tstats$percent[4, ][cond.T_IC.IR.sup.mean] <- paste(round(colSums(cond.T_IC.IR.sup, na.rm=T)/colSums(!is.na(cond.T_IC.IR.sup)),2)[cond.T_IC.IR.sup.mean]*100, "%","*", sep="")
 		summ.Tstats$percent[5, ][cond.T_PC.PR.inf.mean] <- paste(round(colSums(cond.T_PC.PR.inf, na.rm=T)/colSums(!is.na(cond.T_PC.PR.inf)),2)[cond.T_PC.PR.inf.mean]*100, "%","*", sep="")
 		summ.Tstats$percent[6, ][cond.T_PC.PR.sup.mean] <- paste(round(colSums(cond.T_PC.PR.sup, na.rm=T)/colSums(!is.na(cond.T_PC.PR.sup)),2)[cond.T_PC.PR.sup.mean]*100, "%","*", sep="")	
+=======
+		summ.Tstats$percent[1,] <- paste(round(colSums(cond.T_IP.IC.inf, na.rm=T)/colSums(!is.na(cond.T_IP.IC.inf)),2)*100, "%", sep="")
+		summ.Tstats$percent[2,] <- paste(round(colSums(cond.T_IP.IC.sup, na.rm=T)/colSums(!is.na(cond.T_IP.IC.sup)),2)*100, "%", sep="")
+		summ.Tstats$percent[3,] <- paste(round(colSums(cond.T_IC.IR.inf, na.rm=T)/colSums(!is.na(cond.T_IC.IR.inf)),2)*100, "%", sep="")
+		summ.Tstats$percent[4,] <- paste(round(colSums(cond.T_IC.IR.sup, na.rm=T)/colSums(!is.na(cond.T_IC.IR.sup)),2)*100, "%", sep="")
+		summ.Tstats$percent[5,] <- paste(round(colSums(cond.T_PC.PR.inf, na.rm=T)/colSums(!is.na(cond.T_PC.PR.inf)),2)*100, "%", sep="")
+		summ.Tstats$percent[6,] <- paste(round(colSums(cond.T_PC.PR.sup, na.rm=T)/colSums(!is.na(cond.T_PC.PR.sup)),2)*100, "%", sep="")
+				
+		summ.Tstats$percent[1,][cond.T_IP.IC.inf.mean] <- paste(round(colSums(cond.T_IP.IC.inf, na.rm=T)/colSums(!is.na(cond.T_IP.IC.inf)),2)[cond.T_IP.IC.inf.mean]*100, "%" ,"*", sep="")
+		summ.Tstats$percent[2,][cond.T_IP.IC.sup.mean] <- paste(round(colSums(cond.T_IP.IC.sup, na.rm=T)/colSums(!is.na(cond.T_IP.IC.sup)),2)[cond.T_IP.IC.sup.mean]*100, "%" ,"*", sep="")
+		summ.Tstats$percent[3,][cond.T_IC.IR.inf.mean] <- paste(round(colSums(cond.T_IC.IR.inf, na.rm=T)/colSums(!is.na(cond.T_IC.IR.inf)),2)[cond.T_IC.IR.inf.mean]*100, "%","*", sep="")
+		summ.Tstats$percent[4,][cond.T_IC.IR.sup.mean] <- paste(round(colSums(cond.T_IC.IR.sup, na.rm=T)/colSums(!is.na(cond.T_IC.IR.sup)),2)[cond.T_IC.IR.sup.mean]*100, "%","*", sep="")
+		summ.Tstats$percent[5,][cond.T_PC.PR.inf.mean] <- paste(round(colSums(cond.T_PC.PR.inf, na.rm=T)/colSums(!is.na(cond.T_PC.PR.inf)),2)[cond.T_PC.PR.inf.mean]*100, "%","*", sep="")
+		summ.Tstats$percent[6,][cond.T_PC.PR.sup.mean] <- paste(round(colSums(cond.T_PC.PR.sup, na.rm=T)/colSums(!is.na(cond.T_PC.PR.sup)),2)[cond.T_PC.PR.sup.mean]*100, "%","*", sep="")	
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 		
 		#__________
 		##sites
@@ -820,7 +869,11 @@ ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, 
 	ntr <- dim(traits)[2]
 	namestraits <- colnames(traits)
 	
+<<<<<<< HEAD
 	traits <- traits[order(ind.plot), ]
+=======
+	traits <- traits[order(ind.plot),]
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	ind.plot <- ind.plot[order(ind.plot)]
 	sp <- sp[order(ind.plot)]
 	
@@ -900,7 +953,11 @@ ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, 
 			#modèle nul 3: permutations des espèces au niveau de la région   
 			traits.nm3 <- list()
 			traits_by_sp <- apply(traits,2,function(x) tapply(x,name_sp_sites,mean, na.rm=T))  
+<<<<<<< HEAD
 			traits_by_pop <- traits_by_sp[match(name_sp_sites,rownames(traits_by_sp)), ]
+=======
+			traits_by_pop <- traits_by_sp[match(name_sp_sites,rownames(traits_by_sp)),]
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 			
 			for (t in 1: ntr){	
 				traits.nm3[[eval(namestraits[t])]] <- matrix(NA, nrow=dim(traits)[1], ncol=nperm)
@@ -964,7 +1021,11 @@ ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, 
 				
 				if (nullmodels[i]==3){
 					nm_bypop[[eval(namesindex[i])]] <-  apply(nm, 2 , function (x) tapply(x, name_sp_sites, mean , na.rm=T))
+<<<<<<< HEAD
 					Null[[eval(namesindex[i])]] [t,, ] <- apply(nm_bypop[[eval(namesindex[i])]], 2, function (x) eval(parse(text=functionindex)))			
+=======
+					Null[[eval(namesindex[i])]] [t,,] <- apply(nm_bypop[[eval(namesindex[i])]], 2, function (x) eval(parse(text=functionindex)))			
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 				}
 				
 				else{				
@@ -1076,7 +1137,11 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 	
 	if (is.null(by.factor)) {  by.factor=rep(1,length(names_sp_ind_plot)) }
 
+<<<<<<< HEAD
 	traits <- traits[order(ind.plot), ]
+=======
+	traits <- traits[order(ind.plot),]
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	ind.plot <- ind.plot[order(ind.plot)]
 	sp <- sp[order(ind.plot)]
 	
@@ -1155,7 +1220,11 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 			#modèle nul 3: permutations des espèces au niveau de la région   
 			traits.nm3 <- list()
 			traits_by_sp <- apply(traits,2,function(x) tapply(x,name_sp_sites,mean, na.rm=T))  
+<<<<<<< HEAD
 			traits_by_pop <- traits_by_sp[match(name_sp_sites,rownames(traits_by_sp)), ]
+=======
+			traits_by_pop <- traits_by_sp[match(name_sp_sites,rownames(traits_by_sp)),]
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 			
 			for (t in 1: ntr){	
 				traits.nm3[[eval(namestraits[t])]] <- matrix(NA, nrow=dim(traits)[1], ncol=nperm)
@@ -1441,11 +1510,19 @@ plot.listofindex <- function(x, type="normal", col.index=c("red","purple","green
 					
 					points(res[[eval(namesindex[i])]]$ses[s, ], rep( (1:nindex)[i], length(res[[eval(namesindex[i])]]$ses[s, ]) ), pch="*")
 									
+<<<<<<< HEAD
 					cond.sup <- res[[eval(namesindex[i])]]$ses[s, ]>res[[eval(namesindex[i])]]$ses.sup[s, ]
 					points(res[[eval(namesindex[i])]]$ses[s, ][cond.sup], rep( (1:nindex)[i], length(res[[eval(namesindex[i])]]$ses[s, ][cond.sup]) ), pch="*", cex=3, col=color.cond[2])
 					
 					cond.inf <- res[[eval(namesindex[i])]]$ses[s, ]<res[[eval(namesindex[i])]]$ses.inf[s, ]
 					points(res[[eval(namesindex[i])]]$ses[s, ][cond.inf], rep( (1:nindex)[i], length(res[[eval(namesindex[i])]]$ses[s, ][cond.inf]) ), pch="*", cex=3, col=color.cond[1])
+=======
+					cond.sup <- res[[eval(namesindex[i])]]$ses[s,]>res[[eval(namesindex[i])]]$ses.sup[s,]
+					points(res[[eval(namesindex[i])]]$ses[s,][cond.sup], rep( (1:nindex)[i], length(res[[eval(namesindex[i])]]$ses[s,][cond.sup]) ), pch="*", cex=3, col=color.cond[2])
+					
+					cond.inf <- res[[eval(namesindex[i])]]$ses[s,]<res[[eval(namesindex[i])]]$ses.inf[s,]
+					points(res[[eval(namesindex[i])]]$ses[s,][cond.inf], rep( (1:nindex)[i], length(res[[eval(namesindex[i])]]$ses[s,][cond.inf]) ), pch="*", cex=3, col=color.cond[1])
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 					
 					
 					points(mean(res[[eval(namesindex[i])]]$ses[s, ], na.rm=T), (1:nindex)[i], col="red", pch=16)
@@ -2280,7 +2357,11 @@ plotSpPop <- function(traits=NULL, ind.plot=NULL, sp=NULL, col.ind = rgb(0.5,0.5
 	ntr <- dim(traits)[2]
 	namestraits <- colnames(traits)
 	
+<<<<<<< HEAD
 	traits <- traits[order(ind.plot), ]
+=======
+	traits <- traits[order(ind.plot),]
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	ind.plot <- ind.plot[order(ind.plot)]
 	sp <- sp[order(ind.plot)]
 	
@@ -2441,7 +2522,11 @@ plotSpVar <- function(traits=NULL, ind.plot=NULL, sp=NULL, variable = NULL, col.
 	ntr <- dim(traits)[2]
 	namestraits <- colnames(traits)
 	
+<<<<<<< HEAD
 	traits <- traits[order(ind.plot), ]
+=======
+	traits <- traits[order(ind.plot),]
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	ind.plot <- ind.plot[order(ind.plot)]
 	sp <- sp[order(ind.plot)]
 	
@@ -3073,7 +3158,11 @@ plotRandtest <- function(x, alternative=c("greater", "less", "two-sided"), ...){
 	
 	for (i in seq(1,nindex*2,by=2)){
 		for (t in 1:ntr[1]){
+<<<<<<< HEAD
 			rt <- as.randtest(sim=index.list[[i+1]][t,, ], obs=index.list[[i]][t], alter=alternative)
+=======
+			rt <- as.randtest(sim=index.list[[i+1]][t,,], obs=index.list[[i]][t], alter=alternative)
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 			plot(rt, main=paste(namesindex.all[i], namestraits[t], "p.value = ", round(rt$pvalue, digits = 5)), ...)
 		}
 	}
@@ -3108,7 +3197,11 @@ AbToInd <- function(traits, com, type="count"){
 	x4 <- c()
 	x6 <- c()
 	for(i in 1 : nrow(com)){
+<<<<<<< HEAD
 		x1 <- matrix(rep(traits[i, ], rowSums(com)[i]), nrow=ntr, ncol=rowSums(com)[i])
+=======
+		x1 <- matrix(rep(traits[i,], rowSums(com)[i]), nrow=ntr, ncol=rowSums(com)[i])
+>>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 		x2 <- cbind(x2,x1)	
 		
 		x3 <- rep(rownames(com)[i], rowSums(com)[i])
