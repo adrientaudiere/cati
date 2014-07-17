@@ -42,23 +42,23 @@
 
 \examples{
 	data(finch.ind)
-	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
+	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
 	nperm=9, print=FALSE)
 	
 	#Calcul of means by population (name_sp_site is a name of a population) 
-	#like in the function com.index and determine the site 
+	#like in the function ComIndex and determine the site 
 	#for each population (sites_bypop)
 	
 	name_sp_sites=paste(sp.finch, ind.plot.finch,sep="_")
-	traits.by.pop<-apply(traits.finch, 2 , function (x) 
+	traits.by.pop <- apply(traits.finch, 2 , function (x) 
 	tapply(x, name_sp_sites, mean , na.rm=TRUE))
 	
 	require(e1071)
 	
-	sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep="_")
+	sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep="_")
 	, split="_"), function(x) x[3])
 	
-	funct.withoutIV<-c("tapply(x, unlist(sites_bypop), 
+	funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
 	function(x) mean(x, na.rm=TRUE))",
 	"tapply(x, unlist(sites_bypop), function(x) kurtosis(x, na.rm=TRUE))",
 	"tapply(x, unlist(sites_bypop), function(x) 
@@ -66,7 +66,7 @@
 	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
 	
 	
-	funct.withIV<-c("tapply(x, ind.plot.finch, 
+	funct.withIV <- c("tapply(x, ind.plot.finch, 
 	function(x) mean(x, na.rm=TRUE))",
 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))",
 	"tapply(x, ind.plot.finch, function(x) 
@@ -74,11 +74,11 @@
 	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
 	
 	
-	res.finch.withIV<-com.index(traits=traits.finch, index=funct.withIV,
+	res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV,
 	sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, nperm=9
 	, print=FALSE)
 	
-	res.finch.withoutIV<-com.index(traits=traits.finch, 
+	res.finch.withoutIV <- ComIndex(traits=traits.finch, 
 	index=funct.withoutIV, sp=sp.finch, nullmodels=c(3,3,3,3), 
 	ind.plot=ind.plot.finch, nperm=9, print=FALSE)
 
@@ -86,8 +86,8 @@
 	##Plot T-statistics and custom metrics thanks to 
 	#the plot.listofindex function.
 	
-	list.ind<-list(res.finch.withIV, res.finch.withoutIV ,res.finch)
-	index.list<-as.listofindex(list.ind, 
+	list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
+	index.list <- as.listofindex(list.ind, 
 	namesindex=c("mean", "kurtosis", "range", "CVNND",
 				 "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop",
                  "T_IP.IC", "T_IC.IR", "T_PC.PR"))
@@ -101,7 +101,7 @@
 	plot(index.list, plot.ask=FALSE, bysite=FALSE)
 	par(mfrow=c(1,1))
 	
-	ses.list<-ses.listofindex(index.list)
+	ses.list <- ses.listofindex(index.list)
 	
 	#### An other way to see "ses values" 
 	
@@ -124,9 +124,9 @@
 	
 
 	#For all metrics of the list of index
-	ses.list.levelplot<-c()
+	ses.list.levelplot <- c()
 	for(i in 1: length(ses.list)){
-		ses.list.levelplot<-rbind(ses.list.levelplot, ses.list[[i]]$ses)
+		ses.list.levelplot <- rbind(ses.list.levelplot, ses.list[[i]]$ses)
 	}
 	
 	levelplot(t(ses.list.levelplot), colorkey=my.ckey, 

@@ -41,7 +41,7 @@
 }
 
 \details{
-	NA are not allowed in "locabrel<-abundances/ablocist". NA are automatically replaced by 0 in "sample". This function use the function "Qdecomp" by Sebastien Villeger & David Mouillot (J Ecol, 2008) modified by Wilfried Thuiller and the function disc originally proposed by Sandrine Pavoine.
+	NA are not allowed in "locabrel <- abundances/ablocist". NA are automatically replaced by 0 in "sample". This function use the function "Qdecomp" by Sebastien Villeger & David Mouillot (J Ecol, 2008) modified by Wilfried Thuiller and the function disc originally proposed by Sandrine Pavoine.
 
 }
 
@@ -87,21 +87,21 @@
 	data(finch.ind)
 	
 	\dontrun{
-		comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
-		comm.sp<-table(sp.finch, ind.plot.finch)
-		class(comm.sp)<-"matrix"
+		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
+		comm.sp <- table(sp.finch, ind.plot.finch)
+		class(comm.sp) <- "matrix"
 		
-		traits.finch.sp<-apply( apply(traits.finch, 2, scale ), 2, 
+		traits.finch.sp <- apply( apply(traits.finch, 2, scale ), 2, 
 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
 		
-		mat.dist<-as.matrix(dist(traits.finch.sp))^2
+		mat.dist <- as.matrix(dist(traits.finch.sp))^2
 		
-		res.rao<-RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
+		res.rao <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
 		weight=FALSE, Jost=FALSE, structure=NULL)
 		
-		witRao<-res.rao$FD$Mean_Alpha  #overall within species variance
-		betRao<-res.rao$FD$Beta_add    #between species variance
-		totRao<-res.rao$FD$Gamma       #the total variance
+		witRao <- res.rao$FD$Mean_Alpha  #overall within species variance
+		betRao <- res.rao$FD$Beta_add    #between species variance
+		totRao <- res.rao$FD$Gamma       #the total variance
 		
 		witRao+betRao
 		totRao
@@ -109,12 +109,12 @@
 		
 		#Now let"s take the abundance to calculate Rao diversity.
 		
-		res.rao.w<-RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
+		res.rao.w <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
 		weight=TRUE, Jost=FALSE, structure=NULL)
 		
-		witRao.w<-res.rao.w$FD$Mean_Alpha  #overall within species variance
-		betRao.w<-res.rao.w$FD$Beta_add    #between species variance
-		totRao.w<-res.rao.w$FD$Gamma       #the total variance
+		witRao.w <- res.rao.w$FD$Mean_Alpha  #overall within species variance
+		betRao.w <- res.rao.w$FD$Beta_add    #between species variance
+		totRao.w <- res.rao.w$FD$Gamma       #the total variance
 		
 		witRao.w
 		betRao.w
@@ -132,27 +132,27 @@
 		#First we need to replace (or exclude) NA values. 
 		#For this example, we use the package mice to complete the data.
 		
-		comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
+		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
 		
 		library(mice)
 		traits=traits.finch
-		mice<-mice(traits.finch)
-		traits.finch.mice<-complete(mice)
+		mice <- mice(traits.finch)
+		traits.finch.mice <- complete(mice)
 		
 		
-		traits.finch.mice.sp<-apply(apply(traits.finch.mice, 2, scale ), 2, 
+		traits.finch.mice.sp <- apply(apply(traits.finch.mice, 2, scale ), 2, 
 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
 		
-		trait.rao.w<-list()
-		witRao.w.bytrait<-c()
-		betRao.w.bytrait<-c()
+		trait.rao.w <- list()
+		witRao.w.bytrait <- c()
+		betRao.w.bytrait <- c()
 		for(t in 1 : 4){
-		  trait.rao.w[[t]]<-RaoRel(sample=as.matrix(comm.sp), 
+		  trait.rao.w[[t]] <- RaoRel(sample=as.matrix(comm.sp), 
 		  dfunc=dist(traits.finch.mice.sp[,t]), dphyl=NULL, weight=TRUE, 
 		  Jost=FALSE, structure=NULL)
 		  
-		  witRao.w.bytrait<-c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
-		  betRao.w.bytrait<-c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
+		  witRao.w.bytrait <- c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
+		  betRao.w.bytrait <- c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
 		}
 		
 		#Plot the results by traits.

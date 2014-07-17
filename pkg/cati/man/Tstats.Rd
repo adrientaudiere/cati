@@ -157,17 +157,17 @@
 }
 
 \seealso{
-	\code{\link{com.index}};
-	\code{\link{com.index.multi}};
-	\code{\link{plot_cor.Tstats}};
-	\code{\link{plot_ses.var}};
+	\code{\link{ComIndex}};
+	\code{\link{ComIndexMulti}};
+	\code{\link{plotCorTstats}};
+	\code{\link{plotSESvar}};
 	\code{\link{plot.listofindex}}
 }
 
 \examples{
 	data(finch.ind)
 	
-	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, 
+	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
 	sp=sp.finch, nperm=9, print=FALSE)
 	
 	attributes(res.finch)
@@ -211,9 +211,9 @@
 	#### Use a different regional pool than the binding of studied communities
 	
 	#create a random regional pool for the example
-	reg.p<-rbind(traits.finch, traits.finch[sample(1:2000,300),])
+	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300),])
 
-	res.finch2<-Tstats(traits.finch, ind_plot=ind.plot.finch, 
+	res.finch2 <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
     sp=sp.finch, nperm=9, print=FALSE)	
 	
 }

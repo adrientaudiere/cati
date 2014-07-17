@@ -40,14 +40,14 @@
 
 \seealso{
 	\code{\link{plot.listofindex}};
-	\code{\link{plot_ses.var}};
+	\code{\link{plotSESvar}};
 	\code{\link{ses.listofindex}}
 }
 
 \examples{
 	data(finch.ind)
 	
-	res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, 
+	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
 	sp=sp.finch, nperm=9)
 	
 	ses(res.finch$T_IP.IC, res.finch$T_IP.IC_nm)
