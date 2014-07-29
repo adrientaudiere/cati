@@ -11,7 +11,7 @@
 
 \usage{
 	plotCorTstats(tstats = NULL, val.quant = c(0.025, 0.975), 
-	add.text= FALSE, bysite= FALSE, col.obj = NULL, plot.ask = TRUE, 
+	add.text =  FALSE, bysite =  FALSE, col.obj = NULL, plot.ask = TRUE, 
 	multipanel = TRUE, ...)
 }
 
@@ -21,7 +21,7 @@
 	}
 	
 	\item{val.quant}{		
-		Numeric vector of length 2, giving the quantile to calculate confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vector of length 2, giving the quantile to calculate confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{add.text}{
@@ -65,8 +65,8 @@
 
 \examples{
 	data(finch.ind)
-	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
-	sp=sp.finch, nperm=9)
+	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
+	sp = sp.finch, nperm = 9)
 	
 	plotCorTstats(res.finch, bysite = FALSE)
 	plotCorTstats(res.finch, bysite = TRUE)

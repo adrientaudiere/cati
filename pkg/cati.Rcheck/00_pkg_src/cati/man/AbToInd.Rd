@@ -9,7 +9,7 @@
 }
 
 \usage{
-	AbToInd(traits, com, type="count")
+	AbToInd(traits, com, type = "count")
 }
 
 \arguments{

@@ -12,9 +12,9 @@
 \usage{
 	plotSpPop(traits = NULL, ind.plot = NULL, sp = NULL, 
 	col.ind = rgb(0.5, 0.5, 0.5, 0.5), col.pop = NULL, col.sp = NULL, 
-	col.site = NULL, resume= FALSE, p.val = 0.05, min.ind.signif = 10, 
+	col.site = NULL, resume =  FALSE, p.val = 0.05, min.ind.signif = 10, 
 	multipanel = TRUE, col.nonsignif.lm = rgb(0, 0, 0, 0.5), 
-	col.signif.lm = rgb(1, 0.1, 0.1, 0.8), silent= FALSE)
+	col.signif.lm = rgb(1, 0.1, 0.1, 0.8), silent =  FALSE)
 }
 
 \arguments{
@@ -71,7 +71,7 @@
 	}
 	
 	\item{silent}{
-		Logical value, if resume=FALSE do not print warnings argument.
+		Logical value, if resume = FALSE do not print warnings argument.
 	}
 }
 
@@ -89,34 +89,34 @@
 
 \examples{
 	data(finch.ind)
-	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE)
+	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE)
 
 	#If we change the value of the threshold 
-	#(alpha=10\% instead of 5\% 
+	#(alpha = 10\% instead of 5\% 
 	#and the minimum individual to represent significativity 
 	#fixed to 3 instead of 10 by default) 
 	#we can see some significant relationships.
 
-	plotSpPop(traits.finch, ind.plot.finch, sp.finch, p.val=0.1,  
-	min.ind.signif=3, silent=TRUE)
+	plotSpPop(traits.finch, ind.plot.finch, sp.finch, p.val = 0.1,  
+	min.ind.signif = 3, silent = TRUE)
 
 
-	#For a more simple figure, add the option resume=TRUE. 
+	#For a more simple figure, add the option resume = TRUE. 
 	#Again if we change the value of the threshold 
-	#(alpha=10\% instead of 5\% 
+	#(alpha = 10\% instead of 5\% 
 	#and the minimum individual to represent significativity
 	# fixed to 3 instead of 10 by default) 
 	#we can see some significant relationships.
 
-	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, 
-	resume=TRUE, col.pop="grey")
+	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE, 
+	resume = TRUE, col.pop = "grey")
 	
-	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, 
-	resume=TRUE, col.pop="grey", col.sp="black")
+	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE, 
+	resume = TRUE, col.pop = "grey", col.sp = "black")
 	
-	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE, 
-	resume=TRUE, col.pop="grey", col.sp="black", 
-	p.val=0.1,  min.ind.signif=3)
+	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE, 
+	resume = TRUE, col.pop = "grey", col.sp = "black", 
+	p.val = 0.1,  min.ind.signif = 3)
 }
 
 

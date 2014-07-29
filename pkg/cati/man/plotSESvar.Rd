@@ -60,7 +60,7 @@
 
 \examples{
 	data(finch.ind)
-	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
 	nperm = 9)
 
 	par(mfrow = c(2,2))

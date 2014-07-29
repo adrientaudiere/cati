@@ -46,7 +46,7 @@
 
 \examples{
 	data(finch.ind)
-	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9, print = FALSE)
 	
 	par(mfrow = c(3,4))
