@@ -92,12 +92,21 @@
 		class(comm.sp) <- "matrix"
 		
 		traits.finch.sp <- apply( apply(traits.finch, 2, scale ), 2, 
+
+		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
+		
+		mat.dist <- as.matrix(dist(traits.finch.sp))^2
+		
+		res.rao <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
+		weight = FALSE, Jost = FALSE, structure = NULL)
+
 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
 		
 		mat.dist <- as.matrix(dist(traits.finch.sp))^2
 		
 		res.rao <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
 		weight=FALSE, Jost=FALSE, structure=NULL)
+
 		
 		witRao <- res.rao$FD$Mean_Alpha  #overall within species variance
 		betRao <- res.rao$FD$Beta_add    #between species variance
@@ -109,8 +118,13 @@
 		
 		#Now let"s take the abundance to calculate Rao diversity.
 		
+
+		res.rao.w <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
+		weight = TRUE, Jost = FALSE, structure = NULL)
+
 		res.rao.w <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
 		weight=TRUE, Jost=FALSE, structure=NULL)
+
 		
 		witRao.w <- res.rao.w$FD$Mean_Alpha  #overall within species variance
 		betRao.w <- res.rao.w$FD$Beta_add    #between species variance
@@ -123,9 +137,9 @@
 		#Plot the results
 		
 		barplot(cbind(c(witRao.w, betRao.w), c(witRao, betRao)), 
-		names.arg =c("abundance" ,"presence"), 
-		legend.text=c("within species", "between species"), 
-		ylab="Rao", ylim=c(0,10))
+		names.arg  = c("abundance" ,"presence"), 
+		legend.text = c("within species", "between species"), 
+		ylab = "Rao", ylim = c(0,10))
 		
 		
 		#We can do this analysis for each trait separately. 
@@ -135,21 +149,37 @@
 		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
 		
 		library(mice)
+
+		traits = traits.finch
+
 		traits=traits.finch
+
 		mice <- mice(traits.finch)
 		traits.finch.mice <- complete(mice)
 		
 		
 		traits.finch.mice.sp <- apply(apply(traits.finch.mice, 2, scale ), 2, 
+
+		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
+
 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
+
 		
 		trait.rao.w <- list()
 		witRao.w.bytrait <- c()
 		betRao.w.bytrait <- c()
+
+		for (t in 1 : 4){
+		  trait.rao.w[[t]] <- RaoRel(sample = as.matrix(comm.sp), 
+		  dfunc = dist(traits.finch.mice.sp[,t]), dphyl = NULL, weight = TRUE, 
+		  Jost = FALSE, structure = NULL)
+		}
+		
 		for(t in 1 : 4){
 		  trait.rao.w[[t]] <- RaoRel(sample=as.matrix(comm.sp), 
 		  dfunc=dist(traits.finch.mice.sp[,t]), dphyl=NULL, weight=TRUE, 
 		  Jost=FALSE, structure=NULL)
+
 		  
 		  witRao.w.bytrait <- c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
 		  betRao.w.bytrait <- c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
@@ -159,8 +189,8 @@
 		
 		barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)), 
 		names.arg = colnames(traits.finch),
-		legend.text=c("within species", "between species"), 
-		ylab="Rao", ylim=c(0,1.5))	
+		legend.text = c("within species", "between species"), 
+		ylab = "Rao", ylim = c(0,1.5))	
 	}
 }
 

@@ -17,7 +17,7 @@
 
 \arguments{
 	\item{index.list}{
-		A list of index and the associate null models in the forme: list( index_1=index_1_observed, index_1_nm=null.model.index_1 ,index_2=index_2_observed, index_2_nm=null.model.index_2, ...). 
+		A list of index and the associate null models in the forme: list( index_1 = index_1_observed, index_1_nm = null.model.index_1 ,index_2 = index_2_observed, index_2_nm = null.model.index_2, ...). 
 	}
 	
 	\item{variable}{
@@ -33,11 +33,11 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{resume}{
-		Logical value; resume=FALSE by default; Simplify the plot by plotting the mean and standard error for index value of multiple traits
+		Logical value; resume = FALSE by default; Simplify the plot by plotting the mean and standard error for index value of multiple traits
 	}
 	
 	\item{multipanel}{
@@ -60,20 +60,20 @@
 
 \examples{
 	data(finch.ind)
-	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
-	nperm=9)
+	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+	nperm = 9)
 
-	par(mfrow=c(2,2))
+	par(mfrow = c(2,2))
 	species.richness <- table(ind.plot.finch)
 	plotSESvar(as.listofindex(list(res.finch)), species.richness, 
-	multipanel=FALSE)
+	multipanel = FALSE)
 
-	#Same plot with resume=TRUE.
+	#Same plot with resume = TRUE.
 	
-	par(mfrow=c(2,2))
+	par(mfrow = c(2,2))
 	plotSESvar(as.listofindex(list(res.finch)), species.richness, 
-	resume=TRUE, multipanel=FALSE)
-	par(mfrow=c(1,1))
+	resume = TRUE, multipanel = FALSE)
+	par(mfrow = c(1,1))
 }
 
 

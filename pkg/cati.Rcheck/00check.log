@@ -1,12 +1,10 @@
-* using log directory 'C:/Users/taudiere/Desktop/cati/pkg/cati.Rcheck'
-* using R version 3.0.3 (2014-03-06)
-* using platform: x86_64-w64-mingw32 (64-bit)
+* using log directory 'C:/Users/Admin/Desktop/cati/pkg/cati.Rcheck'
+* using R version 3.1.0 (2014-04-10)
+* using platform: i386-w64-mingw32 (32-bit)
 * using session charset: ISO8859-1
 * checking for file 'cati/DESCRIPTION' ... OK
 * checking extension type ... Package
 * this is package 'cati' version '0.9'
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -29,7 +27,6 @@ Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
-* checking loading without being on the library search path ... OK
 * checking dependencies in R code ... OK
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
@@ -37,7 +34,6 @@ Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
 * checking R code for possible problems ... OK
 * checking Rd files ... OK
 * checking Rd metadata ... OK
-* checking Rd line widths ... OK
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
@@ -49,4 +45,3 @@ Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
 * checking data for ASCII and uncompressed saves ... OK
 * checking examples ... OK
 * checking PDF version of manual ... OK
-NOTE: There was 1 note.

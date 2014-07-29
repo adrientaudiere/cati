@@ -31,7 +31,7 @@
 	}
 	
 	\item{nullmodels}{
-		A vector of values corresponding to null models tu use for each index. A value of 1 corresponds to a randomization of individual values within a given community. A value of 2 corresponds to randomization of individual values within region, ie within all the dataset. A value of 3 corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. For example, if nullmodels = c(1,2), the first index will be calculated on the null model 1 and the second index on the null model 2.
+		A vector of values corresponding to null models tu use for each index. A value of 1 corresponds to a randomization of individual values within a given community. A value of 2 corresponds to randomization of individual values within region, ie within all the dataset. A value of 2sp corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. Finally a value of 2sp.prab mirror null model 2 but without taking indo account species abundance. For example, if nullmodels = c(1,2), the first index will be calculated on the null model 1 and the second index on the null model 2.
 		
 		If only one value is given, all the the null model will be determined by this value.
 	}
@@ -50,7 +50,7 @@
 	}
 		
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger than traits. Use only for null model 2.
+		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
 	}	
 	
 	\item{nperm}{
@@ -121,11 +121,11 @@
 	
 	\dontrun{
 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
 		res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c(3,3,3,3), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 	
 		####
@@ -158,7 +158,7 @@
 		nperm = 9, print = FALSE)
 		
 		res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 	
 		
@@ -191,11 +191,11 @@
 		
 		
 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
-		sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
 		res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
-		sp = sp.finch, nullmodels = c(3,3,3,3), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
 		
@@ -274,5 +274,31 @@
 		ComIndex(traits_by_pop, nullmodels = 2, ind.value = FALSE, index = funct, 
 		sp = sp.sp, com = w2)
 		
+	}
+	
+	############################
+	####Simple example using null model 2sp.prab (species level without taking 
+	# into acount for species abundance, prab for presence/absence)
+	
+	\dontrun{
+	traits_by_sp <- apply(traits.finch, 2, function(x) tapply(x, name_sp_sites, mean, na.rm=T))
+	sites_bysp<-unlist(strsplit(rownames(traits_by_sp), split="_"))[seq(3,3*dim(traits_by_sp)[1], by=3) ]
+	
+	funct.withoutIV.prab <- c("tapply(x, unlist(sites_bysp), function(x) mean(x, na.rm = TRUE))", 
+		"tapply(x, unlist(sites_bysp), function(x) kurtosis(x, na.rm = TRUE))", 
+		"tapply(x, unlist(sites_bysp), function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+		"tapply(x, unlist(sites_bysp), function(x) CVNND(x))")
+		
+	res.finch.withoutIV.prab <- ComIndex(traits = traits.finch, index = funct.withoutIV.prab, 
+		sp = sp.finch, nullmodels = rep("2sp.prab", times=4), ind.plot = ind.plot.finch, 
+		nperm = 9, print = FALSE)
+	
+	list.ind2 <- list(res.finch.withoutIV, res.finch.withoutIV.prab)
+	index.list2 <- as.listofindex(list.ind2, namesindex = 
+		c("mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+		"mean.prab", "kurtosis.prab", "range.prab", "CVNND.prab"))
+	
+	plot(index.list2)
+	
 	}
 }
