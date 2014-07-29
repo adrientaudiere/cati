@@ -10,7 +10,7 @@
 }
 
 \usage{
-	plotRandtest(x, alternative=c("greater", "less", "two-sided"), ...)
+	plotRandtest(x, alternative = c("greater", "less", "two-sided"), ...)
 }
 
 \arguments{
@@ -46,13 +46,13 @@
 
 \examples{
 	data(finch.ind)
-	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
-	sp=sp.finch, nperm=9, print=FALSE)
+	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
+	sp = sp.finch, nperm = 9, print = FALSE)
 	
-	par(mfrow=c(3,4))
+	par(mfrow = c(3,4))
 	
 	plotRandtest(res.finch)
-	plotRandtest(res.finch, alter="two-sided")
+	plotRandtest(res.finch, alter = "two-sided")
 }
 
 

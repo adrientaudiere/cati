@@ -12,15 +12,15 @@
 }
 
 \usage{
-	Tstats(traits, ind_plot, sp, reg.pool=NULL, nperm = NULL, printprogress = TRUE, 
+	Tstats(traits, ind_plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE, 
 	p.value = TRUE)
 	
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
-	col.Tstats = c("red", "purple", "green", "white"), ylim=NULL, \dots)
+	col.Tstats = c("red", "purple", "green", "white"), ylim = NULL, \dots)
 	
 	\method{plot}{Tstats}(x, val.quant = c(0.025, 0.975), 
 	col.Tstats = c("red", "purple", "green"), type = "normal", 
-	add.conf = TRUE, ylim=NULL, xlim=NULL, \dots)
+	add.conf = TRUE, ylim = NULL, xlim = NULL, \dots)
 	
 	summary_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 }
@@ -39,7 +39,7 @@
 	}
 	
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger than traits. Use only for null model 2.
+		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
 	}	
 	
 	\item{nperm}{
@@ -65,7 +65,7 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant=c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{col.Tstats}{
@@ -139,12 +139,12 @@
 	\item{$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
 	\item{$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
 	
-	\item{$pval$T_IP.IC.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed < T_IP.IC simulated}
-	\item{$pval$T_IC.IR.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed < T_IC.IR simulated}
-	\item{$pval$T_PC.PR.inf}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed < T_PC.PR simulated}
-	\item{$pval$T_IP.IC.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed > T_IP.IC simulated}
-	\item{$pval$T_IC.IR.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed > T_IC.IR simulated}
-	\item{$pval$T_PC.PR.sup}{If p.value=TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed > T_PC.PR simulated}
+	\item{$pval$T_IP.IC.inf}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed < T_IP.IC simulated}
+	\item{$pval$T_IC.IR.inf}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed < T_IC.IR simulated}
+	\item{$pval$T_PC.PR.inf}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed < T_PC.PR simulated}
+	\item{$pval$T_IP.IC.sup}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed > T_IP.IC simulated}
+	\item{$pval$T_IC.IR.sup}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed > T_IC.IR simulated}
+	\item{$pval$T_PC.PR.sup}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed > T_PC.PR simulated}
 }
 
 \references{
@@ -166,9 +166,9 @@
 
 \examples{
 	data(finch.ind)
-	
-	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
-	sp=sp.finch, nperm=9, print=FALSE)
+
+	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
+	sp = sp.finch, nperm = 9, print = FALSE)
 	
 	attributes(res.finch)
 
@@ -176,19 +176,19 @@
 	
 	plot(res.finch)
 	
-	plot(res.finch, type="color_cond")
-	plot(res.finch, type="simple")
-	plot(res.finch, type="simple_sd")
-	plot(res.finch, type="barplot")
+	plot(res.finch, type = "color_cond")
+	plot(res.finch, type = "simple")
+	plot(res.finch, type = "simple_sd")
+	plot(res.finch, type = "barplot")
 	
 	attributes(summary_Tstats(res.finch))
 	head(summary_Tstats(res.finch)$p.value, 10)
 	
-	summary_Tstats(res.finch, type="binary")
-	summary_Tstats(res.finch, type="percent")
-	summary_Tstats(res.finch, type="site")
-	summary_Tstats(res.finch, type="p.value")
-	summary_Tstats(res.finch, type="all")
+	summary_Tstats(res.finch, type = "binary")
+	summary_Tstats(res.finch, type = "percent")
+	summary_Tstats(res.finch, type = "site")
+	summary_Tstats(res.finch, type = "p.value")
+	summary_Tstats(res.finch, type = "all")
 	
 	barplot(res.finch)
 	
@@ -202,19 +202,26 @@
 	
 	my.theme <- BuRdTheme()
 	# Customize the colorkey
-	my.ckey <- list(col=my.theme$regions$col)
+	my.ckey <- list(col = my.theme$regions$col)
 	
 	levelplot(t(ses(res.finch$T_IP.IC,res.finch$T_IP.IC_nm)$ses), 
-	colorkey=my.ckey, par.settings=my.theme,border="black")
+	colorkey = my.ckey, par.settings = my.theme,border = "black")
 	
 	
 	#### Use a different regional pool than the binding of studied communities
 	
 	#create a random regional pool for the example
+
+	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+
+	res.finch2 <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
+    sp = sp.finch, nperm = 9, print = FALSE)	
+
 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300),])
 
 	res.finch2 <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
     sp=sp.finch, nperm=9, print=FALSE)	
+
 	
 }
 

@@ -10,7 +10,7 @@
 }
 
 \usage{
-	CVNND(trait, div_range= FALSE)
+	CVNND(trait, div_range =  FALSE)
 }
 
 \arguments{

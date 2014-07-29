@@ -15,8 +15,8 @@
 
 \usage{
 	traitflex.anova(formula, specif.avg, const.avg, ...)
-	\method{plot}{traitflex}(x, plot.total= FALSE, use.percentage = TRUE, 
-	plot.covar= FALSE, cumul= FALSE, 
+	\method{plot}{traitflex}(x, plot.total =  FALSE, use.percentage = TRUE, 
+	plot.covar =  FALSE, cumul =  FALSE, 
 	legend.pos = if (plot.total) "topleft" else "topright", 
 	plot.res = TRUE, ...)
 	
@@ -61,7 +61,7 @@
 	}
 	
 	\item{plot.res}{
-		Logical value; if resume=FALSE plot is not shown but the table of values used to print the plot is return.
+		Logical value; if resume = FALSE plot is not shown but the table of values used to print the plot is return.
 	}
 	
 	\item{\dots}{

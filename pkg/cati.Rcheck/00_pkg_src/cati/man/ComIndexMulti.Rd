@@ -12,8 +12,8 @@
 \usage{
 	ComIndexMulti(traits = NULL, index = NULL, by.factor = NULL, 
 	namesindex = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, 
-	com=NULL, reg.pool=NULL, nperm = 99, printprogress = TRUE, 
-	ind.value=TRUE, type="count")
+	com = NULL, reg.pool = NULL, nperm = 99, printprogress = TRUE, 
+	ind.value = TRUE, type = "count")
 }
 
 \arguments{
@@ -47,12 +47,12 @@
 	}
 	
 	\item{com}{
-		Community data matrix with species (or populations) in rows and sites in column. Use only if ind.value=FALSE. 
+		Community data matrix with species (or populations) in rows and sites in column. Use only if ind.value = FALSE. 
 		"traits" matrix and "com" matrix must have the same number of rows.
 	}
 	
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger than traits. Use only for null model 2.
+		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
 	}	
 	
 	\item{nperm}{
@@ -68,7 +68,7 @@
 	}
 	
 	\item{type}{
-		Only if ind.value=FALSE. Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one.
+		Only if ind.value = FALSE. Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one.
 	}
 	
 	
@@ -108,12 +108,12 @@
 	#For this example, we use the package mice to complete the data.
 	
 	\dontrun{
-		names.sp_ind_plot <- as.factor(paste(sp.finch, ind.plot.finch, sep="_")) 
+		names.sp_ind_plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
 		
 		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
 		
 		library(mice)
-		traits=traits.finch
+		traits = traits.finch
 		mice <- mice(traits.finch)
 		traits.finch.mice <- complete(mice)
 		
@@ -122,9 +122,9 @@
 		#ComIndexMulti
 		
 		res.sum.1 <- ComIndexMulti(traits.finch, 
-		index=c("sum(scale(x), na.rm=TRUE)", "sum(x, na.rm=TRUE)"), 
-		by.factor=names.sp_ind_plot, nullmodels=c(2,2), 
-		ind.plot=ind.plot.finch, nperm=50, sp=sp.finch)
+		index = c("sum(scale(x), na.rm = TRUE)", "sum(x, na.rm = TRUE)"), 
+		by.factor = names.sp_ind_plot, nullmodels = c(2,2), 
+		ind.plot = ind.plot.finch, nperm = 50, sp = sp.finch)
 		
 		attributes(ses.listofindex(as.listofindex(res.sum.1)))
 		
@@ -137,32 +137,32 @@
 		
 		require(hypervolume)
 		
-		res.hv.1 <- ComIndexMulti(traits.finch.mice, index=c("as.numeric
-		(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, 
-		warnings=FALSE)@Volume))"), by.factor=rep(1,length(names.sp_ind_plot)), 
-		nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+		res.hv.1 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+		warnings = FALSE)@Volume))"), by.factor = rep(1,length(names.sp_ind_plot)), 
+		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
-		res.hv.2 <- ComIndexMulti(traits.finch.mice, index=c("as.numeric
-		(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, 
-		warnings=FALSE)@Volume))"), by.factor=names.sp_ind_plot, 
-		nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+		res.hv.2 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+		warnings = FALSE)@Volume))"), by.factor = names.sp_ind_plot, 
+		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
-		res.hv.3 <- ComIndexMulti(traits.finch.mice, index=c("as.numeric
-		(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, 
-		warnings=FALSE)@Volume))"), by.factor=ind.plot.finch, 
-		nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+		res.hv.3 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+		warnings = FALSE)@Volume))"), by.factor = ind.plot.finch, 
+		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
-		res.hv.4 <- ComIndexMulti(traits.finch.mice, index=c("as.numeric
-		(try(hypervolume(na.omit(x), reps=100, bandwidth=0.2, verbose=FALSE, 
-		warnings=FALSE)@Volume))"), by.factor=sp.finch, 
-		nullmodels=c(2,2), ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+		res.hv.4 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+		warnings = FALSE)@Volume))"), by.factor = sp.finch, 
+		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
 		list.ind.multi <- as.listofindex(list(res.hv.2, res.hv.3, res.hv.4))
 		
 		ses.listofindex(list.ind.multi)
 		
 		plot(list.ind.multi)
-		plot(list.ind.multi, xlim=c(-200,20))
+		plot(list.ind.multi, xlim = c(-200,20))
 	}
 }
 
