@@ -45,7 +45,7 @@
 	}
 	
 	\item{resume}{
-		Logical. If resume=FALSE, plot one graphic by traits.
+		Logical. If resume = FALSE, plot one graphic by traits.
 	}
 	
 	\item{\dots}{
@@ -74,14 +74,14 @@
 \examples{
 	data(finch.ind)
 	
-	res.decomp <- decompWithin(traits=traits.finch, sp=sp.finch, 
-	ind.plot=ind.plot.finch, print=FALSE)
+	res.decomp <- decompWithin(traits = traits.finch, sp = sp.finch, 
+	ind.plot = ind.plot.finch, print = FALSE)
 	
 	barplot.decompWithin(res.decomp)
 	
-	par(mfrow=c(2,2))
-	barplot.decompWithin(res.decomp, resume=FALSE)
-	par(mfrow=c(1,1))
+	par(mfrow = c(2,2))
+	barplot.decompWithin(res.decomp, resume = FALSE)
+	par(mfrow = c(1,1))
 }
 
 

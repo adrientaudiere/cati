@@ -12,7 +12,7 @@
 }
 
 \usage{
-	Tstats(traits, ind_plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE, 
+	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE, 
 	p.value = TRUE)
 	
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
@@ -30,7 +30,7 @@
 		Individual Matrix of traits with traits in columns. For one trait, use as.matrix().
 	}
 	
-	\item{ind_plot}{
+	\item{ind.plot}{
 		Factor defining the name of the plot in which the individual is.
 	}
 	
@@ -39,7 +39,7 @@
 	}
 	
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger than traits. Use only for null model 2.
+		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
 	}	
 	
 	\item{nperm}{
@@ -166,14 +166,9 @@
 
 \examples{
 	data(finch.ind)
-	
-<<<<<<< HEAD
-	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
+
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9, print = FALSE)
-=======
-	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
-	sp=sp.finch, nperm=9, print=FALSE)
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
 	
 	attributes(res.finch)
 
@@ -216,17 +211,17 @@
 	#### Use a different regional pool than the binding of studied communities
 	
 	#create a random regional pool for the example
-<<<<<<< HEAD
+
 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
 
-	res.finch2 <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
+	res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
     sp = sp.finch, nperm = 9, print = FALSE)	
-=======
+
 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300),])
 
-	res.finch2 <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
+	res.finch2 <- Tstats(traits.finch, ind.plot=ind.plot.finch, 
     sp=sp.finch, nperm=9, print=FALSE)	
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 	
 }
 
