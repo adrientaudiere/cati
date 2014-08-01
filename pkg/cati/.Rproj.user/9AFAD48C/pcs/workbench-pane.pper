@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
     "TabSet1" : 2,
     "TabSet2" : 3
+=======
+    "TabSet1" : 0,
+    "TabSet2" : 1
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 }
