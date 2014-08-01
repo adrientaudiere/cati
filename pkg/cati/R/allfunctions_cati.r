@@ -75,7 +75,7 @@ barPartvar <- function(partvar,  col.bar=NA, ...){
 #______________#______________#______________#______________#______________#______________#______________#______________
 #__Tstats
 
-### Function to calcul Tstats 
+### Function to calculation Tstats 
 Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogress=TRUE, p.value=TRUE){
 	#6 variances: I: individual, P: population, C: community, R: region
 	#IP; IC; IR; PC; PR; CR
@@ -88,7 +88,7 @@ Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogres
 	#Tplosp is the plot in wich the population is
 	
 	######################################## 
-	####	Calcul of observed values	####
+	####	calculation of observed values	####
 	######################################## 
 
 	#________________________________________
@@ -214,10 +214,10 @@ Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogres
 		#________________________________________
 	
 		######################################### 
-		#### calcul of Tstats on null models ####
+		#### calculation of Tstats on null models ####
 		######################################### 
 
-		if (printprogress==T){print("calcul of Tstats using null models")}
+		if (printprogress==T){print("calculation of Tstats using null models")}
 		
 		yy <- length(names_sp_ind.plot)
 		for (t in 1: ncol(traits)){
@@ -266,7 +266,7 @@ Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogres
 			if (printprogress==T){print(paste(round(66.6+t/ncol(traits)/3*100, 2),"%"))} else {}
 		}       
 		      
-	}#end of calcul of Tstats using null models
+	}#end of calculation of Tstats using null models
          
 	colnames(T_IP.IC) <- colnames(traits)
     colnames(T_IC.IR) <- colnames(traits)
@@ -315,10 +315,10 @@ Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogres
  	#________________________________________
  	
  	######################################### 
-	####		 calcul of p.value		 ####
+	####		 calculation of p.value		 ####
 	######################################### 
  
- 	if (printprogress==T){print("calcul of p.value")}
+ 	if (printprogress==T){print("calculation of p.value")}
  	
  	if (p.value==T){
 		p.valueT_IP.IC.sup <- matrix(ncol=ncol(traits), nrow= nlevels(ind.plot))
@@ -381,7 +381,7 @@ plot.Tstats <- function(x, val.quant=c(0.025,0.975), col.Tstats=c("red","purple"
 	tstats <- x
 	
 	#________________________________________
-	#Calcul of standardised effect size
+	#calculation of standardised effect size
 	ses.T_IP.IC <- (tstats$T_IP.IC-apply(tstats$T_IP.IC_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(tstats$T_IP.IC_nm, c(3,2), function(x) sd(x, na.rm=T))
 	ses.T_IC.IR <- (tstats$T_IC.IR-apply(tstats$T_IC.IR_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(tstats$T_IC.IR_nm, c(3,2), function(x) sd(x, na.rm=T))
 	ses.T_PC.PR <- (tstats$T_PC.PR-apply(tstats$T_PC.PR_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(tstats$T_PC.PR_nm, c(3,2), function(x) sd(x, na.rm=T))
@@ -843,7 +843,7 @@ barplot.Tstats <- function(height, val.quant=c(0.025,0.975), col.Tstats=c("red",
 #______________#______________#______________#______________#______________#______________#______________#______________
 #__ ComIndex
 
-#Calcul of statistics (e.g. mean, range, CVNND and kurtosis) to test community assembly using null models
+#calculation of statistics (e.g. mean, range, CVNND and kurtosis) to test community assembly using null models
 #For each statistic this function return observed value and correspondant Null distribution
 #This function implement three null models which keep unchanged the number of individual per community
 #Models 1 correspond to randomization of individual values within community
@@ -905,7 +905,7 @@ ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, 
 	
 	if (is.numeric(nperm)){
 		######################################### 
-		#### 	  Calcul of null models  	 ####
+		#### 	  calculation of null models  	 ####
 		######################################### 
 		#Creation of three null models 
 		if (printprogress==T){ print("creating null models")}
@@ -1008,13 +1008,13 @@ ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, 
 		}
 		
 		######################################## 
-		####	 Calcul of random values   	####
+		####	 calculation of random values   	####
 		######################################## 
 		Null <- list()
 		nm_bypop <- list()
 		nm_bypop.bis <- list()
 		
-		if (printprogress==T){print("calcul of null values using null models")}
+		if (printprogress==T){print("calculation of null values using null models")}
 		
 		for(i in 1:nindex){
 			if (nullmodels[i]=="1"){nm.bis <- traits.nm1[[1]]}
@@ -1085,19 +1085,20 @@ ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, 
 	}
 		  
 	######################################## 
-	####	Calcul of observed values	####
+	####	calculation of observed values	####
 	######################################## 
 	obs <- list()
+	traits_by_pop<-c()
 	
-	if (printprogress==T){print("calcul of observed values")}
+	if (printprogress==T){print("calculation of observed values")}
 	
 	for(i in 1:nindex){
 		functionindex= eval(index[i])
 		
 		if (nullmodels[i]=="2sp") {
-			traits.pop <- apply(traits, 2 , function (x) tapply(x, name_sp_sites, mean , na.rm=T))
-			obs[[eval(namesindex[i])]] <- array(dim=c(ntr, dim(apply(traits.pop, 2, function (x) eval(parse(text=functionindex))))[1]))
-			obs[[eval(namesindex[i])]] <-  apply(traits.pop, 2, function (x) eval(parse(text=functionindex)))
+			traits_by_pop <- apply(traits, 2 , function (x) tapply(x, name_sp_sites, mean , na.rm=T))
+			obs[[eval(namesindex[i])]] <- array(dim=c(ntr, dim(apply(traits_by_pop, 2, function (x) eval(parse(text=functionindex))))[1]))
+			obs[[eval(namesindex[i])]] <-  apply(traits_by_pop, 2, function (x) eval(parse(text=functionindex)))
 		}
 		
 				
@@ -1213,7 +1214,7 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 	
 	if (is.numeric(nperm)){
 		######################################### 
-		#### 	  Calcul of null models  	 ####
+		#### 	  calculation of null models  	 ####
 		######################################### 
 		#Creation of three null models 
 		if (printprogress==T){ print("creating null models")}
@@ -1315,11 +1316,11 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 		
 				
 		######################################## 
-		####	 Calcul of random values   	####
+		####	 calculation of random values   	####
 		######################################## 
 		Null <- list()
 		
-		if (printprogress==T) {print("calcul of null values using null models")}
+		if (printprogress==T) {print("calculation of null values using null models")}
 		
 		for(i in 1:nindex){
 		
@@ -1354,11 +1355,11 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 	}
 		  
 	######################################## 
-	####	Calcul of observed values	####
+	####	calculation of observed values	####
 	######################################## 
 	obs <- list()
 	
-	if (printprogress==T){print("calcul of observed values")}
+	if (printprogress==T){print("calculation of observed values")}
 	
 	for(i in 1:nindex){
 		if (nullmodels[i]=="1"){nm <- array(unlist(traits.nm1),dim=c(ncol(traits), dim(traits)[1], nperm) )}
@@ -1380,7 +1381,7 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 			traits_by_sp <- apply(traits,2,function(x) tapply(x,name_sp_sites,mean, na.rm=T)) 
 			traits_by_pop <- traits_by_sp[match(name_sp_sites, rownames(traits_by_sp)), ]
 			
-			obs[[eval(namesindex[i])]] <- as.vector(by(t(traits.pop), by.factor, function (x) eval(parse(text=functionindex))))
+			obs[[eval(namesindex[i])]] <- as.vector(by(t(traits_by_pop), by.factor, function (x) eval(parse(text=functionindex))))
 		}
 		
 		if (nullmodels[i]=="2sp.prab") {
@@ -1539,7 +1540,7 @@ plot.listofindex <- function(x, type="normal", col.index=c("red","purple","green
 	}
 	
 	#________________________________________
-	#Calcul of standardised effect size
+	#calculation of standardised effect size
 	
 	res <- list()
 	for (i in seq(1,nindex*2, by=2)){
@@ -2348,7 +2349,7 @@ plotSESvar <- function(index.list, variable=NULL, ylab="variable" ,color.traits=
 	}
 	
 	#________________________________________
-	#Calcul of standardised effect size
+	#calculation of standardised effect size
 	
 	res <- list()
 	for (i in seq(1,nindex*2, by=2)){
@@ -2793,8 +2794,8 @@ plotSpVar <- function(traits=NULL, ind.plot=NULL, sp=NULL, variable = NULL, col.
 #______________#______________#______________#______________#______________#______________#______________#______________
 #__ Other functions
 
-#Calcul of CVNND for one trait with our without division by the range of the trait
-CVNND <- function(trait, div_range=FALSE){
+#calculation of CVNND for one trait with our without division by the range of the trait
+CVNND <- function(trait, div_range=FALSE, na.rm=FALSE){
 	
 	r=sort(trait)
 	if (length(r)<1){
@@ -2808,13 +2809,13 @@ CVNND <- function(trait, div_range=FALSE){
 	
 	CVNND <- sd(nnd,na.rm=T)/mean(nnd, na.rm=T)
 	
-	if (div_range==T) {CVNND <- CVNND/range(trait)} 
+	if (div_range==T) {CVNND <- CVNND/range(trait, na.rm=na.rm)} 
 	else {}
 	
 	return(CVNND)
 }
 
-### Function to calcul SES on list of index
+### Function to calculation SES on list of index
 ses.listofindex <- function(index.list=NULL, val.quant=c(0.025,0.975) ){
 	
 	namesindex.all <- names(index.list)
@@ -2827,7 +2828,7 @@ ses.listofindex <- function(index.list=NULL, val.quant=c(0.025,0.975) ){
 	ntr <- dim(index.list[[1]])[2]
 	
 	#________________________________________
-	#Calcul of standardised effect size
+	#calculation of standardised effect size
 	
 	res <- list()
 	for (i in seq(1,nindex*2, by=2)){
@@ -2838,7 +2839,7 @@ ses.listofindex <- function(index.list=NULL, val.quant=c(0.025,0.975) ){
 	return(res)
 }
 
-### Function to calcul SES
+### Function to calculation SES
 ses <- function(obs=NULL, nullmodel=NULL, val.quant=c(0.025,0.975) ){
 		
 	if (is.vector(obs)){
@@ -3229,7 +3230,7 @@ plotRandtest <- function(x, alternative=c("greater", "less", "two-sided"), ...){
 		if (inherits(x, "Tstats") | inherits(x, "ComIndex")  | inherits(x, "ComIndexMulti")) {
 			x <- as.listofindex(x)
 		}	
-		else{stop("x must be a list of objects of class Tstats, ComIndex or ComIndexMulti")}
+		else{stop("x must be a list of objects of class listofindex, Tstats, ComIndex or ComIndexMulti")}
 	}
 
 	index.list <- x
@@ -3255,14 +3256,14 @@ plotRandtest <- function(x, alternative=c("greater", "less", "two-sided"), ...){
 	if (is.null(ncom)) {ncom=1}
 	if (is.null(ntr)) {ntr=1}
 	
-	for (i in seq(1,nindex*2,by=2)){
+	for (i in seq(1, nindex*2, by=2)){
 		for (t in 1:ntr[1]){
-
-			rt <- as.randtest(sim=index.list[[i+1]][t,, ], obs=index.list[[i]][t], alter=alternative)
-
-			rt <- as.randtest(sim=index.list[[i+1]][t,,], obs=index.list[[i]][t], alter=alternative)
-
-			plot(rt, main=paste(namesindex.all[i], namestraits[t], "p.value = ", round(rt$pvalue, digits = 5)), ...)
+			for(s in 1: ncom[1]){
+			
+				rt <- as.randtest(sim =  na.omit(index.list[[i+1]][,t,s]), obs =  na.omit(index.list[[i]][s,t]), alter = alternative)
+				plot(rt, main=paste(namesindex.all[i], namestraits[t], namescommunity[s], "p.value = ", round(rt$pvalue, digits = 5)), ...)
+			
+			}
 		}
 	}
 

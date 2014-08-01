@@ -62,7 +62,7 @@
 	}
 	
 	\item{printprogress}{
-		Logical value; print progress during the calcul or not.
+		Logical value; print progress during the calculation or not.
 	}
 	
 	\item{ind.value}{
@@ -140,22 +140,26 @@
 		require(hypervolume)
 		
 		res.hv.1 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric (try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
+		paste("as.numeric (try(hypervolume(na.omit(x), warnings = FALSE,", 
+		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
 		by.factor = rep(1,length(names.sp_ind.plot)), nullmodels = c(2,2), 
 		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
 		res.hv.2 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
+		paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
+		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
 		by.factor = names.sp_ind.plot, nullmodels = c(2,2), 
 		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
 		res.hv.3 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
+		paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,"
+		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
 		by.factor = ind.plot.finch,	nullmodels = c(2,2), 
 		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
 		res.hv.4 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
+		paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
+		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
 		by.factor = sp.finch, nullmodels = c(2,2), ind.plot = ind.plot.finch, 
 		nperm = 9, sp = sp.finch)
 		
@@ -166,9 +170,6 @@
 		
 		plot(list.ind.multi)
 		plot(list.ind.multi, xlim = c(-200,20))
-		
-		
-
 		
 	}
 }

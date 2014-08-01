@@ -97,7 +97,7 @@
 
 \examples{	
 	data(finch.ind)
-	oldpar <- par()
+	oldpar <- par(no.readonly = TRUE)
 	
 	####
 	#The function ComIndex allow to choose your own function 
@@ -118,11 +118,10 @@
 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 
-	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
-	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
-	}
+		funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
+		"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
 	
-	\dontrun{
+	
 		res.finch.sp_mn2 <- ComIndex(traits=traits.finch, index=funct, 
 		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
 		nperm=9, print=FALSE)
@@ -145,7 +144,7 @@
 	}
 	
 	####
-	#This allows to calcul index per site 
+	#This allows to calculation index per site 
 	#for example using "tapply(x, sites, mean)".
 	
 
@@ -158,8 +157,6 @@
 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm=TRUE) - 
 	min(x, na.rm=TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))")
-
-	
 	
 	##Null model 1 is trivial for this function 
 	#because randomisation is within community only
@@ -184,7 +181,7 @@
 
 		
 		####
-		#We can calcul metrics with or without intraspecific variance.
+		#We can calculation metrics with or without intraspecific variance.
 		#Calculation of trait averages per population 
 		#(name_sp_site is a name of a population) 
 		#like in the function ComIndex
@@ -304,23 +301,22 @@
 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
 		
 		index.list1 <- as.listofindex(list.ind, namesindex=c("mean", "kurtosis", 
-
 		"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
 		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
 		
 		class(index.list1)
 		
 		par(mfrow = c(2,3))
-		plot(index.list1,type = "bytraits", bysite = TRUE)
+		plot(index.list1, type = "bytraits", bysite = TRUE)
 		
 		par(mfrow = c(2,2))
 		plot(index.list1,type = "bytraits")
 		par(mfrow = c(1,1))
 		
-		plot(index.list1,type = "simple")
-		plot(index.list1,type = "simple_range")
-		plot(index.list1,type = "normal")
-		plot(index.list1,type = "barplot")
+		plot(index.list1, type = "simple")
+		plot(index.list1, type = "simple_range")
+		plot(index.list1, type = "barplot")
+		plot(index.list1, type = "normal")
 	}
 }
 
