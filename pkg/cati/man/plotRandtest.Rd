@@ -46,13 +46,15 @@
 
 \examples{
 	data(finch.ind)
-	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-	sp = sp.finch, nperm = 9, print = FALSE)
+	\dontrun{
+		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+		sp = sp.finch, nperm = 99, print = FALSE)
 	
-	par(mfrow = c(3,4))
+	par(mfrow = c(4,4))
 	
 	plotRandtest(res.finch)
 	plotRandtest(res.finch, alter = "two-sided")
+	}
 }
 
 

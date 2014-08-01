@@ -47,11 +47,11 @@
 	}
 	
 	\item{printprogress}{
-		Logical value; print progress during the calcul or not.
+		Logical value; print progress during the calculation or not.
 	}
 	
 	\item{p.value}{
-		Logical value; calcul p-value or not. p-value are here defined as: (x+1)/y 
+		Logical value; calculation p-value or not. p-value are here defined as: (x+1)/y 
 		
 		with x the number of null values greater or lesser than the observed value and y the total number of null values. 
 	}
@@ -65,7 +65,7 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{col.Tstats}{
@@ -129,10 +129,10 @@
 	\item{$variances$var_IR}{variance of individuals within the region}
 	    
 	\item{$variances$var_IP_nm1}{variance of individuals within populations in null model 1}    
-	\item{$variances$var_PC_nm3}{variance of populations within communities in null model 3}
+	\item{$variances$var_PC_nm2sp}{variance of populations within communities in null model 2sp}
 	\item{$variances$var_IC_nm1}{variance of communities within the region in null model 1}
 	\item{$variances$var_IC_nm2}{variance of individuals within communities in null model 2}
-	\item{$variances$var_PR_nm3}{variance of populations within the region in null model 3}
+	\item{$variances$var_PR_nm2sp}{variance of populations within the region in null model 2sp}
 	\item{$variances$var_IR_nm2}{variance of individuals within the region in null model 2}
 	
 	\item{$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}

@@ -80,7 +80,7 @@
 }
 
 \author{
-	Francesco De Bello et al., 2011
+	Francesco De Bello et al., 2011 modified by Adrien Taudiere
 }
 
 \examples{
@@ -159,11 +159,7 @@
 		
 		
 		traits.finch.mice.sp <- apply(apply(traits.finch.mice, 2, scale ), 2, 
-
 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
-
-		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
-
 		
 		trait.rao.w <- list()
 		witRao.w.bytrait <- c()

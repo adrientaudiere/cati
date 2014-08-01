@@ -41,7 +41,7 @@
 	}
 
 	\item{printprogress}{
-		Logical value; print progress during the calcul or not.
+		Logical value; print progress during the calculation or not.
 	}
 	
 	\item{resume}{

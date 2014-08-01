@@ -33,7 +33,7 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{resume}{

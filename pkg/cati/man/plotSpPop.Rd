@@ -75,6 +75,10 @@
 	}
 }
 
+\details{
+	Cornwell, W.K., Ackerly, D.D., 2009. Community assembly and shifts in plant trait distributions across an environmental gradient in coastal California. Ecological Monographs 79, 109-126.
+}
+
 \value{
 	None; used for the side-effect of producing a plot.
 }
