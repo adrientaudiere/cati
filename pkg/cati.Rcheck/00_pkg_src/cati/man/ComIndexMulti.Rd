@@ -35,9 +35,7 @@
 	}
 	
 	\item{nullmodels}{
-		A vector of values corresponding to null models tu use for each index. A value of 1 corresponds to a randomization of individual values within a given community. A value of 2 corresponds to randomization of individual values within region, ie within all the dataset. A value of 2sp corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. Finally a value of 2sp.prab mirror null model 2 but without taking indo account species abundance. For example, if nullmodels = c(1,2), the first index will be calculated on the null model 1 and the second index on the null model 2.
-		
-		If only one value is given, all the the null model will be determined by this value.
+		A vector of values for null models coresponding to index. A value of 1 correspond to randomization of individual values within community. A value of 2 correspond to randomization of individual values within region. A values of 3 correspond to randomization of population values within region.
 	}
 	
 	\item{ind.plot}{
@@ -62,7 +60,7 @@
 	}
 	
 	\item{printprogress}{
-		Logical value; print progress during the calculation or not.
+		Logical value; print progress during the calcul or not.
 	}
 	
 	\item{ind.value}{
@@ -110,7 +108,7 @@
 	#For this example, we use the package mice to complete the data.
 	
 	\dontrun{
-		names.sp_ind.plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
+		names.sp_ind_plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
 		
 		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
 		
@@ -125,7 +123,7 @@
 		
 		res.sum.1 <- ComIndexMulti(traits.finch, 
 		index = c("sum(scale(x), na.rm = TRUE)", "sum(x, na.rm = TRUE)"), 
-		by.factor = names.sp_ind.plot, nullmodels = c(2,2), 
+		by.factor = names.sp_ind_plot, nullmodels = c(2,2), 
 		ind.plot = ind.plot.finch, nperm = 50, sp = sp.finch)
 		
 		attributes(ses.listofindex(as.listofindex(res.sum.1)))
@@ -139,48 +137,25 @@
 		
 		require(hypervolume)
 		
-		res.hv.1 <- ComIndexMulti(traits.finch.mice, index = 
-<<<<<<< HEAD
-		paste("as.numeric (try(hypervolume(na.omit(x), warnings = FALSE,", 
-		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-		by.factor = rep(1,length(names.sp_ind.plot)), nullmodels = c(2,2), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+		res.hv.1 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+		warnings = FALSE)@Volume))"), by.factor = rep(1,length(names.sp_ind_plot)), 
+		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
-		res.hv.2 <- ComIndexMulti(traits.finch.mice, index = 
-		paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
-		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-		by.factor = names.sp_ind.plot, nullmodels = c(2,2), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+		res.hv.2 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+		warnings = FALSE)@Volume))"), by.factor = names.sp_ind_plot, 
+		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
-		res.hv.3 <- ComIndexMulti(traits.finch.mice, index = 
-		paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,"
-		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-=======
-		c("as.numeric (try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-		by.factor = rep(1,length(names.sp_ind_plot)), nullmodels = c(2,2), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+		res.hv.3 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+		warnings = FALSE)@Volume))"), by.factor = ind.plot.finch, 
+		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
-		res.hv.2 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-		by.factor = names.sp_ind_plot, nullmodels = c(2,2), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-		
-		res.hv.3 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
-		by.factor = ind.plot.finch,	nullmodels = c(2,2), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-		
-		res.hv.4 <- ComIndexMulti(traits.finch.mice, index = 
-<<<<<<< HEAD
-		paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
-		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-=======
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
-		by.factor = sp.finch, nullmodels = c(2,2), ind.plot = ind.plot.finch, 
-		nperm = 9, sp = sp.finch)
-		
+		res.hv.4 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+		warnings = FALSE)@Volume))"), by.factor = sp.finch, 
+		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
 		list.ind.multi <- as.listofindex(list(res.hv.2, res.hv.3, res.hv.4))
 		
@@ -188,34 +163,10 @@
 		
 		plot(list.ind.multi)
 		plot(list.ind.multi, xlim = c(-200,20))
-		
-<<<<<<< HEAD
-=======
-		
-
-		
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 	}
 }
 
 
-#essai des deux modeles nuls aux niveaux sp (2sp et 2sp.prab) non concluant, à creuser...
-		
-		res.hv.5 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-		by.factor = sp.finch, nullmodels = c("2sp", "2sp"), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-		
-		
-		
-		traits_by_sp <- apply(traits.finch, 2, function(x) tapply(x, name_sp_sites, mean, na.rm=T))
-		sites_bysp<-unlist(strsplit(rownames(traits_by_sp), split="_"))[seq(3,3*dim(traits_by_sp)[1], by=3) ]
-	
-		res.hv.6 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-		by.factor = sites_bysp, nullmodels = c("2sp.prab", "2sp.prab"), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-		
 
 
 
