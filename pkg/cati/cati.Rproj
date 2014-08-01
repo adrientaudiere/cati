@@ -15,5 +15,8 @@ LaTeX: pdfLaTeX
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
+<<<<<<< HEAD
 PackageCheckArgs: --as-cran
 PackageRoxygenize: rd
+=======
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba

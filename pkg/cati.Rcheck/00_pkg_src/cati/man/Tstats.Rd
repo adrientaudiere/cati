@@ -12,7 +12,7 @@
 }
 
 \usage{
-	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE, 
+	Tstats(traits, ind_plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE, 
 	p.value = TRUE)
 	
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
@@ -30,7 +30,7 @@
 		Individual Matrix of traits with traits in columns. For one trait, use as.matrix().
 	}
 	
-	\item{ind.plot}{
+	\item{ind_plot}{
 		Factor defining the name of the plot in which the individual is.
 	}
 	
@@ -47,11 +47,11 @@
 	}
 	
 	\item{printprogress}{
-		Logical value; print progress during the calculation or not.
+		Logical value; print progress during the calcul or not.
 	}
 	
 	\item{p.value}{
-		Logical value; calculation p-value or not. p-value are here defined as: (x+1)/y 
+		Logical value; calcul p-value or not. p-value are here defined as: (x+1)/y 
 		
 		with x the number of null values greater or lesser than the observed value and y the total number of null values. 
 	}
@@ -65,7 +65,7 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{col.Tstats}{
@@ -129,10 +129,10 @@
 	\item{$variances$var_IR}{variance of individuals within the region}
 	    
 	\item{$variances$var_IP_nm1}{variance of individuals within populations in null model 1}    
-	\item{$variances$var_PC_nm2sp}{variance of populations within communities in null model 2sp}
+	\item{$variances$var_PC_nm3}{variance of populations within communities in null model 3}
 	\item{$variances$var_IC_nm1}{variance of communities within the region in null model 1}
 	\item{$variances$var_IC_nm2}{variance of individuals within communities in null model 2}
-	\item{$variances$var_PR_nm2sp}{variance of populations within the region in null model 2sp}
+	\item{$variances$var_PR_nm3}{variance of populations within the region in null model 3}
 	\item{$variances$var_IR_nm2}{variance of individuals within the region in null model 2}
 	
 	\item{$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
@@ -167,11 +167,7 @@
 \examples{
 	data(finch.ind)
 
-<<<<<<< HEAD
-	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-=======
 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 	sp = sp.finch, nperm = 9, print = FALSE)
 	
 	attributes(res.finch)
@@ -218,12 +214,12 @@
 
 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
 
-	res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	res.finch2 <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
     sp = sp.finch, nperm = 9, print = FALSE)	
 
 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300),])
 
-	res.finch2 <- Tstats(traits.finch, ind.plot=ind.plot.finch, 
+	res.finch2 <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
     sp=sp.finch, nperm=9, print=FALSE)	
 
 	
