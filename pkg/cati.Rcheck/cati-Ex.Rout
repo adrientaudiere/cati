@@ -1,0 +1,2158 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: i386-w64-mingw32/i386 (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "cati"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('cati')
+Loading required package: nlme
+Loading required package: ade4
+Loading required package: ape
+Warning: package 'ape' was built under R version 3.1.1
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("CVNND")
+> ### * CVNND
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CVNND
+> ### Title: Coefficient of variation of the nearest neigbourhood distance
+> ###   (CVNND)
+> ### Aliases: CVNND
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	CVNND(traits.finch[,1])
+[1] 7.883746
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ComIndex")
+> ### * ComIndex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ComIndex
+> ### Title: Computing the moments of the trait distribution and other
+> ###   metrics to test and quantify the non-random assembly of communities
+> ### Aliases: ComIndex
+> 
+> ### ** Examples
+> 	
+> 	data(finch.ind)
+> 	oldpar <- par()
+> 	
+> 	####
+> 	#The function ComIndex allow to choose your own function 
+> 	#(like mean, range, variance...) to calculate customize index.
+> 	
+> 	require(e1071)
+Loading required package: e1071
+> 	
+> 	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
++ 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
+> 	
+> 	## Not run: 
+> ##D 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
+> ##D 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, 
+> ##D 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 	
+> ##D 		####
+> ##D 		#We can represent Standardized Effect Size (ses)
+> ##D 		#using the function plot(as.listofindex(list1, list2, list3))
+> ##D 		
+> ##D 		list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn3)
+> ##D 		index.list2 <- as.listofindex(list.ind2)
+> ##D 		
+> ##D 		plot(index.list2, type = "bytraits")
+> ##D 		
+> ##D 		plot(index.list2)
+> ##D 	
+> ##D 		####
+> ##D 		#This allows to calcul index per site 
+> ##D 		#for example using "tapply(x, sites, mean)".
+> ##D 		
+> ##D 		funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
+> ##D 		"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
+> ##D 		"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
+> ##D 		min(x, na.rm = TRUE) )", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		CVNND(x))"  )
+> ##D 		
+> ##D 		
+> ##D 		##Null model 1 is trivial for this function 
+> ##D 		#because randomisation is within community only
+> ##D 		
+> ##D 		res.finch.ind_mn1 <- ComIndex(traits = traits.finch, index = funct, 
+> ##D 		sp = sp.finch, nullmodels = c(1,1,1,1), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
+> ##D 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 	
+> ##D 		
+> ##D 		####
+> ##D 		#We can calcul metrics with or without intraspecific variance.
+> ##D 		#Calculation of trait averages per population 
+> ##D 		#(name_sp_site is a name of a population) 
+> ##D 		#like in the function ComIndex
+> ##D 		#and determine the site for each population (sites_bypop)
+> ##D 	
+> ##D 		name_sp_sites = paste(sp.finch, ind.plot.finch, sep = "_")
+> ##D 		traits.by.pop <- apply(traits.finch, 2 , function (x) 
+> ##D 		tapply(x, name_sp_sites, mean , na.rm = TRUE))
+> ##D 		
+> ##D 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
+> ##D 		split = "_"), function(x) x[3])
+> ##D 		
+> ##D 		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), function(x) 
+> ##D 		mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), function(x) 
+> ##D 		kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), function(x) 
+> ##D 		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+> ##D 		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		
+> ##D 		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
+> ##D 		mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+> ##D 		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		
+> ##D 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
+> ##D 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
+> ##D 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		
+> ##D 		####
+> ##D 		#We can also represent T-statistics and custom index thanks to
+> ##D 		#the plot.listofindex function.
+> ##D 		
+> ##D 		res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 	
+> ##D 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
+> ##D 		
+> ##D 		index.list1 <- as.listofindex(list.ind, namesindex = c("mean", "kurtosis", 
+> ##D 		"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+> ##D 		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
+> ##D 		
+> ##D 		class(index.list1)
+> ##D 		
+> ##D 		par(mfrow = c(2,3))
+> ##D 		plot(index.list1,type = "bytraits", bysite = TRUE)
+> ##D 		
+> ##D 		par(mfrow = c(2,2))
+> ##D 		plot(index.list1,type = "bytraits")
+> ##D 		par(mfrow = c(1,1))
+> ##D 		
+> ##D 		plot(index.list1,type = "simple")
+> ##D 		plot(index.list1,type = "simple_range")
+> ##D 		plot(index.list1,type = "normal")
+> ##D 		plot(index.list1,type = "barplot")
+> ##D 	
+> ## End(Not run)
+> 	
+> 	############################
+> 	####Using ind.value = FALSE and community data matrix if there is no data 
+> 	#available at the individual level.
+> 	## Not run: 
+> ##D 	
+> ##D 		#create traits data at the species level
+> ##D 		traits_by_sp <- apply(traits.finch,2,function(x) tapply(x,sp.finch,
+> ##D 		function(x) mean(x, na.rm = T)))  
+> ##D 		
+> ##D 		#create traits data at the populational level
+> ##D 		names_sp_ind_plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "@")) 
+> ##D 		traits_by_pop <- apply(traits.finch,2,function(x) tapply(x,names_sp_ind_plot, 
+> ##D 		function(x) mean(x, na.rm = T) ))  
+> ##D 		
+> ##D 		#create community data matrix at the species or populational level
+> ##D 		w1 <- table(sp.finch,ind.plot.finch)
+> ##D 		dim(w1)
+> ##D 		dim(traits_by_sp)
+> ##D 		
+> ##D 		w2 <- table(names_sp_ind_plot,ind.plot.finch)
+> ##D 		dim(w2)
+> ##D 		dim(traits_by_pop)
+> ##D 		
+> ##D 		#Choose indices
+> ##D 		require(e1071)
+> ##D 		
+> ##D 		funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
+> ##D 		"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
+> ##D 		
+> ##D 		
+> ##D 		#################
+> ##D 		#with species value
+> ##D 		
+> ##D 		res <- AbToInd(traits_by_sp, w1)
+> ##D 		
+> ##D 		ComIndex(traits_by_sp, nullmodels = 2, ind.value = FALSE, index = funct, 
+> ##D 		sp = rownames(traits_by_sp), com = w1, nperm = 9)
+> ##D 		
+> ##D 		
+> ##D 		#################
+> ##D 		#with population value
+> ##D 		res <- AbToInd(traits_by_pop, w2)
+> ##D 		sp.sp <- unlist(strsplit(rownames(traits_by_pop),"@"))[seq(1,39*2,2)]
+> ##D 		
+> ##D 		ComIndex(traits_by_pop, nullmodels = 2, ind.value = FALSE, index = funct, 
+> ##D 		sp = sp.sp, com = w2)
+> ##D 		
+> ##D 	
+> ## End(Not run)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+
+detaching 'package:e1071'
+
+> nameEx("ComIndexMulti")
+> ### * ComIndexMulti
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ComIndexMulti
+> ### Title: Computing multitraits metrics to test and quantify the
+> ###   non-random assembly of communities
+> ### Aliases: ComIndexMulti
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	
+> 	####
+> 	#For most multivariate functions we need to replace (or exclude)
+> 	#NA values.
+> 	
+> 	#For this example, we use the package mice to complete the data.
+> 	
+> 	## Not run: 
+> ##D 		names.sp_ind_plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
+> ##D 		
+> ##D 		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
+> ##D 		
+> ##D 		library(mice)
+> ##D 		traits = traits.finch
+> ##D 		mice <- mice(traits.finch)
+> ##D 		traits.finch.mice <- complete(mice)
+> ##D 		
+> ##D 		####
+> ##D 		#A simple example to illustrate the concept of the function 
+> ##D 		#ComIndexMulti
+> ##D 		
+> ##D 		res.sum.1 <- ComIndexMulti(traits.finch, 
+> ##D 		index = c("sum(scale(x), na.rm = TRUE)", "sum(x, na.rm = TRUE)"), 
+> ##D 		by.factor = names.sp_ind_plot, nullmodels = c(2,2), 
+> ##D 		ind.plot = ind.plot.finch, nperm = 50, sp = sp.finch)
+> ##D 		
+> ##D 		attributes(ses.listofindex(as.listofindex(res.sum.1)))
+> ##D 		
+> ##D 		####
+> ##D 		#A more interesting example using the function hypervolume 
+> ##D 		#from the package hypervolume. 
+> ##D 		#We show here several results which differe in there factor 
+> ##D 		#that delimit the group to calculate different hypervolume 
+> ##D 		#(argument by_factor). 
+> ##D 		
+> ##D 		require(hypervolume)
+> ##D 		
+> ##D 		res.hv.1 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+> ##D 		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+> ##D 		warnings = FALSE)@Volume))"), by.factor = rep(1,length(names.sp_ind_plot)), 
+> ##D 		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+> ##D 		
+> ##D 		res.hv.2 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+> ##D 		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+> ##D 		warnings = FALSE)@Volume))"), by.factor = names.sp_ind_plot, 
+> ##D 		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+> ##D 		
+> ##D 		res.hv.3 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+> ##D 		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+> ##D 		warnings = FALSE)@Volume))"), by.factor = ind.plot.finch, 
+> ##D 		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+> ##D 		
+> ##D 		res.hv.4 <- ComIndexMulti(traits.finch.mice, index = c("as.numeric
+> ##D 		(try(hypervolume(na.omit(x), reps = 100, bandwidth = 0.2, verbose = FALSE, 
+> ##D 		warnings = FALSE)@Volume))"), by.factor = sp.finch, 
+> ##D 		nullmodels = c(2,2), ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+> ##D 		
+> ##D 		list.ind.multi <- as.listofindex(list(res.hv.2, res.hv.3, res.hv.4))
+> ##D 		
+> ##D 		ses.listofindex(list.ind.multi)
+> ##D 		
+> ##D 		plot(list.ind.multi)
+> ##D 		plot(list.ind.multi, xlim = c(-200,20))
+> ##D 	
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("RaoRel")
+> ### * RaoRel
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RaoRel
+> ### Title: Alpha, gamma and beta-components for taxonomic, functional and
+> ###   phylogenetic diversity
+> ### Aliases: RaoRel
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	
+> 	## Not run: 
+> ##D 		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
+> ##D 		comm.sp <- table(sp.finch, ind.plot.finch)
+> ##D 		class(comm.sp) <- "matrix"
+> ##D 		
+> ##D 		traits.finch.sp <- apply( apply(traits.finch, 2, scale ), 2, 
+> ##D 
+> ##D 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
+> ##D 		
+> ##D 		mat.dist <- as.matrix(dist(traits.finch.sp))^2
+> ##D 		
+> ##D 		res.rao <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
+> ##D 		weight = FALSE, Jost = FALSE, structure = NULL)
+> ##D 
+> ##D 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
+> ##D 		
+> ##D 		mat.dist <- as.matrix(dist(traits.finch.sp))^2
+> ##D 		
+> ##D 		res.rao <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
+> ##D 		weight=FALSE, Jost=FALSE, structure=NULL)
+> ##D 
+> ##D 		
+> ##D 		witRao <- res.rao$FD$Mean_Alpha  #overall within species variance
+> ##D 		betRao <- res.rao$FD$Beta_add    #between species variance
+> ##D 		totRao <- res.rao$FD$Gamma       #the total variance
+> ##D 		
+> ##D 		witRao+betRao
+> ##D 		totRao
+> ##D 		
+> ##D 		
+> ##D 		#Now let"s take the abundance to calculate Rao diversity.
+> ##D 		
+> ##D 
+> ##D 		res.rao.w <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
+> ##D 		weight = TRUE, Jost = FALSE, structure = NULL)
+> ##D 
+> ##D 		res.rao.w <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
+> ##D 		weight=TRUE, Jost=FALSE, structure=NULL)
+> ##D 
+> ##D 		
+> ##D 		witRao.w <- res.rao.w$FD$Mean_Alpha  #overall within species variance
+> ##D 		betRao.w <- res.rao.w$FD$Beta_add    #between species variance
+> ##D 		totRao.w <- res.rao.w$FD$Gamma       #the total variance
+> ##D 		
+> ##D 		witRao.w
+> ##D 		betRao.w
+> ##D 		
+> ##D 		
+> ##D 		#Plot the results
+> ##D 		
+> ##D 		barplot(cbind(c(witRao.w, betRao.w), c(witRao, betRao)), 
+> ##D 		names.arg  = c("abundance" ,"presence"), 
+> ##D 		legend.text = c("within species", "between species"), 
+> ##D 		ylab = "Rao", ylim = c(0,10))
+> ##D 		
+> ##D 		
+> ##D 		#We can do this analysis for each trait separately. 
+> ##D 		#First we need to replace (or exclude) NA values. 
+> ##D 		#For this example, we use the package mice to complete the data.
+> ##D 		
+> ##D 		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
+> ##D 		
+> ##D 		library(mice)
+> ##D 
+> ##D 		traits = traits.finch
+> ##D 
+> ##D 		traits=traits.finch
+> ##D 
+> ##D 		mice <- mice(traits.finch)
+> ##D 		traits.finch.mice <- complete(mice)
+> ##D 		
+> ##D 		
+> ##D 		traits.finch.mice.sp <- apply(apply(traits.finch.mice, 2, scale ), 2, 
+> ##D 
+> ##D 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
+> ##D 
+> ##D 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
+> ##D 
+> ##D 		
+> ##D 		trait.rao.w <- list()
+> ##D 		witRao.w.bytrait <- c()
+> ##D 		betRao.w.bytrait <- c()
+> ##D 
+> ##D 		for (t in 1 : 4){
+> ##D 		  trait.rao.w[[t]] <- RaoRel(sample = as.matrix(comm.sp), 
+> ##D 		  dfunc = dist(traits.finch.mice.sp[,t]), dphyl = NULL, weight = TRUE, 
+> ##D 		  Jost = FALSE, structure = NULL)
+> ##D 		}
+> ##D 		
+> ##D 		for(t in 1 : 4){
+> ##D 		  trait.rao.w[[t]] <- RaoRel(sample=as.matrix(comm.sp), 
+> ##D 		  dfunc=dist(traits.finch.mice.sp[,t]), dphyl=NULL, weight=TRUE, 
+> ##D 		  Jost=FALSE, structure=NULL)
+> ##D 
+> ##D 		  
+> ##D 		  witRao.w.bytrait <- c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
+> ##D 		  betRao.w.bytrait <- c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
+> ##D 		}
+> ##D 		
+> ##D 		#Plot the results by traits.
+> ##D 		
+> ##D 		barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)), 
+> ##D 		names.arg = colnames(traits.finch),
+> ##D 		legend.text = c("within species", "between species"), 
+> ##D 		ylab = "Rao", ylim = c(0,1.5))	
+> ##D 	
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Tstats")
+> ### * Tstats
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Tstats
+> ### Title: Computing observed T-statistics (T for Traits) and null
+> ###   expectations.
+> ### Aliases: Tstats barplot.Tstats plot.Tstats summary_Tstats
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 
+> 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
++ 	sp = sp.finch, nperm = 9, print = FALSE)
+> 	
+> 	attributes(res.finch)
+$names
+[1] "T_IP.IC"    "T_IC.IR"    "T_PC.PR"    "variances"  "T_IP.IC_nm"
+[6] "T_IC.IR_nm" "T_PC.PR_nm" "pval"      
+
+$class
+[1] "Tstats"
+
+> 
+> 	#Tstats class is associated to S3 methods plot, barplot and summary
+> 	
+> 	plot(res.finch)
+> 	
+> 	plot(res.finch, type = "color_cond")
+> 	plot(res.finch, type = "simple")
+> 	plot(res.finch, type = "simple_sd")
+> 	plot(res.finch, type = "barplot")
+> 	
+> 	attributes(summary_Tstats(res.finch))
+$names
+[1] "p.value" "percent" "sites"   "binary" 
+
+> 	head(summary_Tstats(res.finch)$p.value, 10)
+            WingL BeakH UBeakL N.UBkL
+T_IP.IC.inf   0.1   0.2    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.sup   1.0   0.9    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+> 	
+> 	summary_Tstats(res.finch, type = "binary")
+            WingL BeakH UBeakL N.UBkL
+T_IP.IC.inf  TRUE  TRUE   TRUE   TRUE
+T_IP.IC.sup FALSE FALSE  FALSE  FALSE
+T_IC.IR.inf FALSE FALSE   TRUE  FALSE
+T_IC.IR.sup FALSE FALSE  FALSE  FALSE
+T_PC.PR.inf FALSE FALSE  FALSE  FALSE
+T_PC.PR.sup FALSE FALSE  FALSE  FALSE
+> 	summary_Tstats(res.finch, type = "percent")
+            WingL   BeakH  UBeakL  N.UBkL 
+T_IP.IC.inf "100%*" "83%*" "100%*" "100%*"
+T_IP.IC.sup "0%"    "0%"   "0%"    "0%"   
+T_IC.IR.inf "33%"   "50%"  "50%*"  "33%"  
+T_IC.IR.sup "50%"   "50%"  "17%"   "33%"  
+T_PC.PR.inf "17%"   "17%"  "0%"    "0%"   
+T_PC.PR.sup "17%"   "17%"  "17%"   "33%"  
+> 	summary_Tstats(res.finch, type = "site")
+            WingL                                          
+T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IP.IC.sup "H0 not rejected"                              
+T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IC.IR.sup "EspHd GnovTwr MrchBndl"                       
+T_PC.PR.inf "DMaj"                                         
+T_PC.PR.sup "EspHd"                                        
+            BeakH                                     
+T_IP.IC.inf "EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IP.IC.sup "H0 not rejected"                         
+T_IC.IR.inf "EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IC.IR.sup "EspHd GnovTwr MrchBndl"                  
+T_PC.PR.inf "DMaj"                                    
+T_PC.PR.sup "GnovTwr"                                 
+            UBeakL                                         
+T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IP.IC.sup "H0 not rejected"                              
+T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IC.IR.sup "GnovTwr"                                      
+T_PC.PR.inf "H0 not rejected"                              
+T_PC.PR.sup "MrchBndl"                                     
+            N.UBkL                                         
+T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IP.IC.sup "H0 not rejected"                              
+T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IC.IR.sup "EspHd GnovTwr"                                
+T_PC.PR.inf "H0 not rejected"                              
+T_PC.PR.sup "EspHd SCruInde"                               
+> 	summary_Tstats(res.finch, type = "p.value")
+                     WingL BeakH UBeakL N.UBkL
+T_IP.IC.inf DMaj       0.1   0.2    0.1    0.1
+T_IP.IC.inf EspHd      0.1   0.1    0.1    0.1
+T_IP.IC.inf FlorChrl   0.1   0.1    0.1    0.1
+T_IP.IC.inf GnovTwr    0.1   0.1    0.1    0.1
+T_IP.IC.inf MrchBndl   0.1   0.1    0.1    0.1
+T_IP.IC.inf SCruInde   0.1   0.1    0.1    0.1
+T_IP.IC.sup DMaj       1.0   0.9    1.0    1.0
+T_IP.IC.sup EspHd      1.0   1.0    1.0    1.0
+T_IP.IC.sup FlorChrl   1.0   1.0    1.0    1.0
+T_IP.IC.sup GnovTwr    1.0   1.0    1.0    1.0
+T_IP.IC.sup MrchBndl   1.0   1.0    1.0    1.0
+T_IP.IC.sup SCruInde   1.0   1.0    1.0    1.0
+T_IC.IR.inf DMaj       0.1   0.1    0.1    0.1
+T_IC.IR.inf EspHd      1.0   1.0    0.8    1.0
+T_IC.IR.inf FlorChrl   0.1   0.1    0.1    0.1
+T_IC.IR.inf GnovTwr    1.0   1.0    1.0    1.0
+T_IC.IR.inf MrchBndl   1.0   1.0    0.1    0.2
+T_IC.IR.inf SCruInde   0.2   0.1    0.2    0.3
+T_IC.IR.sup DMaj       1.0   1.0    1.0    1.0
+T_IC.IR.sup EspHd      0.1   0.1    0.3    0.1
+T_IC.IR.sup FlorChrl   1.0   1.0    1.0    1.0
+T_IC.IR.sup GnovTwr    0.1   0.1    0.1    0.1
+T_IC.IR.sup MrchBndl   0.1   0.1    1.0    0.9
+T_IC.IR.sup SCruInde   0.9   1.0    0.9    0.8
+T_PC.PR.inf DMaj       0.1   0.1    0.4    0.3
+T_PC.PR.inf EspHd      1.0   0.7    0.8    1.0
+T_PC.PR.inf FlorChrl   0.6   0.8    0.8    0.7
+T_PC.PR.inf GnovTwr    0.9   1.0    0.8    0.9
+T_PC.PR.inf MrchBndl   0.9   0.6    1.0    0.6
+T_PC.PR.inf SCruInde   0.8   0.6    0.7    1.0
+T_PC.PR.sup DMaj       0.9   0.9    0.6    0.8
+T_PC.PR.sup EspHd      0.1   0.4    0.3    0.1
+T_PC.PR.sup FlorChrl   0.5   0.3    0.3    0.4
+T_PC.PR.sup GnovTwr    0.2   0.1    0.3    0.2
+T_PC.PR.sup MrchBndl   0.2   0.5    0.1    0.5
+T_PC.PR.sup SCruInde   0.3   0.5    0.4    0.1
+> 	summary_Tstats(res.finch, type = "all")
+$p.value
+            WingL BeakH UBeakL N.UBkL
+T_IP.IC.inf   0.1   0.2    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.sup   1.0   0.9    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IC.IR.inf   0.1   0.1    0.1    0.1
+T_IC.IR.inf   1.0   1.0    0.8    1.0
+T_IC.IR.inf   0.1   0.1    0.1    0.1
+T_IC.IR.inf   1.0   1.0    1.0    1.0
+T_IC.IR.inf   1.0   1.0    0.1    0.2
+T_IC.IR.inf   0.2   0.1    0.2    0.3
+T_IC.IR.sup   1.0   1.0    1.0    1.0
+T_IC.IR.sup   0.1   0.1    0.3    0.1
+T_IC.IR.sup   1.0   1.0    1.0    1.0
+T_IC.IR.sup   0.1   0.1    0.1    0.1
+T_IC.IR.sup   0.1   0.1    1.0    0.9
+T_IC.IR.sup   0.9   1.0    0.9    0.8
+T_PC.PR.inf   0.1   0.1    0.4    0.3
+T_PC.PR.inf   1.0   0.7    0.8    1.0
+T_PC.PR.inf   0.6   0.8    0.8    0.7
+T_PC.PR.inf   0.9   1.0    0.8    0.9
+T_PC.PR.inf   0.9   0.6    1.0    0.6
+T_PC.PR.inf   0.8   0.6    0.7    1.0
+T_PC.PR.sup   0.9   0.9    0.6    0.8
+T_PC.PR.sup   0.1   0.4    0.3    0.1
+T_PC.PR.sup   0.5   0.3    0.3    0.4
+T_PC.PR.sup   0.2   0.1    0.3    0.2
+T_PC.PR.sup   0.2   0.5    0.1    0.5
+T_PC.PR.sup   0.3   0.5    0.4    0.1
+
+$percent
+            WingL   BeakH  UBeakL  N.UBkL 
+T_IP.IC.inf "100%*" "83%*" "100%*" "100%*"
+T_IP.IC.sup "0%"    "0%"   "0%"    "0%"   
+T_IC.IR.inf "33%"   "50%"  "50%*"  "33%"  
+T_IC.IR.sup "50%"   "50%"  "17%"   "33%"  
+T_PC.PR.inf "17%"   "17%"  "0%"    "0%"   
+T_PC.PR.sup "17%"   "17%"  "17%"   "33%"  
+
+$sites
+            WingL                                          
+T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IP.IC.sup "H0 not rejected"                              
+T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IC.IR.sup "EspHd GnovTwr MrchBndl"                       
+T_PC.PR.inf "DMaj"                                         
+T_PC.PR.sup "EspHd"                                        
+            BeakH                                     
+T_IP.IC.inf "EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IP.IC.sup "H0 not rejected"                         
+T_IC.IR.inf "EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IC.IR.sup "EspHd GnovTwr MrchBndl"                  
+T_PC.PR.inf "DMaj"                                    
+T_PC.PR.sup "GnovTwr"                                 
+            UBeakL                                         
+T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IP.IC.sup "H0 not rejected"                              
+T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IC.IR.sup "GnovTwr"                                      
+T_PC.PR.inf "H0 not rejected"                              
+T_PC.PR.sup "MrchBndl"                                     
+            N.UBkL                                         
+T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IP.IC.sup "H0 not rejected"                              
+T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+T_IC.IR.sup "EspHd GnovTwr"                                
+T_PC.PR.inf "H0 not rejected"                              
+T_PC.PR.sup "EspHd SCruInde"                               
+
+$binary
+            WingL BeakH UBeakL N.UBkL
+T_IP.IC.inf  TRUE  TRUE   TRUE   TRUE
+T_IP.IC.sup FALSE FALSE  FALSE  FALSE
+T_IC.IR.inf FALSE FALSE   TRUE  FALSE
+T_IC.IR.sup FALSE FALSE  FALSE  FALSE
+T_PC.PR.inf FALSE FALSE  FALSE  FALSE
+T_PC.PR.sup FALSE FALSE  FALSE  FALSE
+
+> 	
+> 	barplot(res.finch)
+> 	
+> 	attributes(summary_Tstats(res.finch))
+$names
+[1] "p.value" "percent" "sites"   "binary" 
+
+> 	head(summary_Tstats(res.finch)$p.value, 10)
+            WingL BeakH UBeakL N.UBkL
+T_IP.IC.inf   0.1   0.2    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.inf   0.1   0.1    0.1    0.1
+T_IP.IC.sup   1.0   0.9    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+T_IP.IC.sup   1.0   1.0    1.0    1.0
+> 	
+> 	#### An other way to see "ses values" of T-statistics
+> 	
+> 	# Custom theme (from rasterVis package)
+> 	require(rasterVis)
+Loading required package: rasterVis
+Loading required package: raster
+Loading required package: sp
+
+Attaching package: 'raster'
+
+The following objects are masked from 'package:ape':
+
+    edges, rotate, zoom
+
+The following object is masked from 'package:nlme':
+
+    getData
+
+Loading required package: lattice
+Loading required package: latticeExtra
+Loading required package: RColorBrewer
+Loading required package: hexbin
+Loading required package: grid
+> 	
+> 	my.theme <- BuRdTheme()
+> 	# Customize the colorkey
+> 	my.ckey <- list(col = my.theme$regions$col)
+> 	
+> 	levelplot(t(ses(res.finch$T_IP.IC,res.finch$T_IP.IC_nm)$ses), 
++ 	colorkey = my.ckey, par.settings = my.theme,border = "black")
+> 	
+> 	
+> 	#### Use a different regional pool than the binding of studied communities
+> 	
+> 	#create a random regional pool for the example
+> 
+> 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+> 
+> 	res.finch2 <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
++     sp = sp.finch, nperm = 9, print = FALSE)	
+> 
+> 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300),])
+> 
+> 	res.finch2 <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
++     sp=sp.finch, nperm=9, print=FALSE)	
+> 
+> 	
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:rasterVis', 'package:hexbin', 'package:grid',
+  'package:latticeExtra', 'package:RColorBrewer', 'package:lattice',
+  'package:raster', 'package:sp'
+
+> nameEx("as.listofindex")
+> ### * as.listofindex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: as.listofindex
+> ### Title: Transform index results in a list of index
+> ### Aliases: as.listofindex
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	oldpar <- par()
+> 	
+> 	####
+> 	#The function ComIndex allow to choose your own function 
+> 	#(like mean, range, variance...) to calculate customize index.
+> 	
+> 	require(e1071)
+Loading required package: e1071
+> 	
+> 
+> 	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)",
++ 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)" )
+> 	
+> 	res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
++ 	nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+> 	
+> 	res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
++ 	nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+> 
+> 	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
++ 	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)" )
+> 	
+> 	res.finch.sp_mn2 <- ComIndex(traits=traits.finch, index=funct, sp=sp.finch,
++ 	nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+> 	
+> 	res.finch.sp_mn3 <- ComIndex(traits=traits.finch, index=funct, sp=sp.finch,
++ 	nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+> 
+> 
+> 	####
+> 	#We can represent Standardized Effect Size (ses) using the 
+> 	#function plot(as.listofindex(list1, list2, list3))
+> 
+> 	#The function ComIndex allow to choose your own function 
+> 	#(like mean, range, variance...) to calculate customize index.
+> 	
+> 
+> 	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
++ 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
+> 	
+> 	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
++ 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
+> 	
+> 	res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch, 
++ 	nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+> 	
+> 	res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch, 
++ 	nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+> 
+> 	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
++ 	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
+> 	
+> 	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
++ 	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
+> 	
+> 	res.finch.sp_mn2 <- ComIndex(traits=traits.finch, index=funct, sp=sp.finch, 
++ 	nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+> 	
+> 	res.finch.sp_mn3 <- ComIndex(traits=traits.finch, index=funct, sp=sp.finch, 
++ 	nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+> 
+> 
+> 	####
+> 	#We can represent Standardized Effect Size (ses) 
+> 	#using the function plot(as.listofindex(list1, list2, list3))
+> 	
+> 	list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn3)
+> 	index.list2 <- as.listofindex(list.ind2)
+> 	
+> 	plot(index.list2, type = "bytraits")
+Warning in mean.default(res[[eval(namesindex.all[i])]]$ses[, t], na.rm = T) :
+  argument is not numeric or logical: returning NA
+> 	
+> 	plot(index.list2)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+
+detaching 'package:e1071'
+
+> nameEx("decompWithin")
+> ### * decompWithin
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: decompWithin
+> ### Title: Variance partitioning for multiple traits
+> ### Aliases: decompWithin barplot.decompWithin
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	
+> 	res.decomp <- decompWithin(traits = traits.finch, sp = sp.finch, 
++ 	ind.plot = ind.plot.finch, print = FALSE)
+> 	
+> 	barplot.decompWithin(res.decomp)
+> 	
+> 	par(mfrow = c(2,2))
+> 	barplot.decompWithin(res.decomp, resume = FALSE)
+> 	par(mfrow = c(1,1))
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("finch.ind")
+> ### * finch.ind
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: finch.ind
+> ### Title: Finch morphological data
+> ### Aliases: finch.ind ind.plot.finch sp.finch traits.finch .Random.seed
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("partvar")
+> ### * partvar
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: partvar
+> ### Title: Variance partitioning accross nested scales
+> ### Aliases: partvar barPartvar piePartvar
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 
+> 	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[seq(1,length(sp.finch)*2, by = 2)])
+> 
+> 	res.partvar.finch <- partvar(traits = traits.finch, 
++ 	factors = cbind(sites = as.factor(as.vector(ind.plot.finch)), 
++ 	species = as.factor(as.vector(sp.finch)), genus = as.factor(genus)))
+[1] "25 %"
+[1] "50 %"
+[1] "75 %"
+[1] "100 %"
+               WingL        BeakH       UBeakL       N.UBkL
+sites   6.227477e-08 7.774483e-08 8.955926e-08 5.391171e-08
+species 4.683655e-01 4.837624e-01 4.770519e-01 4.763562e-01
+genus   4.683655e-01 4.837624e-01 4.770520e-01 4.763563e-01
+within  6.326897e-02 3.247506e-02 4.589606e-02 4.728743e-02
+attr(,"class")
+[1] "partvar"
+> 	
+> 	res.partvar.finch <- partvar(traits=traits.finch, 
++ 	factors=cbind(sites=as.factor(as.vector(ind.plot.finch)), 
++ 	species=as.factor(as.vector(sp.finch)), genus=as.factor(genus)))
+[1] "25 %"
+[1] "50 %"
+[1] "75 %"
+[1] "100 %"
+               WingL        BeakH       UBeakL       N.UBkL
+sites   6.227477e-08 7.774483e-08 8.955926e-08 5.391171e-08
+species 4.683655e-01 4.837624e-01 4.770519e-01 4.763562e-01
+genus   4.683655e-01 4.837624e-01 4.770520e-01 4.763563e-01
+within  6.326897e-02 3.247506e-02 4.589606e-02 4.728743e-02
+attr(,"class")
+[1] "partvar"
+> 
+> 
+> 	res.partvar.finch
+               WingL        BeakH       UBeakL       N.UBkL
+sites   6.227477e-08 7.774483e-08 8.955926e-08 5.391171e-08
+species 4.683655e-01 4.837624e-01 4.770519e-01 4.763562e-01
+genus   4.683655e-01 4.837624e-01 4.770520e-01 4.763563e-01
+within  6.326897e-02 3.247506e-02 4.589606e-02 4.728743e-02
+attr(,"class")
+[1] "partvar"
+> 	
+> 	oldpar <- par()
+> 
+> 	par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2))
+> 	piePartvar(res.partvar.finch, col = c("red", "green", "blue", "purple"))
+> 	par(oldpar)
+Warning in par(oldpar) : graphical parameter "cin" cannot be set
+Warning in par(oldpar) : graphical parameter "cra" cannot be set
+Warning in par(oldpar) : graphical parameter "csi" cannot be set
+Warning in par(oldpar) : graphical parameter "cxy" cannot be set
+Warning in par(oldpar) : graphical parameter "din" cannot be set
+Warning in par(oldpar) : graphical parameter "page" cannot be set
+> 
+> 	barPartvar(res.partvar.finch, col = c("red", "green", "blue", "purple"))
+> 
+> 	par(mfrow=c(2,2), mai=c(0.2,0.2,0.2,0.2))
+> 	piePartvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
+> 	par(oldpar)
+Warning in par(oldpar) : graphical parameter "cin" cannot be set
+Warning in par(oldpar) : graphical parameter "cra" cannot be set
+Warning in par(oldpar) : graphical parameter "csi" cannot be set
+Warning in par(oldpar) : graphical parameter "cxy" cannot be set
+Warning in par(oldpar) : graphical parameter "din" cannot be set
+Warning in par(oldpar) : graphical parameter "page" cannot be set
+> 
+> 	barPartvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
+> 
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("plot.listofindex")
+> ### * plot.listofindex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.listofindex
+> ### Title: Plot community assembly index
+> ### Aliases: plot.listofindex
+> 
+> ### ** Examples
+> 	
+> 	data(finch.ind)
+> 	oldpar <- par()
+> 	
+> 	####
+> 	#The function ComIndex allow to choose your own function 
+> 	#(like mean, range, variance...) to calculate customize index.
+> 	
+> 	require(e1071)
+Loading required package: e1071
+> 	
+> 
+> 	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
++ 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
+> 	
+> 	## Not run: 
+> ##D 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
+> ##D 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, 
+> ##D 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 
+> ##D 	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
+> ##D 	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
+> ##D 	
+> ## End(Not run)
+> 	
+> 	## Not run: 
+> ##D 		res.finch.sp_mn2 <- ComIndex(traits=traits.finch, index=funct, 
+> ##D 		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
+> ##D 		nperm=9, print=FALSE)
+> ##D 		
+> ##D 		res.finch.sp_mn3 <- ComIndex(traits=traits.finch, index=funct, 
+> ##D 		sp=sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot=ind.plot.finch, 
+> ##D 		nperm=9, print=FALSE)
+> ##D 
+> ##D 
+> ##D 		####
+> ##D 		#We can represent Standardized Effect Size (ses)
+> ##D 		#using the function plot(as.listofindex(list1, list2, list3))
+> ##D 		
+> ##D 		list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn3)
+> ##D 		index.list2 <- as.listofindex(list.ind2)
+> ##D 		
+> ##D 		plot(index.list2, type = "bytraits")
+> ##D 		
+> ##D 		plot(index.list2)
+> ##D 	
+> ## End(Not run)
+> 	
+> 	####
+> 	#This allows to calcul index per site 
+> 	#for example using "tapply(x, sites, mean)".
+> 	
+> 
+> 	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
++ 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
++ 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
++ 	min(x, na.rm = TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))")
+> 
+> 	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=TRUE))", 
++ 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))", 
++ 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm=TRUE) - 
++ 	min(x, na.rm=TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))")
+> 
+> 	
+> 	
+> 	##Null model 1 is trivial for this function 
+> 	#because randomisation is within community only
+> 	
+> 	## Not run: 
+> ##D 
+> ##D 		res.finch.ind_mn1 <- ComIndex(traits = traits.finch, index = funct, 
+> ##D 		sp = sp.finch, nullmodels = c(1,1,1,1), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
+> ##D 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 
+> ##D 		res.finch.ind_mn1 <- ComIndex(traits=traits.finch, index=funct, 
+> ##D 		sp=sp.finch, nullmodels = c(1,1,1,1), ind.plot=ind.plot.finch, 
+> ##D 		nperm=9, print=FALSE)
+> ##D 		
+> ##D 		res.finch.ind_mn2 <- ComIndex(traits=traits.finch, index=funct, 
+> ##D 		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
+> ##D 		nperm=9, print=FALSE)
+> ##D 
+> ##D 		
+> ##D 		####
+> ##D 		#We can calcul metrics with or without intraspecific variance.
+> ##D 		#Calculation of trait averages per population 
+> ##D 		#(name_sp_site is a name of a population) 
+> ##D 		#like in the function ComIndex
+> ##D 		#and determine the site for each population (sites_bypop)
+> ##D 		
+> ##D 		name_sp_sites = paste(sp.finch, ind.plot.finch, sep = "_")
+> ##D 		
+> ##D 		traits.by.pop <- apply(traits.finch, 2 , function (x) 
+> ##D 
+> ##D 		tapply(x, name_sp_sites, mean , na.rm = TRUE))
+> ##D 		
+> ##D 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
+> ##D 		split = "_"), function(x) x[3])
+> ##D 		
+> ##D 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
+> ##D 		split = "_"), function(x) x[3])
+> ##D 		
+> ##D 		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+> ##D 		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+> ##D 		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
+> ##D 		mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+> ##D 		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
+> ##D 		mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+> ##D 		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
+> ##D 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
+> ##D 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
+> ##D 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 
+> ##D 		tapply(x, name_sp_sites, mean , na.rm=TRUE))
+> ##D 		
+> ##D 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), 
+> ##D 		split="_"), function(x) x[3])
+> ##D 		
+> ##D 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), 
+> ##D 		split="_"), function(x) x[3])
+> ##D 		
+> ##D 		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) mean(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
+> ##D 		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) mean(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
+> ##D 		function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
+> ##D 		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
+> ##D 		mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		kurtosis(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
+> ##D 		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
+> ##D 		mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		kurtosis(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
+> ##D 		max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
+> ##D 		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+> ##D 		
+> ##D 		res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV, 
+> ##D 		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
+> ##D 		nperm=9, print=FALSE)
+> ##D 		
+> ##D 		res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV, 
+> ##D 		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
+> ##D 		nperm=9, print=FALSE)
+> ##D 		
+> ##D 		res.finch.withoutIV <- ComIndex(traits=traits.finch, index=funct.withoutIV, 
+> ##D 		sp=sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot=ind.plot.finch, 
+> ##D 		nperm=9, print=FALSE)
+> ##D 
+> ##D 	
+> ##D 	
+> ## End(Not run)
+> 	
+> 	####
+> 	#We can also represent T-statistics and custom index thanks to
+> 	#the plot.listofindex function.
+> 	
+> 	## Not run: 
+> ##D 
+> ##D 		res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+> ##D 		nperm = 9, print = FALSE)
+> ##D 		
+> ##D 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
+> ##D 		
+> ##D 		index.list1 <- as.listofindex(list.ind, namesindex = c("mean", "kurtosis", 
+> ##D 
+> ##D 		res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
+> ##D 		nperm=9, print=FALSE)
+> ##D 		
+> ##D 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
+> ##D 		
+> ##D 		index.list1 <- as.listofindex(list.ind, namesindex=c("mean", "kurtosis", 
+> ##D 
+> ##D 		"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+> ##D 		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
+> ##D 		
+> ##D 		class(index.list1)
+> ##D 		
+> ##D 		par(mfrow = c(2,3))
+> ##D 		plot(index.list1,type = "bytraits", bysite = TRUE)
+> ##D 		
+> ##D 		par(mfrow = c(2,2))
+> ##D 		plot(index.list1,type = "bytraits")
+> ##D 		par(mfrow = c(1,1))
+> ##D 		
+> ##D 		plot(index.list1,type = "simple")
+> ##D 		plot(index.list1,type = "simple_range")
+> ##D 		plot(index.list1,type = "normal")
+> ##D 		plot(index.list1,type = "barplot")
+> ##D 	
+> ## End(Not run)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+
+detaching 'package:e1071'
+
+> nameEx("plotCorTstats")
+> ### * plotCorTstats
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotCorTstats
+> ### Title: Plot the bivariate relationships between T-statistics
+> ### Aliases: plotCorTstats
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
++ 	sp = sp.finch, nperm = 9)
+[1] "creating null models"
+[1] "8.33 %"
+[1] "16.67 %"
+[1] "25 %"
+[1] "33.33 %"
+[1] "41.63 %"
+[1] "49.97 %"
+[1] "58.3 %"
+[1] "66.63 %"
+[1] "74.93 %"
+[1] "83.27 %"
+[1] "91.6 %"
+[1] "99.93 %"
+[1] "calcul of Tstats using null models"
+[1] "8.33 %"
+[1] "16.67 %"
+[1] "25 %"
+[1] "33.33 %"
+[1] "41.63 %"
+[1] "49.97 %"
+[1] "58.3 %"
+[1] "66.63 %"
+[1] "74.93 %"
+[1] "83.27 %"
+[1] "91.6 %"
+[1] "99.93 %"
+[1] "calcul of p.value"
+> 	
+> 	plotCorTstats(res.finch, bysite = FALSE)
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+> 	plotCorTstats(res.finch, bysite = TRUE)
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+Warning in text.default(0, 0, "null \r\n model \r\n zone") :
+  font width unknown for character 0xd
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plotDistri")
+> ### * plotDistri
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotDistri
+> ### Title: Plot function to represent density of trait values
+> ### Aliases: plotDistri
+> 
+> ### ** Examples
+> 	
+> 	data(finch.ind)
+> 	
+> 	#Plot the distribution of trait values for populations, 
+> 	#species, sites and regional scales. 
+> 	
+> 	#First, let try the distribution for all populations 
+> 	#of Darwin finches.
+> 	
+> 	par(mfrow = c(4,4), cex = 0.5)
+> 	
+> 	plotDistri(traits.finch, sp.finch, ind.plot.finch, ylim.cex = 3, 
++ 	plot.ask = FALSE, multipanel = FALSE, leg = FALSE)
+> 	
+> 	par(mfrow = c(1,1), cex = 1)
+> 	
+> 	
+> 	#Then we can inverse the second and the third arguments 
+> 	#to plot the distribution for all finches species. 
+> 	
+> 	par(mfrow = c(4,4), cex = 0.5)
+> 	
+> 	plotDistri(traits.finch, ind.plot.finch, sp.finch, ylim.cex = 8, 
++ 	plot.ask = FALSE, multipanel = FALSE, leg = FALSE)
+> 	
+> 	par(mfrow = c(1,1), cex = 1)
+> 	
+> 	
+> 	#You can also plot trait distribution for all species in the region
+> 	
+> 	plotDistri(traits.finch, rep("region", times = dim(traits.finch)[1]), 
++ 	sp.finch, ylim.cex = 6, plot.ask = FALSE, leg = FALSE)
+> 	
+> 	
+> 	#You can also plot trait distribution for all sites
+> 	#without taking into account species identity
+> 	
+> 	plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]), 
++ 	ind.plot.finch, ylim.cex = 3, plot.ask = FALSE)
+> 	
+> 	par(mfrow = c(4,4), cex = 0.5)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("plotRandtest")
+> ### * plotRandtest
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotRandtest
+> ### Title: Plot result of observed indices values against null distribution
+> ### Aliases: plotRandtest
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
++ 	sp = sp.finch, nperm = 9, print = FALSE)
+> 	
+> 	par(mfrow = c(3,4))
+> 	
+> 	plotRandtest(res.finch)
+> 	plotRandtest(res.finch, alter = "two-sided")
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("plotSESvar")
+> ### * plotSESvar
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotSESvar
+> ### Title: Plot SES values against a variable
+> ### Aliases: plotSESvar
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
++ 	nperm = 9)
+[1] "creating null models"
+[1] "8.33 %"
+[1] "16.67 %"
+[1] "25 %"
+[1] "33.33 %"
+[1] "41.63 %"
+[1] "49.97 %"
+[1] "58.3 %"
+[1] "66.63 %"
+[1] "74.93 %"
+[1] "83.27 %"
+[1] "91.6 %"
+[1] "99.93 %"
+[1] "calcul of Tstats using null models"
+[1] "8.33 %"
+[1] "16.67 %"
+[1] "25 %"
+[1] "33.33 %"
+[1] "41.63 %"
+[1] "49.97 %"
+[1] "58.3 %"
+[1] "66.63 %"
+[1] "74.93 %"
+[1] "83.27 %"
+[1] "91.6 %"
+[1] "99.93 %"
+[1] "calcul of p.value"
+> 
+> 	par(mfrow = c(2,2))
+> 	species.richness <- table(ind.plot.finch)
+> 	plotSESvar(as.listofindex(list(res.finch)), species.richness, 
++ 	multipanel = FALSE)
+> 
+> 	#Same plot with resume = TRUE.
+> 	
+> 	par(mfrow = c(2,2))
+> 	plotSESvar(as.listofindex(list(res.finch)), species.richness, 
++ 	resume = TRUE, multipanel = FALSE)
+> 	par(mfrow = c(1,1))
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("plotSpPop")
+> ### * plotSpPop
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotSpPop
+> ### Title: Plot populations values against species values
+> ### Aliases: plotSpPop
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE)
+> 
+> 	#If we change the value of the threshold 
+> 	#(alpha = 10% instead of 5% 
+> 	#and the minimum individual to represent significativity 
+> 	#fixed to 3 instead of 10 by default) 
+> 	#we can see some significant relationships.
+> 
+> 	plotSpPop(traits.finch, ind.plot.finch, sp.finch, p.val = 0.1,  
++ 	min.ind.signif = 3, silent = TRUE)
+> 
+> 
+> 	#For a more simple figure, add the option resume = TRUE. 
+> 	#Again if we change the value of the threshold 
+> 	#(alpha = 10% instead of 5% 
+> 	#and the minimum individual to represent significativity
+> 	# fixed to 3 instead of 10 by default) 
+> 	#we can see some significant relationships.
+> 
+> 	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE, 
++ 	resume = TRUE, col.pop = "grey")
+> 	
+> 	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE, 
++ 	resume = TRUE, col.pop = "grey", col.sp = "black")
+> 	
+> 	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE, 
++ 	resume = TRUE, col.pop = "grey", col.sp = "black", 
++ 	p.val = 0.1,  min.ind.signif = 3)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plotSpVar")
+> ### * plotSpVar
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotSpVar
+> ### Title: Plot populations values against species values
+> ### Aliases: plotSpVar
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	
+> 	#Random variable for this example
+> 	variable <- c(1,5,15,6,3,25)
+> 	
+> 	plotSpVar(traits.finch, ind.plot.finch, sp.finch, variable, 
++ 	silent = TRUE)
+> 
+> 	#If we change the value of the threshold 
+> 	#(alpha = 10% instead of 5% 
+> 	#and the minimum individual to represent significativity 
+> 	#fixed to 3 instead of 10 by default) 
+> 	#we can see some significant relationships.
+> 
+> 	plotSpVar(traits.finch, ind.plot.finch, sp.finch, variable, 
++ 	p.val = 0.1,  min.ind.signif = 3, silent = TRUE)
+> 
+> 
+> 	#For a more simple figure, add the option resume = TRUE. 
+> 	#Again if we change the value of the threshold 
+> 	#(alpha = 10% instead of 5% 
+> 	#and the minimum individual to represent significativity
+> 	# fixed to 3 instead of 10 by default) 
+> 	#we can see some significant relationships.
+> 
+> 	plotSpVar(traits.finch, ind.plot.finch, sp.finch, variable, 
++ 	silent = TRUE, resume = TRUE, col.pop = "grey")
+> 	
+> 	plotSpVar(traits.finch, ind.plot.finch, sp.finch, variable, 
++ 	silent = TRUE, resume = TRUE, col.pop = "grey", col.sp = "black")
+> 	
+> 	plotSpVar(traits.finch, ind.plot.finch, sp.finch, variable, 
++ 	silent = TRUE, resume = TRUE, col.pop = "grey", col.sp = "black", 
++ 	p.val = 0.1,  min.ind.signif = 3)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ses")
+> ### * ses
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ses
+> ### Title: Standardized effect size and confidence interval for a matrix of
+> ###   statistics
+> ### Aliases: ses
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 	
+> 
+> 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
++ 	sp = sp.finch, nperm = 9)
+[1] "creating null models"
+[1] "8.33 %"
+[1] "16.67 %"
+[1] "25 %"
+[1] "33.33 %"
+[1] "41.63 %"
+[1] "49.97 %"
+[1] "58.3 %"
+[1] "66.63 %"
+[1] "74.93 %"
+[1] "83.27 %"
+[1] "91.6 %"
+[1] "99.93 %"
+[1] "calcul of Tstats using null models"
+[1] "8.33 %"
+[1] "16.67 %"
+[1] "25 %"
+[1] "33.33 %"
+[1] "41.63 %"
+[1] "49.97 %"
+[1] "58.3 %"
+[1] "66.63 %"
+[1] "74.93 %"
+[1] "83.27 %"
+[1] "91.6 %"
+[1] "99.93 %"
+[1] "calcul of p.value"
+> 
+> 	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
++ 	sp=sp.finch, nperm=9)
+[1] "creating null models"
+[1] "8.33 %"
+[1] "16.67 %"
+[1] "25 %"
+[1] "33.33 %"
+[1] "41.63 %"
+[1] "49.97 %"
+[1] "58.3 %"
+[1] "66.63 %"
+[1] "74.93 %"
+[1] "83.27 %"
+[1] "91.6 %"
+[1] "99.93 %"
+[1] "calcul of Tstats using null models"
+[1] "8.33 %"
+[1] "16.67 %"
+[1] "25 %"
+[1] "33.33 %"
+[1] "41.63 %"
+[1] "49.97 %"
+[1] "58.3 %"
+[1] "66.63 %"
+[1] "74.93 %"
+[1] "83.27 %"
+[1] "91.6 %"
+[1] "99.93 %"
+[1] "calcul of p.value"
+> 
+> 	
+> 	ses(res.finch$T_IP.IC, res.finch$T_IP.IC_nm)
+$ses
+              WingL      BeakH     UBeakL     N.UBkL
+DMaj      -1.774985  -1.474975  -2.606675  -3.873888
+EspHd    -18.987983 -21.958130 -11.468245 -24.586065
+FlorChrl -18.885456 -20.571025 -27.916699 -38.082183
+GnovTwr  -33.867298 -35.402391 -34.196355 -40.048047
+MrchBndl -21.517444 -35.587213 -14.881170 -52.239387
+SCruInde -21.086063 -17.577933 -24.107521 -21.652120
+
+$ses.inf
+         WingL      BeakH    UBeakL     N.UBkL
+[1,] -1.154315 -1.2540916 -1.566549 -1.5220934
+[2,] -1.727062 -1.4239273 -1.957313 -1.5509197
+[3,] -1.520786 -0.9536051 -1.848493 -1.3018014
+[4,] -1.572056 -1.1484150 -1.409020 -1.6452810
+[5,] -1.025974 -1.3729065 -2.073079 -0.9429766
+[6,] -1.674196 -1.8831787 -1.468300 -1.1102679
+
+$ses.sup
+        WingL    BeakH    UBeakL   N.UBkL
+[1,] 1.459016 1.597927 1.1435753 1.455041
+[2,] 1.192916 1.214637 1.0451900 1.588867
+[3,] 1.127285 1.786134 1.0018990 1.671051
+[4,] 1.098255 1.361885 1.2909029 1.115741
+[5,] 1.820593 1.499617 0.7390394 1.946957
+[6,] 1.276491 0.702042 1.4609253 1.832287
+
+attr(,"class")
+[1] "ses"
+> 	
+> 	ses(t(res.finch$T_IP.IC), res.finch$T_IP.IC_nm)
+$ses
+            DMaj     EspHd  FlorChrl   GnovTwr  MrchBndl  SCruInde
+WingL  -1.774985 -18.98798 -18.88546 -33.86730 -21.51744 -21.08606
+BeakH  -1.474975 -21.95813 -20.57103 -35.40239 -35.58721 -17.57793
+UBeakL -2.606675 -11.46824 -27.91670 -34.19636 -14.88117 -24.10752
+N.UBkL -3.873888 -24.58607 -38.08218 -40.04805 -52.23939 -21.65212
+
+$ses.inf
+            [,1]      [,2]       [,3]      [,4]       [,5]      [,6]
+WingL  -1.154315 -1.727062 -1.5207865 -1.572056 -1.0259741 -1.674196
+BeakH  -1.254092 -1.423927 -0.9536051 -1.148415 -1.3729065 -1.883179
+UBeakL -1.566549 -1.957313 -1.8484934 -1.409020 -2.0730787 -1.468300
+N.UBkL -1.522093 -1.550920 -1.3018014 -1.645281 -0.9429766 -1.110268
+
+$ses.sup
+           [,1]     [,2]     [,3]     [,4]      [,5]     [,6]
+WingL  1.459016 1.192916 1.127285 1.098255 1.8205934 1.276491
+BeakH  1.597927 1.214637 1.786134 1.361885 1.4996171 0.702042
+UBeakL 1.143575 1.045190 1.001899 1.290903 0.7390394 1.460925
+N.UBkL 1.455041 1.588867 1.671051 1.115741 1.9469570 1.832287
+
+attr(,"class")
+[1] "ses"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ses.listofindex")
+> ### * ses.listofindex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ses.listofindex
+> ### Title: Standardized effect size for a list of index.
+> ### Aliases: ses.listofindex
+> 
+> ### ** Examples
+> 
+> 	data(finch.ind)
+> 
+> 	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
++ 	nperm = 9, print = FALSE)
+> 	
+> 	#Calcul of means by population (name_sp_site is a name of a population) 
+> 	#like in the function ComIndex and determine the site 
+> 	#for each population (sites_bypop)
+> 
+> 	name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
+> 	traits.by.pop <- apply(traits.finch, 2 , function (x) 
++ 	tapply(x, name_sp_sites, mean , na.rm = TRUE))
+> 	
+> 	require(e1071)
+Loading required package: e1071
+> 	
+> 	sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_")
++ 	, split = "_"), function(x) x[3])
+> 	
+> 	
+> 	funct.withoutIV <- c("tapply(x, unlist(sites_bypop), function(x) mean(x, na.rm=TRUE))",
++ 	"tapply(x, unlist(sites_bypop), function(x) kurtosis(x, na.rm=TRUE))",
++ 	"tapply(x, unlist(sites_bypop), function(x)	max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
++ 	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+> 	
+> 	
+> 	funct.withIV <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
++ 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
++ 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
++ 	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+> 	
+> 
+> 	res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV,
++ 	sp = sp.finch, nullmodels = rep("2", times=4), ind.plot = ind.plot.finch, nperm = 9
++ 	, print = FALSE)
+> 	
+> 	res.finch.withoutIV <- ComIndex(traits = traits.finch, 
++ 	index = funct.withoutIV, sp = sp.finch, nullmodels = rep("2sp", times=4), 
++ 	ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+> 
+> 	res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV, 
++ 	sp=sp.finch, nullmodels = rep("2", times=4), ind.plot=ind.plot.finch, 
++ 	nperm=9, print=FALSE)
+> 	
+> 	res.finch.withoutIV <- ComIndex(traits=traits.finch, 
++ 	index=funct.withoutIV, sp=sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), 
++ 	ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+> 
+> 
+> 	##Plot T-statistics and custom metrics thanks to 
+> 	#the plot.listofindex function.
+> 	
+> 	list.ind <- list(res.finch.withIV, res.finch.withoutIV, res.finch)
+> 	index.list <- as.listofindex(list.ind, 
++ 				  namesindex=c("mean", "kurtosis", "range", "CVNND",
++ 				  "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop",
++                   "T_IP.IC", "T_IC.IR", "T_PC.PR"))
+> 	
+> 	class(index.list)
+[1] "listofindex"
+> 	
+> 	plot(index.list, plot.ask = FALSE)
+> 
+> 	plot(index.list, plot.ask = FALSE, bysite = FALSE)
+> 
+> 	ses.list <- ses.listofindex(index.list)
+> 	ses.list
+$mean
+$ses
+              WingL      BeakH      UBeakL       N.UBkL
+DMaj     -0.5119128 -0.7728361  -1.5002536  -0.51873740
+EspHd     1.4306778  5.2452567  13.5064344  10.07255165
+FlorChrl -0.2191115 -5.6304967 -10.3163567 -10.42477805
+GnovTwr  -0.2874875  0.9387237  14.5258889   8.75075910
+MrchBndl -0.2770787  4.6797136   2.7830538   1.95326577
+SCruInde -0.1633584 -6.8540430   0.8993478  -0.06286166
+
+$ses.inf
+          [,1]      [,2]      [,3]      [,4]
+[1,] -1.369393 -1.440647 -1.305249 -1.084985
+[2,] -1.425249 -1.329584 -1.411012 -1.067152
+[3,] -1.654367 -1.269626 -1.301261 -1.019473
+[4,] -1.420313 -1.443362 -1.718428 -1.236932
+[5,] -1.866408 -1.526708 -1.151537 -0.826991
+[6,] -1.601517 -1.458134 -1.188268 -1.526789
+
+$ses.sup
+         [,1]     [,2]     [,3]     [,4]
+[1,] 1.699189 1.057602 1.719078 1.812346
+[2,] 1.331231 1.470153 1.507008 1.309404
+[3,] 1.323214 1.592925 1.639315 1.768678
+[4,] 1.175478 1.736608 1.321748 1.680523
+[5,] 1.254789 1.059270 1.537462 1.672210
+[6,] 1.136333 1.386917 1.228755 1.705259
+
+attr(,"class")
+[1] "ses"
+
+$kurtosis
+$ses
+              WingL      BeakH     UBeakL    N.UBkL
+DMaj      0.3614288  0.6850224  8.6456627 10.701726
+EspHd    -9.4390708 -3.9114290 -1.5648470 -5.506617
+FlorChrl 18.4440933 -5.5826279 -2.8637322  0.174284
+GnovTwr  -7.3977919 -1.9959750 -7.2846669 -8.417086
+MrchBndl -3.2877977 -3.1684021  0.5274691 -1.087129
+SCruInde  2.7758575  5.4705463 -3.2098575 -1.110874
+
+$ses.inf
+          [,1]       [,2]      [,3]      [,4]
+[1,] -1.405980 -1.0255956 -1.172623 -1.408751
+[2,] -1.679749 -0.9384334 -1.554179 -1.618958
+[3,] -1.575262 -1.3490470 -1.175227 -1.486578
+[4,] -1.328851 -1.3107182 -1.648408 -1.707156
+[5,] -1.145365 -1.5936038 -1.382778 -1.597846
+[6,] -1.706361 -2.0071244 -1.620027 -1.673738
+
+$ses.sup
+         [,1]      [,2]     [,3]     [,4]
+[1,] 1.653979 1.9921516 1.912306 1.506316
+[2,] 1.042512 1.8606985 1.337902 1.238116
+[3,] 1.599885 1.5378730 1.846963 1.297853
+[4,] 1.143388 1.6279464 1.533789 1.497071
+[5,] 1.459098 1.1867801 1.602353 1.368673
+[6,] 1.010002 0.7622173 1.320963 1.493577
+
+attr(,"class")
+[1] "ses"
+
+$range
+$ses
+              WingL       BeakH     UBeakL     N.UBkL
+DMaj     -9.7314621 -10.7608591  -2.438819  -5.575867
+EspHd    -2.2222222  -4.8485187  -4.394790  -1.600653
+FlorChrl -4.8333333  -9.6515440 -12.179303 -11.313708
+GnovTwr  -0.2286648   1.9360529  -1.151088  -1.751095
+MrchBndl -0.6515704  -0.9496715  -2.403701  -0.369448
+SCruInde -0.5039526  -2.5046183  -2.945536  -1.736185
+
+$ses.inf
+           [,1]      [,2]      [,3]       [,4]
+[1,] -1.6017335 -1.482864 -1.147679 -1.4057468
+[2,] -1.9555556 -1.471160 -1.497942 -1.6692529
+[3,] -1.5333333 -2.020510 -1.410235 -1.3199327
+[4,] -1.2576563 -1.519309 -1.629232 -1.8243970
+[5,] -1.3845870 -1.792980 -1.849001 -0.9739993
+[6,] -0.5039526 -0.931951 -1.857053 -1.5206582
+
+$ses.sup
+          [,1]      [,2]      [,3]     [,4]
+[1,] 1.4154854 1.6848101 1.2827004 1.386113
+[2,] 0.9777778 1.4279884 1.3246267 1.349122
+[3,] 1.1666667 0.6990604 1.6116973 1.319933
+[4,] 1.6235199 1.3158597 1.4787051 1.107670
+[5,] 1.4008763 1.3523322 1.0724204 1.383751
+[6,] 1.7638342 1.5843167 0.9168223 1.388948
+
+attr(,"class")
+[1] "ses"
+
+$CVNND
+$ses
+              WingL      BeakH    UBeakL    N.UBkL
+DMaj      6.9668662  0.1779744  4.267363  8.416008
+EspHd     0.2052887  4.2777927  2.125165 10.215582
+FlorChrl  4.9093747 19.7470017 11.282770  6.101321
+GnovTwr   2.2222078  5.0005506  6.200412 18.161480
+MrchBndl  1.0651905  3.7425264  8.508926  2.432471
+SCruInde -0.6988528  4.6179395 -2.105291  1.192819
+
+$ses.inf
+           [,1]       [,2]       [,3]      [,4]
+[1,] -1.5493038 -0.9131359 -1.4745892 -1.321834
+[2,] -0.8087599 -0.9688268 -0.7974305 -1.598331
+[3,] -1.5786648 -1.2054698 -1.0672891 -1.324207
+[4,] -1.8040185 -1.0058390 -1.0291647 -1.720387
+[5,] -1.7391243 -1.4161190 -1.6752795 -1.359638
+[6,] -1.2603820 -1.1611087 -1.0306262 -1.472021
+
+$ses.sup
+         [,1]     [,2]     [,3]     [,4]
+[1,] 1.405946 1.995304 1.652819 1.461617
+[2,] 2.052937 1.784245 2.038108 1.187531
+[3,] 1.351307 1.665375 1.809885 1.515670
+[4,] 1.126758 1.585302 1.719543 1.353776
+[5,] 1.414883 1.358979 1.489655 1.566279
+[6,] 1.805844 1.638611 1.648117 1.315221
+
+attr(,"class")
+[1] "ses"
+
+$mean.pop
+$ses
+             WingL      BeakH     UBeakL     N.UBkL
+DMaj      7.772396  -2.914217  -2.785523  -2.047876
+EspHd    15.811014  -5.161338  -4.296372 -10.393658
+FlorChrl 12.398575  -5.505969  -3.202403  -3.640662
+GnovTwr   7.654143  -3.218777  -2.401845  -3.112941
+MrchBndl 35.736780  -8.342005  -5.615682  -9.086557
+SCruInde 32.849276 -14.319559 -12.257501  -9.802334
+
+$ses.inf
+           [,1]       [,2]       [,3]       [,4]
+[1,] -1.0318886 -1.6915517 -1.5998579 -1.0665426
+[2,] -1.1759495 -1.3362845 -1.1976766 -1.6138111
+[3,] -1.1193136 -0.9599987 -0.7412595 -0.9245085
+[4,] -0.9455767 -1.4243759 -1.0833528 -0.8475434
+[5,] -0.9637421 -1.5640432 -1.0718213 -1.4841348
+[6,] -1.4554065 -1.1634817 -1.7131345 -1.7560262
+
+$ses.sup
+         [,1]      [,2]     [,3]     [,4]
+[1,] 1.680709 1.1781669 1.263809 1.873834
+[2,] 1.777133 1.5093739 1.775737 1.075870
+[3,] 1.539023 1.5554974 1.787122 1.762329
+[4,] 1.675762 0.9678301 1.948431 1.837579
+[5,] 1.944284 1.3615339 1.625364 1.392519
+[6,] 1.456362 1.6961364 1.188319 1.104684
+
+attr(,"class")
+[1] "ses"
+
+$kurtosis.pop
+$ses
+              WingL      BeakH     UBeakL     N.UBkL
+DMaj      0.0000000 -4.0000000  0.5163978  0.0000000
+EspHd    -0.2107710 -0.4544545 -1.8885825 -0.2488673
+FlorChrl -0.8861071 -0.3730937 -1.1182968 -1.5939558
+GnovTwr  -0.7168977 -4.7207383 -1.7077176 -1.4132240
+MrchBndl -0.9997355  0.9820573 -0.8448406 -1.5417275
+SCruInde  0.1479599  0.9985492 -1.5553414 -0.5158544
+
+$ses.inf
+           [,1]      [,2]       [,3]      [,4]
+[1,] -2.8284271 -2.000000 -2.0655911 -2.828427
+[2,] -1.8980886 -1.615933 -1.7899218 -1.714833
+[3,] -1.3476863 -1.162798 -0.9702227 -1.118912
+[4,] -1.6591887 -1.821075 -2.0558791 -1.702574
+[5,] -1.1497807 -1.139291 -1.2126419 -1.747979
+[6,] -0.9207766 -1.297503 -1.4681065 -1.335022
+
+$ses.sup
+          [,1]     [,2]      [,3]      [,4]
+[1,] 0.0000000 2.000000 0.5163978 0.0000000
+[2,] 0.9753403 1.166829 1.0846646 1.0357921
+[3,] 1.2449218 1.327128 1.4307546 1.5404103
+[4,] 1.0252411 0.830637 0.8390233 0.8968446
+[5,] 1.6313467 1.661260 1.5469453 1.3018817
+[6,] 1.9332891 1.824880 1.1803196 1.2706550
+
+attr(,"class")
+[1] "ses"
+
+$range.pop
+$ses
+              WingL       BeakH     UBeakL     N.UBkL
+DMaj     -1.2311628 -1.11917865 -0.5930190 -1.5895390
+EspHd     2.9540883  0.02763272  0.1173158 -0.1203204
+FlorChrl -0.3744185 -0.93952850 -1.1952006 -1.4057132
+GnovTwr   0.4198203 -1.13248434 -1.1474103 -1.2836070
+MrchBndl  3.4501102  0.84716421 -0.1864114 -1.3732967
+SCruInde  5.4953801  0.64929749 -0.5488444 -1.0497741
+
+$ses.inf
+           [,1]       [,2]       [,3]      [,4]
+[1,] -1.5157672 -0.9354028 -1.1684543 -1.463298
+[2,] -0.9233575 -1.1730208 -1.3781461 -1.241116
+[3,] -1.0930609 -1.1549403 -0.8591341 -1.073633
+[4,] -1.2489514 -1.3395680 -1.5862992 -1.094913
+[5,] -1.6356021 -1.1105378 -1.1510843 -1.369926
+[6,] -1.3743047 -0.9433282 -1.4929019 -1.394535
+
+$ses.sup
+         [,1]      [,2]     [,3]     [,4]
+[1,] 1.475953 1.9269972 1.756863 1.528646
+[2,] 1.989264 1.9592092 1.703381 1.462254
+[3,] 1.377440 1.7582484 1.815058 1.343277
+[4,] 1.777070 0.9119937 1.670065 1.940465
+[5,] 1.246407 1.4797484 1.616212 1.526926
+[6,] 1.528880 1.8600102 1.467490 1.723822
+
+attr(,"class")
+[1] "ses"
+
+$CVNND.pop
+$ses
+              WingL       BeakH     UBeakL      N.UBkL
+DMaj     -1.4181234  0.02631617 -0.6128697 -0.22391958
+EspHd    -1.6349633 -1.44917451 -2.2402726 -0.06911292
+FlorChrl -1.2756576 -0.66616218 -1.8441889 -3.86699079
+GnovTwr  -2.3748368 -2.62947880 -4.0228982 -2.90885935
+MrchBndl -0.9713889  0.45034911 -1.3960327  1.07663771
+SCruInde  0.3890662  1.10566754 -1.1646820  0.68934266
+
+$ses.inf
+          [,1]      [,2]       [,3]      [,4]
+[1,] -1.186941 -1.619967 -1.3399030 -1.090702
+[2,] -1.450250 -1.031763 -1.0229325 -1.651059
+[3,] -1.320577 -1.270202 -0.9197650 -1.404381
+[4,] -1.130752 -1.646238 -1.4926982 -1.216238
+[5,] -1.408006 -1.356259 -0.9397826 -1.123606
+[6,] -1.421936 -1.281044 -1.1049162 -1.314768
+
+$ses.sup
+         [,1]     [,2]     [,3]     [,4]
+[1,] 1.289691 1.220117 1.249762 1.588107
+[2,] 1.277810 1.401630 1.851961 1.342692
+[3,] 1.289262 1.424354 1.584383 1.643127
+[4,] 1.434827 1.034769 1.516628 1.621974
+[5,] 1.299002 1.419425 1.610278 1.591440
+[6,] 1.371953 1.461212 1.869900 1.759464
+
+attr(,"class")
+[1] "ses"
+
+$T_IP.IC
+$ses
+              WingL       BeakH     UBeakL     N.UBkL
+DMaj      -1.365772  -0.7153042  -2.007752  -2.262379
+EspHd    -10.088570 -15.9112539 -15.610573 -11.280891
+FlorChrl -12.698677 -19.0544595 -14.728009 -32.197244
+GnovTwr  -45.457853 -41.0808350 -27.510091 -90.786483
+MrchBndl -27.302122 -18.1158050 -53.504285 -40.893382
+SCruInde -21.403606 -18.8400641 -20.662786 -40.498174
+
+$ses.inf
+          WingL      BeakH    UBeakL    N.UBkL
+[1,] -0.9905538 -0.8295656 -1.108510 -1.434353
+[2,] -1.3667751 -1.3401715 -1.003056 -1.737819
+[3,] -1.4734950 -1.1941028 -1.728229 -1.315557
+[4,] -1.1841065 -1.7206975 -1.823262 -1.453586
+[5,] -1.5304019 -1.6368009 -1.206900 -1.256748
+[6,] -1.1166421 -0.9699753 -1.492427 -1.743825
+
+$ses.sup
+        WingL    BeakH   UBeakL   N.UBkL
+[1,] 1.897501 1.970699 1.499048 1.728873
+[2,] 1.666615 1.229952 1.797561 1.269805
+[3,] 1.635897 1.236991 1.317053 1.381819
+[4,] 1.854113 1.464337 1.114917 1.277076
+[5,] 1.403449 1.121822 1.598867 1.513567
+[6,] 1.631206 1.876323 1.603712 1.188967
+
+attr(,"class")
+[1] "ses"
+
+$T_IC.IR
+$ses
+              WingL      BeakH     UBeakL      N.UBkL
+DMaj      -4.876984  -3.437303  -3.499835  -5.4066240
+EspHd     12.003390   8.632683   1.172039   7.8366430
+FlorChrl -14.201176 -20.189218 -16.799375 -11.4881823
+GnovTwr    9.688279  11.829300   8.063625   5.6842373
+MrchBndl   4.917649   7.335639  -1.043476  -0.5964497
+SCruInde  -1.232696  -7.565033  -1.103542  -1.1369158
+
+$ses.inf
+         WingL     BeakH    UBeakL    N.UBkL
+[1,] -1.917712 -1.051132 -1.163259 -1.094292
+[2,] -1.320874 -1.705893 -1.014074 -1.066455
+[3,] -1.405123 -1.657955 -1.452263 -1.282718
+[4,] -1.115686 -1.309043 -1.865465 -1.436220
+[5,] -1.552935 -1.210219 -1.008762 -1.685933
+[6,] -1.587009 -1.874181 -1.545221 -1.667213
+
+$ses.sup
+        WingL    BeakH   UBeakL   N.UBkL
+[1,] 1.069202 1.699572 1.213032 1.725255
+[2,] 1.635570 1.412176 1.754442 1.677169
+[3,] 1.203389 1.385991 1.170285 1.557748
+[4,] 1.733240 1.351176 1.012587 1.437087
+[5,] 1.281237 1.714047 1.661430 1.499315
+[6,] 1.206316 1.037831 1.086810 1.285377
+
+attr(,"class")
+[1] "ses"
+
+$T_PC.PR
+$ses
+              WingL       BeakH     UBeakL       N.UBkL
+DMaj     -1.3375428 -1.54466644 -0.6310180 -0.909486269
+EspHd     2.1630001  0.34670647  0.2792477  2.175869348
+FlorChrl  0.1602725  0.29420631  0.2623729  0.582425664
+GnovTwr   1.7769516  5.41079078  1.0080726  1.066785710
+MrchBndl  1.1682050  0.03488219  1.5591343 -0.006851332
+SCruInde  0.3497074  0.08927048  0.3651358  1.569397581
+
+$ses.inf
+          WingL      BeakH     UBeakL     N.UBkL
+[1,] -1.1936800 -1.4402067 -0.7877305 -1.0868279
+[2,] -1.0422281 -0.8260751 -0.8009931 -0.9830409
+[3,] -1.0504061 -0.8670563 -0.7629630 -1.1495670
+[4,] -0.9784215 -0.8048187 -0.7123272 -1.0202165
+[5,] -1.1745792 -1.3026864 -1.1800992 -1.3346366
+[6,] -1.1604549 -0.9811848 -1.2562953 -1.1945336
+
+$ses.sup
+        WingL    BeakH   UBeakL   N.UBkL
+[1,] 1.567252 1.290378 1.897312 1.769037
+[2,] 1.435290 1.796738 2.038849 1.755590
+[3,] 1.521110 1.929793 2.012755 1.332786
+[4,] 1.855153 2.057990 1.982396 1.900766
+[5,] 1.325525 1.284115 1.238769 1.650864
+[6,] 1.808624 1.293760 1.613879 1.413714
+
+attr(,"class")
+[1] "ses"
+
+attr(,"class")
+[1] "ses.list"
+> 	attributes(ses.list)
+$names
+ [1] "mean"         "kurtosis"     "range"        "CVNND"        "mean.pop"    
+ [6] "kurtosis.pop" "range.pop"    "CVNND.pop"    "T_IP.IC"      "T_IC.IR"     
+[11] "T_PC.PR"     
+
+$class
+[1] "ses.list"
+
+> 	
+> 	#### An other way to see "ses values" 
+> 	
+> 	# Custom theme (from rasterVis package)
+> 	require(rasterVis)
+Loading required package: rasterVis
+Loading required package: raster
+Loading required package: sp
+
+Attaching package: 'raster'
+
+The following object is masked from 'package:e1071':
+
+    interpolate
+
+The following objects are masked from 'package:ape':
+
+    edges, rotate, zoom
+
+The following object is masked from 'package:nlme':
+
+    getData
+
+Loading required package: lattice
+Loading required package: latticeExtra
+Loading required package: RColorBrewer
+Loading required package: hexbin
+Loading required package: grid
+> 	
+> 	my.theme <- BuRdTheme()
+> 	# Customize the colorkey
+> 	my.ckey <- list(col = my.theme$regions$col)
+> 	
+> 	levelplot(t(rbind(ses.list[[1]]$ses, ses.list[[2]]$ses, 
++ 	ses.list[[3]]$ses,  ses.list[[4]]$ses)), colorkey = my.ckey, 
++ 	par.settings = my.theme,border = "black")
+> 	
+> 	levelplot(t(rbind(ses.list[[1]]$ses>ses.list[[1]]$ses.sup, 
++ 	ses.list[[2]]$ses>ses.list[[2]]$ses.sup, 
++ 	ses.list[[3]]$ses>ses.list[[3]]$ses.sup,
++ 	ses.list[[4]]$ses>ses.list[[4]]$ses.sup)), 
++ 	colorkey = my.ckey, par.settings = my.theme,border = "black")
+> 	
+> 
+> 	#For all metrics of the list of index
+> 	ses.list.levelplot <- c()
+> 
+> 	for(i in 1: length(ses.list)){
++ 
++ 		ses.list.levelplot <- rbind(ses.list.levelplot, ses.list[[i]]$ses)
++ 	}
+> 	
+> 	levelplot(t(ses.list.levelplot), colorkey = my.ckey, 
++ 	par.settings = my.theme,border = "black")
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  20.06 0.42 20.5 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
