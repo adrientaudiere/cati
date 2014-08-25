@@ -113,38 +113,15 @@
 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
-		
-<<<<<<< HEAD
+
 		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 
-		funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
-		"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
-	
-=======
-		res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, 
+		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
-
-	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
-	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
-	}
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
-	
-		res.finch.sp_mn2 <- ComIndex(traits=traits.finch, index=funct, 
-		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
-		nperm=9, print=FALSE)
 		
-<<<<<<< HEAD
-		res.finch.sp_mn2sp <- ComIndex(traits=traits.finch, index=funct, 
-=======
-		res.finch.sp_mn3 <- ComIndex(traits=traits.finch, index=funct, 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
-		sp=sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot=ind.plot.finch, 
-		nperm=9, print=FALSE)
-
-
 		####
 		#We can represent Standardized Effect Size (ses)
 		#using the function plot(as.listofindex(list1, list2, list3))
@@ -161,22 +138,11 @@
 	#This allows to calculation index per site 
 	#for example using "tapply(x, sites, mean)".
 	
-
 	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
 	min(x, na.rm = TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))")
 
-	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=TRUE))", 
-	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))", 
-	"tapply(x, ind.plot.finch, function(x) max(x, na.rm=TRUE) - 
-	min(x, na.rm=TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))")
-<<<<<<< HEAD
-=======
-
-	
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
-	
 	##Null model 1 is trivial for this function 
 	#because randomisation is within community only
 	
@@ -189,14 +155,6 @@
 		res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
-
-		res.finch.ind_mn1 <- ComIndex(traits=traits.finch, index=funct, 
-		sp=sp.finch, nullmodels = c(1,1,1,1), ind.plot=ind.plot.finch, 
-		nperm=9, print=FALSE)
-		
-		res.finch.ind_mn2 <- ComIndex(traits=traits.finch, index=funct, 
-		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
-		nperm=9, print=FALSE)
 
 		
 		####
@@ -215,27 +173,13 @@
 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
 		split = "_"), function(x) x[3])
 		
-		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
-		split = "_"), function(x) x[3])
-		
 		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
 		function(x) mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
 		function(x) kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
 		function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
 		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
 		
-		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
-		function(x) mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
-		
-		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
-		mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
-		
+			
 		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
 		mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
 		kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
@@ -245,60 +189,10 @@
 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
-		
-		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
-		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
-		nperm = 9, print = FALSE)
-		
+				
 		res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
-
-		tapply(x, name_sp_sites, mean , na.rm=TRUE))
-		
-		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), 
-		split="_"), function(x) x[3])
-		
-		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), 
-		split="_"), function(x) x[3])
-		
-		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
-		function(x) mean(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
-		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
-		
-		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
-		function(x) mean(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) kurtosis(x, na.rm=TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
-		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
-		
-		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
-		mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		kurtosis(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
-		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
-		
-		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
-		mean(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		kurtosis(x, na.rm=TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		max(x, na.rm=TRUE) - min(x, na.rm=TRUE) )", 
-		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
-		
-		res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV, 
-		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
-		nperm=9, print=FALSE)
-		
-		res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV, 
-		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
-		nperm=9, print=FALSE)
-		
-		res.finch.withoutIV <- ComIndex(traits=traits.finch, index=funct.withoutIV, 
-		sp=sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot=ind.plot.finch, 
-		nperm=9, print=FALSE)
-
-	
 	}
 	
 	####
@@ -306,32 +200,12 @@
 	#the plot.listofindex function.
 	
 	\dontrun{
-
-<<<<<<< HEAD
 		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
-=======
-		res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 		nperm = 9, print = FALSE)
 		
 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
 		
 		index.list1 <- as.listofindex(list.ind, namesindex = c("mean", "kurtosis", 
-
-<<<<<<< HEAD
-		res.finch <- Tstats(traits.finch, ind.plot=ind.plot.finch, sp=sp.finch, 
-=======
-		res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
-		nperm=9, print=FALSE)
-		
-		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
-		
-		index.list1 <- as.listofindex(list.ind, namesindex=c("mean", "kurtosis", 
-<<<<<<< HEAD
-=======
-
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 		"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
 		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
 		

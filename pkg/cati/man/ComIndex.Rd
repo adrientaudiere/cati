@@ -121,11 +121,11 @@
 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
 	
 	\dontrun{
-<<<<<<< HEAD
+
 	res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
 	sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 	nperm = 9, print = FALSE)
-=======
+
 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
@@ -133,7 +133,7 @@
 		res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 	
 	res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
 	sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
@@ -143,12 +143,12 @@
 	#We can represent Standardized Effect Size (ses)
 	#using the function plot(as.listofindex(list1, list2, list3))
 	
-<<<<<<< HEAD
+
 	list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
 	index.list2 <- as.listofindex(list.ind2)
 	
 	plot(index.list2, type = "bytraits")
-=======
+
 		####
 		#This allows to calcul index per site 
 		#for example using "tapply(x, sites, mean)".
@@ -213,9 +213,9 @@
 		#We can also represent T-statistics and custom index thanks to
 		#the plot.listofindex function.
 		
-		res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
 		nperm = 9, print = FALSE)
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 	
 	plot(index.list2)
 
@@ -361,7 +361,7 @@
 	# into acount for species abundance, prab for presence/absence)
 	
 	\dontrun{
-<<<<<<< HEAD
+
 	traits_by_sp <- apply(traits.finch, 2, function(x) 
 	tapply(x, name_sp_sites, mean, na.rm=T))
 	
@@ -378,7 +378,7 @@
 	res.finch.withoutIV.prab <- ComIndex(traits = traits.finch, 
 		index = funct.withoutIV.prab, sp = sp.finch, 
 		nullmodels = rep("2sp.prab", times=4), ind.plot = ind.plot.finch, 
-=======
+
 	traits_by_sp <- apply(traits.finch, 2, function(x) tapply(x, name_sp_sites, mean, na.rm=T))
 	sites_bysp<-unlist(strsplit(rownames(traits_by_sp), split="_"))[seq(3,3*dim(traits_by_sp)[1], by=3) ]
 	
@@ -389,7 +389,7 @@
 		
 	res.finch.withoutIV.prab <- ComIndex(traits = traits.finch, index = funct.withoutIV.prab, 
 		sp = sp.finch, nullmodels = rep("2sp.prab", times=4), ind.plot = ind.plot.finch, 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 		nperm = 9, print = FALSE)
 	
 	list.ind2 <- list(res.finch.withoutIV, res.finch.withoutIV.prab)
@@ -398,9 +398,9 @@
 		"mean.prab", "kurtosis.prab", "range.prab", "CVNND.prab"))
 	
 	plot(index.list2)
-<<<<<<< HEAD
-=======
+
+
 	
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 	}
 }
