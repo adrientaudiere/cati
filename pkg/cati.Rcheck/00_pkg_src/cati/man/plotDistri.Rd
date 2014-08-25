@@ -74,6 +74,7 @@
 
 \examples{	
 	data(finch.ind)
+	oldpar <- par(no.readonly = TRUE)
 	
 	#Plot the distribution of trait values for populations, 
 	#species, sites and regional scales. 
@@ -112,7 +113,7 @@
 	plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]), 
 	ind.plot.finch, ylim.cex = 3, plot.ask = FALSE)
 	
-	par(mfrow = c(4,4), cex = 0.5)
+	par(oldpar)
 }
 
 

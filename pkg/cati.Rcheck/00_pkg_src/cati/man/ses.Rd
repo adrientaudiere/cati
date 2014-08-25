@@ -5,7 +5,7 @@
 }
 
 \description{
-	Calcul standardized effect size and confidence interval for a matrix of statistics and the related null model expressed as a list or as an array. Internal function use by other functions of the package. You can transpose the observed matrix to represent either the SES by traits or by plots. Warnings, to detect automatically the correspondence between dimension of observed matrix and null model list or array, observed matrix needs to have different numbers of rows and columns.
+	calculation standardized effect size and confidence interval for a matrix of statistics and the related null model expressed as a list or as an array. Internal function use by other functions of the package. You can transpose the observed matrix to represent either the SES by traits or by plots. Warnings, to detect automatically the correspondence between dimension of observed matrix and null model list or array, observed matrix needs to have different numbers of rows and columns.
 }
 
 \usage{
@@ -22,7 +22,7 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 
 }
@@ -47,17 +47,10 @@
 \examples{
 	data(finch.ind)
 	
-
-	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9)
 
-	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
-	sp=sp.finch, nperm=9)
-
-	
-	ses(res.finch$T_IP.IC, res.finch$T_IP.IC_nm)
-	
-	ses(t(res.finch$T_IP.IC), res.finch$T_IP.IC_nm)
+	ses(res.finch$Tstats$T_IP.IC, res.finch$Tstats$T_IP.IC_nm)
 }
 
 

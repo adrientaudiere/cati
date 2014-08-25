@@ -159,15 +159,15 @@
 		
 		
 		traits.finch.mice.sp <- apply(apply(traits.finch.mice, 2, scale ), 2, 
-<<<<<<< HEAD
+
 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
-=======
+
 
 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
 
 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 		
 		trait.rao.w <- list()
 		witRao.w.bytrait <- c()

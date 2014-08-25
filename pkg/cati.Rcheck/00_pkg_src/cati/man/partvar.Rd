@@ -27,7 +27,7 @@
 	}
 	
 	\item{printprogress}{
-		Logical value; print progress during the calcul or not.
+		Logical value; print progress during the calculation or not.
 	}
 	
 	\item{partvar}{
@@ -68,7 +68,12 @@
 \examples{
 	data(finch.ind)
 
+
+	cond<-seq(1,length(sp.finch)*2, by = 2)
+	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[cond])
+
 	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[seq(1,length(sp.finch)*2, by = 2)])
+
 
 	res.partvar.finch <- partvar(traits = traits.finch, 
 	factors = cbind(sites = as.factor(as.vector(ind.plot.finch)), 
@@ -81,7 +86,11 @@
 
 	res.partvar.finch
 	
+
+	oldpar <- par(no.readonly = TRUE)
+
 	oldpar <- par()
+
 
 	par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2))
 	piePartvar(res.partvar.finch, col = c("red", "green", "blue", "purple"))

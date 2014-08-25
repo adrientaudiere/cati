@@ -68,12 +68,12 @@
 \examples{
 	data(finch.ind)
 
-<<<<<<< HEAD
+
 	cond<-seq(1,length(sp.finch)*2, by = 2)
 	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[cond])
-=======
+
 	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[seq(1,length(sp.finch)*2, by = 2)])
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 
 	res.partvar.finch <- partvar(traits = traits.finch, 
 	factors = cbind(sites = as.factor(as.vector(ind.plot.finch)), 
@@ -86,11 +86,11 @@
 
 	res.partvar.finch
 	
-<<<<<<< HEAD
+
 	oldpar <- par(no.readonly = TRUE)
-=======
+
 	oldpar <- par()
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 
 	par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2))
 	piePartvar(res.partvar.finch, col = c("red", "green", "blue", "purple"))

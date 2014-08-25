@@ -19,7 +19,7 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 }
 
@@ -43,10 +43,11 @@
 \examples{
 	data(finch.ind)
 
-	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
 	nperm = 9, print = FALSE)
 	
-	#Calcul of means by population (name_sp_site is a name of a population) 
+	#calculation of means by population (name_sp_site is a population) 
 	#like in the function ComIndex and determine the site 
 	#for each population (sites_bypop)
 
@@ -58,36 +59,29 @@
 	
 	sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_")
 	, split = "_"), function(x) x[3])
-	
-	
-	funct.withoutIV <- c("tapply(x, unlist(sites_bypop), function(x) mean(x, na.rm=TRUE))",
-	"tapply(x, unlist(sites_bypop), function(x) kurtosis(x, na.rm=TRUE))",
-	"tapply(x, unlist(sites_bypop), function(x)	max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
-	
-	
-	funct.withIV <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
-	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
-	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
-	
 
-	res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV,
-	sp = sp.finch, nullmodels = rep("2", times=4), ind.plot = ind.plot.finch, nperm = 9
-	, print = FALSE)
-	
+	funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
+	function(x) mean(x, na.rm=TRUE))",
+	"tapply(x, unlist(sites_bypop), function(x) kurtosis(x, na.rm=TRUE))",
+	"tapply(x, unlist(sites_bypop), function(x)	max(x, na.rm = TRUE) 
+	- min(x, na.rm = TRUE) )", 
+	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+		
+	funct.withIV <- c("tapply(x, ind.plot.finch, 
+	function(x) mean(x, na.rm = TRUE))",
+	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
+	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) 
+	- min(x, na.rm = TRUE) )", 
+	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+
+
+	res.finch.withIV <- ComIndex(traits = traits.finch, 
+	index = funct.withIV, sp = sp.finch, nullmodels = rep("2", times=4), 
+	ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+
 	res.finch.withoutIV <- ComIndex(traits = traits.finch, 
 	index = funct.withoutIV, sp = sp.finch, nullmodels = rep("2sp", times=4), 
 	ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
-
-	res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV, 
-	sp=sp.finch, nullmodels = rep("2", times=4), ind.plot=ind.plot.finch, 
-	nperm=9, print=FALSE)
-	
-	res.finch.withoutIV <- ComIndex(traits=traits.finch, 
-	index=funct.withoutIV, sp=sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), 
-	ind.plot=ind.plot.finch, nperm=9, print=FALSE)
-
 
 	##Plot T-statistics and custom metrics thanks to 
 	#the plot.listofindex function.

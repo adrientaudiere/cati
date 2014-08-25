@@ -47,24 +47,10 @@
 \examples{
 	data(finch.ind)
 	
-<<<<<<< HEAD
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9)
 
-	res.finch <- Tstats(traits.finch, ind.plot=ind.plot.finch, 
-	sp=sp.finch, nperm=9)
-
-=======
-
-	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
-	sp = sp.finch, nperm = 9)
-
-	res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, 
-	sp=sp.finch, nperm=9)
-
-	
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
-	ses(res.finch$T_IP.IC, res.finch$T_IP.IC_nm)
+	ses(res.finch$Tstats$T_IP.IC, res.finch$Tstats$T_IP.IC_nm)
 }
 
 
