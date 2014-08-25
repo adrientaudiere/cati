@@ -2,13 +2,8 @@
 ** R
 ** data
 ** preparing package for lazy loading
-Avis : package 'ape' was built under R version 3.1.1
-** help
-*** installing help indices
-** building package indices
-** testing if installed package can be loaded
-*** arch - i386
-Avis : package 'ape' was built under R version 3.1.1
-*** arch - x64
-Avis : package 'ape' was built under R version 3.1.1
-* DONE (cati)
+Warning in library(pkg, character.only = TRUE, logical.return = TRUE, lib.loc = lib.loc) :
+  there is no package called 'ade4'
+Error : package 'ade4' could not be loaded
+ERROR: lazy loading failed for package 'cati'
+* removing 'C:/Users/taudiere/Desktop/cati/pkg/cati.Rcheck/cati'
