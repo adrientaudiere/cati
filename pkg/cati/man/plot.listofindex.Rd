@@ -97,7 +97,7 @@
 
 \examples{	
 	data(finch.ind)
-	oldpar <- par()
+	oldpar <- par(no.readonly = TRUE)
 	
 	####
 	#The function ComIndex allow to choose your own function 
@@ -105,37 +105,51 @@
 	
 	require(e1071)
 	
-<<<<<<< HEAD
+
 	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
 	
 	\dontrun{
 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
-		res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c(3,3,3,3), ind.plot = ind.plot.finch, 
+<<<<<<< HEAD
+		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
+		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
+
+		funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
+		"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
+	
 =======
+		res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, 
+		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+		nperm = 9, print = FALSE)
+
 	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
 	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)"  )
+	}
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 	
-	\dontrun{
 		res.finch.sp_mn2 <- ComIndex(traits=traits.finch, index=funct, 
-		sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
+		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
 		nperm=9, print=FALSE)
 		
+<<<<<<< HEAD
+		res.finch.sp_mn2sp <- ComIndex(traits=traits.finch, index=funct, 
+=======
 		res.finch.sp_mn3 <- ComIndex(traits=traits.finch, index=funct, 
-		sp=sp.finch, nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, 
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+		sp=sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot=ind.plot.finch, 
 		nperm=9, print=FALSE)
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 
 		####
 		#We can represent Standardized Effect Size (ses)
 		#using the function plot(as.listofindex(list1, list2, list3))
 		
-		list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn3)
+		list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
 		index.list2 <- as.listofindex(list.ind2)
 		
 		plot(index.list2, type = "bytraits")
@@ -144,46 +158,49 @@
 	}
 	
 	####
-	#This allows to calcul index per site 
+	#This allows to calculation index per site 
 	#for example using "tapply(x, sites, mean)".
 	
-<<<<<<< HEAD
+
 	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
 	min(x, na.rm = TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))")
-=======
+
 	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm=TRUE) - 
 	min(x, na.rm=TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))")
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+<<<<<<< HEAD
+=======
+
 	
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 	
 	##Null model 1 is trivial for this function 
 	#because randomisation is within community only
 	
 	\dontrun{
-<<<<<<< HEAD
+
 		res.finch.ind_mn1 <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c(1,1,1,1), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
 		res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
-=======
+
 		res.finch.ind_mn1 <- ComIndex(traits=traits.finch, index=funct, 
-		sp=sp.finch, nullmodels=c(1,1,1,1), ind.plot=ind.plot.finch, 
+		sp=sp.finch, nullmodels = c(1,1,1,1), ind.plot=ind.plot.finch, 
 		nperm=9, print=FALSE)
 		
 		res.finch.ind_mn2 <- ComIndex(traits=traits.finch, index=funct, 
-		sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
+		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
 		nperm=9, print=FALSE)
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 		
 		####
-		#We can calcul metrics with or without intraspecific variance.
+		#We can calculation metrics with or without intraspecific variance.
 		#Calculation of trait averages per population 
 		#(name_sp_site is a name of a population) 
 		#like in the function ComIndex
@@ -192,7 +209,7 @@
 		name_sp_sites = paste(sp.finch, ind.plot.finch, sep = "_")
 		
 		traits.by.pop <- apply(traits.finch, 2 , function (x) 
-<<<<<<< HEAD
+
 		tapply(x, name_sp_sites, mean , na.rm = TRUE))
 		
 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
@@ -226,17 +243,17 @@
 		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
 		
 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
-		sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
-		sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
 		res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
-		sp = sp.finch, nullmodels = c(3,3,3,3), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
-=======
+
 		tapply(x, name_sp_sites, mean , na.rm=TRUE))
 		
 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), 
@@ -270,17 +287,17 @@
 		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
 		
 		res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV, 
-		sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
+		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
 		nperm=9, print=FALSE)
 		
 		res.finch.withIV <- ComIndex(traits=traits.finch, index=funct.withIV, 
-		sp=sp.finch, nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch, 
+		sp=sp.finch, nullmodels = c("2","2","2","2"), ind.plot=ind.plot.finch, 
 		nperm=9, print=FALSE)
 		
 		res.finch.withoutIV <- ComIndex(traits=traits.finch, index=funct.withoutIV, 
-		sp=sp.finch, nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, 
+		sp=sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot=ind.plot.finch, 
 		nperm=9, print=FALSE)
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 	
 	}
 	
@@ -289,37 +306,48 @@
 	#the plot.listofindex function.
 	
 	\dontrun{
+
 <<<<<<< HEAD
+		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
+=======
 		res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 		nperm = 9, print = FALSE)
 		
 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
 		
 		index.list1 <- as.listofindex(list.ind, namesindex = c("mean", "kurtosis", 
+
+<<<<<<< HEAD
+		res.finch <- Tstats(traits.finch, ind.plot=ind.plot.finch, sp=sp.finch, 
 =======
 		res.finch <- Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch, 
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 		nperm=9, print=FALSE)
 		
 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
 		
 		index.list1 <- as.listofindex(list.ind, namesindex=c("mean", "kurtosis", 
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+<<<<<<< HEAD
+=======
+
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 		"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
 		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
 		
 		class(index.list1)
 		
 		par(mfrow = c(2,3))
-		plot(index.list1,type = "bytraits", bysite = TRUE)
+		plot(index.list1, type = "bytraits", bysite = TRUE)
 		
 		par(mfrow = c(2,2))
 		plot(index.list1,type = "bytraits")
 		par(mfrow = c(1,1))
 		
-		plot(index.list1,type = "simple")
-		plot(index.list1,type = "simple_range")
-		plot(index.list1,type = "normal")
-		plot(index.list1,type = "barplot")
+		plot(index.list1, type = "simple")
+		plot(index.list1, type = "simple_range")
+		plot(index.list1, type = "barplot")
+		plot(index.list1, type = "normal")
 	}
 }
 

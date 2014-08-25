@@ -80,7 +80,7 @@
 }
 
 \author{
-	Francesco De Bello et al., 2011
+	Francesco De Bello et al., 2011 modified by Adrien Taudiere
 }
 
 \examples{
@@ -92,21 +92,21 @@
 		class(comm.sp) <- "matrix"
 		
 		traits.finch.sp <- apply( apply(traits.finch, 2, scale ), 2, 
-<<<<<<< HEAD
+
 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
 		
 		mat.dist <- as.matrix(dist(traits.finch.sp))^2
 		
 		res.rao <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
 		weight = FALSE, Jost = FALSE, structure = NULL)
-=======
+
 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
 		
 		mat.dist <- as.matrix(dist(traits.finch.sp))^2
 		
 		res.rao <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
 		weight=FALSE, Jost=FALSE, structure=NULL)
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 		
 		witRao <- res.rao$FD$Mean_Alpha  #overall within species variance
 		betRao <- res.rao$FD$Beta_add    #between species variance
@@ -118,13 +118,13 @@
 		
 		#Now let"s take the abundance to calculate Rao diversity.
 		
-<<<<<<< HEAD
+
 		res.rao.w <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
 		weight = TRUE, Jost = FALSE, structure = NULL)
-=======
+
 		res.rao.w <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
 		weight=TRUE, Jost=FALSE, structure=NULL)
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 		
 		witRao.w <- res.rao.w$FD$Mean_Alpha  #overall within species variance
 		betRao.w <- res.rao.w$FD$Beta_add    #between species variance
@@ -149,11 +149,11 @@
 		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
 		
 		library(mice)
-<<<<<<< HEAD
+
 		traits = traits.finch
-=======
+
 		traits=traits.finch
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 		mice <- mice(traits.finch)
 		traits.finch.mice <- complete(mice)
 		
@@ -162,23 +162,28 @@
 <<<<<<< HEAD
 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
 =======
+
+		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
+
 		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 		
 		trait.rao.w <- list()
 		witRao.w.bytrait <- c()
 		betRao.w.bytrait <- c()
-<<<<<<< HEAD
+
 		for (t in 1 : 4){
 		  trait.rao.w[[t]] <- RaoRel(sample = as.matrix(comm.sp), 
 		  dfunc = dist(traits.finch.mice.sp[,t]), dphyl = NULL, weight = TRUE, 
 		  Jost = FALSE, structure = NULL)
-=======
+		}
+		
 		for(t in 1 : 4){
 		  trait.rao.w[[t]] <- RaoRel(sample=as.matrix(comm.sp), 
 		  dfunc=dist(traits.finch.mice.sp[,t]), dphyl=NULL, weight=TRUE, 
 		  Jost=FALSE, structure=NULL)
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 		  
 		  witRao.w.bytrait <- c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
 		  betRao.w.bytrait <- c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)

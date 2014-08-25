@@ -27,7 +27,7 @@
 	}
 	
 	\item{printprogress}{
-		Logical value; print progress during the calcul or not.
+		Logical value; print progress during the calculation or not.
 	}
 	
 	\item{partvar}{
@@ -68,37 +68,42 @@
 \examples{
 	data(finch.ind)
 
-	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_")) 
 <<<<<<< HEAD
-	[seq(1,length(sp.finch)*2, by = 2)])
-	
+	cond<-seq(1,length(sp.finch)*2, by = 2)
+	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[cond])
+=======
+	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[seq(1,length(sp.finch)*2, by = 2)])
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 	res.partvar.finch <- partvar(traits = traits.finch, 
 	factors = cbind(sites = as.factor(as.vector(ind.plot.finch)), 
 	species = as.factor(as.vector(sp.finch)), genus = as.factor(genus)))
-=======
-	[seq(1,length(sp.finch)*2, by=2)])
 	
 	res.partvar.finch <- partvar(traits=traits.finch, 
 	factors=cbind(sites=as.factor(as.vector(ind.plot.finch)), 
 	species=as.factor(as.vector(sp.finch)), genus=as.factor(genus)))
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 
 	res.partvar.finch
 	
-	oldpar <- par()
 <<<<<<< HEAD
+	oldpar <- par(no.readonly = TRUE)
+=======
+	oldpar <- par()
+>>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
+
 	par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2))
 	piePartvar(res.partvar.finch, col = c("red", "green", "blue", "purple"))
 	par(oldpar)
 
 	barPartvar(res.partvar.finch, col = c("red", "green", "blue", "purple"))
-=======
+
 	par(mfrow=c(2,2), mai=c(0.2,0.2,0.2,0.2))
 	piePartvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
 	par(oldpar)
 
 	barPartvar(res.partvar.finch, col=c("red", "green", "blue", "purple"))
->>>>>>> 04b65626a7b6cd5b6ad1ca36724262b71dae3996
+
 }
 
 
