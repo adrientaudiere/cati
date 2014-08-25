@@ -10,7 +10,7 @@
 }
 
 \usage{
-	CVNND(trait, div_range =  FALSE)
+	CVNND(trait, div_range =  FALSE, na.rm = FALSE)
 }
 
 \arguments{
@@ -20,6 +20,10 @@
 	
 	\item{div_range}{
 		Does CVNND need to be divise by the range.
+	}
+	
+	\item{na.rm}{
+		If div_range=TRUE, a logical value indicating whether NA values should be stripped before the computation proceeds.
 	}
 }
 
@@ -38,6 +42,7 @@
 \examples{
 	data(finch.ind)
 	CVNND(traits.finch[,1])
+	CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
 }
 
 

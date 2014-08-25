@@ -2,7 +2,7 @@
 \alias{ComIndex}
 
 \title{
-	Computing the moments of the trait distribution and other metrics to test and quantify the non-random assembly of communities
+	Computing metrics to test and quantify the non-random assembly of communities
 }
 
 \description{
@@ -31,7 +31,7 @@
 	}
 	
 	\item{nullmodels}{
-		A vector of values corresponding to null models tu use for each index. A value of 1 corresponds to a randomization of individual values within a given community. A value of 2 corresponds to randomization of individual values within region, ie within all the dataset. A value of 3 corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. For example, if nullmodels = c(1,2), the first index will be calculated on the null model 1 and the second index on the null model 2.
+		A vector of values corresponding to null models tu use for each index. A value of 1 corresponds to a randomization of individual values within a given community. A value of 2 corresponds to randomization of individual values within region, ie within all the dataset. A value of 2sp corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. Finally a value of 2sp.prab mirror null model 2 but without taking indo account species abundance. For example, if nullmodels = c(1,2), the first index will be calculated on the null model 1 and the second index on the null model 2.
 		
 		If only one value is given, all the the null model will be determined by this value.
 	}
@@ -58,7 +58,7 @@
 	}
 	
 	\item{printprogress}{
-		Logical value; print progress during the calcul or not.
+		Logical value; print progress during the calculation or not.
 	}
 	
 	\item{ind.value}{
@@ -77,9 +77,10 @@
 	This function implement three null models which keep unchanged the number of individual per community.
 	Model 1 corresponds to randomization of individual values within community.
 	Model 2 corresponds to randomization of individual values within region.
-	Model 3 corresponds to randomization of population values within region.
+	Model 2sp corresponds to randomization of population values within region.
+	Model 2sp.prab corresponds to randomization of population values within region but whitout taking into account for abundance.
 	
-	In most cases, models 1 and 2 correspond to index at the individual level and the model 3 to index at the species level (or any other aggregate variable like genus, family or functionnal group).
+	In most cases, models 1 and 2 correspond to index at the individual level and the model 2sp and 2sp.prab to index at the species level (or any other aggregate variable like genus, family or functionnal group).
 }
 
 \value{
@@ -108,7 +109,7 @@
 
 \examples{	
 	data(finch.ind)
-	oldpar <- par()
+	oldpar <- par(no.readonly = TRUE)
 	
 	####
 	#The function ComIndex allow to choose your own function 
@@ -120,6 +121,11 @@
 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
 	
 	\dontrun{
+
+	res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
+	sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+	nperm = 9, print = FALSE)
+
 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
@@ -127,18 +133,22 @@
 		res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, 
 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
+
 	
-		####
-		#We can represent Standardized Effect Size (ses)
-		#using the function plot(as.listofindex(list1, list2, list3))
-		
-		list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn3)
-		index.list2 <- as.listofindex(list.ind2)
-		
-		plot(index.list2, type = "bytraits")
-		
-		plot(index.list2)
+	res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
+	sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+	nperm = 9, print = FALSE)
+
+	####
+	#We can represent Standardized Effect Size (ses)
+	#using the function plot(as.listofindex(list1, list2, list3))
 	
+
+	list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
+	index.list2 <- as.listofindex(list.ind2)
+	
+	plot(index.list2, type = "bytraits")
+
 		####
 		#This allows to calcul index per site 
 		#for example using "tapply(x, sites, mean)".
@@ -203,28 +213,98 @@
 		#We can also represent T-statistics and custom index thanks to
 		#the plot.listofindex function.
 		
-		res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
 		nperm = 9, print = FALSE)
+
 	
-		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
-		
-		index.list1 <- as.listofindex(list.ind, namesindex = c("mean", "kurtosis", 
-		"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
-		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
-		
-		class(index.list1)
-		
-		par(mfrow = c(2,3))
-		plot(index.list1,type = "bytraits", bysite = TRUE)
-		
-		par(mfrow = c(2,2))
-		plot(index.list1,type = "bytraits")
-		par(mfrow = c(1,1))
-		
-		plot(index.list1,type = "simple")
-		plot(index.list1,type = "simple_range")
-		plot(index.list1,type = "normal")
-		plot(index.list1,type = "barplot")
+	plot(index.list2)
+
+	####
+	#This allows to calculation index per site 
+	#for example using "tapply(x, sites, mean)".
+	
+	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
+	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
+	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
+	min(x, na.rm = TRUE) )", "tapply(x, ind.plot.finch, function(x) 
+	CVNND(x))"  )
+	
+	
+	##Null model 1 is trivial for this function 
+	#because randomisation is within community only
+	
+	res.finch.ind_mn1 <- ComIndex(traits = traits.finch, index = funct, 
+	sp = sp.finch, nullmodels = c(1,1,1,1), ind.plot = ind.plot.finch, 
+	nperm = 9, print = FALSE)
+	
+	res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
+	sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+	nperm = 9, print = FALSE)
+
+	
+	####
+	#We can calculation metrics with or without intraspecific variance.
+	#Calculation of trait averages per population 
+	#(name_sp_site is a name of a population) 
+	#like in the function ComIndex
+	#and determine the site for each population (sites_bypop)
+
+	name_sp_sites = paste(sp.finch, ind.plot.finch, sep = "_")
+	traits.by.pop <- apply(traits.finch, 2 , function (x) 
+	tapply(x, name_sp_sites, mean , na.rm = TRUE))
+	
+	sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
+	split = "_"), function(x) x[3])
+	
+	funct.withoutIV <- c("tapply(x, unlist(sites_bypop), function(x) 
+	mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), function(x) 
+	kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), function(x) 
+	max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+	
+	
+	funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
+	mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
+	kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
+	max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+	
+	
+	res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
+	sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+	nperm = 9, print = FALSE)
+	
+	res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
+	sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+	nperm = 9, print = FALSE)
+	
+	
+	####
+	#We can also represent T-statistics and custom index thanks to
+	#the plot.listofindex function.
+	
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
+	nperm = 9, print = FALSE)
+
+	list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
+	
+	index.list1 <- as.listofindex(list.ind, namesindex = c("mean", "kurtosis", 
+	"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+	"T_IP.IC", "T_IC.IR", "T_PC.PR"))
+	
+	class(index.list1)
+	
+	par(mfrow = c(2,3))
+	plot(index.list1,type = "bytraits", bysite = TRUE)
+	
+	par(mfrow = c(2,2))
+	plot(index.list1,type = "bytraits")
+	par(mfrow = c(1,1))
+	
+	plot(index.list1,type = "simple")
+	plot(index.list1,type = "simple_range")
+	plot(index.list1,type = "normal")
+	plot(index.list1,type = "barplot")
 	}
 	
 	############################
@@ -232,47 +312,95 @@
 	#available at the individual level.
 	\dontrun{
 	
-		#create traits data at the species level
-		traits_by_sp <- apply(traits.finch,2,function(x) tapply(x,sp.finch,
-		function(x) mean(x, na.rm = T)))  
+	#create traits data at the species level
+	traits_by_sp <- apply(traits.finch,2,function(x) tapply(x,sp.finch,
+	function(x) mean(x, na.rm = T)))  
+	
+	#create traits data at the populational level
+	names_sp_ind.plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "@")) 
+	traits_by_pop <- apply(traits.finch,2,function(x) tapply(x,names_sp_ind.plot, 
+	function(x) mean(x, na.rm = T) ))  
+	
+	#create community data matrix at the species or populational level
+	w1 <- table(sp.finch,ind.plot.finch)
+	dim(w1)
+	dim(traits_by_sp)
+	
+	w2 <- table(names_sp_ind.plot,ind.plot.finch)
+	dim(w2)
+	dim(traits_by_pop)
+	
+	#Choose indices
+	require(e1071)
+	
+	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
+	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
+	
+	
+	#################
+	#with species value
+	
+	res <- AbToInd(traits_by_sp, w1)
+	
+	ComIndex(traits_by_sp, nullmodels = 2, ind.value = FALSE, index = funct, 
+	sp = rownames(traits_by_sp), com = w1, nperm = 9)
+	
+	
+	#################
+	#with population value
+	res <- AbToInd(traits_by_pop, w2)
+	sp.sp <- unlist(strsplit(rownames(traits_by_pop),"@"))[seq(1,39*2,2)]
+	
+	ComIndex(traits_by_pop, nullmodels = 2, ind.value = FALSE, index = funct, 
+	sp = sp.sp, com = w2)
 		
-		#create traits data at the populational level
-		names_sp_ind_plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "@")) 
-		traits_by_pop <- apply(traits.finch,2,function(x) tapply(x,names_sp_ind_plot, 
-		function(x) mean(x, na.rm = T) ))  
+	}
+	
+	############################
+	####Simple example using null model 2sp.prab (species level without taking 
+	# into acount for species abundance, prab for presence/absence)
+	
+	\dontrun{
+
+	traits_by_sp <- apply(traits.finch, 2, function(x) 
+	tapply(x, name_sp_sites, mean, na.rm=T))
+	
+	sites_bysp<-unlist(strsplit(rownames(traits_by_sp), 
+	split="_"))[seq(3,3*dim(traits_by_sp)[1], by=3) ]
+	
+	funct.withoutIV.prab <- c("tapply(x, unlist(sites_bysp), 
+		function(x) mean(x, na.rm = TRUE))", 
+		"tapply(x, unlist(sites_bysp), function(x) kurtosis(x, na.rm = TRUE))", 
+		"tapply(x, unlist(sites_bysp), function(x) max(x, na.rm = TRUE) 
+		- min(x, na.rm = TRUE) )", 
+		"tapply(x, unlist(sites_bysp), function(x) CVNND(x))")
 		
-		#create community data matrix at the species or populational level
-		w1 <- table(sp.finch,ind.plot.finch)
-		dim(w1)
-		dim(traits_by_sp)
+	res.finch.withoutIV.prab <- ComIndex(traits = traits.finch, 
+		index = funct.withoutIV.prab, sp = sp.finch, 
+		nullmodels = rep("2sp.prab", times=4), ind.plot = ind.plot.finch, 
+
+	traits_by_sp <- apply(traits.finch, 2, function(x) tapply(x, name_sp_sites, mean, na.rm=T))
+	sites_bysp<-unlist(strsplit(rownames(traits_by_sp), split="_"))[seq(3,3*dim(traits_by_sp)[1], by=3) ]
+	
+	funct.withoutIV.prab <- c("tapply(x, unlist(sites_bysp), function(x) mean(x, na.rm = TRUE))", 
+		"tapply(x, unlist(sites_bysp), function(x) kurtosis(x, na.rm = TRUE))", 
+		"tapply(x, unlist(sites_bysp), function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
+		"tapply(x, unlist(sites_bysp), function(x) CVNND(x))")
 		
-		w2 <- table(names_sp_ind_plot,ind.plot.finch)
-		dim(w2)
-		dim(traits_by_pop)
-		
-		#Choose indices
-		require(e1071)
-		
-		funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
-		"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
-		
-		
-		#################
-		#with species value
-		
-		res <- AbToInd(traits_by_sp, w1)
-		
-		ComIndex(traits_by_sp, nullmodels = 2, ind.value = FALSE, index = funct, 
-		sp = rownames(traits_by_sp), com = w1, nperm = 9)
-		
-		
-		#################
-		#with population value
-		res <- AbToInd(traits_by_pop, w2)
-		sp.sp <- unlist(strsplit(rownames(traits_by_pop),"@"))[seq(1,39*2,2)]
-		
-		ComIndex(traits_by_pop, nullmodels = 2, ind.value = FALSE, index = funct, 
-		sp = sp.sp, com = w2)
-		
+	res.finch.withoutIV.prab <- ComIndex(traits = traits.finch, index = funct.withoutIV.prab, 
+		sp = sp.finch, nullmodels = rep("2sp.prab", times=4), ind.plot = ind.plot.finch, 
+
+		nperm = 9, print = FALSE)
+	
+	list.ind2 <- list(res.finch.withoutIV, res.finch.withoutIV.prab)
+	index.list2 <- as.listofindex(list.ind2, namesindex = 
+		c("mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+		"mean.prab", "kurtosis.prab", "range.prab", "CVNND.prab"))
+	
+	plot(index.list2)
+
+
+	
+
 	}
 }

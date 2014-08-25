@@ -33,7 +33,7 @@
 	}
 	
 	\item{val.quant}{
-		Numeric vectors of length 2, giving the quantile to calcul confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
+		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
 	\item{resume}{
@@ -60,7 +60,7 @@
 
 \examples{
 	data(finch.ind)
-	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, sp = sp.finch, 
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
 	nperm = 9)
 
 	par(mfrow = c(2,2))

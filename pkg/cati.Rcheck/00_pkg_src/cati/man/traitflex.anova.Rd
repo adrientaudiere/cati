@@ -4,7 +4,7 @@
 \alias{plot.traitflex}
 
 \title{
-	Variance decomposition for a given trait
+	Variance decomposition for a given trait used in decompWithin
 }
 
 \description{
@@ -82,11 +82,12 @@
 }
 
 \author{
-	Jan Leps et al., 2011
+	Jan Leps et al., 2011 modified by Adrien Taudiere
 }
 
 
 \seealso{
 	\code{\link{print.traitflex}};
-	\code{\link{plot.traitflex}}
+	\code{\link{plot.traitflex}};
+	\code{\link{decompWithin}}
 }

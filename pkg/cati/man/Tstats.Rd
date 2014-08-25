@@ -2,7 +2,7 @@
 \alias{Tstats}
 \alias{barplot.Tstats}
 \alias{plot.Tstats}
-\alias{summary_Tstats}
+\alias{sum_Tstats}
 
 \title{
 	Computing observed T-statistics (T for Traits) and null expectations.
@@ -12,8 +12,7 @@
 }
 
 \usage{
-	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE, 
-	p.value = TRUE)
+	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE)
 	
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
 	col.Tstats = c("red", "purple", "green", "white"), ylim = NULL, \dots)
@@ -21,8 +20,12 @@
 	\method{plot}{Tstats}(x, val.quant = c(0.025, 0.975), 
 	col.Tstats = c("red", "purple", "green"), type = "normal", 
 	add.conf = TRUE, ylim = NULL, xlim = NULL, \dots)
+		
+	\method{print}{Tstats}(x, \dots)
+		
+	\method{summary}{Tstats}(x, null.values = TRUE, \dots)
 	
-	summary_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
+	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 }
 
 \arguments{
@@ -48,12 +51,6 @@
 	
 	\item{printprogress}{
 		Logical value; print progress during the calculation or not.
-	}
-	
-	\item{p.value}{
-		Logical value; calculation p-value or not. p-value are here defined as: (x+1)/y 
-		
-		with x the number of null values greater or lesser than the observed value and y the total number of null values. 
 	}
 	
 	\item{x}{
@@ -89,6 +86,10 @@
 		limits for the x axis.
 	}
 	
+	\item{null.values}{
+		Summarize also null values of T-statistics
+	}
+	
 	\item{\dots}{
 		Any additional arguments are passed to the plot function creating the core of the plot and can be used to adjust the look of resulting graph.
 	}
@@ -102,7 +103,11 @@
 	-Simple type plot T-statistics for each site and traits and the mean confidence intervals by traits
 	-Barplot type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
 	
-	S3 method summary:
+	S3 method print: print the structure if the object of class Tstats
+	
+	S3 method summary: print the summary statistics of the three T-statistics
+	
+	Method summary sum_Tstats:
 	-Binary type only test if a T-statistics is significatively different from the null expectation for each trait.
 	-Percent type determine the percentage of sites were the T-statistics is significatively different from the null expectation for each trait. Asterix shows global significance of the test.
 	-P-value type determine the p-value (two unilateral tests) of the T-statistics for each trait and sites.
@@ -113,13 +118,14 @@
 \value{
 	A list of statistics:
 	
-	\item{$T_IP.IC}{Observed ratio between variance of individuals in populations and individuals in communities}
-	\item{$T_IC.IR}{Observed ratio between variance of individuals in communities and individuals in the region}
-
-	\item{$T_PC.PR}{Observed ratio between variance of populations in communities and populations in the region}
-
-	\item{$T_PC.PR}{Observed ratio between variance of populations in communities and individuals in the region}
-
+		
+	\item{$tstats$Tstats$T_IP.IC}{Observed ratio between variance of individuals in populations and individuals in communities}
+	\item{$tstats$Tstats$T_IC.IR}{Observed ratio between variance of individuals in communities and individuals in the region}
+	\item{$tstats$Tstats$T_PC.PR}{Observed ratio between variance of populations in communities and populations in the region}
+	
+	\item{$tstats$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
+	\item{$tstats$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
+	\item{$tstats$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
 	
 	\item{$variances$var_IP}{variance of individuals within populations}    
 	\item{$variances$var_PC}{variance of populations within communities}
@@ -134,17 +140,6 @@
 	\item{$variances$var_IC_nm2}{variance of individuals within communities in null model 2}
 	\item{$variances$var_PR_nm2sp}{variance of populations within the region in null model 2sp}
 	\item{$variances$var_IR_nm2}{variance of individuals within the region in null model 2}
-	
-	\item{$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
-	\item{$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
-	\item{$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
-	
-	\item{$pval$T_IP.IC.inf}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed < T_IP.IC simulated}
-	\item{$pval$T_IC.IR.inf}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed < T_IC.IR simulated}
-	\item{$pval$T_PC.PR.inf}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed < T_PC.PR simulated}
-	\item{$pval$T_IP.IC.sup}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_IP.IC observed > T_IP.IC simulated}
-	\item{$pval$T_IC.IR.sup}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_IC.IR observed > T_IC.IR simulated}
-	\item{$pval$T_PC.PR.sup}{If p.value = TRUE; Result of p-value using the alternate hypothesis : T_PC.PR observed > T_PC.PR simulated}
 }
 
 \references{
@@ -167,11 +162,7 @@
 \examples{
 	data(finch.ind)
 
-<<<<<<< HEAD
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-=======
-	res.finch <- Tstats(traits.finch, ind_plot = ind.plot.finch, 
->>>>>>> a58bf8f2500a2cd03b8be9ddfd6467cbfd94faba
 	sp = sp.finch, nperm = 9, print = FALSE)
 	
 	attributes(res.finch)
@@ -185,19 +176,19 @@
 	plot(res.finch, type = "simple_sd")
 	plot(res.finch, type = "barplot")
 	
-	attributes(summary_Tstats(res.finch))
-	head(summary_Tstats(res.finch)$p.value, 10)
+	attributes(sum_Tstats(res.finch))
+	head(sum_Tstats(res.finch)$p.value, 10)
 	
-	summary_Tstats(res.finch, type = "binary")
-	summary_Tstats(res.finch, type = "percent")
-	summary_Tstats(res.finch, type = "site")
-	summary_Tstats(res.finch, type = "p.value")
-	summary_Tstats(res.finch, type = "all")
+	sum_Tstats(res.finch, type = "binary")
+	sum_Tstats(res.finch, type = "percent")
+	sum_Tstats(res.finch, type = "site")
+	sum_Tstats(res.finch, type = "p.value")
+	sum_Tstats(res.finch, type = "all")
 	
 	barplot(res.finch)
 	
-	attributes(summary_Tstats(res.finch))
-	head(summary_Tstats(res.finch)$p.value, 10)
+	attributes(sum_Tstats(res.finch))
+	head(sum_Tstats(res.finch)$p.value, 10)
 	
 	#### An other way to see "ses values" of T-statistics
 	
@@ -208,7 +199,7 @@
 	# Customize the colorkey
 	my.ckey <- list(col = my.theme$regions$col)
 	
-	levelplot(t(ses(res.finch$T_IP.IC,res.finch$T_IP.IC_nm)$ses), 
+	levelplot(t(ses(res.finch$Tstats$T_IP.IC,res.finch$Tstats$T_IP.IC_nm)$ses), 
 	colorkey = my.ckey, par.settings = my.theme,border = "black")
 	
 	
@@ -220,13 +211,6 @@
 
 	res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
     sp = sp.finch, nperm = 9, print = FALSE)	
-
-	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300),])
-
-	res.finch2 <- Tstats(traits.finch, ind.plot=ind.plot.finch, 
-    sp=sp.finch, nperm=9, print=FALSE)	
-
-	
 }
 
 
