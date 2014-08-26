@@ -1,0 +1,682 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{color}
+\definecolor{blue1}{RGB}{0,102,204}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{array}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{url}
+\usepackage{bm}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage[affil-it]{authblk}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\m}[1]{\mathbf{#1}}  % e.g  W(\m{X}) met en gras le X
+\newcommand{\rcmd}[1]{\textcolor{red}{\texttt{#1}}}
+\newcommand{\code}[1]{{{\tt #1}}}
+
+
+\title{Your Title}
+\author{YOU
+  \thanks{\texttt{your mail}}
+}
+\affil{{\footnotesize Report provide by cati (Community Assembly by Traits: Individual and beyond) R package }}
+
+\date{\today}
+
+\sloppy
+\hyphenpenalty 10000
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\selectlanguage{english}
+
+ <<include=FALSE, eval=FALSE>>=
+opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE, warning=FALSE, fig.show="asis")
+@
+
+\maketitle
+
+\begin{abstract}
+Your abstract
+\end{abstract}
+
+
+\newpage
+\tableofcontents
+
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%
+\section{Installing the package cati}
+%%%%%%%%%%%%%%%%
+
+<<results='hide'>>= 
+install.packages("C:/Users/taudiere/Desktop/cati/pkg/cati_0.6.zip", repos=NULL)
+#install.packages("cati", repos="http://R-Forge.R-project.org")
+@
+
+<<results='hide', message=FALSE, warning=FALSE>>= 
+library(cati, warn.conflicts = FALSE)
+data(finch.ind)
+
+#Save default parameters
+oldpar<-par(no.readonly = TRUE)
+@
+
+
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%
+\section{Description of distribution}
+%%%%%%%%%%%%%%%%
+
+\subsection{Plot the density of traits}
+
+Plot the distribution of traits values for populations, species, sites and regional scales. First, let try the distribution for all populations of Darwin finches.
+
+<<dev='pdf'>>=
+par(mfrow=c(4,4), cex=0.5)
+plot_dens(traits.finch, sp.finch,
+          ind.plot.finch, ylim.cex=3, plot.ask=F, 
+          multipanel=F, leg=F)
+@
+
+\newpage
+
+Then we can inverse the second and the third arguments to plot the distribution for all finches species. 
+<<dev='pdf'>>=
+par(mfrow=c(5,5), cex=0.5)
+plot_dens(traits.finch, ind.plot.finch, 
+          sp.finch, ylim.cex=8, plot.ask=F, multipanel=F, leg=F)
+@
+
+<<dev='pdf'>>=
+plot_dens(traits.finch, rep("region", times=dim(traits.finch)[1]), 
+          sp.finch, ylim.cex=6, plot.ask=F, leg=F)
+@
+
+<<dev='pdf'>>=
+plot_dens(traits.finch, rep("toutes_sp", times=dim(traits.finch)[1]),
+          ind.plot.finch, ylim.cex=3, plot.ask=F)
+@
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%
+\section{Decomposition of variances}
+%%%%%%%%%%%%%%%%
+
+\subsection{Decomposition of within/among species variances}
+
+<<>>=
+comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
+comm.sp<-table(sp.finch, ind.plot.finch)
+class(comm.sp)<-"matrix"
+
+traits.finch.sp<-apply( apply(traits.finch, 2, scale ), 2, 
+                        function(x) tapply(x, sp.finch, mean, na.rm=T))
+
+mat.dist<-as.matrix(dist(traits.finch.sp))^2
+
+res.rao<-RaoRel(sample=as.matrix(comm.sp), 
+                dfunc=mat.dist, dphyl=NULL, 
+                weight=F, Jost=F, structure=NULL)
+
+witRao<-res.rao$FD$Mean_Alpha  #overall within species variance
+betRao<-res.rao$FD$Beta_add    #between species variance
+totRao<-res.rao$FD$Gamma       #the total variance
+
+witRao+betRao
+totRao
+@
+
+Now let's take the abundance to calculate Rao diversity.
+
+<<>>=
+res.rao.w<-RaoRel(sample=as.matrix(comm.sp), 
+                  dfunc=mat.dist, dphyl=NULL, 
+                  weight=T, Jost=F, structure=NULL)
+
+witRao.w<-res.rao.w$FD$Mean_Alpha  #overall within species variance
+betRao.w<-res.rao.w$FD$Beta_add    #between species variance
+totRao.w<-res.rao.w$FD$Gamma       #the total variance
+
+witRao.w
+betRao.w
+@
+
+Plot the results
+
+<<dev='pdf', fig.width=3.5, fig.height=3.5, fig.align='center'>>=
+barplot(cbind(c(witRao.w, betRao.w), c(witRao, betRao)), 
+        names.arg =c("abundance" ,"presence"), 
+        legend.text=c("within species", "between species"), 
+        ylab="Rao", ylim=c(0,10))
+@
+
+We can do this analysis for each trait separately. We need to replace (or exclude) NA values. For this example, we use the package mice to complete the data.
+
+<<results='hide'>>=
+comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
+
+require(mice)
+traits=traits.finch
+mice<-mice(traits.finch)
+traits.finch.mice<-complete(mice)
+@
+
+
+<<>>=
+traits.finch.mice.sp<-apply(apply(traits.finch.mice, 2, scale ), 2, 
+                            function(x) tapply(x, sp.finch, mean, na.rm=T))
+
+trait.rao.w<-list()
+witRao.w.bytrait<-c()
+betRao.w.bytrait<-c()
+for(t in 1 : 4){
+  trait.rao.w[[t]]<-RaoRel(sample=as.matrix(comm.sp), 
+                           dfunc=dist(traits.finch.mice.sp[,t]), 
+                           dphyl=NULL, weight=T, Jost=F, structure=NULL)
+  witRao.w.bytrait<-c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
+  betRao.w.bytrait<-c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
+}
+
+@
+
+
+Plot the results by traits.
+
+<<dev='pdf'>>=
+barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)), 
+        names.arg = colnames(traits.finch),
+        legend.text=c("within species", "between species"), 
+        ylab="Rao", ylim=c(0,1.5))
+@
+
+
+\subsection{Decomposition of within/among species variances}
+
+<<dev='pdf', fig.width=3.5, fig.height=3.5, fig.align='center'>>=
+res.decomp<-decomp_within(traits=traits.finch, sp=sp.finch, 
+                           ind.plot=ind.plot.finch, print=FALSE)
+
+barplot.decomp_within(res.decomp)
+
+par(mfrow=c(2,2))
+barplot.decomp_within(res.decomp, resume=F)
+par(mfrow=c(1,1))
+@
+
+
+\newpage
+
+\subsection{Decomposition of variances using nested factors}
+
+<<results='hide'>>=
+vec<- seq(1,length(sp.finch)*2, by=2)
+genus<-as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[vec])
+fact<-cbind(genus=as.factor(genus),  
+            species=as.factor(as.vector(sp.finch)),
+            sites=as.factor(as.vector(ind.plot.finch)))
+
+res.partvar.finch<-partvar(traits=traits.finch, factors=fact)
+ 
+res.partvar.finch
+@
+
+
+<<dev='pdf', fig.width=3.5, fig.height=3.5, fig.align='center'>>=
+par(mfrow=c(2,2), mai=c(0.2,0.2,0.2,0.2))
+colors<-c(rgb(102,167,0,  maxColorValue = 255), 
+          rgb(185,210,0,  maxColorValue = 255), 
+          rgb(98,174,255,  maxColorValue = 255),
+          rgb(158,30,240,  maxColorValue = 255))
+ 
+pie_partvar(res.partvar.finch, col=colors)
+par(oldpar)
+
+bar_partvar(res.partvar.finch, col=colors,
+            leg=TRUE)
+@
+
+
+
+\newpage
+
+\subsection{Plot the relation between populational trait means and sites traits means.}
+
+<<dev='pdf'>>=
+plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE)
+@
+
+If we change the value of the threshold (alpha=10\% instead of 5\% and the minimum individual to represent singificativity fixed to 3 instead of 10 by default) we can see some significant relationships.
+
+\newpage
+
+<<dev='pdf'>>=
+plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, 
+           p.val=0.1,  min.ind.signif=3, silent=TRUE)
+@
+
+\newpage
+
+For a more simple figure, add the option resume=TRUE. Again if we change the value of the threshold (alpha=10\% instead of 5\% and the minimum individual to represent singificativity fixed to 3 instead of 10 by default) we can see some significant relationships.
+
+<<dev='pdf'>>=
+plot_sp_pop(traits.finch, ind.plot.finch, sp.finch,
+           silent=TRUE, resume=TRUE, col.pop="grey")
+plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, 
+           silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black")
+plot_sp_pop(traits.finch, ind.plot.finch, sp.finch, 
+           silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black", 
+           p.val=0.1,  min.ind.signif=3)
+@
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%
+\section{Test of community assembly}
+%%%%%%%%%%%%%%%%
+
+\subsection{Ratio of variances: T-statistics}
+
+<<>>=
+res.finch<-Tstats(traits.finch, ind_plot=ind.plot.finch, sp=sp.finch,
+                  nperm=9, print=FALSE)
+attributes(res.finch)
+@
+
+Tstats class is associated to S3 methods plot, barplot and summary
+
+<<dev='pdf', fig.width=6, fig.height=6, fig.align='center'>>=
+plot(res.finch)
+@
+<<dev='pdf', fig.width=6, fig.height=6, fig.align='center'>>=
+par(mfrow=c(2,2))
+plot(res.finch, type="color_cond")
+plot(res.finch, type="simple")
+plot(res.finch, type="simple_sd")
+plot(res.finch, type="barplot")
+par(oldpar)
+@
+
+\newpage
+
+<<dev='pdf', fig.width=6, fig.height=6, fig.align='center'>>=
+barplot(res.finch, ylim=c(0,3.5))
+@
+
+<<dev='pdf'>>=
+attributes(summary(res.finch))
+head(summary(res.finch)$p.value, 10)
+@
+
+\newpage
+
+We can also see T-statistics correlations and theirs correlation with others variables (e.g. a gradient variable, or the species richness).
+
+<<dev='pdf'>>=
+par(mfrow=c(2,3))
+plot_cor.Tstats(res.finch, plot.ask=FALSE, multipanel=F)
+@
+
+Here we plot T-statistics in function of species richness by sites.
+
+<<dev='pdf'>>=
+par(mfrow=c(2,2))
+species.richness<-table(ind.plot.finch)
+plot_ses.var(as.listofindex(list(res.finch)), species.richness, 
+             multipanel=F)
+@
+
+Same plot with \code(resume=TRUE).
+
+<<dev='pdf'>>=
+par(mfrow=c(2,2))
+plot_ses.var(as.listofindex(list(res.finch)), species.richness, 
+             resume=T, multipanel=F)
+par(mfrow=c(1,1))
+@
+
+
+\newpage
+\subsection{Others univariates index}
+
+The function \code(com.index) allow to choose your own function (like mean, range, variance...) to calculate customize index.
+
+<<>>=
+funct<-c("mean(x, na.rm=T)", "kurtosis(x, na.rm=T)",
+         "max(x, na.rm=T) - min(x, na.rm=T)", "CVNND(x)"  )
+res.finch.sp_mn2<-com.index(traits=traits.finch, index=funct, sp=sp.finch, 
+                            nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch,
+                            nperm=9, print=FALSE)
+res.finch.sp_mn3<-com.index(traits=traits.finch, index=funct, sp=sp.finch,
+                            nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, 
+                            nperm=9, print=FALSE)
+@
+
+\newpage
+We can represent Standardized Effect Size (ses) using the function \code(plot(as.listofindex(list1, list2, list3)))
+<<dev='pdf'>>=
+list.ind2<-list(res.finch.sp_mn2, res.finch.sp_mn3)
+index.list2<-as.listofindex(list.ind2)
+
+plot(index.list2)
+@
+
+\newpage
+
+This allows to calcul index by sites for example using \code("tapply(x, sites, mean)").
+
+<<>>=
+funct<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))",
+         "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))",
+         "tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T))", 
+         "tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+
+##Null model 1 is trivial for this function
+##because randomisation is within community only
+ 
+res.finch.ind_mn1<-com.index(traits=traits.finch, index=funct, sp=sp.finch,
+                             nullmodels=c(1,1,1,1), ind.plot=ind.plot.finch,
+                             nperm=9, print=FALSE)
+res.finch.ind_mn2<-com.index(traits=traits.finch, index=funct, sp=sp.finch, 
+                             nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch,
+                             nperm=9, print=FALSE)
+@
+
+
+We can calcul index with or without intraspecific variance.
+
+<<>>=
+#Calcul of means by population (name_sp_site is a name of a population) 
+#like in the function com.index and determine the site for each population (sites_bypop)
+ 
+name_sp_sites=paste(sp.finch, ind.plot.finch,sep="_")
+traits.by.pop<-apply(traits.finch, 2 , 
+                     function (x) tapply(x, name_sp_sites, mean , na.rm=T))
+
+sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), split="_"), 
+                    function(x) x[3])
+
+#We use the precedent list of function "funct"
+funct.withIV<-funct
+
+fact<-unlist(sites_bypop)
+funct.withoutIV<-c("tapply(x, fact, function(x) mean(x, na.rm=T))",
+                    "tapply(x, fact, function(x) kurtosis(x, na.rm=T))",
+                    "tapply(x, fact, function(x) max(x, na.rm=T)-min(x, na.rm=T))", 
+                    "tapply(x, fact, function(x) CVNND(x))")
+
+
+res.finch.withIV<-com.index(traits=traits.finch, index=funct.withIV,
+                             sp=sp.finch, nullmodels=c(2,2,2,2),
+                             ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+
+res.finch.withoutIV<-com.index(traits=traits.finch, index=funct.withoutIV, 
+                             sp=sp.finch, nullmodels=c(3,3,3,3), 
+                             ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+@
+
+
+\newpage
+
+We can also represent T-statistics and custom index thanks to the \code(plot.listofindex) function.
+<<dev='pdf'>>=
+list.ind<-list(res.finch.withIV, res.finch.withoutIV, res.finch)
+namesindex.i.l1=c("mean", "kurtosis", "range", "CVNND",
+                  "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+                  "T_IP.IC", "T_IC.IR", "T_PC.PR")
+
+i.l1<-as.listofindex(list.ind, namesindex=namesindex.i.l1)                                 
+
+class(i.l1)
+
+par(mfrow=c(2,3))
+plot(i.l1,type="bytraits", bysites=TRUE)
+
+par(mfrow=c(2,2))
+plot(i.l1,type="bytraits")
+par(mfrow=c(1,1))
+@
+
+
+<<dev='pdf'>>=
+plot(i.l1,type="simple")
+plot(i.l1,type="simple_range")
+plot(i.l1,type="normal")
+plot(i.l1,type="barplot")
+@
+
+
+
+\newpage
+
+\subsection{Multivariates index}
+
+For most multivariate functions we need to replace (or exclude) NA values. For this example, we use the package mice to complete the data.
+
+<<results='hide', eval=FALSE>>=
+comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
+
+require(mice)
+traits=traits.finch
+mice<-mice(traits.finch)
+traits.finch.mice<-complete(mice)
+@
+
+A simple example to illustrate the concept of the function \code(com.index.multi) 
+
+<<>>=
+n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep="_")) 
+res.sum.1<-com.index.multi(traits.finch, 
+                           index=c("sum(scale(x), na.rm=T)", "sum(x, na.rm=T)"), 
+                           by.factor=n_sp_plot, nullmodels=c(2,2), 
+                           ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+
+attributes(ses.listofindex(as.listofindex(list(res.sum.1))))
+@
+
+\newpage
+A more interesting example using the function \code(hypervolume) from the package ... hypervolume.  We show here several results which differe in there factor that delimit the group to calculate different hypervolume (argument "byfactor"). 
+
+First, let's try the hypervolume function one finch data.
+<<dev='pdf'>>=
+hv<-hypervolume(traits.finch.mice, 
+                reps=100,bandwidth=0.2, 
+                verbose=F, warnings=F)
+plot(hv)
+@
+
+Now, we can do the same analysis for each species.
+
+<<dev='pdf'>>=
+hv.list<-new("HypervolumeList")
+hv.list2<-list()
+
+for(i in 1: length(table(sp.finch))) {
+  hv.list2[[i]]<-hypervolume(traits.finch.mice[sp.finch==levels(sp.finch)[i], ], 
+                reps=1000,bandwidth=0.2, 
+                verbose=F, warnings=F)
+}
+
+hv.list@HVList<-hv.list2
+require(adegenet)
+colorhv<-transp(funky(nlevels(sp.finch)), alpha=0.8)
+
+plot(hv.list, colors=colorhv, darkfactor=0.8)
+plot(hv.list, colors=colorhv, darkfactor=0.8, showdata=F, npmax = 200, cex.random =1)
+ 
+summary(hv.list)
+ 
+@
+
+The standard example of the hypervolume package also use finch data but at the species level.
+
+<<dev='pdf'>>=
+
+demo('finch', package='hypervolume')
+ 
+@
+
+
+<<result='hide'>>=
+hv.1<-com.index.multi(traits.finch.mice, 
+                          index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, 
+                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"),
+                          by.factor=rep(1,length(n_sp_plot)), nullmodels=c(2,2),
+                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+
+hv.2<-com.index.multi(traits.finch.mice, 
+                          index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, 
+                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"), 
+                          by.factor=n_sp_plot, nullmodels=c(2,2), 
+                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+
+hv.3<-com.index.multi(traits.finch.mice, 
+                          index=c("as.numeric(try(hypervolume(na.omit(x), reps=100,
+                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"), 
+                          by.factor=ind.plot.finch, nullmodels=c(2,2), 
+                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+
+hv.4<-com.index.multi(traits.finch.mice, 
+                          index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, 
+                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"), 
+                          by.factor=sp.finch, nullmodels=c(2,2), 
+                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+
+list.ind.multi<-as.listofindex(list(hv.2, hv.3, hv.4))
+
+ses.list.multi<-ses.listofindex(list.ind.multi)
+@
+
+<<dev='pdf', fig.width=4, fig.height=4>>=
+plot(list.ind.multi)
+plot(list.ind.multi, xlim=c(-200,20))
+@
+
+
+\section{Others graphics functions}
+
+Using rasterVis to obtain more color schemes. 
+<<>>=
+require(rasterVis)
+# Custom theme (from rasterVis package)
+my.theme <- BuRdTheme()
+# Customize the colorkey
+my.ckey <- list(col=my.theme$regions$col)
+@
+
+Plot the p-value or the ses values using the function \code(levelplot).
+
+<<dev='pdf'>>=
+levelplot(t(rbind(res.finch$pval$T_IP.IC.inf,
+                  res.finch$pval$T_IC.IR.inf, 
+                  res.finch$pval$T_PC.PR.inf)), 
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+@
+
+
+<<dev='pdf'>>=
+levelplot(t(ses(res.finch$T_IP.IC,res.finch$T_IP.IC_nm)$ses), 
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+levelplot(cbind(t(ses(res.finch$T_IP.IC,res.finch$T_IP.IC_nm)$ses), 
+                t(ses(res.finch$T_IC.IR,res.finch$T_IP.IC_nm)$ses),
+                t(ses(res.finch$T_PC.PR,res.finch$T_IP.IC_nm)$ses))
+          , colorkey=my.ckey, par.settings=my.theme,border="black")
+@
+
+An other example using \code(ses.listofindex). The first plot represent "ses" values and the second one the result of a test with H0: observed index value are greater than what we can expect using the null model (alpha=2.5\%).
+
+<<dev='pdf'>>=
+
+ses.list<-ses.listofindex(i.l1)
+
+levelplot(t(rbind(ses.list[[1]]$ses, ses.list[[2]]$ses, 
+                  ses.list[[3]]$ses,  ses.list[[4]]$ses)),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+
+levelplot(t(rbind(ses.list[[1]]$ses>ses.list[[1]]$ses.sup, 
+                  ses.list[[2]]$ses>ses.list[[2]]$ses.sup,
+                  ses.list[[3]]$ses>ses.list[[3]]$ses.sup,
+                  ses.list[[4]]$ses>ses.list[[4]]$ses.sup)),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+ 
+
+@
+
+
+<<dev='pdf'>>=
+obj1<-t(rbind(ses.list[[1]]$ses>ses.list[[1]]$ses.sup, 
+              ses.list[[2]]$ses>ses.list[[2]]$ses.sup,
+              ses.list[[3]]$ses>ses.list[[3]]$ses.sup,
+              ses.list[[4]]$ses>ses.list[[4]]$ses.sup))
+
+obj2<-t(rbind(ses.list[[5]]$ses>ses.list[[5]]$ses.sup, 
+              ses.list[[6]]$ses>ses.list[[6]]$ses.sup,
+              ses.list[[7]]$ses>ses.list[[7]]$ses.sup,
+              ses.list[[8]]$ses>ses.list[[8]]$ses.sup))
+
+levelplot(rbind(obj1, obj2),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+ 
+ 
+obj1.ses<-t(rbind(ses.list[[1]]$ses, 
+              ses.list[[2]]$ses,
+              ses.list[[3]]$ses,
+              ses.list[[4]]$ses))
+
+obj2.ses<-t(rbind(ses.list[[5]]$ses, 
+              ses.list[[6]]$ses,
+              ses.list[[7]]$ses,
+              ses.list[[8]]$ses))
+ 
+levelplot(rbind(obj1.ses, obj2.ses),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+@
+
+
+ 
+<<dev='pdf', fig.width=6, fig.height=2>>=
+ses.list.multi<-ses.listofindex(list.ind.multi)
+
+ses.list.multi[[1]]<-lapply(ses.list.multi[[1]],
+                            function(x) x[!is.na(ses.list.multi[[1]][[2]])] )
+ses.list.multi[[2]]<-lapply(ses.list.multi[[2]], 
+                            function(x) x[!is.na(ses.list.multi[[2]][[2]])] )
+ses.list.multi[[3]]<-lapply(ses.list.multi[[3]],
+                            function(x) x[!is.na(ses.list.multi[[3]][[2]])] )
+
+levelplot(t(as.matrix(ses.list.multi[[1]]$ses)),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+levelplot(t(as.matrix(ses.list.multi[[2]]$ses)),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+levelplot(t(as.matrix(ses.list.multi[[3]]$ses)),
+          colorkey=my.ckey, par.settings=my.theme,border="black")
+
+@
+
+
+\end{document}
