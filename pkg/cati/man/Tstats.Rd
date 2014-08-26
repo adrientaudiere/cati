@@ -2,6 +2,8 @@
 \alias{Tstats}
 \alias{barplot.Tstats}
 \alias{plot.Tstats}
+\alias{summary.Tstats}
+\alias{print.Tstats}
 \alias{sum_Tstats}
 
 \title{
@@ -23,7 +25,7 @@
 		
 	\method{print}{Tstats}(x, \dots)
 		
-	\method{summary}{Tstats}(x, null.values = TRUE, \dots)
+	\method{summary}{Tstats}(object, \dots)
 	
 	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 }
@@ -61,6 +63,10 @@
 		An object of class Tstats.
 	}
 	
+	\item{object}{
+		An object of class Tstats.
+	}
+	
 	\item{val.quant}{
 		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
@@ -84,10 +90,6 @@
 	
 	\item{xlim}{
 		limits for the x axis.
-	}
-	
-	\item{null.values}{
-		Summarize also null values of T-statistics
 	}
 	
 	\item{\dots}{

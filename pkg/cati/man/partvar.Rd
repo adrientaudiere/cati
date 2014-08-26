@@ -72,7 +72,8 @@
 	cond<-seq(1,length(sp.finch)*2, by = 2)
 	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[cond])
 
-	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[seq(1,length(sp.finch)*2, by = 2)])
+	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))
+	[seq(1,length(sp.finch)*2, by = 2)])
 
 
 	res.partvar.finch <- partvar(traits = traits.finch, 
