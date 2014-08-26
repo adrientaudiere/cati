@@ -1,17 +1,19 @@
-* using log directory 'C:/Users/taudiere/Desktop/cati/pkg/cati.Rcheck'
-* using R version 3.0.3 (2014-03-06)
+* using log directory 'C:/Users/Admin/Desktop/cati/pkg/cati.Rcheck'
+* using R version 3.1.1 (2014-07-10)
 * using platform: x86_64-w64-mingw32 (64-bit)
-* using session charset: ASCII
+* using session charset: ISO8859-1
 * checking for file 'cati/DESCRIPTION' ... OK
 * checking extension type ... Package
 * this is package 'cati' version '0.91'
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
+Version jumps in minor (submitted: 0.91, existing: 0.8)
 * checking package namespace information ... OK
-* checking package dependencies ... OK
+* checking package dependencies ... NOTE
+  No repository set, so cyclic dependency check skipped
 * checking if this is a source package ... OK
 * checking if there is a namespace ... OK
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
-* checking whether package 'cati' can be installed ... ERROR
-Installation failed.
-See 'C:/Users/taudiere/Desktop/cati/pkg/cati.Rcheck/00install.out' for details.
+* checking whether package 'cati' can be installed ...

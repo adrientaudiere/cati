@@ -1,5 +1,8 @@
 \name{ComIndexMulti}
 \alias{ComIndexMulti}
+\alias{plot.ComIndexMulti}
+\alias{summary.ComIndexMulti}
+\alias{print.ComIndexMulti}
 
 \title{
 	Computing multitraits metrics to test and quantify the non-random assembly of communities
@@ -13,7 +16,19 @@
 	ComIndexMulti(traits = NULL, index = NULL, by.factor = NULL, 
 	namesindex = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, 
 	com = NULL, reg.pool = NULL, nperm = 99, printprogress = TRUE, 
-	ind.value = TRUE, type = "count")
+	ind.value = TRUE, type.sp.val = "count")
+	
+	\method{plot}{ComIndexMulti}(x, type = "normal", 
+	col.index = c("red", "purple", "green"), add.conf = TRUE, 
+	color.cond = TRUE, val.quant = c(0.025, 0.975), 
+	grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, 
+	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, 
+	bysite = FALSE, ...)
+		
+	\method{print}{ComIndexMulti}(x, \dots)
+		
+	\method{summary}{ComIndexMulti}(object, \dots)
+
 }
 
 \arguments{
@@ -69,11 +84,73 @@
 		Do the data are from individual value. If not, an internal function transform the abundance data matrix of com into a individual like matrix to compute the function.
 	}
 	
-	\item{type}{
+	\item{type.sp.val}{
 		Only if ind.value = FALSE. Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one.
 	}
 	
+	\item{x}{
+		An object of class ComIndexMulti.
+	}
+
+	\item{object}{
+		An object of class ComIndexMulti.
+	}
 	
+	\item{type}{
+		Type of plot. Possible type = "simple", "simple_range", "normal", "barplot" and "bytraits".
+	}
+	
+	\item{col.index}{
+		Vector of colors for index.
+	}
+	
+	\item{add.conf}{
+		Logical value; Add confidence intervals or not. 
+	}
+	
+	\item{color.cond}{
+		Logical value; If color.cond = TRUE, color points indicate T-statistics values significatively different from the null model and grey points are not different from null model.
+	}
+	
+	\item{val.quant}{
+		Numeric vectors of length 2, giving the quantile to calculate confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
+	}
+	
+	\item{grid.v}{
+		Logical value; print vertical grid or not
+	}
+	
+	\item{grid.h}{
+		Logical value; print horizontal grid or not
+	}
+	
+	\item{xlim}{
+		Numeric vectors of length 2, giving the x coordinates range 
+	}
+	
+	\item{ylim}{
+		Numeric vectors of length 2, giving the y coordinates range 
+	}
+		
+	\item{cex.text}{
+		Numeric value; the magnification to be used for text relative to the current setting of cex
+	}
+	
+	\item{plot.ask}{
+		Logical value; ask for plotting the next plot or not.
+	}
+	
+	\item{srt.text}{
+		Degree of rotation for text.
+	}
+	
+	\item{bysite}{
+		Logical value; plot per site or by traits. 
+	}
+	
+	\item{\dots}{
+		Any additional arguments are passed to the plot, print or summary function creating the core of the plot and can be used to adjust the look of resulting graph.
+	}
 }
 
 \value{
@@ -140,7 +217,6 @@
 		require(hypervolume)
 		
 		res.hv.1 <- ComIndexMulti(traits.finch.mice, index = 
-
 		paste("as.numeric (try(hypervolume(na.omit(x), warnings = FALSE,", 
 		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
 		by.factor = rep(1,length(names.sp_ind.plot)), nullmodels = c(2,2), 
@@ -155,29 +231,16 @@
 		res.hv.3 <- ComIndexMulti(traits.finch.mice, index = 
 		paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,"
 		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-
-		c("as.numeric (try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
+		c("as.numeric (try(hypervolume(na.omit(x), 
+		warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
 		by.factor = rep(1,length(names.sp_ind.plot)), nullmodels = c(2,2), 
 		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 		
-		res.hv.2 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-		by.factor = names.sp_ind.plot, nullmodels = c(2,2), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-		
-		res.hv.3 <- ComIndexMulti(traits.finch.mice, index = 
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-
-		by.factor = ind.plot.finch,	nullmodels = c(2,2), 
-		ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-		
 		res.hv.4 <- ComIndexMulti(traits.finch.mice, index = 
-
 		paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
 		"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-
-		c("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-
+		c("as.numeric(try(hypervolume(na.omit(x), 
+		warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
 		by.factor = sp.finch, nullmodels = c(2,2), ind.plot = ind.plot.finch, 
 		nperm = 9, sp = sp.finch)
 		

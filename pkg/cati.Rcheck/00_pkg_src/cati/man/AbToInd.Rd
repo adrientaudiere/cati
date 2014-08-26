@@ -9,7 +9,7 @@
 }
 
 \usage{
-	AbToInd(traits, com, type = "count")
+	AbToInd(traits, com, type.sp.val = "count")
 }
 
 \arguments{
@@ -21,8 +21,8 @@
 		Community data matrix with species in rows and sites in column.
 	}
 	
-	\item{type}{
-		Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one. Using abundance type is EXPERIMENTAL. This function round abundance to fit count data. 
+	\item{type.sp.val}{
+		Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one. Using abundance is EXPERIMENTAL. This function round abundance to fit count data. 
 	}
 }
 

@@ -349,52 +349,46 @@ print.ComIndexMulti<-function(x, ...){
 	print(str(x[-1], max.level = 1, give.attr1 = FALSE, vec.len = 0, ...))
 }
 
-summary.Tstats <- function(x, null.values=FALSE, ...){
+summary.Tstats <- function(object, ...){
 
-	if (!inherits(x, "Tstats"))
-		{stop("x must be a list of objects of class Tstats")
+	if (!inherits(object, "Tstats"))
+		{stop("object must be a list of objects of class Tstats")
 	}
 	
 	print("Observed values", ...)
-	print(lapply(x$Tstats[c(1:3)], function(x) summary(x, ...)), ...)
+	print(lapply(object$Tstats[c(1:3)], function(x) summary(x, ...)), ...)
 	
-	if(null.values){	
-		print("Null values", ...)
-		print(lapply(x$Tstats[c(4:6)], function(x) summary(x, ...)), ...)
-	}
-	else{}
+	print("Null values", ...)
+	print(lapply(object$Tstats[c(4:6)], function(x) summary(x, ...)), ...)
+
 }
 
-summary.ComIndex <- function(x, null.values=FALSE, ...){
+summary.ComIndex <- function(object, ...){
 
-	if (!inherits(x, "ComIndex"))
-		{stop("x must be a list of objects of class ComIndex")
+	if (!inherits(object, "ComIndex"))
+		{stop("object must be a list of objects of class ComIndex")
 	}
 	
 	print("Observed values", ...)
-	print(lapply(x$obs, function(x) summary(x, ...)), ...)
+	print(lapply(object$obs, function(x) summary(x, ...)), ...)
 	
-	if(null.values){
-		print("Null values", ...)
-		print(lapply(x$Null, function(x) summary(x, ...)), ...)
-	}
-	else{}
+	print("Null values", ...)
+	print(lapply(object$Null, function(x) summary(x, ...)), ...)
+	
 }
 
-summary.ComIndexMulti<- function(x, null.values=FALSE, ...){
+summary.ComIndexMulti<- function(object, ...){
 
-	if (!inherits(x, "ComIndexMulti"))
-		{stop("x must be a list of objects of class ComIndexMulti")
+	if (!inherits(object, "ComIndexMulti"))
+		{stop("object must be a list of objects of class ComIndexMulti")
 	}
 	
 	print("Observed values", ...)
-	print(lapply(x$obs, function(x) summary(x, ...)), ...)
+	print(lapply(object$obs, function(x) summary(x, ...)), ...)
 		
-	if(null.values){
-		print("Null values", ...)
-		print(lapply(x$Null, function(x) summary(x, ...)), ...)
-	}
-	else{}
+	print("Null values", ...)
+	print(lapply(object$Null, function(x) summary(x, ...)), ...)
+
 }
 
 ### Function to represent standardised effect size of Tstats using null models
@@ -648,6 +642,8 @@ sum_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
  	######################################### 
 	####		 calculation of p.value		 ####
 	######################################### 
+	
+	res<-x
 	
 	if (type=="all" | type=="p.value"){
  
@@ -934,14 +930,14 @@ barplot.Tstats <- function(height, val.quant=c(0.025,0.975), col.Tstats=c("red",
 
 #In most case, model 1 and 2 correspond to index at the individual level and models 2sp and 2sp.prab to index at the species (or any other aggregate variable like genus or family) level
 
-ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, com=NULL, reg.pool=NULL, nperm=99, printprogress=TRUE, ind.value=TRUE, type="count"){
+ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, com=NULL, reg.pool=NULL, nperm=99, printprogress=TRUE, ind.value=TRUE, type.sp.val="count"){
 	
 	#If data are from species or population traits, this function (AbToInd) transform this data in a suitable format for cati
 	if (!ind.value){
 		if (is.null(com)) {stop("if ind.value=FALSE, you need to replace arguments ind.plot by a community matrix 'com' ")}
 		
 		rownames(traits) <- sp
-		res.interm <- AbToInd(traits, com, type=type)
+		res.interm <- AbToInd(traits, com, type.sp.val=type.sp.val)
 	
 		traits <- res.interm$traits
 		sp <- res.interm$sp
@@ -1237,7 +1233,7 @@ ComIndex <- function(traits=NULL, index=NULL, namesindex=NULL, nullmodels=NULL, 
 	return(ComIndex)
 }
 
-ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, com=NULL, reg.pool=NULL, nperm=99, printprogress=TRUE, ind.value=TRUE, type="count"){
+ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, com=NULL, reg.pool=NULL, nperm=99, printprogress=TRUE, ind.value=TRUE, type.sp.val="count"){
 	
 	names_sp_ind.plot <- as.factor(paste(sp, ind.plot, sep="@")) 
 	
@@ -1246,7 +1242,7 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, namesindex=NU
 		if (is.null(com)) {stop("if ind.value=FALSE, you need to replace arguments ind.plot by a community matrix 'com' ")}
 		
 		rownames(traits) <- sp
-		res.interm <- AbToInd(traits, com, type=type)
+		res.interm <- AbToInd(traits, com, type.sp.val=type.sp.val)
 	
 		traits <- res.interm$traits
 		sp <- res.interm$sp
@@ -1539,16 +1535,17 @@ as.listofindex <- function(x, namesindex=NULL) {
 	
 	for(l in 1: nlist){
 		if (inherits(x[[l]], "Tstats")) {
-			for(i in c(1,5,2,6,3,7) ){
-				res <- c(res, list(x[[l]][[i]]))
+			for(i in c(1,4,2,5,3,6) ){
+				res <- c(res, list(x[[l]][[1]][[i]]))
 			}
 		}
 		
-		else{
+		else if (inherits(x[[l]], c("ComIndex", "ComIndexMulti"))) {
 			for(i in 1: nindex[l]){
 				res <- c(res, list(x[[l]]$obs[[i]]), list(x[[l]]$Null[[i]]) )
 			}		
 		}
+		else{stop("x must be a list of objects of class Tstats, ComIndex or ComIndexMulti")}
 	}
 	
 	if (is.null(namesindex)) {
@@ -1578,14 +1575,14 @@ as.listofindex <- function(x, namesindex=NULL) {
 #e.g. index.list <- list(T_IP.IC=res.finch$T_IP.IC, T_IP.IC_nm=res.finch$T_IP.IC_nm, T_PC.PR=res.finch$T_PC.PR, T_PC.PR_nm=res.finch$T_PC.PR_nm)
 #observed matrix of values need to be of the same dimension
 #You can transpose the observed matrix to represent either the ses by traits or by plots
-plot.listofindex <- function(x, type="normal", col.index=c("red","purple","green"), add.conf=TRUE, color.cond=TRUE, val.quant=c(0.025,0.975), grid.v=TRUE, grid.h=TRUE, xlim=NULL, ylim=NULL, cex.text =0.8, plot.ask=FALSE, srt.text=90, bysite=FALSE,...){
+plot.listofindex <- function(x, type="normal", col.index=c("red","purple","green"), add.conf=TRUE, color.cond=TRUE, val.quant=c(0.025,0.975), grid.v=TRUE, grid.h=TRUE, xlim=NULL, ylim=NULL, cex.text =0.8, plot.ask=FALSE, srt.text=90, bysite=FALSE, ...){
 	#possible type = "simple",  "simple_range", "normal" , "barplot" and "bytraits"
 	
 	if (!inherits(x, "listofindex")) {
 		if (inherits(x[[1]], "Tstats") | inherits(x[[2]], "ComIndex")  | inherits(x[[3]], "ComIndexMulti")) {
 			x <- as.listofindex(x)
 		}	
-		else{stop("x must be a list of objects of class Tstats, ComIndex or ComIndexMulti")}
+		else{stop("x must be a list of objects of class Tstats, ComIndex, ComIndexMulti or listofindex")}
 	}
 	
 	index.list <- x
@@ -1890,8 +1887,23 @@ plot.listofindex <- function(x, type="normal", col.index=c("red","purple","green
 	par(oldpar) #return to default parameter
 }
 
+plot.ComIndex <- function(x, type="normal", col.index=c("red","purple","green"), add.conf=TRUE, color.cond=TRUE, val.quant=c(0.025,0.975), grid.v=TRUE, grid.h=TRUE, xlim=NULL, ylim=NULL, cex.text =0.8, plot.ask=FALSE, srt.text=90, bysite=FALSE, ...){
+	
+	if (!inherits(x, "ComIndex")) {
+		stop("x must be of class ComIndex")
+	}
+	
+	plot.listofindex (as.listofindex(x), type = type, col.index = col.index, add.conf = add.conf, color.cond = color.cond, val.quant = val.quant, grid.v = grid.v, grid.h = grid.h, xlim = xlim, ylim = ylim, cex.text = cex.text, plot.ask = plot.ask, srt.text = srt.text, bysite = bysite, ...)
+}
 
-
+plot.ComIndexMulti <- function(x, type="normal", col.index=c("red","purple","green"), add.conf=TRUE, color.cond=TRUE, val.quant=c(0.025,0.975), grid.v=TRUE, grid.h=TRUE, xlim=NULL, ylim=NULL, cex.text =0.8, plot.ask=FALSE, srt.text=90, bysite=FALSE, ...){
+	
+	if (!inherits(x, "ComIndexMulti")) {
+		stop("x must be of class ComIndexMulti")
+	}
+	
+	plot.listofindex (as.listofindex(x), type = type, col.index = col.index, add.conf = add.conf, color.cond = color.cond, val.quant = val.quant, grid.v = grid.v, grid.h = grid.h, xlim = xlim, ylim = ylim, cex.text = cex.text, plot.ask = plot.ask, srt.text = srt.text, bysite = bysite, ...)
+}
 
 
 #______________#______________#______________#______________#______________#______________#______________#______________
@@ -3359,17 +3371,17 @@ plotRandtest <- function(x, alternative=c("greater", "less", "two-sided"), ...){
 #Replace a matrix with abundance of species and mean traits by pop in a pseudo-individual matrix
 #Each individual take therefore the value of the population 
 
-AbToInd <- function(traits, com, type="count"){
+AbToInd <- function(traits, com, type.sp.val="count"){
 	
 	if (nrow(traits) != nrow(com)){
 		stop("number of rows of traits and com need to be equal")
 	}
 	
-	#type is either count data or abundance
+	#type.sp.val is either count data or abundance
 	#transform abundance data to number of individual
-	#Using abundance type is EXPERIMENTAL. This function round abundance to fit count data.
+	#Using abundance type.sp.val is EXPERIMENTAL. This function round abundance to fit count data.
 	
-	if (type=="abundance"){
+	if (type.sp.val=="abundance"){
 		if (min(com)<1){
 			com <- apply(com,2, function(x) round(x/min(x[x>0], na.rm=T), 1)*10 )
 		}

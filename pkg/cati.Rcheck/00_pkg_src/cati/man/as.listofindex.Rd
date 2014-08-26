@@ -59,10 +59,12 @@
 	ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 
 	res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
-	nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+	nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, nperm = 9, 
+	print = FALSE)
 	
 	res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
-	nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+	nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, nperm = 9,
+	print = FALSE)
 
 	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
 	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)" )
