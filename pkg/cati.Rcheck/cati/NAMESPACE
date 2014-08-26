@@ -1,0 +1,24 @@
+exportPattern("^[^\\.]")
+
+## Import all packages listed as Imports or Depends
+
+import(ade4)
+import(nlme)
+import(ape)
+
+import(e1071)
+import(mice)
+import(rasterVis)
+import(hypervolume)
+
+S3method(print, Tstats)
+S3method(print, ComIndex)
+S3method(print, ComIndexMulti)
+
+S3method(summary, Tstats)
+S3method(summary, ComIndex)
+S3method(summary, ComIndexMulti)
+
+S3method(plot, Tstats)
+S3method(plot, ComIndex)
+S3method(plot, ComIndexMulti)
