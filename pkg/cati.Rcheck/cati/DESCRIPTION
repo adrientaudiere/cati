@@ -13,5 +13,5 @@ Description: A package to detect and quantify community assembly processes
     other metrics, and dedicated null models.
 License: GPL (>= 2)
 URL: https://sourceforge.net/p/cati-r/code
-Packaged: 2014-08-26 15:36:05 UTC; Admin
-Built: R 3.1.1; ; 2014-08-26 15:36:36 UTC; windows
+Packaged: 2014-08-27 06:55:54 UTC; Taudiere
+Built: R 3.0.3; ; 2014-08-27 06:56:03 UTC; windows
