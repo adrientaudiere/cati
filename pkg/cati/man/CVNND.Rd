@@ -40,9 +40,9 @@
 }
 
 \examples{
-	data(finch.ind)
-	CVNND(traits.finch[,1])
-	CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
+data(finch.ind)
+CVNND(traits.finch[,1])
+CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
 }
 
 

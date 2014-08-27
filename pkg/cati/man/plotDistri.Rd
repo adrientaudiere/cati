@@ -74,46 +74,41 @@
 
 \examples{	
 	data(finch.ind)
-	oldpar <- par(no.readonly = TRUE)
 	
 	#Plot the distribution of trait values for populations, 
 	#species, sites and regional scales. 
 	
-	#First, let try the distribution for all populations 
+	### First, let try the distribution for all populations 
 	#of Darwin finches.
 	
 	par(mfrow = c(4,4), cex = 0.5)
-	
 	plotDistri(traits.finch, sp.finch, ind.plot.finch, ylim.cex = 3, 
 	plot.ask = FALSE, multipanel = FALSE, leg = FALSE)
 	
-	par(mfrow = c(1,1), cex = 1)
-	
-	
-	#Then we can inverse the second and the third arguments 
+	### Then we can inverse the second and the third arguments 
 	#to plot the distribution for all finches species. 
 	
 	par(mfrow = c(4,4), cex = 0.5)
-	
 	plotDistri(traits.finch, ind.plot.finch, sp.finch, ylim.cex = 8, 
 	plot.ask = FALSE, multipanel = FALSE, leg = FALSE)
 	
+	### Only one trait to plot using leg = TRUE to plot the legend
+
+	par(mfrow=c(2,3))
+	plotDistri(as.matrix(traits.finch[,1]), ind.plot.finch, sp.finch, 
+    ylim.cex=8, plot.ask = FALSE, multipanel = FALSE, leg = TRUE, cex.leg=0.5)
+
+	### You can also plot trait distribution for all species in the region
+	
 	par(mfrow = c(1,1), cex = 1)
-	
-	
-	#You can also plot trait distribution for all species in the region
-	
 	plotDistri(traits.finch, rep("region", times = dim(traits.finch)[1]), 
 	sp.finch, ylim.cex = 6, plot.ask = FALSE, leg = FALSE)
-	
-	
-	#You can also plot trait distribution for all sites
+		
+	### You can also plot trait distribution for all sites
 	#without taking into account species identity
 	
 	plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]), 
 	ind.plot.finch, ylim.cex = 3, plot.ask = FALSE)
-	
-	par(oldpar)
 }
 
 

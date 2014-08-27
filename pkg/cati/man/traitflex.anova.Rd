@@ -4,7 +4,7 @@
 \alias{plot.traitflex}
 
 \title{
-	Variance decomposition for a given trait used in decompWithin
+	Variance decomposition for a given trait used in decompCTRE
 }
 
 \description{
@@ -89,5 +89,5 @@
 \seealso{
 	\code{\link{print.traitflex}};
 	\code{\link{plot.traitflex}};
-	\code{\link{decompWithin}}
+	\code{\link{decompCTRE}}
 }

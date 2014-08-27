@@ -1,6 +1,6 @@
-\name{decompWithin}
-\alias{decompWithin}
-\alias{barplot.decompWithin}
+\name{decompCTRE}
+\alias{decompCTRE}
+\alias{barplot.decompCTRE}
 
 \title{
 	Variance partitioning for multiple traits
@@ -9,14 +9,14 @@
 \description{
 	This function decomposes the variation in community trait composition into three sources: (i) the intraspecific trait variability, (ii) the
 	variability due to species turnover and (iii) their covariation is also separated. This decomposition is computed for the whole variation in the trait
-	values and, The formula specified, across the contribution of various explanatory variables considered in the model. Barplot.decompWithin allow to plot the result of the decomposition.
+	values and, The formula specified, across the contribution of various explanatory variables considered in the model. Barplot.decompCTRE allow to plot the result of the decomposition.
 }
 
 \usage{
-	decompWithin(traits = NULL, formula = ~1, ind.plot = NULL, sp = NULL, 
+	decompCTRE(traits = NULL, formula = ~1, ind.plot = NULL, sp = NULL, 
 	printprogress = TRUE, ...)
 	
-	\method{barplot}{decompWithin}(height, resume = TRUE, \dots)
+	\method{barplot}{decompCTRE}(height, resume = TRUE, \dots)
 }
 
 \arguments{
@@ -25,7 +25,7 @@
 	}
 	
 	\item{height}{
-		An object of class decompWithin obtain by the function decompWithin.
+		An object of class decompCTRE obtain by the function decompCTRE.
 	}
 	
 	\item{formula}{
@@ -54,7 +54,7 @@
 }
 
 \value{
-	An object of class "decompWithin".
+	An object of class "decompCTRE".
 }
 
 \references{
@@ -67,21 +67,21 @@
 }
 
 \seealso{
-	\code{\link{barplot.decompWithin}};
+	\code{\link{barplot.decompCTRE}};
 	\code{\link{traitflex.anova}}
 }
 
 \examples{
-	data(finch.ind)
-	
-	res.decomp <- decompWithin(traits = traits.finch, sp = sp.finch, 
-	ind.plot = ind.plot.finch, print = FALSE)
-	
-	barplot.decompWithin(res.decomp)
-	
-	par(mfrow = c(2,2))
-	barplot.decompWithin(res.decomp, resume = FALSE)
-	par(mfrow = c(1,1))
+data(finch.ind)
+
+res.decomp <- decompCTRE(traits = traits.finch, sp = sp.finch, 
+ind.plot = ind.plot.finch, print = FALSE)
+
+barplot.decompCTRE(res.decomp)
+
+par(mfrow = c(2,2))
+barplot.decompCTRE(res.decomp, resume = FALSE)
+par(mfrow = c(1,1))
 }
 
 
