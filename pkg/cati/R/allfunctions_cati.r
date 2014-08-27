@@ -44,7 +44,7 @@ piePartvar <- function(partvar, col.pie=NA, ...){
 	nfactors <- nrow(partvar)
 	ntraits  <- ncol(partvar)
 	
-	if(anyNA(col.pie)){
+	if(any(is.na(col.pie))){
 		col.pie <- palette(rainbow(nfactors))
 	}
 	
@@ -61,7 +61,7 @@ barPartvar <- function(partvar,  col.bar=NA, ...){
 	oldpar <- par(no.readonly = TRUE)
 	par(mar=c(5,6.5,4,2), cex=0.7)
 	
-	if(anyNA(col.bar)){
+	if(any(is.na(col.bar))){
 		col.bar <- palette(rainbow(nfactors))
 	}
 	
@@ -1910,8 +1910,8 @@ plot.ComIndexMulti <- function(x, type="normal", col.index=c("red","purple","gre
 #______________#______________#______________#______________#______________#______________#______________#______________
 #__ Decomposition of variance
 
-decompWithin <- function(traits=NULL , formula=~ 1, ind.plot=NULL, sp=NULL, printprogress=TRUE, ...) {
-	
+decompCTRE <- function(traits=NULL , formula=~ 1, ind.plot=NULL, sp=NULL, printprogress=TRUE, ...) {
+
 	form.string <- deparse(substitute(formula))
 	
  	ntr <- dim(traits)[2]
@@ -1943,11 +1943,11 @@ decompWithin <- function(traits=NULL , formula=~ 1, ind.plot=NULL, sp=NULL, prin
 	}
 	
 	decomp$traits <- namestraits
-	class(decomp)  <- "decompWithin"
+	class(decomp)  <- "decompCTRE"
 	return(decomp)
 }
 
-barplot.decompWithin <- function(height, resume=TRUE, ...) { 
+barplot.decompCTRE <- function(height, resume=TRUE, ...) { 
 	
 	x <- height
 	
@@ -2500,8 +2500,8 @@ plotDistri <- function(traits=NULL, var.1=NULL, var.2=NULL, col.dens=NULL, plot.
 	namescommunity <- unique(var.1)
 	ncom <- length(namescommunity)
 	
-	ntr <- dim(traits)[2]
-	
+	ntr <- dim(as.matrix(traits))[2]
+		
 	if (is.null(col.dens)) { col.dens <- rainbow(nlevels(as.factor(var.2))) }
 	
 	if (multipanel) {
