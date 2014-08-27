@@ -36,50 +36,50 @@
 }
 
 \examples{
-	data(finch.ind)
-	oldpar <- par(no.readonly = TRUE)
-	
-	####
-	#The function ComIndex allow to choose your own function 
-	#(like mean, range, variance...) to calculate customize index.
-	
-	require(e1071)
-	
+data(finch.ind)
+oldpar <- par(no.readonly = TRUE)
 
-	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)",
-	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)" )
-	
+####
+#The function ComIndex allow to choose your own function 
+#(like mean, range, variance...) to calculate customize index.
 
-	res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-	sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
-	nperm = 9, print = FALSE)
-	
-	res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-	sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), 
-	ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
-
-	res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
-	nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, nperm = 9, 
-	print = FALSE)
-	
-	res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
-	nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, nperm = 9,
-	print = FALSE)
-
-	funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
-	"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)" )
+require(e1071)
 
 
-	####
-	#We can represent Standardized Effect Size (ses) 
-	#using the function plot(as.listofindex(list1, list2, list3))
-	
-	list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
-	index.list2 <- as.listofindex(list.ind2)
-	
-	plot(index.list2, type = "bytraits")
-	
-	plot(index.list2)
+funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)",
+"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)" )
+
+
+res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
+sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
+nperm = 9, print = FALSE)
+
+res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
+sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), 
+ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+
+res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
+nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, nperm = 9, 
+print = FALSE)
+
+res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
+nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, nperm = 9,
+print = FALSE)
+
+funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
+"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)" )
+
+
+####
+#We can represent Standardized Effect Size (ses) 
+#using the function plot(as.listofindex(list1, list2, list3))
+
+list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
+index.list2 <- as.listofindex(list.ind2)
+
+plot(index.list2, type = "bytraits")
+
+plot(index.list2)
 }
 
 

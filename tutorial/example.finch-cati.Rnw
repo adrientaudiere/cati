@@ -21,11 +21,11 @@
 
 
 \title{Illustrating package cati (Community Assembly by Traits: Individuals and beyond) using Darwin finches data}
-\author{Adrien Taudiere
+\author{Adrien Taudiere & Cyrille Violle
 \thanks{\texttt{adrien.taudiere@cefe.cnrs.fr}}
 }
 
-\affil{{\footnotesize EPHE \\CEFE - Centre d'Ecologie Fonctionnelle et Evolutive}}
+\affil{{\footnotesize CEFE - Centre d'Ecologie Fonctionnelle et Evolutive, Montpellier: France}}
 
 \date{\today}
 
@@ -40,7 +40,7 @@
 \selectlanguage{english}
 
  <<include=FALSE, eval=FALSE>>=
-opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE, warning=FALSE, fig.show="asis")
+opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE, warning=FALSE, fig.show="tex")
 @
 
 
@@ -54,7 +54,7 @@ opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE
 \maketitle
 
 \begin{abstract}
-  This vignette present the cati package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
+  This vignette present the cati package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data. 
 \end{abstract}
 
 
@@ -69,7 +69,6 @@ opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE
 \section{Introduction}
 %%%%%%%%%%%%%%%%
   This vignette present the cati package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
-
 
 %%%%%%%%%%%%%%%%
 \section{Installing the package cati}
