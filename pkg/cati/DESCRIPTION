@@ -6,15 +6,15 @@ Date: 2014-04-14
 Author: Adrien Taudiere, Cyrille Violle with contribution of Francois Munoz
 Maintainer: Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>
 Depends:
-    R (>= 3.0.2),  
+    R (>= 3.0.2),
     nlme,
     ade4,
     ape
 Imports:
-	e1071,
-	mice,
-	rasterVis,
-	hypervolume
+    e1071,
+    mice,
+    rasterVis,
+    hypervolume
 Suggests:
     lattice,
     vegan,
@@ -22,7 +22,7 @@ Suggests:
     spacodiR,
     entropart,
     fBasics,
-    picante 
+    picante
 Description: A package to detect and quantify community assembly processes
     using trait values of individuals or populations, the T-statistics and
     other metrics, and dedicated null models.
