@@ -592,7 +592,9 @@ plot.Tstats <- function(x, val.quant=c(0.025,0.975), col.Tstats=c("red","purple"
 ### Function to summarize traits and community which show a significant difference between observed and simulated value
 sum_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
 	
-	Tst <- x$Tstats
+	res <- x
+	Tst <- res$Tstats
+	
 	#________________________________________
 	ses.T_IP.IC <- (Tst$T_IP.IC-apply(Tst$T_IP.IC_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(Tst$T_IP.IC_nm, c(3,2), function(x) sd(x, na.rm=T))
 	ses.T_IC.IR <- (Tst$T_IC.IR-apply(Tst$T_IC.IR_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(Tst$T_IC.IR_nm, c(3,2), function(x) sd(x, na.rm=T))
@@ -642,8 +644,6 @@ sum_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
  	######################################### 
 	####		 calculation of p.value		 ####
 	######################################### 
-	
-	res<-x
 	
 	if (type=="all" | type=="p.value"){
  
@@ -3494,22 +3494,6 @@ SDNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method.
 	mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
 	nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
 	
-	#Uni-traits
-	else if(is.vector(traits)){
-		r=sort(traits)
-		if (length(r)<1){
-			nnd=NA
-		}
-		
-		else{
-			nnd=vector(length=length(r)-1)
-			for(j in 2:length(r)){
-				nnd[j-1]=r[j]-r[j-1]
-			}
-		}
-	}
-	else{stop("traits must be vector or a matrix of traits")}
-	
 	#Metric calculation
 	SDNND <- sd(nnd, na.rm = na.rm)
 	
@@ -3538,22 +3522,6 @@ MinNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method
 	mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
 	nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
 	
-	#Uni-traits
-	else if(is.vector(traits)){
-		r=sort(traits)
-		if (length(r)<1){
-			nnd=NA
-		}
-		
-		else{
-			nnd=vector(length=length(r)-1)
-			for(j in 2:length(r)){
-				nnd[j-1]=r[j]-r[j-1]
-			}
-		}
-	}
-	else{stop("traits must be vector or a matrix of traits")}
-	
 	#Metric calculation
 	MinNND <- min(nnd[nnd>0], na.rm = na.rm)
 	
@@ -3574,7 +3542,7 @@ SDND <- function(trait, div_range=FALSE, na.rm=FALSE){
 	SDND <- sd(diff(r, na.rm = na.rm))
 	
 	if (div_range) {
-		SDND <- SDND/(max(traits, na.rm=na.rm) - min(traits, na.rm=na.rm) ) 
+		SDND <- SDND/(max(trait, na.rm=na.rm) - min(trait, na.rm=na.rm) ) 
 	} 
 	else {}
 	

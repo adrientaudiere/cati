@@ -1,12 +1,8 @@
 citHeader("To cite the cati package:")
 
 citEntry(
-entry="Article",
+entry="package",
 title = "cati (Community Assembly by Traits: Individuals and beyond  ): a R package to detect and quantify multi-level assembly processes using functional traits",
-journal= "",
 year = "2014",
-author = "A. Taudiere and C. Violle", 
-volume = "",
-pages = "",
-doi = ""
+author = "A. Taudiere and C. Violle",
 )

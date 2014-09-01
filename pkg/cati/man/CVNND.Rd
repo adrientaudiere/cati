@@ -18,17 +18,29 @@
 }
 
 \usage{
-	CVNND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
-	MNND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
-	MinNND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
-	SDNND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
-	SDND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
+	CVNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE,
+	method.dist = "euclidian")
+	
+	MNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, 
+	method.dist = "euclidian")
+	
+	MinNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, 
+	method.dist = "euclidian")
+	
+	SDNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, 
+	method.dist = "euclidian")
+	
+	SDND(trait, div_range = FALSE, na.rm = FALSE)
 }
 
 \arguments{
 	\item{traits}{
 		Trait vector (uni-trait metric) or traits matrix (Multi-traits metric), traits in column.
 	}
+	
+	\item{trait}{
+		Trait vector
+	}	
 	
 	\item{div_range}{
 		Does metric need to be divided by the range? Default is no.

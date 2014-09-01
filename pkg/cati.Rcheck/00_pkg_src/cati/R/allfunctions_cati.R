@@ -592,7 +592,9 @@ plot.Tstats <- function(x, val.quant=c(0.025,0.975), col.Tstats=c("red","purple"
 ### Function to summarize traits and community which show a significant difference between observed and simulated value
 sum_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
 	
-	Tst <- x$Tstats
+	res <- x
+	Tst <- res$Tstats
+	
 	#________________________________________
 	ses.T_IP.IC <- (Tst$T_IP.IC-apply(Tst$T_IP.IC_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(Tst$T_IP.IC_nm, c(3,2), function(x) sd(x, na.rm=T))
 	ses.T_IC.IR <- (Tst$T_IC.IR-apply(Tst$T_IC.IR_nm, c(3,2), function(x) mean(x, na.rm=T)))/apply(Tst$T_IC.IR_nm, c(3,2), function(x) sd(x, na.rm=T))
@@ -642,8 +644,6 @@ sum_Tstats <- function(x, val.quant=c(0.025,0.975), type="all") {
  	######################################### 
 	####		 calculation of p.value		 ####
 	######################################### 
-	
-	res<-x
 	
 	if (type=="all" | type=="p.value"){
  
@@ -3405,40 +3405,45 @@ AbToInd <- function(traits, com, type.sp.val="count"){
 ###### 				        Metrics								  ###### 				
 ########################################################################
 
+#Uni-traits
+#	else if(is.vector(traits)){
+#		r=sort(traits)
+#		if (length(r)<1){
+#			nnd=NA
+#		}
+#		
+#		else{
+#			nnd=vector(length=length(r)-1)
+#			for(j in 2:length(r)){
+#				nnd[j-1]=r[j]-r[j-1]
+#			}
+#		}
+#	}
+
+
 #calculation of the coefficient of variation of the NND (nearest neigbour distance) for one trait with our without division by the range of the trait
 CVNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method.dist = "euclidian"){
 	
-	#Multi-traits
-	if(is.matrix(traits) | is.data.frame(traits)){
-		if(scale.tr) {
-			traits<-apply(traits, 1, scale)
-		}
-		mat.dist<- dist(traits, method = method.dist)
-		mat.dist <- as.matrix(mat.dist)
-		mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
-		nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
+	#Uni-traits vector transforme to a matrix
+	if(is.vector(traits)){
+		traits<-as.matrix(traits, ncol=1)
 	}
 	
-	#Uni-traits
-	else if(is.vector(traits)){
-		r=sort(traits)
-		if (length(r)<1){
-			nnd=NA
-		}
-		
-		else{
-			nnd=vector(length=length(r)-1)
-			for(j in 2:length(r)){
-				nnd[j-1]=r[j]-r[j-1]
-			}
-		}
+	#Calcul of nearest neighbourhood distance
+	if(scale.tr) {
+			traits<-apply(traits, 2, scale)
 	}
-	else{stop("traits must be vector or a matrix of traits")}
+	mat.dist<- dist(traits, method = method.dist)
+	mat.dist <- as.matrix(mat.dist)
+	mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
+	nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
 	
 	#Metric calculation
 	CVNND <- sd(nnd, na.rm = T)/mean(nnd, na.rm=T)
 	
-	if (div_range==T) {CVNND <- CVNND/range(traits, na.rm=na.rm)} 
+	if (div_range) {
+		CVNND <- CVNND/(max(traits, na.rm=na.rm) - min(traits, na.rm=na.rm) ) 
+	} 
 	else {}
 	
 	return(CVNND)
@@ -3447,37 +3452,26 @@ CVNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method.
 #calculation of mean NND (nearest neigbour distance) for one trait or multiple traits with our without division by the range of the trait
 MNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method.dist = "euclidian"){
 	
-	#Multi-traits
-	if(is.matrix(traits) | is.data.frame(traits)){
-		if(scale.tr) {
-			traits<-apply(traits, 1, scale)
-		}
-		mat.dist<- dist(traits, method = method.dist)
-		mat.dist <- as.matrix(mat.dist)
-		mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
-		nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
+	#Uni-traits vector transforme to a matrix
+	if(is.vector(traits)){
+		traits<-as.matrix(traits, ncol=1)
 	}
 	
-	#Uni-traits
-	else if(is.vector(traits)){
-		r=sort(traits)
-		if (length(r)<1){
-			nnd=NA
-		}
-		
-		else{
-			nnd=vector(length=length(r)-1)
-			for(j in 2:length(r)){
-				nnd[j-1]=r[j]-r[j-1]
-			}
-		}
+	#Calcul of nearest neighbourhood distance
+	if(scale.tr) {
+		traits<-apply(traits, 2, scale)
 	}
-	else{stop("traits must be vector or a matrix of traits")}
+	mat.dist<- dist(traits, method = method.dist)
+	mat.dist <- as.matrix(mat.dist)
+	mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
+	nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
 	
 	#Metric calculation
 	MNND <- mean(nnd, na.rm = na.rm)
 	
-	if (div_range==T) {MNND <- MNND/range(traits, na.rm=na.rm)} 
+	if (div_range) {
+		MNND <- MNND/(max(traits, na.rm=na.rm) - min(traits, na.rm=na.rm) ) 
+	} 
 	else {}
 	
 	return(MNND)
@@ -3486,37 +3480,26 @@ MNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method.d
 #calculation of sd NND for one trait or multiple traits with our without division by the range of the trait
 SDNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method.dist = "euclidian"){
 	
-	#Multi-traits
-	if(is.matrix(traits) | is.data.frame(traits)){
-		if(scale.tr) {
-			traits<-apply(traits, 1, scale)
-		}
-		mat.dist<- dist(traits, method = method.dist)
-		mat.dist <- as.matrix(mat.dist)
-		mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
-		nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
+	#Uni-traits vector transforme to a matrix
+	if(is.vector(traits)){
+		traits<-as.matrix(traits, ncol=1)
 	}
 	
-	#Uni-traits
-	else if(is.vector(traits)){
-		r=sort(traits)
-		if (length(r)<1){
-			nnd=NA
-		}
-		
-		else{
-			nnd=vector(length=length(r)-1)
-			for(j in 2:length(r)){
-				nnd[j-1]=r[j]-r[j-1]
-			}
-		}
+	#Calcul of nearest neighbourhood distance
+	if(scale.tr) {
+		traits<-apply(traits, 2, scale)
 	}
-	else{stop("traits must be vector or a matrix of traits")}
+	mat.dist<- dist(traits, method = method.dist)
+	mat.dist <- as.matrix(mat.dist)
+	mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
+	nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
 	
 	#Metric calculation
 	SDNND <- sd(nnd, na.rm = na.rm)
 	
-	if (div_range==T) {SDNND <- SDNND/range(traits, na.rm=na.rm)} 
+	if (div_range) {
+		SDNND <- SDNND/(max(traits, na.rm=na.rm) - min(traits, na.rm=na.rm) ) 
+	} 
 	else {}
 	
 	return(SDNND)
@@ -3525,37 +3508,26 @@ SDNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method.
 #calculation of minimum NND for one trait or multiple traits with our without division by the range of the trait
 MinNND <- function(traits, div_range=FALSE, na.rm=FALSE, scale.tr = TRUE, method.dist = "euclidian"){
 	
-	#Multi-traits
-	if(is.matrix(traits) | is.data.frame(traits)){
-		if(scale.tr) {
-			traits<-apply(traits, 1, scale)
-		}
-		mat.dist<- dist(traits, method = method.dist)
-		mat.dist <- as.matrix(mat.dist)
-		mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
-		nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
+	#Uni-traits vector transforme to a matrix
+	if(is.vector(traits)){
+		traits<-as.matrix(traits, ncol=1)
 	}
 	
-	#Uni-traits
-	else if(is.vector(traits)){
-		r=sort(traits)
-		if (length(r)<1){
-			nnd=NA
-		}
-		
-		else{
-			nnd=vector(length=length(r)-1)
-			for(j in 2:length(r)){
-				nnd[j-1]=r[j]-r[j-1]
-			}
-		}
+	#Calcul of nearest neighbourhood distance
+	if(scale.tr) {
+		traits<-apply(traits, 2, scale)
 	}
-	else{stop("traits must be vector or a matrix of traits")}
+	mat.dist<- dist(traits, method = method.dist)
+	mat.dist <- as.matrix(mat.dist)
+	mat.dist <- apply(mat.dist, 1, function(x) as.numeric(sub("^0$", NA, x)))
+	nnd<-apply(mat.dist, 1, function(x) min (x, na.rm=T))
 	
 	#Metric calculation
-	MinNND <- min(nnd, na.rm = na.rm)
+	MinNND <- min(nnd[nnd>0], na.rm = na.rm)
 	
-	if (div_range==T) {MinNND <- MinNND/range(traits, na.rm=na.rm)} 
+	if (div_range) {
+		MinNND <- MinNND/(max(traits, na.rm=na.rm) - min(traits, na.rm=na.rm) ) 
+	} 
 	else {}
 	
 	return(MinNND)
@@ -3569,12 +3541,62 @@ SDND <- function(trait, div_range=FALSE, na.rm=FALSE){
 	
 	SDND <- sd(diff(r, na.rm = na.rm))
 	
-	if (div_range==T) {SDND <- SDND/range(trait, na.rm=na.rm)} 
+	if (div_range) {
+		SDND <- SDND/(max(trait, na.rm=na.rm) - min(trait, na.rm=na.rm) ) 
+	} 
 	else {}
 	
 	return(SDND)
 }
 
+#Sum of branch length 
+#All individuals with one NA are omitted
+
+SumBL <- function(traits, gower.dist = TRUE, method.hclust = "average", scale.tr = TRUE, method.dist = "euclidian"){
+	require(vegan)
+	
+	if(sum(is.na(traits)) > 0){
+		traits<-na.omit(traits)
+		warnings("All individuals with one NA are excluded")
+	}
+	
+	if(gower.dist){
+		require(FD)
+		tree.dist <- gowdis(traits)
+	}
+	else{
+		if(scale.tr){
+			traits <-apply(traits, 2, scale)
+		}
+		tree.dist <-dist(traits, method = method.dist)
+	}
+	
+	tree.dist <- na.omit(tree.dist)	
+	tree <- hclust(tree.dist, method = method.hclust)
+	
+	res <- treeheight(tree)
+	return(res)
+}
 
 
-
+#Min/Max MST
+MinMaxMST <- function (traits, gower.dist = TRUE, scale.tr = TRUE, method.dist = "euclidian"){
+	
+	if(gower.dist){
+		require(FD)
+		tree.dist <- gowdis(traits)
+	}
+	else{
+		if(scale.tr){
+			traits <-apply(traits, 2, scale)
+		}
+		tree.dist <-dist(traits, method = method.dist)
+	}
+	
+	traits.mst <- mst(as.matrix(tree.dist))
+	res.mst <- as.matrix(tree.dist)*as.matrix(traits.mst)
+	
+	res.mst <- apply(res.mst, 1, function(x) as.numeric(sub("^0$",NA,x)))
+	res <- min(res.mst, na.rm=T) / max(res.mst, na.rm=T)
+	return(res)
+}

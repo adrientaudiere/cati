@@ -18,17 +18,29 @@
 }
 
 \usage{
-	CVNND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
-	MNND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
-	MinNND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
-	SDNND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
-	SDND(trait, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, method.dist = "euclidian")
+	CVNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE,
+	method.dist = "euclidian")
+	
+	MNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, 
+	method.dist = "euclidian")
+	
+	MinNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, 
+	method.dist = "euclidian")
+	
+	SDNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, 
+	method.dist = "euclidian")
+	
+	SDND(trait, div_range = FALSE, na.rm = FALSE)
 }
 
 \arguments{
 	\item{traits}{
-		Trait vector (uni-trait metric) or traits matrix (Multi-traits metric)
+		Trait vector (uni-trait metric) or traits matrix (Multi-traits metric), traits in column.
 	}
+	
+	\item{trait}{
+		Trait vector
+	}	
 	
 	\item{div_range}{
 		Does metric need to be divided by the range? Default is no.
@@ -48,12 +60,12 @@
 }
 
 \value{
-	One value corresponding to the coefficient of variation of the nearest neigbourhood for the trait.
+	One value corresponding to the metric value.
 }
 
 \references{
-	Jung, Vincent, Cyrille Violle, Cedric Mondy, Lucien Hoffmann, et Serge Muller. 2010. Intraspecific variability and trait-based community assembly: Intraspecific variability and community assembly. Journal of Ecology 98 (5): 1134-1140. doi:10.1111/j.1365-2745.2010.01687.x.
 	Aiba, M., Katabuchi, M., Takafumi, H., Matsuzaki, S.S., Sasaki, T. & Hiura, T. 2013. Robustness of trait distribution metrics for community assembly studies under the uncertainties of assembly processes. Ecology, 94, 2873-2885.
+	Jung, Vincent, Cyrille Violle, Cedric Mondy, Lucien Hoffmann, et Serge Muller. 2010. Intraspecific variability and trait-based community assembly: Intraspecific variability and community assembly. Journal of Ecology 98 (5): 1134-1140.
 }
 
 \author{
