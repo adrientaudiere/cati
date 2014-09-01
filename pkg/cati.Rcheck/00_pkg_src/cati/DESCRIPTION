@@ -12,7 +12,6 @@ Suggests: lattice, vegan, FD, spacodiR, entropart, fBasics, picante,
 Description: A package to detect and quantify community assembly processes
     using trait values of individuals or populations, the T-statistics and
     other metrics, and dedicated null models.
-VignetteBuilder: knitr
 License: GPL (>= 2)
 URL: https://sourceforge.net/p/cati-r/code
-Packaged: 2014-09-01 15:47:19 UTC; Admin
+Packaged: 2014-09-02 08:31:16 UTC; Taudiere
