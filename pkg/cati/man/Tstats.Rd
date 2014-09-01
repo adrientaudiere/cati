@@ -16,6 +16,8 @@
 \usage{
 	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE)
 	
+	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
+		
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
 	col.Tstats = c("red", "purple", "green", "white"), ylim = NULL, \dots)
 	
@@ -26,8 +28,6 @@
 	\method{print}{Tstats}(x, \dots)
 		
 	\method{summary}{Tstats}(object, \dots)
-	
-	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 }
 
 \arguments{

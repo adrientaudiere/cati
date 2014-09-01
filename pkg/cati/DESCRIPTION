@@ -27,7 +27,6 @@ Suggests:
 Description: A package to detect and quantify community assembly processes
     using trait values of individuals or populations, the T-statistics and
     other metrics, and dedicated null models.
-VignetteBuilder: knitr
 License: GPL (>= 2)
 URL: https://sourceforge.net/p/cati-r/code
  
