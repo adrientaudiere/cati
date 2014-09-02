@@ -3600,3 +3600,13 @@ MinMaxMST <- function (traits, gower.dist = TRUE, scale.tr = TRUE, method.dist =
 	res <- min(res.mst, na.rm=T) / max(res.mst, na.rm=T)
 	return(res)
 }
+
+
+IndexByGroups<-function(metrics, groups){
+	res<-c()
+	for (i in 1:length(metrics)){
+		res<- c(res, paste("tapply(x, ", groups, ", function(x) ", metrics[i], ")", sep=""))
+	}
+  
+	return(res)
+}
