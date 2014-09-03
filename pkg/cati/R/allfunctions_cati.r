@@ -76,18 +76,20 @@ barPartvar <- function(partvar,  col.bar=NA, ...){
 #__Tstats
 
 ### Function to calculation Tstats 
-Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogress=TRUE){
+Tstats <- function(traits, ind.plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE){
 	#6 variances: I: individual, P: population, C: community, R: region
 	#IP; IC; IR; PC; PR; CR
 	
 	#traits is the matrix of individual traits, ind.plot is the name of the plot in which the individual is (factor type), and sp is the species name of each individual
-	
 
 	names_sp_ind.plot <- as.factor(paste(sp, ind.plot, sep="@")) 
 	Tplosp <- unlist(strsplit(levels(names_sp_ind.plot), split="@"))[2*(1:nlevels(names_sp_ind.plot))] 
 	names(Tplosp) <- levels(names_sp_ind.plot)
-
 	#Tplosp is the plot in wich the population is
+	
+	if(!is.null(nperm)){
+		if (nperm == 0) {nperm = NULL}
+	}
 	
 	######################################## 
 	####	calculation of observed values	####
@@ -284,9 +286,8 @@ Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogres
     res$Tstats$T_IC.IR <- T_IC.IR
     res$Tstats$T_PC.PR <- T_PC.PR
     
-    
     res$variances <- list()
-    
+   
     res$variances$var_IP <- var_IP
     res$variances$var_PC <- var_PC
     res$variances$var_CR <- var_CR
@@ -294,14 +295,6 @@ Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogres
     res$variances$var_PR <- var_PR
     res$variances$var_IR <- var_IR
 
-    res$variances$var_IP_nm1 <- var_IP_nm1
-    res$variances$var_PC_nm2sp <- var_PC_nm2sp
-    res$variances$var_IC_nm1 <- var_IC_nm1
-	res$variances$var_IC_nm2 <- var_IC_nm2
-    res$variances$var_PR_nm2sp <- var_PR_nm2sp
-    res$variances$var_IR_nm2 <- var_IR_nm2
-
-    	
 	if (is.numeric(nperm)){	 
 		res$variances$var_IP_nm1 <- var_IP_nm1
 		res$variances$var_PC_nm2sp <- var_PC_nm2sp
@@ -320,7 +313,8 @@ Tstats <- function(traits, ind.plot, sp, reg.pool=NULL, nperm=NULL, printprogres
  	res$traits <- traits
  	res$ind.plot <- ind.plot
  	res$sp <- sp
- 	
+ 	res$sites_richness <- table(ind.plot)
+ 	res$namestraits <- colnames(traits)
  	res$call <- match.call()
  	
 	class(res) <- "Tstats"
@@ -344,16 +338,23 @@ print.Tstats<-function(x, ...){
     
     cat("\n###############")
     cat("\n$Tstats: list of observed and null T-statistics")
-    cat("\n\n$T_IP.IC: ratio of within-population variance to total within-community variance")
-    cat("\n$T_IC.IR: community-wide variance relative to the total variance in the regional pool")
-    cat("\n$T_PC.PR: inter-community variance relative to the total variance in the regional pool")
+    cat("\n\nObserved values")
     
-    cat("\n\n$T_IP.IC_nm: distribution of T_IP.IC value under the null model")
-    cat("\n$T_IC.IR_nm: distribution of T_IC.IR value under the null model")
-    cat("\n$T_PC.PR_nm: distribution of T_PC.PR value under the null model\n")
+    cat("\n\t$T_IP.IC: ratio of within-population variance to total within-community variance")
+    cat("\n\t$T_IC.IR: community-wide variance relative to the total variance in the regional pool")
+    cat("\n\t$T_PC.PR: inter-community variance relative to the total variance in the regional pool\n")
+    
+    if(length(x$Tstats)==6){
+	    cat("\nNull values, number of permutation:", dim(x$Tstats$T_IP.IC_nm)[1])
+	    cat("\n\t$T_IP.IC_nm: distribution of T_IP.IC value under the null model")
+	    cat("\n\t$T_IC.IR_nm: distribution of T_IC.IR value under the null model")
+	    cat("\n\t$T_PC.PR_nm: distribution of T_PC.PR value under the null model\n")
+    }
     
     cat("\n###############")
-    cat("\n$variances: list of observed and null variances")
+    interm <- ""
+    if(length(x$Tstats)==6){interm <- "and null"}
+    cat("\n$variances: list of observed",  interm, "variances")
     
     TABDIM<-3
     
@@ -363,9 +364,21 @@ print.Tstats<-function(x, ...){
     sumry[3, ] <- c("$sp", class(x$sp), length(x$sp), "groups (e.g. species) which the individual belong to")
     
     class(sumry)<-"table"
-    cat("\n\n###############\n")
+    cat("\n\n###############")
+    cat("\ndata used\n")
     print(sumry)
-    cat("\n")
+    
+	cat("\n###############\n")
+    cat("others")
+    cat("\n\t$namestraits:", length(x$namestraits),"traits\n")  
+    print(head(x$namestraits)) 
+    if(length(x$namestraits)>5){print("...")}
+    
+    rich <- x$sites_richness
+    class(rich) <- "table"
+    cat("\n\t$sites_richness:\n\t") 
+    print(rich)
+    cat("\n")   
 }
 
 print.ComIndex<-function(x, ...){
@@ -374,8 +387,49 @@ print.ComIndex<-function(x, ...){
 		{stop("x must be a list of objects of class ComIndex")
 	}
 	
-	print(str(x[1], max.level = 2, give.attr1 = FALSE, vec.len = 0, ...))
-	print(str(x[-1], max.level = 1, give.attr1 = FALSE, vec.len = 0, ...))
+    cat("\t#################################\n")
+    cat("\t# Community metrics calculation #\n")
+    cat("\t#################################\n")
+    cat("class: ")
+    cat(class(x))
+    
+    cat("\n$call: ")
+    print(x$call)
+   
+    cat("\n###############")
+    cat("\n$obs: list of observed values\n")
+	seq.interm<-seq(1,length(names(x$list.index)), by=2)
+    cat(paste("\t$", names(x$list.index)[seq.interm], sep=""), sep="\n")
+    
+    if(!is.null(x$null)){
+	    cat("\n###############")
+	    cat("\n$null: list of null values, number of permutation:", dim(x$null[[1]])[3], "\n")
+        cat(paste("\t$", names(x$list.index)[-seq.interm], sep=""), sep="\n")
+    }
+   
+    TABDIM<-3
+    
+    sumry <- array("", c(TABDIM, 4), list(1:TABDIM, c("data", "class", "dim", "content")))
+    sumry[1, ] <- c("$traits", class(x$traits), paste(dim(x$traits)[1], dim(x$traits)[2], sep=",") , "traits data")
+    sumry[2, ] <- c("$ind.plot", class(x$ind.plot), length(x$ind.plot), "name of the plot in which the individual is")
+    sumry[3, ] <- c("$sp", class(x$sp), length(x$sp), "groups (e.g. species) which the individual belong to")
+    
+    class(sumry)<-"table"
+    cat("\n###############")
+    cat("\ndata used\n")
+    print(sumry)
+    
+	cat("\n###############\n")
+    cat("others")
+    cat("\n\t$namestraits:", length(x$namestraits),"traits\n")  
+    print(head(x$namestraits)) 
+    if(length(x$namestraits)>5){print("...")}
+    
+    rich <- x$sites_richness
+    class(rich) <- "table"
+    cat("\n\t$sites_richness:\n\t") 
+    print(rich)
+    cat("\n")   
 }
 
 print.ComIndexMulti<-function(x, ...){
@@ -384,8 +438,49 @@ print.ComIndexMulti<-function(x, ...){
 		{stop("x must be a list of objects of class ComIndexMulti")
 	}
 	
-	print(str(x[1], max.level = 2, give.attr1 = FALSE, vec.len = 0, ...))
-	print(str(x[-1], max.level = 1, give.attr1 = FALSE, vec.len = 0, ...))
+	cat("\t#################################\n")
+    cat("\t# Community metrics calculation #\n")
+    cat("\t#################################\n")
+    cat("class: ")
+    cat(class(x))
+    
+    cat("\n$call: ")
+    print(x$call)
+   
+    cat("\n###############")
+    cat("\n$obs: list of observed values\n")
+	seq.interm<-seq(1,length(names(x$list.index)), by=2)
+    cat(paste("\t$", names(x$list.index)[seq.interm], sep=""), sep="\n")
+    
+    if(!is.null(x$null)){
+	    cat("\n###############")
+	    cat("\n$null: list of null values, number of permutation:", dim(x$null[[1]])[2], "\n")
+        cat(paste("\t$", names(x$list.index)[-seq.interm], sep=""), sep="\n")
+    }
+   
+    TABDIM<-3
+    
+    sumry <- array("", c(TABDIM, 4), list(1:TABDIM, c("data", "class", "dim", "content")))
+    sumry[1, ] <- c("$traits", class(x$traits), paste(dim(x$traits)[1], dim(x$traits)[2], sep=",") , "traits data")
+    sumry[2, ] <- c("$ind.plot", class(x$ind.plot), length(x$ind.plot), "name of the plot in which the individual is")
+    sumry[3, ] <- c("$sp", class(x$sp), length(x$sp), "groups (e.g. species) which the individual belong to")
+    
+    class(sumry)<-"table"
+    cat("\n###############")
+    cat("\ndata used\n")
+    print(sumry)
+    
+	cat("\n###############\n")
+    cat("others")
+    cat("\n\t$namestraits:", length(x$namestraits),"traits\n")  
+    print(head(x$namestraits)) 
+    if(length(x$namestraits)>5){print("...")}
+    
+    rich <- x$sites_richness
+    class(rich) <- "table"
+    cat("\n\t$sites_richness:\n\t") 
+    print(rich)
+    cat("\n")   
 }
 
 summary.Tstats <- function(object, ...){
@@ -397,7 +492,7 @@ summary.Tstats <- function(object, ...){
 	print("Observed values", ...)
 	print(lapply(object$Tstats[c(1:3)], function(x) summary(x, ...)), ...)
 	
-	print("Null values", ...)
+	print("null values", ...)
 	print(lapply(object$Tstats[c(4:6)], function(x) summary(x, ...)), ...)
 
 }
@@ -411,8 +506,8 @@ summary.ComIndex <- function(object, ...){
 	print("Observed values", ...)
 	print(lapply(object$obs, function(x) summary(x, ...)), ...)
 	
-	print("Null values", ...)
-	print(lapply(object$Null, function(x) summary(x, ...)), ...)
+	print("null values", ...)
+	print(lapply(object$null, function(x) summary(x, ...)), ...)
 	
 }
 
@@ -425,8 +520,8 @@ summary.ComIndexMulti<- function(object, ...){
 	print("Observed values", ...)
 	print(lapply(object$obs, function(x) summary(x, ...)), ...)
 		
-	print("Null values", ...)
-	print(lapply(object$Null, function(x) summary(x, ...)), ...)
+	print("null values", ...)
+	print(lapply(object$null, function(x) summary(x, ...)), ...)
 
 }
 
@@ -960,7 +1055,7 @@ barplot.Tstats <- function(height, val.quant=c(0.025,0.975), col.Tstats=c("red",
 #__ ComIndex
 
 #calculation of statistics (e.g. mean, range, CVNND and kurtosis) to test community assembly using null models
-#For each statistic this function return observed value and correspondant Null distribution
+#For each statistic this function return observed value and correspondant null distribution
 #This function implement three null models which keep unchanged the number of individual per community
 #Models 1 correspond to randomization of individual values within community
 #Models 2 correspond to randomization of individual values within region
@@ -969,7 +1064,7 @@ barplot.Tstats <- function(height, val.quant=c(0.025,0.975), col.Tstats=c("red",
 
 #In most case, model 1 and 2 correspond to index at the individual level and models 2sp and 2sp.prab to index at the species (or any other aggregate variable like genus or family) level
 
-ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, com=NULL,  namesindex=NULL, reg.pool=NULL, nperm=99, printprogress=TRUE, ind.value=TRUE, type.sp.val="count"){
+ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL,  namesindex = NULL, reg.pool = NULL, nperm = 99, printprogress = TRUE, ind.value = TRUE, type.sp.val = "count"){
 	
 	#If data are from species or population traits, this function (AbToInd) transform this data in a suitable format for cati
 	if (!ind.value){
@@ -1100,7 +1195,7 @@ ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp
 		
 		if (sum(nullmodels=="2sp.prab")>0){
 			#________________________________________  
-			#Null model 2sp.prab   
+			#null model 2sp.prab   
 			traits.nm2sp.prab <- list()
 			traits_by_sp <- apply(traits, 2, function(x) tapply(x, name_sp_sites, mean, na.rm=T)) 
 			
@@ -1126,7 +1221,7 @@ ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp
 		######################################## 
 		####	 calculation of random values   	####
 		######################################## 
-		Null <- list()
+		null <- list()
 		nm_bypop <- list()
 		nm_bypop.bis <- list()
 		
@@ -1145,9 +1240,9 @@ ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp
 				nm_bypop.bis[[eval(namesindex[i])]] <-  apply(nm.bis, 2 , function (x) tapply(x, name_sp_sites, mean , na.rm=T))
 					
 				dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, function (x) eval(parse(text=functionindex))))[1]
-				Null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, dim2, nperm) )
+				null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, dim2, nperm) )
 				if (is.null(dim2)) {
-					Null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, 1, nperm) )
+					null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, 1, nperm) )
 				}	
 			} 
 			
@@ -1155,17 +1250,17 @@ ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp
 				nm_bypop.bis[[eval(namesindex[i])]] <-  apply(nm.bis, 2 , function (x) tapply(x, rownames(traits_by_sp), mean , na.rm=T))
 					
 				dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, function (x) eval(parse(text=functionindex))))[1]
-				Null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, dim2, nperm) )
+				null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, dim2, nperm) )
 				if (is.null(dim2)) {
-					Null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, 1, nperm) )
+					null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, 1, nperm) )
 				}	
 			}
 				
 			else{
 				dim2 <- dim(apply(nm.bis, 2, function (x) eval(parse(text=functionindex))))[1]
-				Null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, dim2, nperm) )
+				null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, dim2, nperm) )
 				if (is.null(dim2)) {
-					Null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, 1, nperm) )
+					null[[eval(namesindex[i])]] <- array(NA, dim=c(ntr, 1, nperm) )
 				}		
 			}
 			
@@ -1180,17 +1275,17 @@ ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp
 				if (nullmodels[i]=="2sp"){
 					nm_bypop[[eval(namesindex[i])]] <-  apply(nm, 2 , function (x) tapply(x, name_sp_sites, mean , na.rm=T))
 
-					Null[[eval(namesindex[i])]] [t,, ] <- apply(nm_bypop[[eval(namesindex[i])]], 2, function (x) eval(parse(text=functionindex)))					
+					null[[eval(namesindex[i])]] [t,, ] <- apply(nm_bypop[[eval(namesindex[i])]], 2, function (x) eval(parse(text=functionindex)))					
 				}
 				
 				else if (nullmodels[i]=="2sp.prab"){
 					nm_bypop[[eval(namesindex[i])]] <-  apply(nm, 2 , function (x) tapply(x, rownames(traits_by_sp), mean , na.rm=T))
 
-					Null[[eval(namesindex[i])]] [t,, ] <- apply(nm_bypop[[eval(namesindex[i])]], 2, function (x) eval(parse(text=functionindex)))			
+					null[[eval(namesindex[i])]] [t,, ] <- apply(nm_bypop[[eval(namesindex[i])]], 2, function (x) eval(parse(text=functionindex)))			
 				}
 				
 				else{				
-					Null[[eval(namesindex[i])]] [t,, ] <- apply(nm, 2, function (x) eval(parse(text=functionindex)))				
+					null[[eval(namesindex[i])]] [t,, ] <- apply(nm, 2, function (x) eval(parse(text=functionindex)))				
 				}
 				
 				if (printprogress==T){
@@ -1242,7 +1337,7 @@ ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp
 	ComIndex$obs <- obs
 		
 	if (is.numeric(nperm)){
-		ComIndex$Null <- Null
+		ComIndex$null <- null
 	}
 	
 	ComIndex$list.index <- list()
@@ -1255,9 +1350,9 @@ ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp
 		name.ComIndex_list.index[seq(1,nindex*2,by=2)[i]] <- names(obs)[i]
 		
 		if (is.numeric(nperm)){
-			ComIndex$list.index[[seq(1,nindex*2,by=2)[i]+1]] <- Null[[i]]
-			ComIndex$list.index.t[[seq(1,nindex*2,by=2)[i]+1]] <- Null[[i]]
-			name.ComIndex_list.index[seq(1,nindex*2,by=2)[i]+1] <- paste(names(Null)[i], "nm", sep="_")
+			ComIndex$list.index[[seq(1,nindex*2,by=2)[i]+1]] <- null[[i]]
+			ComIndex$list.index.t[[seq(1,nindex*2,by=2)[i]+1]] <- null[[i]]
+			name.ComIndex_list.index[seq(1,nindex*2,by=2)[i]+1] <- paste(names(null)[i], "nm", sep="_")
 		}
 	}
 	
@@ -1267,9 +1362,15 @@ ComIndex <- function(traits=NULL, index=NULL, nullmodels=NULL, ind.plot=NULL, sp
 	ComIndex$sites_richness <- S
 	ComIndex$namestraits <- namestraits
 	
-	class(ComIndex) <- "ComIndex"
-	
-	return(ComIndex)
+	ComIndex$traits <- traits
+ 	ComIndex$ind.plot <- ind.plot
+ 	ComIndex$sp <- sp
+ 	
+ 	ComIndex$call <- match.call()
+ 	
+ 	class(ComIndex) <- "ComIndex"
+    
+    invisible(ComIndex)
 }
 
 ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, nullmodels=NULL, ind.plot=NULL, sp=NULL, com=NULL, namesindex=NULL, reg.pool=NULL, nperm=99, printprogress=TRUE, ind.value=TRUE, type.sp.val="count"){
@@ -1408,7 +1509,7 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, nullmodels=NU
 		
 		if (sum(nullmodels=="2sp.prab")>0){
 			#________________________________________  
-			#Null model 2sp.prab   
+			#null model 2sp.prab   
 			traits.nm2sp.prab <- list()
 			traits_by_sp <- apply(traits, 2, function(x) tapply(x, name_sp_sites, mean, na.rm=T)) 
 			
@@ -1432,7 +1533,7 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, nullmodels=NU
 		######################################## 
 		####	 calculation of random values   	####
 		######################################## 
-		Null <- list()
+		null <- list()
 		
 		if (printprogress==T) {print("calculation of null values using null models")}
 		
@@ -1451,14 +1552,14 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, nullmodels=NU
 			functionindex= eval(index[i])
 			
 			dim2 <- dim(by(t(nm_n), by.factor, function (x) eval(parse(text=functionindex))))[1]
-			Null[[eval(namesindex[i])]] <- array(NA, dim=c(dim2, nperm) )
+			null[[eval(namesindex[i])]] <- array(NA, dim=c(dim2, nperm) )
 				
 			if (is.null(dim2)) {
-				Null[[eval(namesindex[i])]] <- array(NA, dim=c(1, nperm) )
+				null[[eval(namesindex[i])]] <- array(NA, dim=c(1, nperm) )
 			}
 				
 			for(n in 1:nperm){
-				Null[[eval(namesindex[i])]][,n]  <- as.vector(by(t(nm[,,n]), by.factor, function (x) eval(parse(text=functionindex))))
+				null[[eval(namesindex[i])]][,n]  <- as.vector(by(t(nm[,,n]), by.factor, function (x) eval(parse(text=functionindex))))
 			}
 			
 			if (printprogress==T){
@@ -1524,7 +1625,7 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, nullmodels=NU
 	ComIndex$obs <- obs
 		
 	if (is.numeric(nperm)){
-		ComIndex$Null <- Null
+		ComIndex$null <- null
 	}
 	
 	ComIndex$list.index <- list()
@@ -1537,9 +1638,9 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, nullmodels=NU
 		name.ComIndex_list.index[seq(1,nindex*2,by=2)[i]] <- names(obs)[i]
 		
 		if (is.numeric(nperm)){
-			ComIndex$list.index[[seq(1,nindex*2,by=2)[i]+1]] <- Null[[i]]
-			ComIndex$list.index.t[[seq(1,nindex*2,by=2)[i]+1]] <- Null[[i]]
-			name.ComIndex_list.index[seq(1,nindex*2,by=2)[i]+1] <- paste(names(Null)[i], "nm", sep="_")
+			ComIndex$list.index[[seq(1,nindex*2,by=2)[i]+1]] <- null[[i]]
+			ComIndex$list.index.t[[seq(1,nindex*2,by=2)[i]+1]] <- null[[i]]
+			name.ComIndex_list.index[seq(1,nindex*2,by=2)[i]+1] <- paste(names(null)[i], "nm", sep="_")
 		}
 	}
 	
@@ -1548,7 +1649,13 @@ ComIndexMulti <- function(traits=NULL, index=NULL, by.factor=NULL, nullmodels=NU
 		
 	ComIndex$sites_richness <- S
 	ComIndex$namestraits <- namestraits
-		
+	
+	ComIndex$traits <- traits
+ 	ComIndex$ind.plot <- ind.plot
+ 	ComIndex$sp <- sp
+ 	
+ 	ComIndex$call <- match.call()
+ 	
 	class(ComIndex) <- "ComIndexMulti"
 	
 	return(ComIndex)
@@ -1581,7 +1688,7 @@ as.listofindex <- function(x, namesindex=NULL) {
 		
 		else if (inherits(x[[l]], c("ComIndex", "ComIndexMulti"))) {
 			for(i in 1: nindex[l]){
-				res <- c(res, list(x[[l]]$obs[[i]]), list(x[[l]]$Null[[i]]) )
+				res <- c(res, list(x[[l]]$obs[[i]]), list(x[[l]]$null[[i]]) )
 			}		
 		}
 		else{stop("x must be a list of objects of class Tstats, ComIndex or ComIndexMulti")}
