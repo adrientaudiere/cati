@@ -1,0 +1,39 @@
+AbToInd                 Internal function. Transform abundance data
+                        matrix into individual like matrix.
+CVNND                   Coefficient of variation, mean, minimum and
+                        standard deviation of the nearest neigbourhood
+                        distance.
+ComIndex                Computing metrics to test and quantify the
+                        non-random assembly of communities
+ComIndexMulti           Computing multitraits metrics to test and
+                        quantify the non-random assembly of communities
+IndexByGroups           Apply metrics to groups.
+MinMaxMST               Ratio of the shortest distance to the longest
+                        distance in a minimum spanning tree
+RaoRel                  Alpha, gamma and beta-components for taxonomic,
+                        functional and phylogenetic diversity
+SumBL                   Sum of branch length of a classification
+                        dendrogram (Petchey and Gaston, 2002)
+Tstats                  Computing observed T-statistics (T for Traits)
+                        and null expectations.
+as.listofindex          Transform index results in a list of index
+cati-package            Community Assembly by Traits: Individuals and
+                        beyond
+decompCTRE              Variance partitioning for multiple traits
+finch.ind               Finch morphological data
+partvar                 Variance partitioning accross nested scales
+plot.listofindex        Plot community assembly index
+plotCorTstats           Plot the bivariate relationships between
+                        T-statistics
+plotDistri              Plot function to represent density of trait
+                        values
+plotRandtest            Plot result of observed indices values against
+                        null distribution
+plotSESvar              Plot SES values against a variable
+plotSpPop               Plot populations values against species values
+plotSpVar               Plot populations values against species values
+ses                     Standardized effect size and confidence
+                        interval for a matrix of statistics
+ses.listofindex         Standardized effect size for a list of index.
+traitflex.anova         Variance decomposition for a given trait used
+                        in decompCTRE
