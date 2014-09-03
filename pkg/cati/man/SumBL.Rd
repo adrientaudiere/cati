@@ -50,10 +50,13 @@ Petchey, OL., and Gaston, KJ. 2002. Functional diversity (FD), species richness 
 
 \examples{
 
+\dontrun{
+
 data(finch.ind)
 SumBL(traits.finch)
 SumBL(traits.finch, gower.dist = FALSE)
 
+}
 
 }
 

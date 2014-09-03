@@ -74,15 +74,14 @@
 
 \examples{
 data(finch.ind)
-CVNND(traits.finch[,1])
-CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
-
-CVNND(traits.finch)
 \dontrun{
+	CVNND(traits.finch[,1])
+	CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
+	CVNND(traits.finch)
 	CVNND(traits.finch, scale.tr = FALSE)
+	SDND(traits.finch[,1])
 }
 
-SDND(traits.finch[,1])
 }
 
 
