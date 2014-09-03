@@ -44,13 +44,14 @@
 }
 
 \examples{
+\dontrun{
 
-data(finch.ind)
-
-MinMaxMST(traits.finch[1:10,])
-MinMaxMST(traits.finch[1:10,], gower.dist = FALSE)
-MinMaxMST(traits.finch[1:10,], gower.dist = FALSE, scale.tr = FALSE)
-
+	data(finch.ind)
+	
+	MinMaxMST(traits.finch[1:10,])
+	MinMaxMST(traits.finch[1:10,], gower.dist = FALSE)
+	MinMaxMST(traits.finch[1:10,], gower.dist = FALSE, scale.tr = FALSE)
+}
 
 }
 
