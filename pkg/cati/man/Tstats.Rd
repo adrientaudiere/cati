@@ -124,9 +124,9 @@
 	\item{$tstats$Tstats$T_IC.IR}{Observed ratio between variance of individuals in communities and individuals in the region}
 	\item{$tstats$Tstats$T_PC.PR}{Observed ratio between variance of populations in communities and populations in the region}
 	
-	\item{$tstats$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
-	\item{$tstats$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
-	\item{$tstats$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
+	\item{$tstats$Tstats$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
+	\item{$tstats$Tstats$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
+	\item{$tstats$Tstats$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
 	
 	\item{$variances$var_IP}{variance of individuals within populations}    
 	\item{$variances$var_PC}{variance of populations within communities}

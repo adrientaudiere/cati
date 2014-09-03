@@ -158,13 +158,19 @@
 	
 	\item{$obs}{List of observed values for each trait in each community. Each component of the list correspond to a matrix containing the result for each custom function.}
 	
-	\item{$Null}{List of null values for each trait in each community. Each component of the list correspond to an array containing the result of the permutations for each custom function.}
-	
-	\item{$list.index}{List of index values and associate null models. Internal use in other function. Traits in columns.}
-	\item{$list.index.t}{List of index values and associate null models. Internal use in other function. Traits in rows.}
+	\item{$null}{List of null values for each trait in each community. Each component of the list correspond to an array containing the result of the permutations for each custom function.}
 	
 	\item{$sites_richness}{Number of species per site.}
 	\item{$namestraits}{Names of traits.}
+	
+	\item{$traits}{traits data}
+ 	\item{$ind.plot}{name of the plot in which the individual is}
+ 	\item{$sp}{groups (e.g. species) which the individual belong to}
+ 	
+ 	\item{$call}{call of the function Tstats}
+ 	
+ 	\item{$list.index}{List of index values and associate null models. Internal use in other function. Traits in columns.}
+	\item{$list.index.t}{List of index values and associate null models. Internal use in other function. Traits in rows.}
 }
 
 \author{
