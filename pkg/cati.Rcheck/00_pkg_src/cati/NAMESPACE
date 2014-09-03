@@ -1,0 +1,12 @@
+exportPattern("^[^\\.]")
+
+## Import all packages listed as Imports or Depends
+
+import(ade4)
+import(nlme)
+import(ape)
+
+import(e1071)
+import(mice)
+import(rasterVis)
+import(hypervolume)
