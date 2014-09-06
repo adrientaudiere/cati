@@ -42,7 +42,6 @@
 
 \details{
 	NA are not allowed in "locabrel <- abundances/ablocist". NA are automatically replaced by 0 in "sample". This function use the function "Qdecomp" by Sebastien Villeger & David Mouillot (J Ecol, 2008) modified by Wilfried Thuiller and the function disc originally proposed by Sandrine Pavoine.
-
 }
 
 \value{

@@ -37,10 +37,11 @@
 
 \references{
 	Stubbs, WJ., and Wilson, JB. 2004. Evidence for limiting similarity in a sand dune community. Journal of Ecology 92: 557-567.
+	Aiba, M., Katabuchi, M., Takafumi, H., Matsuzaki, S.S., Sasaki, T. & Hiura, T. 2013. Robustness of trait distribution metrics for community assembly studies under the uncertainties of assembly processes. Ecology, 94, 2873-2885.
 }
 
 \author{
-	Adrien Taudiere
+	Aiba et al., 2013 modified by Adrien Taudiere
 }
 
 \examples{

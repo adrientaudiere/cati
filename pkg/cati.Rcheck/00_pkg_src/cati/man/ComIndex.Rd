@@ -16,14 +16,11 @@
 	ComIndex(traits = NULL, index = NULL, nullmodels = NULL, 
 	ind.plot = NULL, sp = NULL, com = NULL, namesindex = NULL,
 	reg.pool = NULL, nperm = 99, printprogress = TRUE, 
-	ind.value = TRUE, type.sp.val = "count")
+	type.sp.val = "count")
 	
 	\method{plot}{ComIndex}(x, type = "normal", 
-	col.index = c("red", "purple", "green"), add.conf = TRUE, 
-	color.cond = TRUE, val.quant = c(0.025, 0.975), 
-	grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, 
-	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, 
-	bysite = FALSE, ...)
+	col.index = c("red", "purple", "olivedrab3"), add.conf = TRUE, 
+	color.cond = TRUE, val.quant = c(0.025, 0.975), ...)
 		
 	\method{print}{ComIndex}(x, \dots)
 		
@@ -56,7 +53,7 @@
 	}
 	
 	\item{com}{
-		Community data matrix with species (or populations) in rows and sites in column. Use only if ind.value = FALSE. 
+		Community data matrix with species (or populations) in rows and sites in column. Use only if ind.plot = NULL. 
 		"traits" matrix and "com" matrix must have the same number of rows.
 	}
 	
@@ -69,19 +66,15 @@
 	}	
 	
 	\item{nperm}{
-		Number of permutations. If NULL, only observed values are returned; 
+		Number of permutations. If NULL, only observed values are returned.
 	}
 	
 	\item{printprogress}{
 		Logical value; print progress during the calculation or not.
 	}
 	
-	\item{ind.value}{
-		Do the data are from individual value. If not, an internal function transform the abundance data matrix of com into a individual like matrix to compute the function. 
-	}
-	
 	\item{type.sp.val}{
-		Only if ind.value = FALSE. Either "count" or "abundance". Use abundance when one value or more in the com matrix are inferior to one. Using abundance is EXPERIMENTAL. This function round abundance to fit count data.
+		Only if ind.plot = NULL. Either "count" or "abundance". Use abundance when one value or more in the com matrix are inferior to one. Using abundance is EXPERIMENTAL. This function round abundance to fit count data.
 	}
 	
 	\item{x}{
@@ -112,40 +105,9 @@
 		Numeric vectors of length 2, giving the quantile to calculate confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
-	\item{grid.v}{
-		Logical value; print vertical grid or not
-	}
-	
-	\item{grid.h}{
-		Logical value; print horizontal grid or not
-	}
-	
-	\item{xlim}{
-		Numeric vectors of length 2, giving the x coordinates range 
-	}
-	
-	\item{ylim}{
-		Numeric vectors of length 2, giving the y coordinates range 
-	}
-		
-	\item{cex.text}{
-		Numeric value; the magnification to be used for text relative to the current setting of cex
-	}
-	
-	\item{plot.ask}{
-		Logical value; ask for plotting the next plot or not.
-	}
-	
-	\item{srt.text}{
-		Degree of rotation for text.
-	}
-	
-	\item{bysite}{
-		Logical value; plot per site or by traits. 
-	}
 	
 	\item{\dots}{
-		Any additional arguments are passed to the plot, print or summary function.
+		Any additional arguments are passed to the plot, print or summary function. See \code{\link{plot.listofindex}} for more arguments.
 	}
 	
 }
@@ -167,13 +129,19 @@
 	
 	\item{$obs}{List of observed values for each trait in each community. Each component of the list corresponds to a matrix containing the result for each custom function.}
 	
-	\item{$Null}{List of null values for each trait in each community. Each component of the list corresponds to an array containing the result of the permutations for each custom function.}
+	\item{$null}{List of null values for each trait in each community. Each component of the list corresponds to an array containing the result of the permutations for each custom function.}
 	
 	\item{$list.index}{List of index values and related null models. Internal use in other function. Traits in columns.}
 	\item{$list.index.t}{List of index values and related null models. Internal use in other function. Traits in rows.}
 	
 	\item{$sites_richness}{Number of species per site.}
 	\item{$namestraits}{Names of traits.}
+	
+	\item{$traits}{traits data}
+ 	\item{$ind.plot}{name of the plot in which the individual is}
+ 	\item{$sp}{groups (e.g. species) which the individual belong to}
+ 	
+ 	\item{$call}{call of the function Tstats}
 }
 
 \author{
@@ -307,7 +275,7 @@ plot(index.list1,type = "barplot")
 
 
 ############################
-####Using ind.value = FALSE and community data matrix if there is no data 
+####Using  and community data matrix if there is no data 
 #available at the individual level.
 
 \dontrun{
@@ -342,7 +310,7 @@ funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)",
 
 res <- AbToInd(traits_by_sp, w1)
 
-ComIndex(traits_by_sp, nullmodels = 2, ind.value = FALSE, index = funct, 
+ComIndex(traits_by_sp, nullmodels = 2,  index = funct, 
 sp = rownames(traits_by_sp), com = w1, nperm = 9)
 
 
@@ -351,7 +319,7 @@ sp = rownames(traits_by_sp), com = w1, nperm = 9)
 res <- AbToInd(traits_by_pop, w2)
 sp.sp <- unlist(strsplit(rownames(traits_by_pop),"@"))[seq(1,39*2,2)]
 
-ComIndex(traits_by_pop, nullmodels = 2, ind.value = FALSE, index = funct, 
+ComIndex(traits_by_pop, nullmodels = 2,  index = funct, 
 sp = sp.sp, com = w2)
 	
 }

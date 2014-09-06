@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.3.11)  27 AUG 2014 15:26
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.3.11)  6 SEP 2014 20:19
 entering extended mode
 **vignette.tex
-(C:\Users\taudiere\Desktop\cati\tutorial\vignette.tex
+(C:\Users\Admin\Desktop\cati\tutorial\vignettes\vignette.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -70,7 +70,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\framed\framed.sty"
+(C:\Users\Admin\AppData\Roaming\MiKTeX\2.9\tex\latex\framed\framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \OuterFrameSep=\skip43
 \fb@frw=\dimen105
@@ -379,7 +379,7 @@ Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
 \c@Hy@tempcnt=\count91
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty"
+(C:\Users\Admin\AppData\Roaming\MiKTeX\2.9\tex\latex\url\url.sty
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
@@ -477,7 +477,7 @@ Package: geometry 2010/09/12 v5.6 Page Geometry
 \Gm@dimlist=\toks19
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\preprint\authblk.sty"
+(C:\Users\Admin\AppData\Roaming\MiKTeX\2.9\tex\latex\preprint\authblk.sty
 Package: authblk 2001/02/27 1.3 (PWD)
 \affilsep=\skip47
 \@affilsep=\skip48
@@ -485,11 +485,11 @@ Package: authblk 2001/02/27 1.3 (PWD)
 \c@authors=\count103
 \c@affil=\count104
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\upquote\upquote.sty"
+(C:\Users\Admin\AppData\Roaming\MiKTeX\2.9\tex\latex\upquote\upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
 )
-(C:\Users\taudiere\Desktop\cati\tutorial\vignette.aux)
+(C:\Users\Admin\Desktop\cati\tutorial\vignettes\vignette.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
 LaTeX Font Info:    ... okay on input line 84.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
@@ -505,7 +505,7 @@ LaTeX Font Info:    ... okay on input line 84.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
 LaTeX Font Info:    ... okay on input line 84.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+(C:\Users\Admin\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count105
 \scratchdimen=\dimen124
@@ -533,8 +533,8 @@ LaTeX Info: Redefining \ref on input line 84.
 LaTeX Info: Redefining \pageref on input line 84.
 LaTeX Info: Redefining \nameref on input line 84.
 
-(C:\Users\taudiere\Desktop\cati\tutorial\vignette.out)
-(C:\Users\taudiere\Desktop\cati\tutorial\vignette.out)
+(C:\Users\Admin\Desktop\cati\tutorial\vignettes\vignette.out)
+(C:\Users\Admin\Desktop\cati\tutorial\vignettes\vignette.out)
 \@outlinefile=\write3
 
 *geometry* driver: auto-detecting
@@ -581,8 +581,8 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 90.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-(C:\Users\taudiere\Desktop\cati\tutorial\vignette.toc)
+{C:/Users/Admin/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+(C:\Users\Admin\Desktop\cati\tutorial\vignettes\vignette.toc)
 \tf@toc=\write4
  [2]
 Package color Info: Redefining color shadecolor on input line 116.
@@ -597,92 +597,97 @@ Package color Info: Redefining color shadecolor on input line 191.
 Package color Info: Redefining color shadecolor on input line 204.
 Package color Info: Redefining color shadecolor on input line 216.
 
-Overfull \hbox (44.44228pt too wide) in paragraph at lines 220--220
-[][]\OT1/cmtt/m/n/12 table[][](sp.finch)[] []\OT1/cmtt/m/it/12 #the species nam
-es vector contains 2513 individuals belonging to 12 species[][] 
- []
+
+LaTeX Warning: File `figs/darwinfinch.pdf' not found on input line 235.
 
 
-Overfull \hbox (106.69206pt too wide) in paragraph at lines 221--221
-[][]\OT1/cmtt/m/n/12 table[][](ind.plot.finch)[] []\OT1/cmtt/m/it/12 #the sites
- names vector contains 2513 individuals belonging to 6 sites (Island)[][] 
- []
+! Package pdftex.def Error: File `figs/darwinfinch.pdf' not found.
 
-<figs/darwinfinch.pdf, id=162, 478.49844pt x 196.1178pt>
-File: figs/darwinfinch.pdf Graphic file (type pdf)
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.235 ...s[width=\textwidth]{figs/darwinfinch.pdf}
+                                                  
+Using draft setting for this image.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-<use figs/darwinfinch.pdf>
-Package pdftex.def Info: figs/darwinfinch.pdf used on input line 229.
-(pdftex.def)             Requested size: 528.93675pt x 216.81651pt.
- [4 <C:/Users/taudiere/Desktop/cati/tutorial/figs/darwinfinch.pdf>]
-Package color Info: Redefining color shadecolor on input line 244.
- <figure/unnamed-chunk-101.pdf, id=169, 505.89pt x 505.89pt>
+[4] [5]
+Package color Info: Redefining color shadecolor on input line 250.
+ <figure/unnamed-chunk-101.pdf, id=170, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-101.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-101.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-101.pdf used on input line 251.
+Package pdftex.def Info: figure/unnamed-chunk-101.pdf used on input line 257.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
 
-<figure/unnamed-chunk-102.pdf, id=170, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-102.pdf, id=171, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-102.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-102.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-102.pdf used on input line 253.
+Package pdftex.def Info: figure/unnamed-chunk-102.pdf used on input line 259.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
 
-<figure/unnamed-chunk-103.pdf, id=171, 505.89pt x 505.89pt> [5 <C:/Users/taudie
-re/Desktop/cati/tutorial/figure/unnamed-chunk-101.pdf>]
+<figure/unnamed-chunk-103.pdf, id=172, 505.89pt x 505.89pt> [6 <C:/Users/Admin/
+Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-101.pdf>]
 File: figure/unnamed-chunk-103.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-103.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-103.pdf used on input line 255.
+Package pdftex.def Info: figure/unnamed-chunk-103.pdf used on input line 261.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [6 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-102.pdf>] [7 
-<C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-103.pdf>]
-Package color Info: Redefining color shadecolor on input line 264.
+ [7 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-102.pd
+f>] [8 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-103
+.pdf>]
+Package color Info: Redefining color shadecolor on input line 270.
 
-<figure/unnamed-chunk-111.pdf, id=212, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-111.pdf, id=213, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-111.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-111.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-111.pdf used on input line 271.
+Package pdftex.def Info: figure/unnamed-chunk-111.pdf used on input line 277.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
 
-<figure/unnamed-chunk-112.pdf, id=213, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-112.pdf, id=214, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-112.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-112.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-112.pdf used on input line 273.
+Package pdftex.def Info: figure/unnamed-chunk-112.pdf used on input line 279.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [8 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-111.pdf>]
-Package color Info: Redefining color shadecolor on input line 280.
+ [9 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-111.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 286.
 
-<figure/unnamed-chunk-12.pdf, id=227, 505.89pt x 361.35pt>
+<figure/unnamed-chunk-12.pdf, id=228, 505.89pt x 361.35pt>
 File: figure/unnamed-chunk-12.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-12.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-12.pdf used on input line 287.
+Package pdftex.def Info: figure/unnamed-chunk-12.pdf used on input line 293.
 (pdftex.def)             Requested size: 505.88875pt x 361.35463pt.
- [9 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-112.pdf>]
-Package color Info: Redefining color shadecolor on input line 293.
+ [10 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-112.p
+df>]
+Package color Info: Redefining color shadecolor on input line 299.
 
-<figure/unnamed-chunk-13.pdf, id=241, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-13.pdf, id=242, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-13.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-13.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-13.pdf used on input line 300.
+Package pdftex.def Info: figure/unnamed-chunk-13.pdf used on input line 306.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
-Package color Info: Redefining color shadecolor on input line 305.
- [10 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-12.pdf>]
-<figure/unnamed-chunk-14.pdf, id=255, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 311.
+ [11 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-12.pd
+f>]
+<figure/unnamed-chunk-14.pdf, id=256, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-14.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-14.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-14.pdf used on input line 311.
+Package pdftex.def Info: figure/unnamed-chunk-14.pdf used on input line 317.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [11 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-13.pdf>]
-Package color Info: Redefining color shadecolor on input line 317.
- [12 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-14.pdf>]
+ [12 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-13.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 323.
+ [13 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-14.pd
+f>]
 
 ! Package inputenc Error: Unicode char \u8:α not set up for use with LaTeX.
 
@@ -690,7 +695,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.331 The Rao function computes α
+l.337 The Rao function computes α
                                   , γ and β -components for taxonomic, fun...
 
 Your command was ignored.
@@ -704,7 +709,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.331 The Rao function computes α, γ
+l.337 The Rao function computes α, γ
                                        and β -components for taxonomic, fun...
 
 Your command was ignored.
@@ -718,7 +723,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.331 The Rao function computes α, γ and β
+l.337 The Rao function computes α, γ and β
                                               -components for taxonomic, fun...
 
 Your command was ignored.
@@ -728,7 +733,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.337 Where: \gamma
+l.343 Where: \gamma
                     is the diversity of the regional pool, \alpha is the div...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -736,13 +741,13 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.339 
+l.345 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (446.15492pt too wide) in paragraph at lines 337--339
+Overfull \hbox (446.15492pt too wide) in paragraph at lines 343--345
 []\OT1/cmr/m/n/12 Where: $\OML/cmm/m/it/12 isthediversityoftheregionalpool; i
 sthediversityofthelocalcommunityandistheturnoverbetweenlocalcommunities\OT1/cm
 r/m/n/12 ; \OML/cmm/m/it/12 diversityisestimatedusingtheRaoquadraticentropyindi
@@ -750,722 +755,754 @@ ces:[] $
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 337--339
+Underfull \hbox (badness 10000) in paragraph at lines 343--345
 
  []
 
-Package color Info: Redefining color shadecolor on input line 347.
-Package color Info: Redefining color shadecolor on input line 385.
-[13]
-Package color Info: Redefining color shadecolor on input line 412.
- <figure/unnamed-chunk-18.pdf, id=287, 361.35pt x 361.35pt>
+Package color Info: Redefining color shadecolor on input line 353.
+Package color Info: Redefining color shadecolor on input line 391.
+[14]
+Package color Info: Redefining color shadecolor on input line 418.
+ <figure/unnamed-chunk-18.pdf, id=288, 361.35pt x 361.35pt>
 File: figure/unnamed-chunk-18.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-18.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-18.pdf used on input line 421.
+Package pdftex.def Info: figure/unnamed-chunk-18.pdf used on input line 427.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-Package color Info: Redefining color shadecolor on input line 434.
- [14 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-18.pdf>]
-Package color Info: Redefining color shadecolor on input line 448.
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 457
+Package color Info: Redefining color shadecolor on input line 440.
+ [15 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-18.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 454.
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 463
 .
 
 (C:/PROGRA~1/R/R-31~1.1/share/texmf/tex/latex\omscmtt.fd
 File: omscmtt.fd 
 )
 LaTeX Font Info:    Font shape `OMS/cmtt/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 457.
-Package color Info: Redefining color shadecolor on input line 471.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 463.
+Package color Info: Redefining color shadecolor on input line 477.
 
-<figure/unnamed-chunk-21.pdf, id=297, 361.35pt x 361.35pt>
+<figure/unnamed-chunk-21.pdf, id=298, 361.35pt x 361.35pt>
 File: figure/unnamed-chunk-21.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-21.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-21.pdf used on input line 479.
+Package pdftex.def Info: figure/unnamed-chunk-21.pdf used on input line 485.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
- [15]
-Package color Info: Redefining color shadecolor on input line 489.
+ [16]
+Package color Info: Redefining color shadecolor on input line 495.
 
-<figure/unnamed-chunk-221.pdf, id=302, 433.62pt x 433.62pt>
+<figure/unnamed-chunk-221.pdf, id=303, 433.62pt x 433.62pt>
 File: figure/unnamed-chunk-221.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-221.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-221.pdf used on input line 498.
+Package pdftex.def Info: figure/unnamed-chunk-221.pdf used on input line 504.
 (pdftex.def)             Requested size: 433.61894pt x 433.63878pt.
- [16 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-21.pdf>]
-<figure/unnamed-chunk-222.pdf, id=312, 433.62pt x 433.62pt>
+ [17 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-21.pd
+f>]
+<figure/unnamed-chunk-222.pdf, id=313, 433.62pt x 433.62pt>
 File: figure/unnamed-chunk-222.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-222.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-222.pdf used on input line 509.
+Package pdftex.def Info: figure/unnamed-chunk-222.pdf used on input line 515.
 (pdftex.def)             Requested size: 433.61894pt x 433.63878pt.
- [17 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-221.pdf>] [1
-8 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-222.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 524--526
+ [18 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-221.p
+df>] [19 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-2
+22.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 530--532
 
  []
 
-Package color Info: Redefining color shadecolor on input line 530.
-Package color Info: Redefining color shadecolor on input line 547.
-<figure/unnamed-chunk-241.pdf, id=332, 289.08pt x 289.08pt>
+Package color Info: Redefining color shadecolor on input line 536.
+Package color Info: Redefining color shadecolor on input line 553.
+<figure/unnamed-chunk-241.pdf, id=334, 289.08pt x 289.08pt>
 File: figure/unnamed-chunk-241.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-241.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-241.pdf used on input line 559.
+Package pdftex.def Info: figure/unnamed-chunk-241.pdf used on input line 565.
 (pdftex.def)             Requested size: 289.07928pt x 289.09251pt.
- [19 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-241.pdf>]
-<figure/unnamed-chunk-242.pdf, id=344, 289.08pt x 289.08pt>
+ [20 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-241.p
+df>]
+<figure/unnamed-chunk-242.pdf, id=345, 289.08pt x 289.08pt>
 File: figure/unnamed-chunk-242.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-242.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-242.pdf used on input line 571.
+Package pdftex.def Info: figure/unnamed-chunk-242.pdf used on input line 577.
 (pdftex.def)             Requested size: 289.07928pt x 289.09251pt.
- [20 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-242.pdf>]
-Package color Info: Redefining color shadecolor on input line 588.
+ [21 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-242.p
+df>]
+Package color Info: Redefining color shadecolor on input line 594.
 
-<figure/unnamed-chunk-25.pdf, id=354, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-25.pdf, id=355, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-25.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-25.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-25.pdf used on input line 593.
+Package pdftex.def Info: figure/unnamed-chunk-25.pdf used on input line 599.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [21 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-25.pdf>]
-Package color Info: Redefining color shadecolor on input line 602.
+ [22 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-25.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 608.
 
-<figure/unnamed-chunk-26.pdf, id=369, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-26.pdf, id=370, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-26.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-26.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-26.pdf used on input line 608.
+Package pdftex.def Info: figure/unnamed-chunk-26.pdf used on input line 614.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [22 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-26.pdf>]
-Package color Info: Redefining color shadecolor on input line 617.
+ [23 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-26.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 623.
 
-<figure/unnamed-chunk-271.pdf, id=385, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-271.pdf, id=386, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-271.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-271.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-271.pdf used on input line 623.
+Package pdftex.def Info: figure/unnamed-chunk-271.pdf used on input line 629.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
 
-<figure/unnamed-chunk-272.pdf, id=386, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-272.pdf, id=387, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-272.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-272.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-272.pdf used on input line 629.
+Package pdftex.def Info: figure/unnamed-chunk-272.pdf used on input line 635.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [23 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-271.pdf>]
-<figure/unnamed-chunk-273.pdf, id=396, 505.89pt x 505.89pt>
+ [24 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-271.p
+df>]
+<figure/unnamed-chunk-273.pdf, id=397, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-273.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-273.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-273.pdf used on input line 636.
+Package pdftex.def Info: figure/unnamed-chunk-273.pdf used on input line 642.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [24 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-272.pdf>] [2
-5 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-273.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 650--652
+ [25 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-272.p
+df>] [26 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-2
+73.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 656--658
 
  []
 
-Package color Info: Redefining color shadecolor on input line 656.
-[26]
-Package color Info: Redefining color shadecolor on input line 753.
- [27] <figure/unnamed-chunk-29.pdf, id=425, 433.62pt x 433.62pt>
+Package color Info: Redefining color shadecolor on input line 662.
+
+Overfull \hbox (20.63852pt too wide) in paragraph at lines 712--712
+[]\OT1/cmtt/m/n/12 ##  $T_IC.IR: community-wide variance relative to the total 
+variance in the regional pool[] 
+ []
+
+
+Overfull \hbox (26.81352pt too wide) in paragraph at lines 712--712
+[]\OT1/cmtt/m/n/12 ##  $T_PC.PR: inter-community variance relative to the total
+ variance in the regional pool[] 
+ []
+
+
+Overfull \hbox (45.33853pt too wide) in paragraph at lines 783--783
+[]\OT1/cmtt/m/n/12 ##  $ sp            : Factor w/ 12 levels "Camarhynchus_pall
+idus",..: 8 8 8 8 8 8 8 8 8 8 ...[] 
+ []
+
+
+Overfull \hbox (341.73868pt too wide) in paragraph at lines 783--783
+[]\OT1/cmtt/m/n/12 ##  $ call          : language Tstats(traits = traits.finch,
+ ind.plot = ind.plot.finch, sp = sp.finch,      nperm = 9, printprogress = FALS
+E)[] 
+ []
+
+[27] [28]
+Package color Info: Redefining color shadecolor on input line 792.
+ <figure/unnamed-chunk-29.pdf, id=426, 433.62pt x 433.62pt>
 File: figure/unnamed-chunk-29.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-29.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-29.pdf used on input line 760.
+Package pdftex.def Info: figure/unnamed-chunk-29.pdf used on input line 799.
 (pdftex.def)             Requested size: 433.61894pt x 433.63878pt.
-Package color Info: Redefining color shadecolor on input line 770.
+ [29]
+Package color Info: Redefining color shadecolor on input line 809.
 
-<figure/unnamed-chunk-30.pdf, id=426, 542.025pt x 542.025pt>
+<figure/unnamed-chunk-30.pdf, id=431, 542.025pt x 542.025pt>
 File: figure/unnamed-chunk-30.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-30.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-30.pdf used on input line 780.
+Package pdftex.def Info: figure/unnamed-chunk-30.pdf used on input line 830.
 (pdftex.def)             Requested size: 528.93675pt x 528.95607pt.
- [28 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-29.pdf>] [29
- <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-30.pdf>]
-Package color Info: Redefining color shadecolor on input line 794.
+ [30 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-29.pd
+f>] [31 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-30
+.pdf>]
+Package color Info: Redefining color shadecolor on input line 841.
 
-<figure/unnamed-chunk-31.pdf, id=445, 361.35pt x 361.35pt>
+<figure/unnamed-chunk-31.pdf, id=451, 361.35pt x 361.35pt>
 File: figure/unnamed-chunk-31.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-31.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-31.pdf used on input line 800.
+Package pdftex.def Info: figure/unnamed-chunk-31.pdf used on input line 847.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-Package color Info: Redefining color shadecolor on input line 809.
- [30 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-31.pdf>] [31
-]
-Package color Info: Redefining color shadecolor on input line 888.
+Package color Info: Redefining color shadecolor on input line 856.
+ [32 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-31.pd
+f>] [33]
+Package color Info: Redefining color shadecolor on input line 935.
 
-<figure/unnamed-chunk-331.pdf, id=460, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-331.pdf, id=465, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-331.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-331.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-331.pdf used on input line 894.
+Package pdftex.def Info: figure/unnamed-chunk-331.pdf used on input line 941.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
 
-<figure/unnamed-chunk-332.pdf, id=461, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-332.pdf, id=466, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-332.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-332.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-332.pdf used on input line 896.
+Package pdftex.def Info: figure/unnamed-chunk-332.pdf used on input line 943.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
 
-<figure/unnamed-chunk-333.pdf, id=462, 505.89pt x 505.89pt> [32 <C:/Users/taudi
-ere/Desktop/cati/tutorial/figure/unnamed-chunk-331.pdf>]
+<figure/unnamed-chunk-333.pdf, id=467, 505.89pt x 505.89pt> [34 <C:/Users/Admin
+/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-331.pdf>]
 File: figure/unnamed-chunk-333.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-333.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-333.pdf used on input line 898.
+Package pdftex.def Info: figure/unnamed-chunk-333.pdf used on input line 945.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [33 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-332.pdf>]
-Package color Info: Redefining color shadecolor on input line 905.
+ [35 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-332.p
+df>]
+Package color Info: Redefining color shadecolor on input line 952.
 
-<figure/unnamed-chunk-34.pdf, id=483, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-34.pdf, id=488, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-34.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-34.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-34.pdf used on input line 913.
+Package pdftex.def Info: figure/unnamed-chunk-34.pdf used on input line 960.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [34 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-333.pdf>]
-Package color Info: Redefining color shadecolor on input line 920.
+ [36 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-333.p
+df>]
+Package color Info: Redefining color shadecolor on input line 967.
 
-<figure/unnamed-chunk-35.pdf, id=494, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-35.pdf, id=499, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-35.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-35.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-35.pdf used on input line 927.
+Package pdftex.def Info: figure/unnamed-chunk-35.pdf used on input line 974.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [35 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-34.pdf>] [36
- <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-35.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 938--939
+ [37 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-34.pd
+f>] [38 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-35
+.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 985--986
 \OT1/cmtt/m/n/12 The function ComIndex allow to choose your own function (like 
 mean, range,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 938--939
+Underfull \hbox (badness 10000) in paragraph at lines 985--986
 \OT1/cmtt/m/n/12 variance...) to calculate customize metrics. Here CVNND refers
  to the Coefficient
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 938--939
+Underfull \hbox (badness 10000) in paragraph at lines 985--986
 \OT1/cmtt/m/n/12 of Variation of the Nearest Neighborhood Distance. ComIndexMul
 ti do the same things
  []
 
-Package color Info: Redefining color shadecolor on input line 941.
+Package color Info: Redefining color shadecolor on input line 988.
 
-Underfull \hbox (badness 10000) in paragraph at lines 960--961
+Underfull \hbox (badness 10000) in paragraph at lines 1007--1008
 []\OT1/cmtt/m/n/12 These two functions allows to calcul index by sites for exam
 ple using "tapply(x,
  []
 
-Package color Info: Redefining color shadecolor on input line 963.
-Package color Info: Redefining color shadecolor on input line 987.
+Package color Info: Redefining color shadecolor on input line 1010.
+Package color Info: Redefining color shadecolor on input line 1034.
 
-Overfull \hbox (21.24153pt too wide) in paragraph at lines 990--990
+Overfull \hbox (21.24153pt too wide) in paragraph at lines 1037--1037
 [][]\OT1/cmtt/m/it/12 #like in the function ComIndex and determine the site for
  each population (sites_bypop)[][] 
  []
 
-[37]
-Package color Info: Redefining color shadecolor on input line 1026.
-
-Overfull \hbox (113.26357pt too wide) in paragraph at lines 1050--1050
-[]\OT1/cmtt/m/n/12 ##   ..$ tapply(x, ind.plot.finch, function(x) mean(x, na.rm
-=T))               : num [1:6, 1:4] NULL ...[] 
- []
-
-
-Overfull \hbox (113.26357pt too wide) in paragraph at lines 1050--1050
-[]\OT1/cmtt/m/n/12 ##   ..$ tapply(x, ind.plot.finch, function(x) kurtosis(x, n
-a.rm=T))           : num [1:6, 1:4] NULL ...[] 
- []
-
-
-Overfull \hbox (113.26357pt too wide) in paragraph at lines 1050--1050
-[]\OT1/cmtt/m/n/12 ##   ..$ tapply(x, ind.plot.finch, function(x) max(x, na.rm=
-T)-min(x, na.rm=T)): num [1:6, 1:4] NULL ...[] 
- []
-
-
-Overfull \hbox (113.26357pt too wide) in paragraph at lines 1050--1050
-[]\OT1/cmtt/m/n/12 ##   ..$ tapply(x, ind.plot.finch, function(x) CVNND(x))    
-                   : num [1:6, 1:4] NULL ...[] 
- []
-
-[38]
-Underfull \vbox (badness 10000) detected at line 1170
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1170
- []
-
-[39] [40] <figure/unnamed-chunk-391.pdf, id=530, 361.35pt x 361.35pt>
+[39]
+Package color Info: Redefining color shadecolor on input line 1073.
+ [40] [41] [42]
+<figure/unnamed-chunk-391.pdf, id=535, 361.35pt x 361.35pt>
 File: figure/unnamed-chunk-391.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-391.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-391.pdf used on input line 1171.
+Package pdftex.def Info: figure/unnamed-chunk-391.pdf used on input line 1240.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-
-<figure/unnamed-chunk-392.pdf, id=531, 361.35pt x 361.35pt>
+ [43]
+<figure/unnamed-chunk-392.pdf, id=541, 361.35pt x 361.35pt>
 File: figure/unnamed-chunk-392.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-392.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-392.pdf used on input line 1176.
+Package pdftex.def Info: figure/unnamed-chunk-392.pdf used on input line 1245.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
- [41 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-391.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 1182--1183
+ [44 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-391.p
+df>]
+Underfull \hbox (badness 10000) in paragraph at lines 1251--1252
 \OT1/cmtt/m/n/12 The class listofindex permit to stock differents metrics compu
 ted using Tstats,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1182--1183
+Underfull \hbox (badness 10000) in paragraph at lines 1251--1252
 \OT1/cmtt/m/n/12 ComIndex and ComIndexMulti and compared to different null mode
 l. To do that we can
  []
 
 
-LaTeX Warning: Command \textendash invalid in math mode on input line 1185.
+LaTeX Warning: Command \textendash invalid in math mode on input line 1254.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1188--1189
+Underfull \hbox (badness 10000) in paragraph at lines 1257--1258
 []\OT1/cmtt/m/n/12 where $\OML/cmm/m/it/12 I[]bs$ \OT1/cmtt/m/n/12 is the obser
 ved value, $\OML/cmm/m/it/12 I[]im$ \OT1/cmtt/m/n/12 the mean of values calcula
 ted from the null
  []
 
-Package color Info: Redefining color shadecolor on input line 1192.
-Package color Info: Redefining color shadecolor on input line 1203.
-[42 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-392.pdf>]
-Package color Info: Redefining color shadecolor on input line 1222.
+Package color Info: Redefining color shadecolor on input line 1261.
+Package color Info: Redefining color shadecolor on input line 1272.
+[45 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-392.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 1291.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1220--1222
+Underfull \hbox (badness 10000) in paragraph at lines 1289--1291
 []\OT1/cmtt/m/n/12 The plot type bytraits allows to plot all SES traits values 
 for all sites or all
  []
 
-<figure/unnamed-chunk-421.pdf, id=550, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-421.pdf, id=560, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-421.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-421.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-421.pdf used on input line 1228.
+Package pdftex.def Info: figure/unnamed-chunk-421.pdf used on input line 1297.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
 
-<figure/unnamed-chunk-422.pdf, id=551, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-422.pdf, id=561, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-422.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-422.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-422.pdf used on input line 1234.
+Package pdftex.def Info: figure/unnamed-chunk-422.pdf used on input line 1303.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [43 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-421.pdf>]
-Package color Info: Redefining color shadecolor on input line 1244.
+ [46 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-421.p
+df>]
+Package color Info: Redefining color shadecolor on input line 1313.
 
-<figure/unnamed-chunk-431.pdf, id=563, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-431.pdf, id=572, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-431.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-431.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-431.pdf used on input line 1250.
+Package pdftex.def Info: figure/unnamed-chunk-431.pdf used on input line 1319.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [44 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-422.pdf>]
-<figure/unnamed-chunk-432.pdf, id=574, 505.89pt x 505.89pt>
+ [47 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-422.p
+df>]
+<figure/unnamed-chunk-432.pdf, id=583, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-432.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-432.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-432.pdf used on input line 1255.
+Package pdftex.def Info: figure/unnamed-chunk-432.pdf used on input line 1324.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [45 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-431.pdf>]
-<figure/unnamed-chunk-433.pdf, id=584, 505.89pt x 505.89pt>
+ [48 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-431.p
+df>]
+<figure/unnamed-chunk-433.pdf, id=593, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-433.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-433.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-433.pdf used on input line 1260.
+Package pdftex.def Info: figure/unnamed-chunk-433.pdf used on input line 1329.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [46 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-432.pdf>]
-<figure/unnamed-chunk-434.pdf, id=594, 505.89pt x 505.89pt>
+ [49 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-432.p
+df>]
+<figure/unnamed-chunk-434.pdf, id=604, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-434.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-434.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-434.pdf used on input line 1265.
+Package pdftex.def Info: figure/unnamed-chunk-434.pdf used on input line 1334.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [47 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-433.pdf>] [4
-8 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-434.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 1278--1279
+ [50 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-433.p
+df>] [51 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-4
+34.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 1347--1348
 \OT1/cmtt/m/n/12 For most multivariate functions we need to replace (or exclude
 ) NA values. For this
  []
 
-Package color Info: Redefining color shadecolor on input line 1281.
-Package color Info: Redefining color shadecolor on input line 1296.
-[49]
-Underfull \hbox (badness 10000) in paragraph at lines 1331--1332
+Package color Info: Redefining color shadecolor on input line 1350.
+Package color Info: Redefining color shadecolor on input line 1365.
+[52]
+Underfull \hbox (badness 10000) in paragraph at lines 1400--1401
 []\OT1/cmtt/m/n/12 A more interesting example using the function hypervolume fr
 om the package ...
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1331--1332
+Underfull \hbox (badness 10000) in paragraph at lines 1400--1401
 \OT1/cmtt/m/n/12 hypervolume. We show here several results which differe in the
 re factor that delimit
  []
 
-Package color Info: Redefining color shadecolor on input line 1335.
-<figure/unnamed-chunk-46.pdf, id=618, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 1404.
+<figure/unnamed-chunk-46.pdf, id=627, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-46.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-46.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-46.pdf used on input line 1343.
+Package pdftex.def Info: figure/unnamed-chunk-46.pdf used on input line 1412.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
-Package color Info: Redefining color shadecolor on input line 1350.
- [50 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-46.pdf>]
-<figure/unnamed-chunk-471.pdf, id=640, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 1419.
+ [53 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-46.pd
+f>]
+<figure/unnamed-chunk-471.pdf, id=649, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-471.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-471.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-471.pdf used on input line 1372.
+Package pdftex.def Info: figure/unnamed-chunk-471.pdf used on input line 1441.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [51]
-<figure/unnamed-chunk-472.pdf, id=645, 505.89pt x 505.89pt>
+ [54]
+<figure/unnamed-chunk-472.pdf, id=654, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-472.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-472.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-472.pdf used on input line 1377.
+Package pdftex.def Info: figure/unnamed-chunk-472.pdf used on input line 1446.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [52 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-471.pdf>] [5
-3 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-472.pdf>]
-Underfull \vbox (badness 10000) detected at line 1517
+ [55 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-471.p
+df>] [56 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-4
+72.pdf>]
+Underfull \vbox (badness 10000) detected at line 1586
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1517
+Underfull \vbox (badness 10000) detected at line 1586
  []
 
-[54]
-Underfull \vbox (badness 10000) detected at line 1517
+[57]
+Underfull \vbox (badness 10000) detected at line 1586
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1517
+Underfull \vbox (badness 10000) detected at line 1586
  []
 
-[55]
-Underfull \hbox (badness 10000) in paragraph at lines 1520--1521
+[58]
+Underfull \hbox (badness 10000) in paragraph at lines 1589--1590
 []\OT1/cmtt/m/n/12 The standard example of the hypervolume package also use fin
 ch data but at the
  []
 
-Package color Info: Redefining color shadecolor on input line 1523.
+Package color Info: Redefining color shadecolor on input line 1592.
 
-Overfull \hbox (193.5386pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (193.5386pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +     hv_finches_list@HVList[[i]] <- hypervolume(this_spe
 cies_log, bandwidth=estimate_bandwidth(this_species_log),[] 
  []
 
 
-Overfull \hbox (230.58862pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (230.58862pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +                                                reps=100
 00, quantile=0, name=as.character(species_list[i]), warn=FALSE)[] 
  []
 
 
-Overfull \hbox (323.21367pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (323.21367pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +         this_set = hypervolume_set(hv_finches_list@HVLi
 st[[i]], hv_finches_list@HVList[[j]],reduction_factor=0.5, check_memory=FALSE)[
 ] 
  []
 
 
-Overfull \hbox (39.16353pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (39.16353pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +         # calculate a Sorensen overlap index (2 x share
 d volume / sum of |hv1| + |hv2|)[] 
  []
 
 
-Overfull \hbox (354.08868pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (354.08868pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +         overlap[i,j] = 2 * this_set@HVList$Intersection
 @Volume / (hv_finches_list@HVList[[i]]@Volume + hv_finches_list@HVList[[j]]@Vol
 ume)[] 
  []
 
 
-Overfull \hbox (63.86354pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (63.86354pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +   # show pairwise overlaps - note that actually very fe
 w species overlap in nine dimensions[] 
  []
 
 
-Overfull \hbox (82.38855pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (82.38855pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +   image(x=1:nrow(overlap), y=1:nrow(overlap), z=overlap
 ,axes=F,xlab=,ylab=,col=rainbow(5))[] 
  []
 
 
-Overfull \hbox (94.73856pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (94.73856pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +   axis(side=1, at=1:(length(dimnames(overlap)[[1]])),di
 mnames(overlap)[[1]],las=2,cex.axis=0.75)[] 
  []
 
 
-Overfull \hbox (94.73856pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (94.73856pt too wide) in paragraph at lines 1663--1663
 []\OT1/cmtt/m/n/12 ## +   axis(side=2, at=1:(length(dimnames(overlap)[[2]])),di
 mnames(overlap)[[2]],las=1,cex.axis=0.75)[] 
  []
 
-[56]
-Underfull \vbox (badness 10000) detected at line 1597
+[59]
+Underfull \vbox (badness 10000) detected at line 1666
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1597
+Underfull \vbox (badness 10000) detected at line 1666
  []
 
-[57]
-Underfull \hbox (badness 10000) in paragraph at lines 1600--1601
+[60]
+Underfull \hbox (badness 10000) in paragraph at lines 1669--1670
 []\OT1/cmtt/m/n/12 ComIndexMulti takes the same arguments as ComIndex and an ar
 gument by factor to
  []
 
-Package color Info: Redefining color shadecolor on input line 1603.
+Package color Info: Redefining color shadecolor on input line 1672.
 
-Overfull \hbox (372.6137pt too wide) in paragraph at lines 1622--1622
+Overfull \hbox (372.6137pt too wide) in paragraph at lines 1691--1691
 []\OT1/cmtt/m/n/12 ## [1] "as.numeric(try(hypervolume(na.omit(x), reps=100, \n 
                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))
  100 %"[] 
  []
 
 
-Overfull \hbox (372.6137pt too wide) in paragraph at lines 1640--1640
+Overfull \hbox (372.6137pt too wide) in paragraph at lines 1709--1709
 []\OT1/cmtt/m/n/12 ## [1] "as.numeric(try(hypervolume(na.omit(x), reps=100, \n 
                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))
  100 %"[] 
  []
 
 
-Overfull \hbox (366.43869pt too wide) in paragraph at lines 1658--1658
+Overfull \hbox (366.43869pt too wide) in paragraph at lines 1727--1727
 []\OT1/cmtt/m/n/12 ## [1] "as.numeric(try(hypervolume(na.omit(x), reps=100,\n  
                                 bandwidth=0.2, verbose=F, warnings=F)@Volume)) 
 100 %"[] 
  []
 
 
-Overfull \hbox (372.6137pt too wide) in paragraph at lines 1676--1676
+Overfull \hbox (372.6137pt too wide) in paragraph at lines 1745--1745
 []\OT1/cmtt/m/n/12 ## [1] "as.numeric(try(hypervolume(na.omit(x), reps=100, \n 
                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))
  100 %"[] 
  []
 
-[58]
-Package color Info: Redefining color shadecolor on input line 1686.
- <figure/unnamed-chunk-501.pdf, id=730, 289.08pt x 289.08pt>
+[61]
+Package color Info: Redefining color shadecolor on input line 1755.
+ <figure/unnamed-chunk-501.pdf, id=740, 289.08pt x 289.08pt>
 File: figure/unnamed-chunk-501.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-501.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-501.pdf used on input line 1691.
+Package pdftex.def Info: figure/unnamed-chunk-501.pdf used on input line 1760.
 (pdftex.def)             Requested size: 289.07928pt x 289.09251pt.
- [59]
-<figure/unnamed-chunk-502.pdf, id=735, 289.08pt x 289.08pt>
+ [62]
+<figure/unnamed-chunk-502.pdf, id=745, 289.08pt x 289.08pt>
 File: figure/unnamed-chunk-502.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-502.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-502.pdf used on input line 1696.
+Package pdftex.def Info: figure/unnamed-chunk-502.pdf used on input line 1765.
 (pdftex.def)             Requested size: 289.07928pt x 289.09251pt.
-Package color Info: Redefining color shadecolor on input line 1703.
- [60 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-501.pdf> <C:
-/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-502.pdf>]
-Package color Info: Redefining color shadecolor on input line 1740.
+Package color Info: Redefining color shadecolor on input line 1772.
+ [63 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-501.p
+df> <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-502.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 1809.
 
-<figure/unnamed-chunk-52.pdf, id=750, 289.08pt x 289.08pt>
+<figure/unnamed-chunk-52.pdf, id=760, 289.08pt x 289.08pt>
 File: figure/unnamed-chunk-52.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-52.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-52.pdf used on input line 1745.
+Package pdftex.def Info: figure/unnamed-chunk-52.pdf used on input line 1814.
 (pdftex.def)             Requested size: 289.07928pt x 289.09251pt.
-Package color Info: Redefining color shadecolor on input line 1753.
- [61 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-52.pdf>]
-Package color Info: Redefining color shadecolor on input line 1762.
+Package color Info: Redefining color shadecolor on input line 1822.
+ [64 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-52.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 1831.
 
-<figure/unnamed-chunk-54.pdf, id=761, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-54.pdf, id=770, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-54.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-54.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-54.pdf used on input line 1768.
+Package pdftex.def Info: figure/unnamed-chunk-54.pdf used on input line 1837.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
-Package color Info: Redefining color shadecolor on input line 1774.
- [62]
-<figure/unnamed-chunk-551.pdf, id=766, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 1843.
+ [65]
+<figure/unnamed-chunk-551.pdf, id=775, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-551.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-551.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-551.pdf used on input line 1780.
+Package pdftex.def Info: figure/unnamed-chunk-551.pdf used on input line 1849.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [63 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-54.pdf>]
-<figure/unnamed-chunk-552.pdf, id=776, 505.89pt x 505.89pt>
+ [66 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-54.pd
+f>]
+<figure/unnamed-chunk-552.pdf, id=785, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-552.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-552.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-552.pdf used on input line 1788.
+Package pdftex.def Info: figure/unnamed-chunk-552.pdf used on input line 1857.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [64 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-551.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 1792--1793
+ [67 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-551.p
+df>]
+Underfull \hbox (badness 10000) in paragraph at lines 1861--1862
 []\OT1/cmtt/m/n/12 An other example using ses.listofindex. The first plot repre
 sent "ses" values and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1792--1793
+Underfull \hbox (badness 10000) in paragraph at lines 1861--1862
 \OT1/cmtt/m/n/12 the second one the result of a test with H0: observed index va
 lue are greater than
  []
 
-Package color Info: Redefining color shadecolor on input line 1795.
-<figure/unnamed-chunk-561.pdf, id=786, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 1864.
+<figure/unnamed-chunk-561.pdf, id=796, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-561.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-561.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-561.pdf used on input line 1804.
+Package pdftex.def Info: figure/unnamed-chunk-561.pdf used on input line 1873.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [65 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-552.pdf>]
-<figure/unnamed-chunk-562.pdf, id=796, 505.89pt x 505.89pt>
+ [68 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-552.p
+df>]
+<figure/unnamed-chunk-562.pdf, id=806, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-562.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-562.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-562.pdf used on input line 1813.
+Package pdftex.def Info: figure/unnamed-chunk-562.pdf used on input line 1882.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [66 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-561.pdf>]
-Package color Info: Redefining color shadecolor on input line 1819.
+ [69 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-561.p
+df>]
+Package color Info: Redefining color shadecolor on input line 1888.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1817--1819
+Underfull \hbox (badness 10000) in paragraph at lines 1886--1888
 []\OT1/cmtt/m/n/12 Compare metrics calculate on individual against metrics calc
 ulate after
  []
 
 
-Overfull \vbox (0.98466pt too high) detected at line 1834
+Overfull \vbox (0.98466pt too high) detected at line 1903
  []
 
-[67 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-562.pdf>]
-<figure/unnamed-chunk-571.pdf, id=816, 505.89pt x 505.89pt>
+[70 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-562.pd
+f>] <figure/unnamed-chunk-571.pdf, id=825, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-571.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-571.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-571.pdf used on input line 1835.
+Package pdftex.def Info: figure/unnamed-chunk-571.pdf used on input line 1904.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
 
-<figure/unnamed-chunk-572.pdf, id=817, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-572.pdf, id=826, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-572.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-572.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-572.pdf used on input line 1841.
+Package pdftex.def Info: figure/unnamed-chunk-572.pdf used on input line 1910.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [68 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-571.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 1846--1847
+ [71 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-571.p
+df>]
+Underfull \hbox (badness 10000) in paragraph at lines 1915--1916
 \OT1/cmtt/m/n/12 To finish, we can do a multivariate analysis of the metrics ob
 tain during this
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1846--1847
+Underfull \hbox (badness 10000) in paragraph at lines 1915--1916
 \OT1/cmtt/m/n/12 tutorial. Analysis dudi 1 put together all traits by meaning t
 he SES values for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1846--1847
+Underfull \hbox (badness 10000) in paragraph at lines 1915--1916
 \OT1/cmtt/m/n/12 each metrics in each sites whereas analysis dudi 2 analyse all
  combination of traits
  []
 
-Package color Info: Redefining color shadecolor on input line 1849.
+Package color Info: Redefining color shadecolor on input line 1918.
 
-Overfull \hbox (32.98853pt too wide) in paragraph at lines 1853--1853
+Overfull \hbox (32.98853pt too wide) in paragraph at lines 1922--1922
 [] []\OT1/cmtt/m/n/12 matfordudi[][]<-[][]matrix[][]([][]nrow[][]=[][]length[][
 ]([][]colMeans[][](ses.list[[[][]1[][]]][][]$[][]ses)),[] []ncol[][]=[][]length
 [][]([][]names[][](ses.list)))[][] 
  []
 
 
-Overfull \hbox (45.33853pt too wide) in paragraph at lines 1860--1860
+Overfull \hbox (45.33853pt too wide) in paragraph at lines 1929--1929
 [] []\OT1/cmtt/m/n/12 matfordudi2[][]<-[][]matrix[][]([][]nrow[][]=[][]length[]
 []([][]as.vector[][](ses.list[[[][]1[][]]][][]$[][]ses)),[] []ncol[][]=[][]leng
 th[][]([][]names[][](ses.list)))[][] 
  []
 
-[69 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-572.pdf>]
-[70] <figure/unnamed-chunk-581.pdf, id=840, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-581.pdf Graphic file (type pdf)
+[72 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-572.pd
+f>]
+Package color Info: Redefining color shadecolor on input line 1939.
+Package color Info: Redefining color shadecolor on input line 1950.
+ <figure/unnamed-chunk-601.pdf, id=845, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-601.pdf Graphic file (type pdf)
 
-<use figure/unnamed-chunk-581.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-581.pdf used on input line 1937.
+<use figure/unnamed-chunk-601.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-601.pdf used on input line 1958.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [71]
-<figure/unnamed-chunk-582.pdf, id=845, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-582.pdf Graphic file (type pdf)
+ [73]
+<figure/unnamed-chunk-602.pdf, id=851, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-602.pdf Graphic file (type pdf)
 
-<use figure/unnamed-chunk-582.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-582.pdf used on input line 1943.
+<use figure/unnamed-chunk-602.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-602.pdf used on input line 1964.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [72 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-581.pdf>]
-<figure/unnamed-chunk-583.pdf, id=855, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-583.pdf Graphic file (type pdf)
+ [74 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-601.p
+df>]
+<figure/unnamed-chunk-603.pdf, id=861, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-603.pdf Graphic file (type pdf)
 
-<use figure/unnamed-chunk-583.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-583.pdf used on input line 1948.
+<use figure/unnamed-chunk-603.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-603.pdf used on input line 1969.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [73 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-582.pdf>]
-Overfull \hbox (181.1886pt too wide) in paragraph at lines 1950--1950
+ [75 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-602.p
+df>]
+Overfull \hbox (181.1886pt too wide) in paragraph at lines 1971--1971
 [][]\OT1/cmtt/m/n/12 s.class[][](res.dudi2[][]$[][]li,[] []as.factor[][]([][]c[
 ][]([][]rep[][]([][]"WingL"[][],[][]6[][]),[] []rep[][]([][]"BeakH"[][],[][]6[]
 []),[] []rep[][]([][]"UBeakL"[][],[][]6[][]),[] []rep[][]([][]"N.UBkL"[][],[][]
 6[][]))),[] []col[][]=[][]funky[][]([][]4[][]))[][] 
  []
 
-<figure/unnamed-chunk-584.pdf, id=866, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-584.pdf Graphic file (type pdf)
+<figure/unnamed-chunk-604.pdf, id=871, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-604.pdf Graphic file (type pdf)
 
-<use figure/unnamed-chunk-584.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-584.pdf used on input line 1953.
+<use figure/unnamed-chunk-604.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-604.pdf used on input line 1974.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [74 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-583.pdf>]
-Overfull \hbox (187.3636pt too wide) in paragraph at lines 1955--1955
+ [76 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-603.p
+df>]
+Overfull \hbox (187.3636pt too wide) in paragraph at lines 1976--1976
 [][]\OT1/cmtt/m/n/12 s.class[][](res.dudi2[][]$[][]li,[] []as.factor[][]([][]re
 p[][]([][]c[][]([][]"DMaj"[][],[][]"EspHd"[][],[][]"FlorChrl"[][],[][]"GnovTwr"
 [][],[][]"MrchBndl"[][],[][]"SCruInde"[][]),[][]4[] [])),[] []col[][]=[][]funky
 [][]([][]6[][]))[][] 
  []
 
-<figure/unnamed-chunk-585.pdf, id=876, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-585.pdf Graphic file (type pdf)
+<figure/unnamed-chunk-605.pdf, id=881, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-605.pdf Graphic file (type pdf)
 
-<use figure/unnamed-chunk-585.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-585.pdf used on input line 1958.
+<use figure/unnamed-chunk-605.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-605.pdf used on input line 1979.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
- [75 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-584.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1965.
- [76 <C:/Users/taudiere/Desktop/cati/tutorial/figure/unnamed-chunk-585.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1965.
+ [77 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-604.p
+df>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1986.
+ [78 <C:/Users/Admin/Desktop/cati/tutorial/vignettes/figure/unnamed-chunk-605.p
+df>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1986.
 
-(C:\Users\taudiere\Desktop\cati\tutorial\vignette.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1965.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1965.
+(C:\Users\Admin\Desktop\cati\tutorial\vignettes\vignette.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1986.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1986.
 
 Package rerunfilecheck Info: File `vignette.out' has not changed.
 (rerunfilecheck)             Checksum: 3D30377A85D6052DD45F7CD601BA98CE;2213.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1965.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1986.
  ) 
 Here is how much of TeX's memory you used:
- 6769 strings out of 493921
- 101630 string characters out of 3144867
- 205145 words of memory out of 3000000
- 9794 multiletter control sequences out of 15000+200000
+ 6768 strings out of 493921
+ 101770 string characters out of 3144876
+ 207145 words of memory out of 3000000
+ 9791 multiletter control sequences out of 15000+200000
  21907 words of font info for 81 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 33i,6n,32p,682b,427s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 33i,6n,32p,719b,427s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
 :/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C
@@ -1481,9 +1518,9 @@ x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files (x86)/Mi
 KTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on vignette.pdf (76 pages, 8947240 bytes).
+Output written on vignette.pdf (78 pages, 8917413 bytes).
 PDF statistics:
- 969 PDF objects out of 1000 (max. 8388607)
- 104 named destinations out of 1000 (max. 500000)
- 479 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 974 PDF objects out of 1000 (max. 8388607)
+ 106 named destinations out of 1000 (max. 500000)
+ 474 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -23,7 +23,8 @@ Suggests:
     entropart,
     fBasics,
     picante,
-    knitr
+    knitr,
+    geometry
 Description: A package to detect and quantify community assembly processes
     using trait values of individuals or populations, the T-statistics and
     other metrics, and dedicated null models.
