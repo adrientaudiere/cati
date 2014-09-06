@@ -14,16 +14,15 @@
 }
 
 \usage{
-	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE)
+	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = 99, printprogress = TRUE)
 	
 	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 		
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
-	col.Tstats = c("red", "purple", "green", "white"), ylim = NULL, \dots)
-	
-	\method{plot}{Tstats}(x, val.quant = c(0.025, 0.975), 
-	col.Tstats = c("red", "purple", "green"), type = "normal", 
-	add.conf = TRUE, ylim = NULL, xlim = NULL, \dots)
+	col.index = c("red", "purple", "olivedrab3", "white"), ylim = NULL, \dots)
+                 
+	\method{plot}{Tstats}(x, type = "normal", col.index = c("red", "purple", "olivedrab3"),
+	add.conf = TRUE, color.cond = TRUE, val.quant = c(0.025, 0.975), \dots)
 		
 	\method{print}{Tstats}(x, \dots)
 		
@@ -71,8 +70,16 @@
 		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
-	\item{col.Tstats}{
+	\item{ylim}{
+		Numeric vectors of length 2, giving the y coordinates range 
+	}
+	
+	\item{col.index}{
 		A vector of three color correspond to the three T-statistics.
+	}
+	
+	\item{color.cond}{
+		Logical value; If color.cond = TRUE, color points indicate T-statistics values significatively different from the null model and grey points are not different from null model.
 	}
 	
 	\item{type}{
@@ -84,16 +91,8 @@
 		Logical value; Add confidence intervals or not. 
 	}
 	
-	\item{ylim}{
-		limits for the y axis.
-	}
-	
-	\item{xlim}{
-		limits for the x axis.
-	}
-	
 	\item{\dots}{
-		Any additional arguments are passed to the plot function creating the core of the plot and can be used to adjust the look of resulting graph.
+		Any additional arguments are passed to the plot function creating the core of the plot and can be used to adjust the look of resulting graph. See \code{\link{plot.listofindex}} for more arguments.
 	}
 }
 
@@ -124,9 +123,9 @@
 	\item{$tstats$Tstats$T_IC.IR}{Observed ratio between variance of individuals in communities and individuals in the region}
 	\item{$tstats$Tstats$T_PC.PR}{Observed ratio between variance of populations in communities and populations in the region}
 	
-	\item{$tstats$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
-	\item{$tstats$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
-	\item{$tstats$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
+	\item{$tstats$Tstats$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
+	\item{$tstats$Tstats$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
+	\item{$tstats$Tstats$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
 	
 	\item{$variances$var_IP}{variance of individuals within populations}    
 	\item{$variances$var_PC}{variance of populations within communities}
@@ -172,7 +171,7 @@
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9, print = FALSE)
 	
-	attributes(res.finch)
+	res.finch
 
 	#Tstats class is associated to S3 methods plot, barplot and summary
 	

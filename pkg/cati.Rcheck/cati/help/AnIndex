@@ -11,10 +11,12 @@ ComIndexMulti	ComIndexMulti
 CVNND	CVNND
 decompCTRE	decompCTRE
 finch.ind	finch.ind
+Fred	Fred
 ind.plot.finch	finch.ind
 IndexByGroups	IndexByGroups
 MinMaxMST	MinMaxMST
 MinNND	CVNND
+MND	CVNND
 MNND	CVNND
 partvar	partvar
 piePartvar	partvar
@@ -33,6 +35,7 @@ print.ComIndex	ComIndex
 print.ComIndexMulti	ComIndexMulti
 print.traitflex	traitflex.anova
 print.Tstats	Tstats
+Pval	Pval
 RaoRel	RaoRel
 SDND	CVNND
 SDNND	CVNND

@@ -4,6 +4,7 @@
 \alias{MinNND}
 \alias{SDNND}
 \alias{SDND}
+\alias{MND}
 
 \title{
 	Coefficient of variation, mean, minimum and standard deviation of the nearest neigbourhood distance.
@@ -19,6 +20,8 @@
 	SDNND : Standard deviation of the nearest neigbourhood distance
 	
 	SDND : Standard deviation of the neigbourhood distance
+	
+	MND : Mean of the neigbourhood distance
 }
 
 \usage{
@@ -34,7 +37,9 @@
 	SDNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, 
 	method.dist = "euclidian")
 	
-	SDND(trait, div_range = FALSE, na.rm = FALSE)
+	SDND(trait, div_range = FALSE, na.rm = FALSE)	
+	
+	MND(trait, div_range = FALSE, na.rm = FALSE)
 }
 
 \arguments{

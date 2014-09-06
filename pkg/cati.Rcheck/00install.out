@@ -1,4 +1,4 @@
-* installing *source* package ‘cati’ ...
+* installing *source* package 'cati' ...
 ** R
 ** data
 ** inst
@@ -7,4 +7,6 @@
 *** installing help indices
 ** building package indices
 ** testing if installed package can be loaded
+*** arch - i386
+*** arch - x64
 * DONE (cati)

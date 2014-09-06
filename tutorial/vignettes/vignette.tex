@@ -109,7 +109,7 @@ This vignette present the \textit(cati) package for R (Community Assembly by Tra
 
 Before going further, we shall make sure that \textit{cati} is well installed
 on the computer.
-The current version of the package is 0.91.
+The current version of the package is 0.92.
 Make sure you have a recent version of R ($\geq 3.0.2$) by typing:
 
 \begin{knitrout}
@@ -132,7 +132,7 @@ Then, install \textit{cati} with dependencies using:
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Installing package into 'C:/Users/taudiere/Documents/R/win-library/3.1'\\\#\# (as 'lib' is unspecified)}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: zip file 'C:/Users/taudiere/Desktop/cati/pkg/cati\_0.91.zip' not found}}\begin{alltt}
 \hlkwd{library}\hlstd{(}\hlstr{"cati"}\hlstd{)}
 \end{alltt}
 
@@ -163,11 +163,11 @@ We can now load the package alongside other useful packages:
 \hlkwd{packageDescription}\hlstd{(}\hlstr{"cati"}\hlstd{,} \hlkwc{fields} \hlstd{=} \hlstr{"Version"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] "0.91"
+## [1] "0.92"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-\textit{cati} version should read 0.91.
+\textit{cati} version should read 0.92.
 
 \subsection{Getting help}
 
@@ -211,14 +211,20 @@ First we need to load the data.
 \end{kframe}
 \end{knitrout}
 
-Now we can see 3 objects: a traits matrix 
+Now we can see 3 objects: a traits matrix traits.finch, a vector of species names sp.finch and a vector of sites names ind.plot. 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{dim}\hlstd{(traits.finch)} \hlcom{#the trait matrix contains 2513 individuals values for 4 traits}
+\hlkwd{dim}\hlstd{(traits.finch)}
+\hlcom{#the trait matrix contains 2513 individuals values for 4 traits}
 
-\hlkwd{table}\hlstd{(sp.finch)} \hlcom{#the species names vector contains 2513 individuals belonging to 12 species}
-\hlkwd{table}\hlstd{(ind.plot.finch)} \hlcom{#the sites names vector contains 2513 individuals belonging to 6 sites (Island)}
+\hlkwd{table}\hlstd{(sp.finch)}
+\hlcom{#the species names vector contains }
+\hlcom{#2513 individuals belonging to 12 species}
+
+\hlkwd{table}\hlstd{(ind.plot.finch)}
+\hlcom{#the sites names vector contains}
+\hlcom{#2513 individuals belonging to 6 sites (Here 6 Island)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -660,36 +666,57 @@ The funcion Tstats computes observed T-statistics (T for Traits; Violle et al (2
 \hlstd{res.finch}
 \end{alltt}
 \begin{verbatim}
-## $Tstats
-##            Length Class  Mode   
-## T_IP.IC     24    -none- numeric
-## T_IC.IR     24    -none- numeric
-## T_PC.PR     24    -none- numeric
-## T_IP.IC_nm 216    -none- numeric
-## T_IC.IR_nm 216    -none- numeric
-## T_PC.PR_nm 216    -none- numeric
+## 	##################
+## 	# T-statistiques #
+## 	##################
+## class: Tstats
+## $call: Tstats(traits = traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
+##     nperm = 9, printprogress = FALSE)
 ## 
-## $variances
-##              Length Class  Mode   
-## var_IP        156   -none- numeric
-## var_PC         24   -none- numeric
-## var_CR          4   -none- numeric
-## var_IC         24   -none- numeric
-## var_PR          4   -none- numeric
-## var_IR          4   -none- numeric
-## var_IP_nm1   1404   -none- numeric
-## var_PC_nm2sp  216   -none- numeric
-## var_IC_nm1    216   -none- numeric
-## var_IC_nm2    216   -none- numeric
-## var_PR_nm2sp   36   -none- numeric
-## var_IR_nm2     36   -none- numeric
+## ###############
+## $Tstats: list of observed and null T-statistics
+## 
+## Observed values
+## 	$T_IP.IC: ratio of within-population variance to total within-community variance
+## 	$T_IC.IR: community-wide variance relative to the total variance in the regional pool
+## 	$T_PC.PR: inter-community variance relative to the total variance in the regional pool
+## 
+## Null values, number of permutation: 9
+## 	$T_IP.IC_nm: distribution of T_IP.IC value under the null model
+## 	$T_IC.IR_nm: distribution of T_IC.IR value under the null model
+## 	$T_PC.PR_nm: distribution of T_PC.PR value under the null model
+## 
+## ###############
+## $variances: list of observed and null variances
+## 
+## ###############
+## data used
+##   data      class      dim   
+## 1 $traits   data.frame 2513,4
+## 2 $ind.plot factor     2513  
+## 3 $sp       factor     2513  
+##   content                                             
+## 1 traits data                                         
+## 2 name of the plot in which the individual is         
+## 3 groups (e.g. species) which the individual belong to
+## 
+## ###############
+## others
+## 	$namestraits: 4 traits
+## [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
+## 
+## 	$sites_richness:
+## 	ind.plot
+##     DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
+##       50      267      981      258      270      687
 \end{verbatim}
 \begin{alltt}
 \hlkwd{attributes}\hlstd{(res.finch)}
 \end{alltt}
 \begin{verbatim}
 ## $names
-## [1] "Tstats"    "variances"
+## [1] "Tstats"         "variances"      "traits"         "ind.plot"      
+## [5] "sp"             "sites_richness" "namestraits"    "call"          
 ## 
 ## $class
 ## [1] "Tstats"
@@ -698,8 +725,8 @@ The funcion Tstats computes observed T-statistics (T for Traits; Violle et al (2
 \hlkwd{str}\hlstd{(res.finch)}
 \end{alltt}
 \begin{verbatim}
-## List of 2
-##  $ Tstats   :List of 6
+## List of 8
+##  $ Tstats        :List of 6
 ##   ..$ T_IP.IC   : num [1:6, 1:4] 0.3831 0.0343 0.1084 0.0417 0.0496 ...
 ##   .. ..- attr(*, "dimnames")=List of 2
 ##   .. .. ..$ : chr [1:6] "DMaj" "EspHd" "FlorChrl" "GnovTwr" ...
@@ -727,7 +754,7 @@ The funcion Tstats computes observed T-statistics (T for Traits; Violle et al (2
 ##   .. .. ..$ : NULL
 ##   .. .. ..$ : chr [1:4] "WingL" "BeakH" "UBeakL" "N.UBkL"
 ##   .. .. ..$ : NULL
-##  $ variances:List of 12
+##  $ variances     :List of 12
 ##   ..$ var_IP      : num [1:39, 1:4] NA 4.6 4.5 2.94 3.54 ...
 ##   ..$ var_PC      : num [1:6, 1:4] 17.4 112.8 66.9 135.3 113.3 ...
 ##   ..$ var_CR      : num [1:4] 1.941 0.473 1.376 0.235
@@ -740,6 +767,18 @@ The funcion Tstats computes observed T-statistics (T for Traits; Violle et al (2
 ##   ..$ var_IC_nm2  : num [1:9, 1:4, 1:6] 67.1 81.6 61.8 77.4 76.5 ...
 ##   ..$ var_PR_nm2sp: num [1:9, 1:4] 83.1 91.9 105 123.7 69.1 ...
 ##   ..$ var_IR_nm2  : num [1:9, 1:4] 70.8 69 70.6 72.5 71.8 ...
+##  $ traits        :'data.frame':	2513 obs. of  4 variables:
+##   ..$ WingL : int [1:2513] 69 65 65 68 66 68 67 69 67 68 ...
+##   ..$ BeakH : num [1:2513] 10.8 10.3 10 9.5 11 10.4 11.3 10.6 10.8 10.3 ...
+##   ..$ UBeakL: num [1:2513] 15.2 14.2 13.6 13.5 15 15 15.7 15.3 15.5 15.2 ...
+##   ..$ N.UBkL: num [1:2513] 10.6 9.8 9.9 9.9 10.7 10.2 11.2 11.3 11.2 10.2 ...
+##  $ ind.plot      : Factor w/ 6 levels "DMaj","EspHd",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ sp            : Factor w/ 12 levels "Camarhynchus_pallidus",..: 8 8 8 8 8 8 8 8 8 8 ...
+##  $ sites_richness: 'table' int [1:6(1d)] 50 267 981 258 270 687
+##   ..- attr(*, "dimnames")=List of 1
+##   .. ..$ ind.plot: chr [1:6] "DMaj" "EspHd" "FlorChrl" "GnovTwr" ...
+##  $ namestraits   : chr [1:4] "WingL" "BeakH" "UBeakL" "N.UBkL"
+##  $ call          : language Tstats(traits = traits.finch, ind.plot = ind.plot.finch, sp = sp.finch,      nperm = 9, printprogress = FALSE)
 ##  - attr(*, "class")= chr "Tstats"
 \end{verbatim}
 \end{kframe}
@@ -771,9 +810,20 @@ There is multiple kind of representation avaible
 \begin{alltt}
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
 \hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"color_cond"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] "Error: color_cond is not a valid type of plot"
+\end{verbatim}
+\begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"simple"}\hlstd{)}
 \hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"simple_sd"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] "Error: simple_sd is not a valid type of plot"
+\end{verbatim}
+\begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"barplot"}\hlstd{)}
+\hlkwd{par}\hlstd{(old.par)}
 \end{alltt}
 \end{kframe}
 
@@ -782,10 +832,7 @@ There is multiple kind of representation avaible
 }
 
 
-\begin{kframe}\begin{alltt}
-\hlkwd{par}\hlstd{(old.par)}
-\end{alltt}
-\end{kframe}
+
 \end{knitrout}
 
 \newpage
@@ -839,7 +886,7 @@ There is multiple kind of representation avaible
 ##  3rd Qu.:1.474   3rd Qu.:1.3286   3rd Qu.:1.215   3rd Qu.:1.351  
 ##  Max.   :1.762   Max.   :3.0016   Max.   :1.530   Max.   :1.585  
 ## 
-## [1] "Null values"
+## [1] "null values"
 ## $T_IP.IC_nm
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   0.422   0.961   0.992   1.000   1.020   3.230 
@@ -1028,25 +1075,47 @@ Tstats class is associated to S3 methods plot, print and summary
 \hlstd{res.finch.withIV}
 \end{alltt}
 \begin{verbatim}
-## List of 1
-##  $ obs:List of 4
-##   ..$ tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))               : num [1:6, 1:4] NULL ...
-##   .. ..- attr(*, "dimnames")=List of 2
-##   ..$ tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))           : num [1:6, 1:4] NULL ...
-##   .. ..- attr(*, "dimnames")=List of 2
-##   ..$ tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T)): num [1:6, 1:4] NULL ...
-##   .. ..- attr(*, "dimnames")=List of 2
-##   ..$ tapply(x, ind.plot.finch, function(x) CVNND(x))                       : num [1:6, 1:4] NULL ...
-##   .. ..- attr(*, "dimnames")=List of 2
-## NULL
-## List of 5
-##  $ Null          :List of 4
-##  $ list.index    :List of 8
-##  $ list.index.t  :List of 8
-##  $ sites_richness: Named num [1:6] NULL ...
-##   ..- attr(*, "names")= chr [1:6]  ...
-##  $ namestraits   : chr [1:4]  ...
-## NULL
+## 	#################################
+## 	# Community metrics calculation #
+## 	#################################
+## class: ComIndex
+## $call: ComIndex(traits = traits.finch, index = funct.withIV, nullmodels = c(2, 
+##     2, 2, 2), ind.plot = ind.plot.finch, sp = sp.finch, nperm = 9, 
+##     printprogress = FALSE)
+## 
+## ###############
+## $obs: list of observed values
+## 	$tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))
+## 	$tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))
+## 	$tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T))
+## 	$tapply(x, ind.plot.finch, function(x) CVNND(x))
+## 
+## ###############
+## $null: list of null values, number of permutation: 9 
+## 	$tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))_nm
+## 	$tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))_nm
+## 	$tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T))_nm
+## 	$tapply(x, ind.plot.finch, function(x) CVNND(x))_nm
+## 
+## ###############
+## data used
+##   data      class      dim   
+## 1 $traits   data.frame 2513,4
+## 2 $ind.plot factor     2513  
+## 3 $sp       factor     2513  
+##   content                                             
+## 1 traits data                                         
+## 2 name of the plot in which the individual is         
+## 3 groups (e.g. species) which the individual belong to
+## 
+## ###############
+## others
+## 	$namestraits: 4 traits
+## [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
+## 
+## 	$sites_richness:
+## 	    DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
+##       50      267      981      258      270      687
 \end{verbatim}
 \begin{alltt}
 \hlkwd{summary}\hlstd{(res.finch.withIV)}
@@ -1081,15 +1150,15 @@ Tstats class is associated to S3 methods plot, print and summary
 ##  Max.   :38.0   Max.   :19.4   Max.   :13.6   Max.   :10.50  
 ## 
 ## $`tapply(x, ind.plot.finch, function(x) CVNND(x))`
-##      WingL          BeakH          UBeakL         N.UBkL    
-##  Min.   :2.09   Min.   :1.66   Min.   :1.77   Min.   :1.89  
-##  1st Qu.:2.62   1st Qu.:3.00   1st Qu.:2.17   1st Qu.:2.17  
-##  Median :2.67   Median :3.27   Median :2.74   Median :2.61  
-##  Mean   :3.21   Mean   :3.37   Mean   :2.61   Mean   :2.64  
-##  3rd Qu.:3.73   3rd Qu.:3.47   3rd Qu.:2.91   3rd Qu.:3.10  
-##  Max.   :5.17   Max.   :5.58   Max.   :3.46   Max.   :3.41  
+##      WingL            BeakH           UBeakL          N.UBkL      
+##  Min.   :0.0000   Min.   :0.268   Min.   :0.139   Min.   :0.0321  
+##  1st Qu.:0.0000   1st Qu.:0.613   1st Qu.:0.278   1st Qu.:0.2086  
+##  Median :0.0000   Median :0.651   Median :0.553   Median :0.3482  
+##  Mean   :0.0374   Mean   :0.602   Mean   :0.666   Mean   :0.4112  
+##  3rd Qu.:0.0643   3rd Qu.:0.695   3rd Qu.:1.112   3rd Qu.:0.5505  
+##  Max.   :0.1386   Max.   :0.732   Max.   :1.267   Max.   :0.9588  
 ## 
-## [1] "Null values"
+## [1] "null values"
 ## $`tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    9.66   10.60   13.30   26.20   29.20   70.30 
@@ -1104,7 +1173,7 @@ Tstats class is associated to S3 methods plot, print and summary
 ## 
 ## $`tapply(x, ind.plot.finch, function(x) CVNND(x))`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   0.796   1.610   2.180   2.300   2.680   4.990
+##   0.000   0.097   0.272   0.382   0.613   1.790
 \end{verbatim}
 \begin{alltt}
 \hlkwd{summary}\hlstd{(res.finch.withoutIV)}
@@ -1139,15 +1208,15 @@ Tstats class is associated to S3 methods plot, print and summary
 ##  Max.   :30.41   Max.   :16.93   Max.   :10.67   Max.   :8.20  
 ## 
 ## $`tapply(x, fact, function(x) CVNND(x))`
-##      WingL            BeakH           UBeakL           N.UBkL     
-##  Min.   :0.0162   Min.   :0.106   Min.   :0.0954   Min.   :0.382  
-##  1st Qu.:0.1530   1st Qu.:0.530   1st Qu.:0.1835   1st Qu.:0.398  
-##  Median :0.4492   Median :0.910   Median :0.4489   Median :0.556  
-##  Mean   :0.5157   Mean   :0.784   Mean   :0.3828   Mean   :0.663  
-##  3rd Qu.:0.9333   3rd Qu.:1.108   3rd Qu.:0.5212   3rd Qu.:0.909  
-##  Max.   :1.0306   Max.   :1.198   Max.   :0.6635   Max.   :1.110  
+##      WingL            BeakH            UBeakL           N.UBkL     
+##  Min.   :0.0132   Min.   :0.0944   Min.   :0.0797   Min.   :0.323  
+##  1st Qu.:0.1538   1st Qu.:0.5381   1st Qu.:0.1723   1st Qu.:0.356  
+##  Median :0.3944   Median :1.0743   Median :0.4270   Median :0.611  
+##  Mean   :0.5963   Mean   :0.9382   Mean   :0.3873   Mean   :0.606  
+##  3rd Qu.:1.1147   3rd Qu.:1.3756   3rd Qu.:0.5791   3rd Qu.:0.835  
+##  Max.   :1.3475   Max.   :1.5508   Max.   :0.6732   Max.   :0.913  
 ## 
-## [1] "Null values"
+## [1] "null values"
 ## $`tapply(x, fact, function(x) mean(x, na.rm=T))`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    15.6    24.7    26.7    27.0    28.6    40.3 
@@ -1162,7 +1231,7 @@ Tstats class is associated to S3 methods plot, print and summary
 ## 
 ## $`tapply(x, fact, function(x) CVNND(x))`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.0199  0.6750  0.9220  0.9960  1.2400  2.4500
+##  0.0163  0.6800  1.0500  1.0900  1.4300  2.6300
 \end{verbatim}
 \begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch.withIV)}
@@ -1222,7 +1291,7 @@ The plot type \tt{bytraits} allows to plot all SES traits values for all sites o
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type}\hlstd{=}\hlstr{"bytraits"}\hlstd{,} \hlkwc{bysite}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type}\hlstd{=}\hlstr{"bysites"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-421} 
@@ -1753,7 +1822,7 @@ Using rasterVis to obtain more color schemes.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: rasterVis\\\#\# Loading required package: raster\\\#\# Loading required package: sp\\\#\# \\\#\# Attaching package: 'raster'\\\#\# \\\#\# The following object is masked from 'package:magic':\\\#\# \\\#\#\ \ \ \  shift\\\#\# \\\#\# The following objects are masked from 'package:ape':\\\#\# \\\#\#\ \ \ \  edges, rotate, zoom\\\#\# \\\#\# The following object is masked from 'package:nlme':\\\#\# \\\#\#\ \ \ \  getData\\\#\# \\\#\# Loading required package: latticeExtra\\\#\# Loading required package: RColorBrewer\\\#\# Loading required package: hexbin}}\end{kframe}
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: rasterVis\\\#\# Loading required package: raster\\\#\# Loading required package: sp\\\#\# \\\#\# Attaching package: 'raster'\\\#\# \\\#\# The following object is masked from 'package:magic':\\\#\# \\\#\#\ \ \ \  shift\\\#\# \\\#\# The following objects are masked from 'package:ape':\\\#\# \\\#\#\ \ \ \  edges, rotate, zoom\\\#\# \\\#\# The following object is masked from 'package:nlme':\\\#\# \\\#\#\ \ \ \  getData\\\#\# \\\#\# Loading required package: latticeExtra\\\#\# Loading required package: RColorBrewer\\\#\# Loading required package: hexbin\\\#\# Loading required package: grid}}\end{kframe}
 \end{knitrout}
 
 Plot the p-value or the ses values using the function \tt{levelplot}.
@@ -1862,71 +1931,23 @@ To finish, we can do a multivariate analysis of the metrics obtain during this t
    \hlstd{matfordudi2[,i]}\hlkwb{<-}\hlkwd{as.vector}\hlstd{(ses.list[[i]]}\hlopt{$}\hlstd{ses)}
  \hlstd{\}}
  \hlkwd{colnames}\hlstd{(matfordudi2)}\hlkwb{<-}\hlkwd{names}\hlstd{(ses.list)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 \hlcom{#Use mice for the purpose of this example}
 \hlstd{matfordudi}\hlkwb{<-}\hlkwd{complete}\hlstd{(}\hlkwd{mice}\hlstd{(matfordudi))}
-\end{alltt}
-\begin{verbatim}
-## 
-##  iter imp variable
-##   1   1  kurtosis.pop
-##   1   2  kurtosis.pop
-##   1   3  kurtosis.pop
-##   1   4  kurtosis.pop
-##   1   5  kurtosis.pop
-##   2   1  kurtosis.pop
-##   2   2  kurtosis.pop
-##   2   3  kurtosis.pop
-##   2   4  kurtosis.pop
-##   2   5  kurtosis.pop
-##   3   1  kurtosis.pop
-##   3   2  kurtosis.pop
-##   3   3  kurtosis.pop
-##   3   4  kurtosis.pop
-##   3   5  kurtosis.pop
-##   4   1  kurtosis.pop
-##   4   2  kurtosis.pop
-##   4   3  kurtosis.pop
-##   4   4  kurtosis.pop
-##   4   5  kurtosis.pop
-##   5   1  kurtosis.pop
-##   5   2  kurtosis.pop
-##   5   3  kurtosis.pop
-##   5   4  kurtosis.pop
-##   5   5  kurtosis.pop
-\end{verbatim}
-\begin{alltt}
 \hlstd{matfordudi2}\hlkwb{<-}\hlkwd{complete}\hlstd{(}\hlkwd{mice}\hlstd{(matfordudi2))}
 \end{alltt}
-\begin{verbatim}
-## 
-##  iter imp variable
-##   1   1  kurtosis.pop
-##   1   2  kurtosis.pop
-##   1   3  kurtosis.pop
-##   1   4  kurtosis.pop
-##   1   5  kurtosis.pop
-##   2   1  kurtosis.pop
-##   2   2  kurtosis.pop
-##   2   3  kurtosis.pop
-##   2   4  kurtosis.pop
-##   2   5  kurtosis.pop
-##   3   1  kurtosis.pop
-##   3   2  kurtosis.pop
-##   3   3  kurtosis.pop
-##   3   4  kurtosis.pop
-##   3   5  kurtosis.pop
-##   4   1  kurtosis.pop
-##   4   2  kurtosis.pop
-##   4   3  kurtosis.pop
-##   4   4  kurtosis.pop
-##   4   5  kurtosis.pop
-##   5   1  kurtosis.pop
-##   5   2  kurtosis.pop
-##   5   3  kurtosis.pop
-##   5   4  kurtosis.pop
-##   5   5  kurtosis.pop
-\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{res.dudi}\hlkwb{<-}\hlkwd{dudi.pca}\hlstd{(}\hlkwd{t}\hlstd{(matfordudi),} \hlkwc{scan}\hlstd{=F,} \hlkwc{nf}\hlstd{=}\hlnum{2}\hlstd{)}
 \hlkwd{s.corcircle}\hlstd{(res.dudi}\hlopt{$}\hlstd{co)}
@@ -1934,28 +1955,28 @@ To finish, we can do a multivariate analysis of the metrics obtain during this t
 \hlkwd{s.label}\hlstd{(res.dudi}\hlopt{$}\hlstd{li}\hlopt{+}\hlnum{0.05}\hlstd{,} \hlkwc{add.plot}\hlstd{=T,} \hlkwc{boxes}\hlstd{=F)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-581} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-601} 
 \begin{kframe}\begin{alltt}
 \hlstd{res.dudi2}\hlkwb{<-}\hlkwd{dudi.pca}\hlstd{(matfordudi2,} \hlkwc{scan}\hlstd{=F,} \hlkwc{nf}\hlstd{=}\hlnum{2}\hlstd{)}
 \hlkwd{scatter}\hlstd{(res.dudi2)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-582} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-602} 
 \begin{kframe}\begin{alltt}
 \hlkwd{s.corcircle}\hlstd{(res.dudi2}\hlopt{$}\hlstd{co)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-583} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-603} 
 \begin{kframe}\begin{alltt}
 \hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"WingL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"BeakH"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"UBeakL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"N.UBkL"}\hlstd{,}\hlnum{6}\hlstd{))),} \hlkwc{col}\hlstd{=}\hlkwd{funky}\hlstd{(}\hlnum{4}\hlstd{))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-584} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-604} 
 \begin{kframe}\begin{alltt}
 \hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"DMaj"}\hlstd{,}\hlstr{"EspHd"}\hlstd{,}\hlstr{"FlorChrl"}\hlstd{,}\hlstr{"GnovTwr"}\hlstd{,}\hlstr{"MrchBndl"}\hlstd{,}\hlstr{"SCruInde"}\hlstd{),}\hlnum{4} \hlstd{)),} \hlkwc{col}\hlstd{=}\hlkwd{funky}\hlstd{(}\hlnum{6}\hlstd{))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-585} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-605} 
 
 \end{knitrout}
 
@@ -1964,58 +1985,5 @@ To finish, we can do a multivariate analysis of the metrics obtain during this t
 
 \end{document}
 
-
-
-
-
-
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{comm}\hlkwb{<-}\hlkwd{t}\hlstd{(}\hlkwd{table}\hlstd{(ind.plot.finch,}\hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(ind.plot.finch)))}
-
-\hlstd{funct}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"spacodi.calc(sp.plot = comm, sp.traits = as.matrix(x) )$Ist"}\hlstd{,}
-         \hlstr{"spacodi.calc(sp.plot = comm, sp.traits = as.matrix(x) )$Tst"}  \hlstd{)}
-\hlstd{res.finch.sp_mn2}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch.mice,} \hlkwc{index}\hlstd{=funct,} \hlkwc{sp}\hlstd{=sp.finch,}
-                            \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),} \hlkwc{ind.plot}\hlstd{=ind.plot.finch,}
-                            \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}spacodi.calc"{}}}\begin{alltt}
-\hlstd{res.finch.sp_mn3}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{index}\hlstd{=funct,} \hlkwc{sp}\hlstd{=sp.finch,}
-                            \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{3}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{3}\hlstd{),} \hlkwc{ind.plot}\hlstd{=ind.plot.finch,}
-                            \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "nullmodels need values 1, 2, 2sp or 2sp.prab"
-\end{verbatim}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'nm.bis' introuvable}}\end{kframe}
-\end{knitrout}
-
-\newpage
-We can represent Standardized Effect Size (ses) using the function \tt{plot(as.listofindex(list1, list2, list3))}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{list.ind2}\hlkwb{<-}\hlkwd{list}\hlstd{(res.finch.sp_mn2, res.finch.sp_mn3)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch.sp\_mn3' introuvable}}\begin{alltt}
-\hlstd{index.list2}\hlkwb{<-}\hlkwd{as.listofindex}\hlstd{(list.ind2)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'list.ind2' introuvable}}\begin{alltt}
-\hlkwd{plot}\hlstd{(index.list2)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'plot' : Erreur : objet 'index.list2' introuvable}}\end{kframe}
-\end{knitrout}
 
 
