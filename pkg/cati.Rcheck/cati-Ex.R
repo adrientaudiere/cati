@@ -643,10 +643,14 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 	
 	plot(res.finch)
 	
-	plot(res.finch, type = "color_cond")
-	plot(res.finch, type = "simple")
-	plot(res.finch, type = "simple_sd")
-	plot(res.finch, type = "barplot")
+	## Not run: 
+##D 	plot(res.finch, type = "simple")
+##D 	plot(res.finch, type = "simple_sd")
+##D 	plot(res.finch, type = "barplot")
+##D 	plot(res.finch, type = "bysites")
+##D 	plot(res.finch, type = "bytraits")
+##D 	
+## End(Not run)
 	
 	attributes(sum_Tstats(res.finch))
 	head(sum_Tstats(res.finch)$p.value, 10)
@@ -675,14 +679,19 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 	colorkey = my.ckey, par.settings = my.theme,border = "black")
 	
 	
-	#### Use a different regional pool than the binding of studied communities
-	
-	#create a random regional pool for the example
-
-	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
-
-	res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-    sp = sp.finch, nperm = 9, print = FALSE)	
+	## Not run: 
+##D 		#### Use a different regional pool than the binding of studied communities
+##D 		
+##D 		#create a random regional pool for the example
+##D 	
+##D 		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+##D 	
+##D 		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+##D 	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+##D 	    
+##D 	    plot(as.listofindex(list(res.finch,res.finch2)))
+##D     
+## End(Not run)
 
 
 

@@ -779,12 +779,14 @@ others
 > 	
 > 	plot(res.finch)
 > 	
-> 	plot(res.finch, type = "color_cond")
-[1] "Error: color_cond is not a valid type of plot"
-> 	plot(res.finch, type = "simple")
-> 	plot(res.finch, type = "simple_sd")
-[1] "Error: simple_sd is not a valid type of plot"
-> 	plot(res.finch, type = "barplot")
+> 	## Not run: 
+> ##D 	plot(res.finch, type = "simple")
+> ##D 	plot(res.finch, type = "simple_sd")
+> ##D 	plot(res.finch, type = "barplot")
+> ##D 	plot(res.finch, type = "bysites")
+> ##D 	plot(res.finch, type = "bytraits")
+> ##D 	
+> ## End(Not run)
 > 	
 > 	attributes(sum_Tstats(res.finch))
 $names
@@ -1026,14 +1028,19 @@ Loading required package: grid
 + 	colorkey = my.ckey, par.settings = my.theme,border = "black")
 > 	
 > 	
-> 	#### Use a different regional pool than the binding of studied communities
-> 	
-> 	#create a random regional pool for the example
-> 
-> 	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
-> 
-> 	res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-+     sp = sp.finch, nperm = 9, print = FALSE)	
+> 	## Not run: 
+> ##D 		#### Use a different regional pool than the binding of studied communities
+> ##D 		
+> ##D 		#create a random regional pool for the example
+> ##D 	
+> ##D 		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+> ##D 	
+> ##D 		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+> ##D 	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+> ##D 	    
+> ##D 	    plot(as.listofindex(list(res.finch,res.finch2)))
+> ##D     
+> ## End(Not run)
 > 
 > 
 > 
@@ -1889,7 +1896,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.79 0.19 11.01 NA NA 
+Time elapsed:  31.76 1.31 34.1 NA NA 
 > grDevices::dev.off()
 null device 
           1 

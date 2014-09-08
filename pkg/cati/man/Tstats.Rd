@@ -43,7 +43,7 @@
 	}
 	
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
+		Regional pool data for traits. If not informed, 'traits' is considered as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
 	}	
 	
 	\item{nperm}{
@@ -83,7 +83,7 @@
 	}
 	
 	\item{type}{
-		For the plot function, type of plot. Either "color_cond", "simple", "simple_sd", "normal" and "barplot". 
+		For the plot function, type of plot. Possible type = "simple", "simple_range", "normal", "barplot" and "bytraits".
 		For the summary function, type of summary statistics. Either "binary", "percent", "p.value", "site" or "all". 
 	}
 	
@@ -99,10 +99,11 @@
 \details{
 	S3 method plot:
 	-Normal type plot means, standard deviations, ranges and confidence intervals of T-statistics.
-	-Color_cond type plot T-statistics for each site and traits with color for significant values and grey for non signifivative ones. 
-	-Simple_sd type plot means, standard deviations and confidence intervals of T-statistics
+	-Simple_range type plot means, standard deviations and range of T-statistics
 	-Simple type plot T-statistics for each site and traits and the mean confidence intervals by traits
 	-Barplot type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
+	-Bysites type plot each metrics for each sites
+	-Bytraits type plot each metrics for each traits
 	
 	S3 method print: print the structure if the object of class Tstats
 	
@@ -177,10 +178,13 @@
 	
 	plot(res.finch)
 	
-	plot(res.finch, type = "color_cond")
+	\dontrun{
 	plot(res.finch, type = "simple")
 	plot(res.finch, type = "simple_sd")
 	plot(res.finch, type = "barplot")
+	plot(res.finch, type = "bysites")
+	plot(res.finch, type = "bytraits")
+	}
 	
 	attributes(sum_Tstats(res.finch))
 	head(sum_Tstats(res.finch)$p.value, 10)
@@ -209,12 +213,16 @@
 	colorkey = my.ckey, par.settings = my.theme,border = "black")
 	
 	
-	#### Use a different regional pool than the binding of studied communities
+	\dontrun{
+		#### Use a different regional pool than the binding of studied communities
+		
+		#create a random regional pool for the example
 	
-	#create a random regional pool for the example
-
-	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
-
-	res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-    sp = sp.finch, nperm = 9, print = FALSE)	
+		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+	
+		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+	    
+	    plot(as.listofindex(list(res.finch,res.finch2)))
+    }
 }
