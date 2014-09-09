@@ -4,6 +4,7 @@
 \alias{MinNND}
 \alias{SDNND}
 \alias{SDND}
+\alias{MND}
 
 \title{
 	Coefficient of variation, mean, minimum and standard deviation of the nearest neigbourhood distance.
@@ -11,10 +12,16 @@
 
 \description{
 	CVNND : Coefficient of variation of the nearest neigbourhood distance
+	
 	MNND : Mean of the nearest neigbourhood distance
+	
 	MinNND : Minimum of the nearest neigbourhood distance	
+	
 	SDNND : Standard deviation of the nearest neigbourhood distance
+	
 	SDND : Standard deviation of the neigbourhood distance
+	
+	MND : Mean of the neigbourhood distance
 }
 
 \usage{
@@ -30,7 +37,9 @@
 	SDNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE, 
 	method.dist = "euclidian")
 	
-	SDND(trait, div_range = FALSE, na.rm = FALSE)
+	SDND(trait, div_range = FALSE, na.rm = FALSE)	
+	
+	MND(trait, div_range = FALSE, na.rm = FALSE)
 }
 
 \arguments{
@@ -74,15 +83,14 @@
 
 \examples{
 data(finch.ind)
-CVNND(traits.finch[,1])
-CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
-
-CVNND(traits.finch)
 \dontrun{
+	CVNND(traits.finch[,1])
+	CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
+	CVNND(traits.finch)
 	CVNND(traits.finch, scale.tr = FALSE)
+	SDND(traits.finch[,1])
 }
 
-SDND(traits.finch[,1])
 }
 
 

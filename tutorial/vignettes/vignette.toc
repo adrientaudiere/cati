@@ -5,24 +5,24 @@
 \contentsline {subsection}{\numberline {2.1}Installing the package \textit (cati)}{3}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Getting help}{4}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}Data presentation: Darwin finches in Galapagos Island}{4}{subsection.2.3}
-\contentsline {section}{\numberline {3}Description of traits distributions}{5}{section.3}
-\contentsline {subsection}{\numberline {3.1}Plot the kernel density of traits}{5}{subsection.3.1}
-\contentsline {section}{\numberline {4}Decomposition of variances}{13}{section.4}
-\contentsline {subsection}{\numberline {4.1}Decomposition of within/among species variances using rao diversity}{13}{subsection.4.1}
-\contentsline {subsubsection}{\numberline {4.1.1}Multitraits analysis}{13}{subsubsection.4.1.1}
-\contentsline {subsubsection}{\numberline {4.1.2}Unitraits analysis}{15}{subsubsection.4.1.2}
-\contentsline {subsection}{\numberline {4.2}Decomposition of community trait response to environment into intraspecific trait variability, variability due to species turnover and their covariation.}{16}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Decomposition of traits variances using nested factors}{19}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}Plot the relation between populational trait means and sites traits means.}{21}{subsection.4.4}
-\contentsline {section}{\numberline {5}Test of community assembly}{26}{section.5}
-\contentsline {subsection}{\numberline {5.1}Ratio of variances: T-statistics}{26}{subsection.5.1}
+\contentsline {section}{\numberline {3}Description of traits distributions}{6}{section.3}
+\contentsline {subsection}{\numberline {3.1}Plot the kernel density of traits}{6}{subsection.3.1}
+\contentsline {section}{\numberline {4}Decomposition of variances}{14}{section.4}
+\contentsline {subsection}{\numberline {4.1}Decomposition of within/among species variances using rao diversity}{14}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Multitraits analysis}{14}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Unitraits analysis}{16}{subsubsection.4.1.2}
+\contentsline {subsection}{\numberline {4.2}Decomposition of community trait response to environment into intraspecific trait variability, variability due to species turnover and their covariation.}{17}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Decomposition of traits variances using nested factors}{20}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Plot the relation between populational trait means and sites traits means.}{22}{subsection.4.4}
+\contentsline {section}{\numberline {5}Test of community assembly}{27}{section.5}
+\contentsline {subsection}{\numberline {5.1}Ratio of variances: T-statistics}{27}{subsection.5.1}
 \contentsline {subsubsection}{\numberline {5.1.1}S3 methods for class Tstats}{27}{subsubsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.2}Plot T-statistics correlations}{32}{subsubsection.5.1.2}
-\contentsline {subsection}{\numberline {5.2}Others univariates metrics: function \tt {ComIndex} and \tt {ComIndexMulti}}{37}{subsection.5.2}
-\contentsline {subsubsection}{\numberline {5.2.1}S3 methods for class ComIndex and ComIndexMulti}{38}{subsubsection.5.2.1}
-\contentsline {subsubsection}{\numberline {5.2.2}Plot Tstats and other uni/multivariates metrics together}{42}{subsubsection.5.2.2}
+\contentsline {subsubsection}{\numberline {5.1.2}Plot T-statistics correlations}{33}{subsubsection.5.1.2}
+\contentsline {subsection}{\numberline {5.2}Others univariates metrics: function \tt {ComIndex} and \tt {ComIndexMulti}}{38}{subsection.5.2}
+\contentsline {subsubsection}{\numberline {5.2.1}S3 methods for class ComIndex and ComIndexMulti}{39}{subsubsection.5.2.1}
+\contentsline {subsubsection}{\numberline {5.2.2}Plot Tstats and other uni/multivariates metrics together}{43}{subsubsection.5.2.2}
 \contentsline {subsection}{\numberline {5.3}Multivariates index}{49}{subsection.5.3}
 \contentsline {section}{\numberline {6}Others graphics functions}{62}{section.6}
 \contentsline {section}{\numberline {7}Conclusion}{69}{section.7}
-\contentsline {section}{\numberline {8}Conclusion}{76}{section.8}
-\contentsline {section}{\numberline {9}Acknowledgment}{76}{section.9}
+\contentsline {section}{\numberline {8}Conclusion}{71}{section.8}
+\contentsline {section}{\numberline {9}Acknowledgment}{71}{section.9}

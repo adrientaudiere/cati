@@ -11,11 +11,10 @@
 
 \usage{
 	\method{plot}{listofindex}(x, type = "normal", 
-	col.index = c("red", "purple", "green"), add.conf = TRUE, 
+	col.index = c("red", "purple", "olivedrab3"), add.conf = TRUE, 
 	color.cond = TRUE, val.quant = c(0.025, 0.975), 
 	grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, 
-	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, 
-	bysite = FALSE, ...)
+	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, alpha = 0.5 ...)
 }
 
 \arguments{
@@ -72,13 +71,24 @@
 		Degree of rotation for text.
 	}
 	
-	\item{bysite}{
-		Logical value; plot per site or by traits. 
+	\item{alpha}{
+		Degree of transparency for null models aera.
 	}
 	
 	\item{\dots}{
 		Any additional arguments are passed to the plot function creating the core of the plot and can be used to adjust the look of resulting graph.
 	}
+}
+
+
+\details{
+	S3 method plot for class listofindex:
+	-Normal type plot means, standard deviations, ranges and confidence intervals of T-statistics.
+	-Simple_range type plot means, standard deviations and range of T-statistics
+	-Simple type plot T-statistics for each site and traits and the mean confidence intervals by traits
+	-Barplot type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
+	-Bysites type plot each metrics for each sites
+	-Bytraits type plot each metrics for each traits
 }
 
 \value{
@@ -104,22 +114,21 @@
 	#(like mean, range, variance...) to calculate customize index.
 	
 	require(e1071)
-	
 
 	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
-	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
+	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)")
 	
 	\dontrun{
 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = "2", ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 
 		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = "2sp", ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 
 		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = "2sp", ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
 		####
@@ -141,7 +150,7 @@
 	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
-	min(x, na.rm = TRUE) )", "tapply(x, ind.plot.finch, function(x) CVNND(x))")
+	min(x, na.rm = TRUE) )")
 
 	##Null model 1 is trivial for this function 
 	#because randomisation is within community only
@@ -149,11 +158,11 @@
 	\dontrun{
 
 		res.finch.ind_mn1 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c(1,1,1,1), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c(1,1,1), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 		
 		res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 
 		
@@ -176,22 +185,20 @@
 		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
 		function(x) mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
 		function(x) kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-		"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
+		function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )")
 		
 			
 		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
 		mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
 		kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-		"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )")
 		
 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
-		sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2","2","2"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 				
 		res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
-		sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
+		sp = sp.finch, nullmodels = c("2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
 		nperm = 9, print = FALSE)
 	}
 	
@@ -205,23 +212,21 @@
 		
 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
 		
-		index.list1 <- as.listofindex(list.ind, namesindex = c("mean", "kurtosis", 
-		"range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+		index.list1 <- as.listofindex(list.ind, namesindex = 
+		c("mean", "kurtosis", "range", "mean.pop", "kurtosis.pop", "range.pop", 
 		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
 		
 		class(index.list1)
-		
-		par(mfrow = c(2,3))
-		plot(index.list1, type = "bytraits", bysite = TRUE)
-		
-		par(mfrow = c(2,2))
-		plot(index.list1,type = "bytraits")
-		par(mfrow = c(1,1))
 		
 		plot(index.list1, type = "simple")
 		plot(index.list1, type = "simple_range")
 		plot(index.list1, type = "barplot")
 		plot(index.list1, type = "normal")
+		
+				
+		plot(index.list1, type = "bysites")
+		
+		plot(index.list1,type = "bytraits")
 	}
 }
 
