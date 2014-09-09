@@ -11,11 +11,10 @@
 
 \usage{
 	\method{plot}{listofindex}(x, type = "normal", 
-	col.index = c("red", "purple", "green"), add.conf = TRUE, 
+	col.index = c("red", "purple", "olivedrab3"), add.conf = TRUE, 
 	color.cond = TRUE, val.quant = c(0.025, 0.975), 
 	grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, 
-	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, 
-	bysite = FALSE, ...)
+	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, ...)
 }
 
 \arguments{
@@ -72,13 +71,20 @@
 		Degree of rotation for text.
 	}
 	
-	\item{bysite}{
-		Logical value; plot per site or by traits. 
-	}
-	
 	\item{\dots}{
 		Any additional arguments are passed to the plot function creating the core of the plot and can be used to adjust the look of resulting graph.
 	}
+}
+
+
+\details{
+	S3 method plot for class listofindex:
+	-Normal type plot means, standard deviations, ranges and confidence intervals of T-statistics.
+	-Simple_range type plot means, standard deviations and range of T-statistics
+	-Simple type plot T-statistics for each site and traits and the mean confidence intervals by traits
+	-Barplot type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
+	-Bysites type plot each metrics for each sites
+	-Bytraits type plot each metrics for each traits
 }
 
 \value{
@@ -104,7 +110,6 @@
 	#(like mean, range, variance...) to calculate customize index.
 	
 	require(e1071)
-	
 
 	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
 	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )

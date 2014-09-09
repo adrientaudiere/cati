@@ -14,16 +14,13 @@
 
 \usage{
 	ComIndexMulti(traits = NULL, index = NULL, by.factor = NULL, 
-	namesindex = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, 
-	com = NULL, reg.pool = NULL, nperm = 99, printprogress = TRUE, 
-	ind.value = TRUE, type.sp.val = "count")
+	nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, 
+	namesindex = NULL, reg.pool = NULL, nperm = 99, 
+	printprogress = TRUE, type.sp.val = "count")
 	
 	\method{plot}{ComIndexMulti}(x, type = "normal", 
-	col.index = c("red", "purple", "green"), add.conf = TRUE, 
-	color.cond = TRUE, val.quant = c(0.025, 0.975), 
-	grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, 
-	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, 
-	bysite = FALSE, ...)
+	col.index = c("red", "purple", "olivedrab3"), add.conf = TRUE, 
+	color.cond = TRUE, val.quant = c(0.025, 0.975), ...)
 		
 	\method{print}{ComIndexMulti}(x, \dots)
 		
@@ -45,10 +42,6 @@
 		A factor to split the Matrix of traits and compute index for each subset eg for each site.  
 	}
 	
-	\item{namesindex}{
-		A vector of names for metrics.
-	}
-	
 	\item{nullmodels}{
 		A vector of values corresponding to null models tu use for each index. A value of 1 corresponds to a randomization of individual values within a given community. A value of 2 corresponds to randomization of individual values within region, ie within all the dataset. A value of 2sp corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. Finally a value of 2sp.prab mirror null model 2 but without taking indo account species abundance. For example, if nullmodels = c(1,2), the first index will be calculated on the null model 1 and the second index on the null model 2.
 		
@@ -64,8 +57,12 @@
 	}
 	
 	\item{com}{
-		Community data matrix with species (or populations) in rows and sites in column. Use only if ind.value = FALSE. 
+		Community data matrix with species (or populations) in rows and sites in column. Use only if ind.plot = NULL. 
 		"traits" matrix and "com" matrix must have the same number of rows.
+	}
+	
+	\item{namesindex}{
+		A vector of names for metrics.
 	}
 	
 	\item{reg.pool}{
@@ -73,19 +70,15 @@
 	}	
 	
 	\item{nperm}{
-		Number of permutations. If NULL, only observed values are returned; 
+		Number of permutations. If NULL, only observed values are returned.
 	}
 	
 	\item{printprogress}{
 		Logical value; print progress during the calculation or not.
 	}
 	
-	\item{ind.value}{
-		Do the data are from individual value. If not, an internal function transform the abundance data matrix of com into a individual like matrix to compute the function.
-	}
-	
 	\item{type.sp.val}{
-		Only if ind.value = FALSE. Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one.
+		Only if ind.plot = NULL. Either "count" or "abundance". Use abundance when all values in the com matrix are not superior to one.
 	}
 	
 	\item{x}{
@@ -116,41 +109,19 @@
 		Numeric vectors of length 2, giving the quantile to calculate confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
-	\item{grid.v}{
-		Logical value; print vertical grid or not
-	}
-	
-	\item{grid.h}{
-		Logical value; print horizontal grid or not
-	}
-	
-	\item{xlim}{
-		Numeric vectors of length 2, giving the x coordinates range 
-	}
-	
-	\item{ylim}{
-		Numeric vectors of length 2, giving the y coordinates range 
-	}
-		
-	\item{cex.text}{
-		Numeric value; the magnification to be used for text relative to the current setting of cex
-	}
-	
-	\item{plot.ask}{
-		Logical value; ask for plotting the next plot or not.
-	}
-	
-	\item{srt.text}{
-		Degree of rotation for text.
-	}
-	
-	\item{bysite}{
-		Logical value; plot per site or by traits. 
-	}
-	
 	\item{\dots}{
-		Any additional arguments are passed to the plot, print or summary function creating the core of the plot and can be used to adjust the look of resulting graph.
+		Any additional arguments are passed to the plot, print or summary function creating the core of the plot and can be used to adjust the look of resulting graph. See \code{\link{plot.listofindex}} for more arguments.
 	}
+}
+
+\details{
+	S3 method plot for class listofindex:
+	-Normal type plot means, standard deviations, ranges and confidence intervals of T-statistics.
+	-Simple_range type plot means, standard deviations and range of T-statistics
+	-Simple type plot T-statistics for each site and traits and the mean confidence intervals by traits
+	-Barplot type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
+	-Bysites type plot each metrics for each sites
+	-Bytraits type plot each metrics for each traits
 }
 
 \value{
@@ -158,13 +129,19 @@
 	
 	\item{$obs}{List of observed values for each trait in each community. Each component of the list correspond to a matrix containing the result for each custom function.}
 	
-	\item{$Null}{List of null values for each trait in each community. Each component of the list correspond to an array containing the result of the permutations for each custom function.}
-	
-	\item{$list.index}{List of index values and associate null models. Internal use in other function. Traits in columns.}
-	\item{$list.index.t}{List of index values and associate null models. Internal use in other function. Traits in rows.}
+	\item{$null}{List of null values for each trait in each community. Each component of the list correspond to an array containing the result of the permutations for each custom function.}
 	
 	\item{$sites_richness}{Number of species per site.}
 	\item{$namestraits}{Names of traits.}
+	
+	\item{$traits}{traits data}
+ 	\item{$ind.plot}{name of the plot in which the individual is}
+ 	\item{$sp}{groups (e.g. species) which the individual belong to}
+ 	
+ 	\item{$call}{call of the function Tstats}
+ 	
+ 	\item{$list.index}{List of index values and associate null models. Internal use in other function. Traits in columns.}
+	\item{$list.index.t}{List of index values and associate null models. Internal use in other function. Traits in rows.}
 }
 
 \author{

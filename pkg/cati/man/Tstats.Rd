@@ -14,16 +14,15 @@
 }
 
 \usage{
-	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = NULL, printprogress = TRUE)
+	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = 99, printprogress = TRUE)
 	
 	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 		
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
-	col.Tstats = c("red", "purple", "green", "white"), ylim = NULL, \dots)
-	
-	\method{plot}{Tstats}(x, val.quant = c(0.025, 0.975), 
-	col.Tstats = c("red", "purple", "green"), type = "normal", 
-	add.conf = TRUE, ylim = NULL, xlim = NULL, \dots)
+	col.index = c("red", "purple", "olivedrab3", "white"), ylim = NULL, \dots)
+                 
+	\method{plot}{Tstats}(x, type = "normal", col.index = c("red", "purple", "olivedrab3"),
+	add.conf = TRUE, color.cond = TRUE, val.quant = c(0.025, 0.975), \dots)
 		
 	\method{print}{Tstats}(x, \dots)
 		
@@ -44,7 +43,7 @@
 	}
 	
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
+		Regional pool data for traits. If not informed, 'traits' is considered as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
 	}	
 	
 	\item{nperm}{
@@ -71,12 +70,20 @@
 		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 	
-	\item{col.Tstats}{
+	\item{ylim}{
+		Numeric vectors of length 2, giving the y coordinates range 
+	}
+	
+	\item{col.index}{
 		A vector of three color correspond to the three T-statistics.
 	}
 	
+	\item{color.cond}{
+		Logical value; If color.cond = TRUE, color points indicate T-statistics values significatively different from the null model and grey points are not different from null model.
+	}
+	
 	\item{type}{
-		For the plot function, type of plot. Either "color_cond", "simple", "simple_sd", "normal" and "barplot". 
+		For the plot function, type of plot. Possible type = "simple", "simple_range", "normal", "barplot" and "bytraits".
 		For the summary function, type of summary statistics. Either "binary", "percent", "p.value", "site" or "all". 
 	}
 	
@@ -84,26 +91,19 @@
 		Logical value; Add confidence intervals or not. 
 	}
 	
-	\item{ylim}{
-		limits for the y axis.
-	}
-	
-	\item{xlim}{
-		limits for the x axis.
-	}
-	
 	\item{\dots}{
-		Any additional arguments are passed to the plot function creating the core of the plot and can be used to adjust the look of resulting graph.
+		Any additional arguments are passed to the plot function creating the core of the plot and can be used to adjust the look of resulting graph. See \code{\link{plot.listofindex}} for more arguments.
 	}
 }
 
 \details{
 	S3 method plot:
 	-Normal type plot means, standard deviations, ranges and confidence intervals of T-statistics.
-	-Color_cond type plot T-statistics for each site and traits with color for significant values and grey for non signifivative ones. 
-	-Simple_sd type plot means, standard deviations and confidence intervals of T-statistics
+	-Simple_range type plot means, standard deviations and range of T-statistics
 	-Simple type plot T-statistics for each site and traits and the mean confidence intervals by traits
 	-Barplot type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
+	-Bysites type plot each metrics for each sites
+	-Bytraits type plot each metrics for each traits
 	
 	S3 method print: print the structure if the object of class Tstats
 	
@@ -120,14 +120,13 @@
 \value{
 	A list of statistics:
 	
-		
 	\item{$tstats$Tstats$T_IP.IC}{Observed ratio between variance of individuals in populations and individuals in communities}
 	\item{$tstats$Tstats$T_IC.IR}{Observed ratio between variance of individuals in communities and individuals in the region}
 	\item{$tstats$Tstats$T_PC.PR}{Observed ratio between variance of populations in communities and populations in the region}
 	
-	\item{$tstats$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
-	\item{$tstats$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
-	\item{$tstats$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
+	\item{$tstats$Tstats$T_IP.IC_nm}{If nperm is numeric; Result of simulation for T_IP.IC}
+	\item{$tstats$Tstats$T_IC.IR_nm}{If nperm is numeric; Result of simulation for T_IC.IR}
+	\item{$tstats$Tstats$T_PC.PR_nm}{If nperm is numeric; Result of simulation for T_PC.PR}
 	
 	\item{$variances$var_IP}{variance of individuals within populations}    
 	\item{$variances$var_PC}{variance of populations within communities}
@@ -142,6 +141,12 @@
 	\item{$variances$var_IC_nm2}{variance of individuals within communities in null model 2}
 	\item{$variances$var_PR_nm2sp}{variance of populations within the region in null model 2sp}
 	\item{$variances$var_IR_nm2}{variance of individuals within the region in null model 2}
+	
+	\item{$traits}{traits data}
+ 	\item{$ind.plot}{name of the plot in which the individual is}
+ 	\item{$sp}{groups (e.g. species) which the individual belong to}
+ 	
+ 	\item{$call}{call of the function Tstats}
 }
 
 \references{
@@ -167,16 +172,19 @@
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9, print = FALSE)
 	
-	attributes(res.finch)
+	res.finch
 
 	#Tstats class is associated to S3 methods plot, barplot and summary
 	
 	plot(res.finch)
 	
-	plot(res.finch, type = "color_cond")
+	\dontrun{
 	plot(res.finch, type = "simple")
 	plot(res.finch, type = "simple_sd")
 	plot(res.finch, type = "barplot")
+	plot(res.finch, type = "bysites")
+	plot(res.finch, type = "bytraits")
+	}
 	
 	attributes(sum_Tstats(res.finch))
 	head(sum_Tstats(res.finch)$p.value, 10)
@@ -205,17 +213,16 @@
 	colorkey = my.ckey, par.settings = my.theme,border = "black")
 	
 	
-	#### Use a different regional pool than the binding of studied communities
+	\dontrun{
+		#### Use a different regional pool than the binding of studied communities
+		
+		#create a random regional pool for the example
 	
-	#create a random regional pool for the example
-
-	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
-
-	res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-    sp = sp.finch, nperm = 9, print = FALSE)	
+		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+	
+		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+	    
+	    plot(as.listofindex(list(res.finch,res.finch2)))
+    }
 }
-
-
-
-
-
