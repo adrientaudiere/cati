@@ -73,8 +73,9 @@
 }
 
 \examples{	
-	data(finch.ind)
-	
+data(finch.ind)
+
+\dontrun{
 	#Plot the distribution of trait values for populations, 
 	#species, sites and regional scales. 
 	
@@ -103,12 +104,15 @@
 	par(mfrow = c(1,1), cex = 1)
 	plotDistri(traits.finch, rep("region", times = dim(traits.finch)[1]), 
 	sp.finch, ylim.cex = 6, plot.ask = FALSE, leg = FALSE)
-		
-	### You can also plot trait distribution for all sites
-	#without taking into account species identity
 	
-	plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]), 
-	ind.plot.finch, ylim.cex = 3, plot.ask = FALSE)
+}
+	
+### You can also plot trait distribution for all sites
+#without taking into account species identity
+
+plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]), 
+ind.plot.finch, ylim.cex = 3, plot.ask = FALSE)
+
 }
 
 

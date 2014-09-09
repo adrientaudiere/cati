@@ -52,9 +52,7 @@ opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE
 \newpage
 
 
-%%%%%%%%%%%%%%%%
 \section{Introduction}
-%%%%%%%%%%%%%%%%
 This vignette present the \textit(cati) package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
 
 \section{Getting started}
@@ -72,7 +70,7 @@ R.version.string
 Then, install \textit{cati} with dependencies using:
 <<results='hide'>>=
 #install.packages("cati", dep=TRUE)
-install.packages("C:/Users/taudiere/Desktop/cati/pkg/cati_0.91.zip", repos=NULL)
+install.packages("C:/Users/taudiere/Desktop/cati/pkg/cati_0.92.zip", repos=NULL)
 library("cati")
 @
 
@@ -118,12 +116,18 @@ data(finch.ind)
 old.par<-par(no.readonly = TRUE)
 @
 
-Now we can see 3 objects: a traits matrix 
+Now we can see 3 objects: a traits matrix traits.finch, a vector of species names sp.finch and a vector of sites names ind.plot. 
 <<results='hide', message=FALSE, warning=FALSE>>= 
-dim(traits.finch) #the trait matrix contains 2513 individuals values for 4 traits
+dim(traits.finch) 
+#the trait matrix contains 2513 individuals values for 4 traits
 
-table(sp.finch) #the species names vector contains 2513 individuals belonging to 12 species
-table(ind.plot.finch) #the sites names vector contains 2513 individuals belonging to 6 sites (Island)
+table(sp.finch) 
+#the species names vector contains 
+#2513 individuals belonging to 12 species
+
+table(ind.plot.finch)
+#the sites names vector contains
+#2513 individuals belonging to 6 sites (Here 6 Island)
 @
 
 The four traits correspond to three beak traits and one wing trait.
@@ -227,6 +231,8 @@ witRao<-res.rao$FD$Mean_Alpha  #overall within species variance
 betRao<-res.rao$FD$Beta_add    #between species variance
 totRao<-res.rao$FD$Gamma       #the total variance
 
+#Check that the total variance is equal
+#to between species + within species variances
 witRao+betRao
 totRao
 @
@@ -376,13 +382,14 @@ For a more simple figure, add the option resume=TRUE. Again if we change the val
 <<dev='pdf'>>=
 plotSpPop(traits.finch, ind.plot.finch, sp.finch,
            silent=TRUE, resume=TRUE, col.pop="grey")
+
 plotSpPop(traits.finch, ind.plot.finch, sp.finch, 
            silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black")
+
 plotSpPop(traits.finch, ind.plot.finch, sp.finch, 
            silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black", 
            p.val=0.1,  min.ind.signif=3)
 @
-
 
 
 \newpage
@@ -402,8 +409,6 @@ The funcion Tstats computes observed T-statistics (T for Traits; Violle et al (2
 res.finch<-Tstats(traits.finch, ind.plot=ind.plot.finch, sp=sp.finch,
                   nperm=9, print=FALSE)
 res.finch
-attributes(res.finch)
-str(res.finch)
 @
 
 
@@ -412,16 +417,16 @@ Tstats class is associated to S3 methods plot, barplot, print and summary
 
 <<dev='pdf', fig.width=6, fig.height=6, fig.align='center'>>=
 plot(res.finch)
-abline(v=0)
 @
 
 There is multiple kind of representation avaible
- <<dev='pdf', fig.width=7.5, fig.height=7.5, fig.align='center'>>=
-par(mfrow=c(2,2))
-plot(res.finch, type="color_cond")
+<<dev='pdf', fig.width=4.5, fig.height=3.5, fig.align='center'>>=
 plot(res.finch, type="simple")
-plot(res.finch, type="simple_sd")
+plot(res.finch, type="simple_range")
 plot(res.finch, type="barplot")
+plot(res.finch, type="bytraits")
+plot(res.finch, type="bysites")
+
 par(old.par)
 @
 
@@ -586,7 +591,7 @@ class(i.l1)
 The plot type \tt{bytraits} allows to plot all SES traits values for all sites or all traits
 <<dev='pdf'>>=
 par(mfrow=c(2,3))
-plot(i.l1,type="bytraits", bysite=TRUE)
+plot(i.l1,type="bysites")
 
 par(mfrow=c(2,2))
 plot(i.l1,type="bytraits")
@@ -819,11 +824,16 @@ library(ade4)
    matfordudi2[,i]<-as.vector(ses.list[[i]]$ses)
  }
  colnames(matfordudi2)<-names(ses.list)
- 
+@
+
+<<results='hide'>>=
 #Use mice for the purpose of this example
 matfordudi<-complete(mice(matfordudi))
 matfordudi2<-complete(mice(matfordudi2))
-  
+@
+
+
+<<dev='pdf'>>=  
 res.dudi<-dudi.pca(t(matfordudi), scan=F, nf=2) 
 s.corcircle(res.dudi$co)
 s.label(res.dudi$li, add.plot=T, clabel = 0, pch=16)
@@ -841,33 +851,5 @@ s.class(res.dudi2$li, as.factor(rep(c("DMaj","EspHd","FlorChrl","GnovTwr","MrchB
 
 \end{document}
 
-
-
-
-
-
-
-<<>>=
-comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
- 
-funct<-c("spacodi.calc(sp.plot = comm, sp.traits = as.matrix(x) )$Ist",
-         "spacodi.calc(sp.plot = comm, sp.traits = as.matrix(x) )$Tst"  )
-res.finch.sp_mn2<-ComIndex(traits=traits.finch.mice, index=funct, sp=sp.finch, 
-                            nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch,
-                            nperm=9, print=FALSE)
-
-res.finch.sp_mn3<-ComIndex(traits=traits.finch, index=funct, sp=sp.finch,
-                            nullmodels=c(3,3,3,3), ind.plot=ind.plot.finch, 
-                            nperm=9, print=FALSE)
-@
-
-\newpage
-We can represent Standardized Effect Size (ses) using the function \tt{plot(as.listofindex(list1, list2, list3))}
-<<dev='pdf'>>=
-list.ind2<-list(res.finch.sp_mn2, res.finch.sp_mn3)
-index.list2<-as.listofindex(list.ind2)
-
-plot(index.list2)
-@
 
 
