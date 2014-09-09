@@ -66,27 +66,24 @@
 }
 
 \examples{
-data(finch.ind)
 
+	data(finch.ind)
+	
+	cond<-seq(1,length(sp.finch)*2, by = 2)
+	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[cond])
 
-cond<-seq(1,length(sp.finch)*2, by = 2)
-genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[cond])
-
-genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))
-[seq(1,length(sp.finch)*2, by = 2)])
-
-
-res.partvar.finch <- partvar(traits = traits.finch, 
-factors = cbind(sites = as.factor(as.vector(ind.plot.finch)), 
-species = as.factor(as.vector(sp.finch)), genus = as.factor(genus)))
-
-res.partvar.finch
-
-par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2))
-piePartvar(res.partvar.finch, col = c("red", "green", "blue", "purple"))
-par(oldpar)
-
-barPartvar(res.partvar.finch, col = c("red", "green", "blue", "purple"))
+	res.partvar.finch <- partvar(traits = traits.finch, 
+	factors = cbind(sites = as.factor(as.vector(ind.plot.finch)), 
+	species = as.factor(as.vector(sp.finch)), genus = as.factor(genus)))
+	
+	res.partvar.finch
+	
+	oldpar<-par()
+	par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2))
+	piePartvar(res.partvar.finch, col = c("red", "olivedrab3", "blue", "purple"))
+	par(oldpar)
+	
+	barPartvar(res.partvar.finch, col = c("red", "olivedrab3", "blue", "purple"))
 
 }
 

@@ -43,6 +43,7 @@
 \examples{
 	data(finch.ind)
 
+	\dontrun{
 
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
 	nperm = 9, print = FALSE)
@@ -132,4 +133,6 @@
 	
 	levelplot(t(ses.list.levelplot), colorkey = my.ckey, 
 	par.settings = my.theme,border = "black")
+	
+	}
 }
