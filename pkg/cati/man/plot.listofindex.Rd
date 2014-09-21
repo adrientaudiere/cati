@@ -14,7 +14,7 @@
 	col.index = c("red", "purple", "olivedrab3"), add.conf = TRUE, 
 	color.cond = TRUE, val.quant = c(0.025, 0.975), 
 	grid.v = TRUE, grid.h = TRUE, xlim = NULL, ylim = NULL, 
-	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, alpha = 0.5 ...)
+	cex.text = 0.8, plot.ask = FALSE, srt.text = 90, alpha = 0.4, ...)
 }
 
 \arguments{
