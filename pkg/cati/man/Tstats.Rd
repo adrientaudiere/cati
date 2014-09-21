@@ -180,7 +180,7 @@
 	
 	\dontrun{
 	plot(res.finch, type = "simple")
-	plot(res.finch, type = "simple_sd")
+	plot(res.finch, type = "simple_range")
 	plot(res.finch, type = "barplot")
 	plot(res.finch, type = "bysites")
 	plot(res.finch, type = "bytraits")
@@ -215,7 +215,6 @@
 	
 	\dontrun{
 		#### Use a different regional pool than the binding of studied communities
-		
 		#create a random regional pool for the example
 	
 		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
@@ -224,5 +223,23 @@
 	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
 	    
 	    plot(as.listofindex(list(res.finch,res.finch2)))
-    }
+    
+    
+	    #### Use a different regional pool for each communities
+		#create a random regional pool for each communities for the example
+		list.reg.p <- list(
+		traits.finch[sample(1:290,200), ], traits.finch[sample(100:1200,300), ], 
+		traits.finch[sample(100:1500, 1000), ], traits.finch[sample(300:800,300), ],
+		traits.finch[sample(1000:2000, 500), ], traits.finch[sample(100:900, 700), ] )
+
+		# Warnings: the regional pool need to be larger than the observed communities
+		table(ind.plot.finch)
+		# For exemple, the third community need a regional pool of more than 981 individuals
+		
+		res.finch3 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	    sp = sp.finch, reg.pool=list.reg.p, nperm = 9, print = FALSE)	
+	    
+	    plot(as.listofindex(list(res.finch, res.finch2, res.finch3)))	
+	}
+	
 }
