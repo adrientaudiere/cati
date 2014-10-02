@@ -232,7 +232,7 @@
 		traits.finch[sample(100:1500, 1000), ], traits.finch[sample(300:800,300), ],
 		traits.finch[sample(1000:2000, 500), ], traits.finch[sample(100:900, 700), ] )
 
-		# Warnings: the regional pool need to be larger than the observed communities
+		# Warning: the regional pool need to be larger than the observed communities
 		table(ind.plot.finch)
 		# For exemple, the third community need a regional pool of more than 981 individuals
 		
