@@ -1,4 +1,4 @@
-\name{CVNND}
+\name{Neigbourhood distance metrics}
 \alias{CVNND}
 \alias{MNND}
 \alias{MinNND}
