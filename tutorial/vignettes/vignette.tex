@@ -52,23 +52,22 @@
 \usepackage{graphicx}
 \usepackage{color}
 \definecolor{blue1}{RGB}{0,102,204}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[colorlinks = true,linkcolor = blue,citecolor = blue,urlcolor = blue]{hyperref}
 \usepackage{array}
 \usepackage[english]{babel}
 \usepackage{amsfonts}
 \usepackage{url}
 \usepackage{bm}
-\usepackage[margin=1.5cm]{geometry}
+\usepackage[margin = 1.5cm]{geometry}
 \usepackage[affil-it]{authblk}
+\usepackage{hyperref}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\code}[1]{{{\tt #1}}}
 
 
 \title{Illustrating package cati (Community Assembly by Traits: Individuals and beyond) using Darwin finches data}
-\author{Adrien Taudiere and Cyrille Violle
-\thanks{\texttt{adrien.taudiere@cefe.cnrs.fr}}
-}
+\author{Adrien Taudiere\thanks{\texttt{adrien.taudiere@cefe.cnrs.fr}} and Cyrille Violle}
 
 \affil{{\footnotesize CEFE - Centre d'Ecologie Fonctionnelle et Evolutive, Montpellier: France}}
 
@@ -90,8 +89,21 @@
 \maketitle
 
 \begin{abstract}
-  This vignette present the \textit(cati) package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
+1) The description of species by functional traits and the subsequent quantification of the functional structure of ecological communities have recently stimulated the field of community ecology. Patterns of trait distribution within communities are increasingly reliable indicator of community assembly processes. Myriad functional diversity indices and analytical tools – including the implementation of null models of community assembly – have been developed to detect and quantify different assembly process. With increased methodological complexities, such as the incorporation of intraspecific trait variation, the construction of a unified R package to test community assembly using functional traits, and its scale-dependency, is imperative and timely particularly to take into account the role of intraspecific variation in community ecology.
+\\
+
+2) We introduce the R package cati, available on CRAN, specifically dedicated to community assembly analyses using functional traits. The package includes: (i) the use of single-trait and multi-trait indices to characterize the functional structure of communities; (ii) the partitioning of functional trait variation across spatial scales and organizational levels, noticeably to account for individual differences and their implications for community assembly and the maintenance of species coexistence; (iii) the implementation of flexible null models to detect and quantify environmental filters.
+\\
+
+3) cati offers a comprehensive tool to detect and quantify assembly processes and can be applied to any kind of community (plant, animal, fungi…). Moreover, the possibility to import any type of ecological distances (notably phylogenetic and genetic distances) in cati allows a test of the response of different facets of biodiversity to assembly processes.
 \end{abstract}
+
+\\
+\textbf{Key words:}
+Functional space, functional structure, community assembly, ecological niche, environmental filter, individual differences, intraspecific variation, null model, trait, variance decomposition
+
+\hfill
+The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.
 
 \newpage
 \tableofcontents
@@ -100,14 +112,14 @@
 
 
 \section{Introduction}
-This vignette present the \textit(cati) package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
+This vignette present the \texttt{cati} package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
 
 \section{Getting started}
-\subsection{Installing the package \textit(cati)}
+\subsection{Installing the package \texttt{cati}}
 
-Before going further, we shall make sure that \textit{cati} is well installed
+Before going further, we shall make sure that \texttt{cati} is well installed
 on the computer.
-The current version of the package is 0.92.
+The current version of the package is 0.93.
 Make sure you have a recent version of R ($\geq 3.0.2$) by typing:
 
 \begin{knitrout}
@@ -121,16 +133,17 @@ Make sure you have a recent version of R ($\geq 3.0.2$) by typing:
 \end{kframe}
 \end{knitrout}
 
-Then, install \textit{cati} with dependencies using:
+Then, install \texttt{cati} with dependencies using:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{#install.packages("cati", dep=TRUE)}
-\hlkwd{install.packages}\hlstd{(}\hlstr{"C:/Users/taudiere/Desktop/cati/pkg/cati_0.92.zip"}\hlstd{,} \hlkwc{repos}\hlstd{=}\hlkwa{NULL}\hlstd{)}
+\hlkwd{install.packages}\hlstd{(}\hlstr{"cati"}\hlstd{)}
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Installing package into 'C:/Users/taudiere/Documents/R/win-library/3.1'\\\#\# (as 'lib' is unspecified)}}\begin{alltt}
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Installing package into 'C:/Users/taudiere/Documents/R/win-library/3.1'\\\#\# (as 'lib' is unspecified)}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: trying to use CRAN without setting a mirror}}\begin{alltt}
 \hlkwd{library}\hlstd{(}\hlstr{"cati"}\hlstd{)}
 \end{alltt}
 
@@ -161,11 +174,11 @@ We can now load the package alongside other useful packages:
 \hlkwd{packageDescription}\hlstd{(}\hlstr{"cati"}\hlstd{,} \hlkwc{fields} \hlstd{=} \hlstr{"Version"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] "0.92"
+## [1] "0.93"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-\textit{cati} version should read 0.92.
+\texttt{cati} version should read 0.93.
 
 \subsection{Getting help}
 
@@ -181,8 +194,8 @@ For instance:
 \end{kframe}
 \end{knitrout}
 
-will open up the manpage of T-statistics function (\textit{Tstats}).
-An `example' section will shows how to use a function at the end of the manpage. 
+will open up the manpage of T-statistics function (\texttt{Tstats}).
+An 'example' section will shows how to use a function at the end of the manpage. 
 
 Note that you can also browse help pages as html pages, using:
 \begin{knitrout}
@@ -192,8 +205,8 @@ Note that you can also browse help pages as html pages, using:
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-To go to the \textit{cati} page, click `packages', `cati', and
-`cati-package'.
+
+To go to the \texttt{cati} man page on Rstudio, click 'packages' in the lower right windows, then clik 'cati', and 'cati-package'.
 
 \subsection{Data presentation: Darwin finches in Galapagos Island}
 
@@ -209,17 +222,15 @@ First we need to load the data.
 \end{kframe}
 \end{knitrout}
 
-Now we can see 3 objects: a traits matrix traits.finch, a vector of species names sp.finch and a vector of sites names ind.plot. 
+Now we can see 3 objects: a traits matrix \texttt{traits.finch}, a vector of species names \texttt{sp.finch} and a vector of sites names \texttt{ind.plot}. 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{dim}\hlstd{(traits.finch)}
 \hlcom{#the trait matrix contains 2513 individuals values for 4 traits}
-
 \hlkwd{table}\hlstd{(sp.finch)}
 \hlcom{#the species names vector contains }
 \hlcom{#2513 individuals belonging to 12 species}
-
 \hlkwd{table}\hlstd{(ind.plot.finch)}
 \hlcom{#the sites names vector contains}
 \hlcom{#2513 individuals belonging to 6 sites (Here 6 Island)}
@@ -230,7 +241,7 @@ Now we can see 3 objects: a traits matrix traits.finch, a vector of species name
 The four traits correspond to three beak traits and one wing trait.
 
 \begin{center}
-\includegraphics[width=\textwidth]{figs/darwinfinch.pdf}
+\includegraphics[width = 10cm]{figs/darwinfinch.pdf}
 \end{center}
 
 \newpage
@@ -242,14 +253,14 @@ The four traits correspond to three beak traits and one wing trait.
 
 \subsection{Plot the kernel density of traits}
 
-Plot the distribution of traits values for populations, species, sites and regional scales. First, let try the distribution for all populations of Darwin finches.
+Plot the distribution of traits values for populations, species, sites and regional scales. First, let try the distribution for all populations of Darwin finches. In R, FALSE and TRUE can be written respectively \texttt{F} and \texttt{T}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{),} \hlkwc{cex}\hlstd{=}\hlnum{0.5}\hlstd{)}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{),} \hlkwc{cex} \hlstd{=} \hlnum{0.5}\hlstd{)}
 \hlkwd{plotDistri}\hlstd{(traits.finch, sp.finch, ind.plot.finch,}
-          \hlkwc{ylim.cex}\hlstd{=}\hlnum{3}\hlstd{,} \hlkwc{plot.ask}\hlstd{=F,} \hlkwc{multipanel}\hlstd{=F,} \hlkwc{leg}\hlstd{=F)}
+     \hlkwc{ylim.cex} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{multipanel} \hlstd{= F,} \hlkwc{leg} \hlstd{= F)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-101} 
@@ -259,6 +270,7 @@ Plot the distribution of traits values for populations, species, sites and regio
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-103} 
 
 \end{knitrout}
+The argument \texttt{ylim.cex} define the magnification to be used for range of y axe. To understand the other argument, type \texttt{?plotDistri}.
 
 \newpage
 
@@ -267,9 +279,9 @@ Then we can inverse the second and the third arguments to plot the distribution 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{),} \hlkwc{cex}\hlstd{=}\hlnum{0.5}\hlstd{)}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{),} \hlkwc{cex} \hlstd{=} \hlnum{0.5}\hlstd{)}
 \hlkwd{plotDistri}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
-           \hlkwc{ylim.cex}\hlstd{=}\hlnum{8}\hlstd{,} \hlkwc{plot.ask}\hlstd{=F,} \hlkwc{multipanel}\hlstd{=F,} \hlkwc{leg}\hlstd{=F)}
+      \hlkwc{ylim.cex} \hlstd{=} \hlnum{8}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{multipanel} \hlstd{= F,} \hlkwc{leg} \hlstd{= F)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-111} 
@@ -278,27 +290,27 @@ Then we can inverse the second and the third arguments to plot the distribution 
 
 \end{knitrout}
 
-Only one trait to plot using leg=T to plot the legend.
+Now, see the result for only one trait with the legend (\texttt{leg = TRUE}). \texttt{cex.leg} specify the magnification of legend. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
 \hlkwd{plotDistri}\hlstd{(}\hlkwd{as.matrix}\hlstd{(traits.finch[,}\hlnum{1}\hlstd{]), ind.plot.finch, sp.finch,}
-          \hlkwc{ylim.cex}\hlstd{=}\hlnum{8}\hlstd{,} \hlkwc{plot.ask}\hlstd{=F,} \hlkwc{multipanel}\hlstd{=F,} \hlkwc{leg}\hlstd{=T,} \hlkwc{cex.leg}\hlstd{=}\hlnum{0.5}\hlstd{)}
+     \hlkwc{ylim.cex} \hlstd{=} \hlnum{8}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{multipanel} \hlstd{= F,} \hlkwc{leg} \hlstd{= T,} \hlkwc{cex.leg} \hlstd{=} \hlnum{0.5}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-12} 
 
 \end{knitrout}
 
-If we want to plot all the sites (regional distribution) or all the species: we can use the folowing code:
+If we want to plot all the sites (regional distribution) or all the species: we can use the following code:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{),} \hlkwc{cex}\hlstd{=}\hlnum{0.5}\hlstd{)}
-\hlkwd{plotDistri}\hlstd{(traits.finch,} \hlkwd{rep}\hlstd{(}\hlstr{"region"}\hlstd{,} \hlkwc{times}\hlstd{=}\hlkwd{dim}\hlstd{(traits.finch)[}\hlnum{1}\hlstd{]),}
-          \hlstd{sp.finch,} \hlkwc{ylim.cex}\hlstd{=}\hlnum{6}\hlstd{,} \hlkwc{plot.ask}\hlstd{=F,} \hlkwc{leg}\hlstd{=F)}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{),} \hlkwc{cex} \hlstd{=} \hlnum{0.5}\hlstd{)}
+\hlkwd{plotDistri}\hlstd{(traits.finch,} \hlkwd{rep}\hlstd{(}\hlstr{"region"}\hlstd{,} \hlkwc{times} \hlstd{=} \hlkwd{dim}\hlstd{(traits.finch)[}\hlnum{1}\hlstd{]),}
+     \hlstd{sp.finch,} \hlkwc{ylim.cex} \hlstd{=} \hlnum{6}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{leg} \hlstd{= F)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-13} 
@@ -308,15 +320,15 @@ If we want to plot all the sites (regional distribution) or all the species: we 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{plotDistri}\hlstd{(traits.finch,} \hlkwd{rep}\hlstd{(}\hlstr{"toutes_sp"}\hlstd{,} \hlkwc{times}\hlstd{=}\hlkwd{dim}\hlstd{(traits.finch)[}\hlnum{1}\hlstd{]),}
-          \hlstd{ind.plot.finch,} \hlkwc{ylim.cex}\hlstd{=}\hlnum{3}\hlstd{,} \hlkwc{plot.ask}\hlstd{=F,} \hlkwc{cex.leg}\hlstd{=}\hlnum{0.5}\hlstd{)}
+\hlkwd{plotDistri}\hlstd{(traits.finch,} \hlkwd{rep}\hlstd{(}\hlstr{"toutes_sp"}\hlstd{,} \hlkwc{times} \hlstd{=} \hlkwd{dim}\hlstd{(traits.finch)[}\hlnum{1}\hlstd{]),}
+     \hlstd{ind.plot.finch,} \hlkwc{ylim.cex} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{cex.leg} \hlstd{=} \hlnum{0.5}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-14} 
 
 \end{knitrout}
 
-Reset the default parameter
+Now we can reset the default graphical parameter:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -338,14 +350,14 @@ The Rao function computes α, γ and β -components for taxonomic, functional an
 $\gamma = mean \alpha + \beta$
 \end{center}
 
-Where: \gamma is the diversity of the regional pool, \alpha is the diversity of the local community and \beta is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices.
+Where: \gamma is the diversity of the regional pool, \alpha is the diversity of the local community and \beta is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 \\
 
 \textbf{Reference}: de Bello, F., Lavorel, S., Albert, C.H., Thuiller, W., Grigulis, K., Dolezal, J., Janecek, S. and Leps, J. (2011) Quantifying the relevance of intraspecific trait variability for functional diversity. Methods in Ecology and Evolution, 2, 163-174.
 
 
 \subsubsection{Multitraits analysis}
-First, rao diversity can be calculated on the functionnal space (i.e. considering all traits together).
+First, rao diversity can be calculated on the functional  space (i.e. considering all traits together).
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -357,17 +369,17 @@ First, rao diversity can be calculated on the functionnal space (i.e. considerin
 \hlkwd{class}\hlstd{(comm.sp)}\hlkwb{<-}\hlstr{"matrix"}
 
 \hlstd{traits.finch.sp}\hlkwb{<-}\hlkwd{apply}\hlstd{(} \hlkwd{apply}\hlstd{(traits.finch,} \hlnum{2}\hlstd{, scale ),} \hlnum{2}\hlstd{,}
-                        \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{tapply}\hlstd{(x, sp.finch, mean,} \hlkwc{na.rm}\hlstd{=T))}
+            \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{tapply}\hlstd{(x, sp.finch, mean,} \hlkwc{na.rm} \hlstd{= T))}
 
 \hlstd{mat.dist}\hlkwb{<-}\hlkwd{as.matrix}\hlstd{(}\hlkwd{dist}\hlstd{(traits.finch.sp))}\hlopt{^}\hlnum{2}
 
-\hlstd{res.rao}\hlkwb{<-}\hlkwd{RaoRel}\hlstd{(}\hlkwc{sample}\hlstd{=}\hlkwd{as.matrix}\hlstd{(comm.sp),}
-                \hlkwc{dfunc}\hlstd{=mat.dist,} \hlkwc{dphyl}\hlstd{=}\hlkwa{NULL}\hlstd{,}
-                \hlkwc{weight}\hlstd{=F,} \hlkwc{Jost}\hlstd{=F,} \hlkwc{structure}\hlstd{=}\hlkwa{NULL}\hlstd{)}
+\hlstd{res.rao}\hlkwb{<-}\hlkwd{RaoRel}\hlstd{(}\hlkwc{sample} \hlstd{=} \hlkwd{as.matrix}\hlstd{(comm.sp),}
+        \hlkwc{dfunc} \hlstd{= mat.dist,} \hlkwc{dphyl} \hlstd{=} \hlkwa{NULL}\hlstd{,}
+        \hlkwc{weight} \hlstd{= F,} \hlkwc{Jost} \hlstd{= F,} \hlkwc{structure} \hlstd{=} \hlkwa{NULL}\hlstd{)}
 
-\hlstd{witRao}\hlkwb{<-}\hlstd{res.rao}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Mean_Alpha}  \hlcom{#overall within species variance}
-\hlstd{betRao}\hlkwb{<-}\hlstd{res.rao}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Beta_add}    \hlcom{#between species variance}
-\hlstd{totRao}\hlkwb{<-}\hlstd{res.rao}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Gamma}       \hlcom{#the total variance}
+\hlstd{witRao}\hlkwb{<-}\hlstd{res.rao}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Mean_Alpha} \hlcom{#overall within species variance}
+\hlstd{betRao}\hlkwb{<-}\hlstd{res.rao}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Beta_add}  \hlcom{#between species variance}
+\hlstd{totRao}\hlkwb{<-}\hlstd{res.rao}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Gamma}    \hlcom{#the total variance}
 
 \hlcom{#Check that the total variance is equal}
 \hlcom{#to between species + within species variances}
@@ -385,18 +397,18 @@ First, rao diversity can be calculated on the functionnal space (i.e. considerin
 \end{kframe}
 \end{knitrout}
 
-Now let's take the abundance to calculate Rao diversity.
+Now let's take the abundance into account to calculate Rao diversity.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{res.rao.w}\hlkwb{<-}\hlkwd{RaoRel}\hlstd{(}\hlkwc{sample}\hlstd{=}\hlkwd{as.matrix}\hlstd{(comm.sp),}
-                  \hlkwc{dfunc}\hlstd{=mat.dist,} \hlkwc{dphyl}\hlstd{=}\hlkwa{NULL}\hlstd{,}
-                  \hlkwc{weight}\hlstd{=T,} \hlkwc{Jost}\hlstd{=F,} \hlkwc{structure}\hlstd{=}\hlkwa{NULL}\hlstd{)}
+\hlstd{res.rao.w}\hlkwb{<-}\hlkwd{RaoRel}\hlstd{(}\hlkwc{sample} \hlstd{=} \hlkwd{as.matrix}\hlstd{(comm.sp),}
+         \hlkwc{dfunc} \hlstd{= mat.dist,} \hlkwc{dphyl} \hlstd{=} \hlkwa{NULL}\hlstd{,}
+         \hlkwc{weight} \hlstd{= T,} \hlkwc{Jost} \hlstd{= F,} \hlkwc{structure} \hlstd{=} \hlkwa{NULL}\hlstd{)}
 
-\hlstd{witRao.w}\hlkwb{<-}\hlstd{res.rao.w}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Mean_Alpha}  \hlcom{#overall within species variance}
-\hlstd{betRao.w}\hlkwb{<-}\hlstd{res.rao.w}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Beta_add}    \hlcom{#between species variance}
-\hlstd{totRao.w}\hlkwb{<-}\hlstd{res.rao.w}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Gamma}       \hlcom{#the total variance}
+\hlstd{witRao.w}\hlkwb{<-}\hlstd{res.rao.w}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Mean_Alpha} \hlcom{#overall within species variance}
+\hlstd{betRao.w}\hlkwb{<-}\hlstd{res.rao.w}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Beta_add}  \hlcom{#between species variance}
+\hlstd{totRao.w}\hlkwb{<-}\hlstd{res.rao.w}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Gamma}    \hlcom{#the total variance}
 
 \hlstd{witRao.w}
 \end{alltt}
@@ -412,15 +424,15 @@ Now let's take the abundance to calculate Rao diversity.
 \end{kframe}
 \end{knitrout}
 
-Plot the results
+Plot the results.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{barplot}\hlstd{(}\hlkwd{cbind}\hlstd{(}\hlkwd{c}\hlstd{(witRao.w, betRao.w),} \hlkwd{c}\hlstd{(witRao, betRao)),}
-        \hlkwc{names.arg} \hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"abundance"} \hlstd{,}\hlstr{"presence"}\hlstd{),}
-        \hlkwc{legend.text}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"within species"}\hlstd{,} \hlstr{"between species"}\hlstd{),}
-        \hlkwc{ylab}\hlstd{=}\hlstr{"Rao"}\hlstd{,} \hlkwc{ylim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{10}\hlstd{))}
+    \hlkwc{names.arg} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"abundance"} \hlstd{,}\hlstr{"presence"}\hlstd{),}
+    \hlkwc{legend.text} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"within species"}\hlstd{,} \hlstr{"between species"}\hlstd{),}
+    \hlkwc{ylab} \hlstd{=} \hlstr{"Rao"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{10}\hlstd{))}
 \end{alltt}
 \end{kframe}
 
@@ -434,7 +446,7 @@ Plot the results
 
 
 \subsubsection{Unitraits analysis}
-We can also do this analysis for each trait separately. We need to replace (or exclude) NA values. For this example, we use the package mice to complete the data.
+We can also do this analysis for each trait separately. We need to replace (or exclude) NA values. For this example, we use the package \texttt{mice} to complete the data.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -442,7 +454,7 @@ We can also do this analysis for each trait separately. We need to replace (or e
 \hlstd{comm}\hlkwb{<-}\hlkwd{t}\hlstd{(}\hlkwd{table}\hlstd{(ind.plot.finch,}\hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(ind.plot.finch)))}
 
 \hlkwd{require}\hlstd{(mice)}
-\hlstd{traits}\hlkwb{=}\hlstd{traits.finch}
+\hlstd{traits} \hlkwb{=} \hlstd{traits.finch}
 \hlstd{mice}\hlkwb{<-}\hlkwd{mice}\hlstd{(traits.finch)}
 \hlstd{traits.finch.mice}\hlkwb{<-}\hlkwd{complete}\hlstd{(mice)}
 \end{alltt}
@@ -455,17 +467,17 @@ We can also do this analysis for each trait separately. We need to replace (or e
 \begin{alltt}
 \hlcom{#Calculate the mean traits value by population using the mice dataset}
 \hlstd{traits.finch.mice.sp}\hlkwb{<-}\hlkwd{apply}\hlstd{(}\hlkwd{apply}\hlstd{(traits.finch.mice,} \hlnum{2}\hlstd{, scale ),} \hlnum{2}\hlstd{,}
-                            \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{tapply}\hlstd{(x, sp.finch, mean,} \hlkwc{na.rm}\hlstd{=T))}
+              \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{tapply}\hlstd{(x, sp.finch, mean,} \hlkwc{na.rm} \hlstd{= T))}
 
 \hlstd{trait.rao.w}\hlkwb{<-}\hlkwd{list}\hlstd{()}
 \hlstd{witRao.w.bytrait}\hlkwb{<-}\hlkwd{c}\hlstd{()}
 \hlstd{betRao.w.bytrait}\hlkwb{<-}\hlkwd{c}\hlstd{()}
 \hlkwa{for}\hlstd{(t} \hlkwa{in} \hlnum{1} \hlopt{:} \hlnum{4}\hlstd{)\{}
-  \hlstd{trait.rao.w[[t]]}\hlkwb{<-}\hlkwd{RaoRel}\hlstd{(}\hlkwc{sample}\hlstd{=}\hlkwd{as.matrix}\hlstd{(comm.sp),}
-                           \hlkwc{dfunc}\hlstd{=}\hlkwd{dist}\hlstd{(traits.finch.mice.sp[,t]),}
-                           \hlkwc{dphyl}\hlstd{=}\hlkwa{NULL}\hlstd{,} \hlkwc{weight}\hlstd{=T,} \hlkwc{Jost}\hlstd{=F,} \hlkwc{structure}\hlstd{=}\hlkwa{NULL}\hlstd{)}
-  \hlstd{witRao.w.bytrait}\hlkwb{<-}\hlkwd{c}\hlstd{(witRao.w.bytrait, trait.rao.w[[t]]}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Mean_Alpha)}
-  \hlstd{betRao.w.bytrait}\hlkwb{<-}\hlkwd{c}\hlstd{(betRao.w.bytrait, trait.rao.w[[t]]}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Beta_add)}
+ \hlstd{trait.rao.w[[t]]}\hlkwb{<-}\hlkwd{RaoRel}\hlstd{(}\hlkwc{sample} \hlstd{=} \hlkwd{as.matrix}\hlstd{(comm.sp),}
+              \hlkwc{dfunc} \hlstd{=} \hlkwd{dist}\hlstd{(traits.finch.mice.sp[,t]),}
+              \hlkwc{dphyl} \hlstd{=} \hlkwa{NULL}\hlstd{,} \hlkwc{weight} \hlstd{= T,} \hlkwc{Jost} \hlstd{= F,} \hlkwc{structure} \hlstd{=} \hlkwa{NULL}\hlstd{)}
+ \hlstd{witRao.w.bytrait}\hlkwb{<-}\hlkwd{c}\hlstd{(witRao.w.bytrait, trait.rao.w[[t]]}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Mean_Alpha)}
+ \hlstd{betRao.w.bytrait}\hlkwb{<-}\hlkwd{c}\hlstd{(betRao.w.bytrait, trait.rao.w[[t]]}\hlopt{$}\hlstd{FD}\hlopt{$}\hlstd{Beta_add)}
 \hlstd{\}}
 \end{alltt}
 \end{kframe}
@@ -477,12 +489,17 @@ Plot the results by traits.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{barplot}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{cbind}\hlstd{( witRao.w.bytrait, betRao.w.bytrait)),}
-        \hlkwc{names.arg} \hlstd{=} \hlkwd{colnames}\hlstd{(traits.finch),}
-        \hlkwc{legend.text}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"within species"}\hlstd{,} \hlstr{"between species"}\hlstd{),}
-        \hlkwc{ylab}\hlstd{=}\hlstr{"Rao"}\hlstd{,} \hlkwc{ylim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1.5}\hlstd{))}
+    \hlkwc{names.arg} \hlstd{=} \hlkwd{colnames}\hlstd{(traits.finch),}
+    \hlkwc{legend.text} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"within species"}\hlstd{,} \hlstr{"between species"}\hlstd{),}
+    \hlkwc{ylab} \hlstd{=} \hlstr{"Rao"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1.5}\hlstd{))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-21} 
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-21} 
+
+}
+
+
 
 \end{knitrout}
 
@@ -494,31 +511,36 @@ Plot the results by traits.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{res.decomp}\hlkwb{<-}\hlkwd{decompCTRE}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{sp}\hlstd{=sp.finch,}
-                           \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+\hlstd{res.decomp}\hlkwb{<-}\hlkwd{decompCTRE}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{sp} \hlstd{= sp.finch,}
+              \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 
 \hlkwd{barplot}\hlstd{(res.decomp)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-221} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-22} 
 
 }
 
 
-\begin{kframe}\begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
-\hlkwd{barplot}\hlstd{(res.decomp,} \hlkwc{resume}\hlstd{=F)}
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlkwd{barplot}\hlstd{(res.decomp,} \hlkwc{resume} \hlstd{= F)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-222} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-23} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -535,13 +557,13 @@ Variance partitioning across nested scales using the decomposition of variance o
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{vec}\hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{1}\hlstd{,}\hlkwd{length}\hlstd{(sp.finch)}\hlopt{*}\hlnum{2}\hlstd{,} \hlkwc{by}\hlstd{=}\hlnum{2}\hlstd{)}
+\hlstd{vec}\hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{1}\hlstd{,}\hlkwd{length}\hlstd{(sp.finch)}\hlopt{*}\hlnum{2}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{2}\hlstd{)}
 \hlstd{genus}\hlkwb{<-}\hlkwd{as.vector}\hlstd{(}\hlkwd{unlist}\hlstd{(}\hlkwd{strsplit}\hlstd{(}\hlkwd{as.vector}\hlstd{(sp.finch),}\hlstr{"_"}\hlstd{))[vec])}
-\hlstd{fact}\hlkwb{<-}\hlkwd{cbind}\hlstd{(}\hlkwc{genus}\hlstd{=}\hlkwd{as.factor}\hlstd{(genus),}
-            \hlkwc{species}\hlstd{=}\hlkwd{as.factor}\hlstd{(}\hlkwd{as.vector}\hlstd{(sp.finch)),}
-            \hlkwc{sites}\hlstd{=}\hlkwd{as.factor}\hlstd{(}\hlkwd{as.vector}\hlstd{(ind.plot.finch)))}
+\hlstd{fact}\hlkwb{<-}\hlkwd{cbind}\hlstd{(}\hlkwc{genus} \hlstd{=} \hlkwd{as.factor}\hlstd{(genus),}
+      \hlkwc{species} \hlstd{=} \hlkwd{as.factor}\hlstd{(}\hlkwd{as.vector}\hlstd{(sp.finch)),}
+      \hlkwc{sites} \hlstd{=} \hlkwd{as.factor}\hlstd{(}\hlkwd{as.vector}\hlstd{(ind.plot.finch)))}
 
-\hlstd{res.partvar.finch}\hlkwb{<-}\hlkwd{partvar}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{factors}\hlstd{=fact)}
+\hlstd{res.partvar.finch}\hlkwb{<-}\hlkwd{partvar}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{factors} \hlstd{= fact)}
 
 \hlstd{res.partvar.finch}
 \end{alltt}
@@ -552,55 +574,60 @@ Variance partitioning across nested scales using the decomposition of variance o
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),} \hlkwc{mai}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{0.2}\hlstd{,}\hlnum{0.2}\hlstd{,}\hlnum{0.2}\hlstd{,}\hlnum{0.2}\hlstd{))}
-\hlstd{colors}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlkwd{rgb}\hlstd{(}\hlnum{102}\hlstd{,}\hlnum{167}\hlstd{,}\hlnum{0}\hlstd{,}  \hlkwc{maxColorValue} \hlstd{=} \hlnum{255}\hlstd{),}
-          \hlkwd{rgb}\hlstd{(}\hlnum{185}\hlstd{,}\hlnum{210}\hlstd{,}\hlnum{0}\hlstd{,}  \hlkwc{maxColorValue} \hlstd{=} \hlnum{255}\hlstd{),}
-          \hlkwd{rgb}\hlstd{(}\hlnum{98}\hlstd{,}\hlnum{174}\hlstd{,}\hlnum{255}\hlstd{,}  \hlkwc{maxColorValue} \hlstd{=} \hlnum{255}\hlstd{),}
-          \hlkwd{rgb}\hlstd{(}\hlnum{158}\hlstd{,}\hlnum{30}\hlstd{,}\hlnum{240}\hlstd{,}  \hlkwc{maxColorValue} \hlstd{=} \hlnum{255}\hlstd{))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),} \hlkwc{mai} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0.2}\hlstd{,}\hlnum{0.2}\hlstd{,}\hlnum{0.2}\hlstd{,}\hlnum{0.2}\hlstd{))} \hlcom{#save graphical parameters}
+\hlstd{colors}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlkwd{rgb}\hlstd{(}\hlnum{102}\hlstd{,}\hlnum{167}\hlstd{,}\hlnum{0}\hlstd{,} \hlkwc{maxColorValue} \hlstd{=} \hlnum{255}\hlstd{),}
+     \hlkwd{rgb}\hlstd{(}\hlnum{185}\hlstd{,}\hlnum{210}\hlstd{,}\hlnum{0}\hlstd{,} \hlkwc{maxColorValue} \hlstd{=} \hlnum{255}\hlstd{),}
+     \hlkwd{rgb}\hlstd{(}\hlnum{98}\hlstd{,}\hlnum{174}\hlstd{,}\hlnum{255}\hlstd{,} \hlkwc{maxColorValue} \hlstd{=} \hlnum{255}\hlstd{),}
+     \hlkwd{rgb}\hlstd{(}\hlnum{158}\hlstd{,}\hlnum{30}\hlstd{,}\hlnum{240}\hlstd{,} \hlkwc{maxColorValue} \hlstd{=} \hlnum{255}\hlstd{))}
 
-\hlkwd{piePartvar}\hlstd{(res.partvar.finch,} \hlkwc{col}\hlstd{=colors)}
+\hlkwd{piePartvar}\hlstd{(res.partvar.finch,} \hlkwc{col} \hlstd{= colors)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-241} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-25} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlkwd{par}\hlstd{(old.par)}
-\hlkwd{barPartvar}\hlstd{(res.partvar.finch,} \hlkwc{col}\hlstd{=colors,}
-            \hlkwc{leg}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\hlkwd{par}\hlstd{(old.par)} \hlcom{#reset old graphical parameters}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{barPartvar}\hlstd{(res.partvar.finch,} \hlkwc{col} \hlstd{= colors,} \hlkwc{leg} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-242} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-26} 
 
 }
 
 
 
 \end{knitrout}
-
 
 
 \newpage
 
 \subsection{Plot the relation between populational trait means and sites traits means.}
 
-For an example of utilisation see: Cornwell, W.K. and Ackerly, D.D., 2009. Community assembly and shifts in plant trait distributions across an environmental gradient in coastal California. Ecological Monographs 79, 109-126.
+For an example of utilisation see: Cornwell, W.K. and Ackerly, D.D., 2009. Community assembly and shifts in plant trait distributions across an environmental gradient in coastal California. Ecological Monographs, 79, 109-126.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,} \hlkwc{silent}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,} \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-25} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-27} 
 
 \end{knitrout}
 
-If we change the value of the threshold (alpha=10\% instead of 5\% and the minimum individual to represent singificativity fixed to 3 instead of 10 by default) we can see some significant relationships.
+If we change the value of two arguments we can see some significant relationships. Here let's try a more permissive threshold: alpha = 10\% instead of 5\% (\texttt{p.val}) and define a lower minimum of values to represent significance  fixed to 3 instead of 10 by default (\texttt{min.ind.signif}). 
 
 \newpage
 
@@ -608,38 +635,60 @@ If we change the value of the threshold (alpha=10\% instead of 5\% and the minim
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
-           \hlkwc{p.val}\hlstd{=}\hlnum{0.1}\hlstd{,}  \hlkwc{min.ind.signif}\hlstd{=}\hlnum{3}\hlstd{,} \hlkwc{silent}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+      \hlkwc{p.val} \hlstd{=} \hlnum{0.1}\hlstd{,} \hlkwc{min.ind.signif} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-26} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-28} 
 
 \end{knitrout}
 
 \newpage
 
-For a more simple figure, add the option resume=TRUE. Again if we change the value of the threshold (alpha=10\% instead of 5\% and the minimum individual to represent singificativity fixed to 3 instead of 10 by default) we can see some significant relationships.
+For a more simple figure, add the option resume = TRUE. 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
+      \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{resume} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col.pop} \hlstd{=} \hlstr{"grey"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-29} 
+
+\end{knitrout}
+
+If you are fed up with colors, try this:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
+      \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{resume} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col.pop} \hlstd{=} \hlstr{"grey"}\hlstd{,} \hlkwc{col.sp} \hlstd{=} \hlstr{"black"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-30} 
+
+}
+
+
+
+\end{knitrout}
+
+Again if we change the value of the threshold (\texttt{p.val} = 0.1 and \texttt{min.ind.signif} = 3) we can see some significant relationships.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
-           \hlkwc{silent}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{resume}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{col.pop}\hlstd{=}\hlstr{"grey"}\hlstd{)}
+      \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{resume} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col.pop} \hlstd{=} \hlstr{"grey"}\hlstd{,} \hlkwc{col.sp} \hlstd{=} \hlstr{"black"}\hlstd{,}
+      \hlkwc{p.val} \hlstd{=} \hlnum{0.1}\hlstd{,} \hlkwc{min.ind.signif} \hlstd{=} \hlnum{3}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-271} 
-\begin{kframe}\begin{alltt}
-\hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
-           \hlkwc{silent}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{resume}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{col.pop}\hlstd{=}\hlstr{"grey"}\hlstd{,} \hlkwc{col.sp}\hlstd{=}\hlstr{"black"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-272} 
-\begin{kframe}\begin{alltt}
-\hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
-           \hlkwc{silent}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{resume}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{col.pop}\hlstd{=}\hlstr{"grey"}\hlstd{,} \hlkwc{col.sp}\hlstd{=}\hlstr{"black"}\hlstd{,}
-           \hlkwc{p.val}\hlstd{=}\hlnum{0.1}\hlstd{,}  \hlkwc{min.ind.signif}\hlstd{=}\hlnum{3}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-273} 
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-31} 
+
+}
+
+
 
 \end{knitrout}
 
@@ -652,7 +701,7 @@ For a more simple figure, add the option resume=TRUE. Again if we change the val
 
 \subsection{Ratio of variances: T-statistics}
 
-The funcion Tstats computes observed T-statistics (T for Traits; Violle et al (2012)) as three ratios of variance, namely $T_IP/IC$, $T_IC/IR$ and $T_PC/PR$. This function can also return the distribution of these three statistics under null models.
+The function \texttt{Tstat} computes observed T-statistics (T for Traits; Violle et al (2012)) as three ratios of variance, namely $T_IP/IC$, $T_IC/IR$ and $T_PC/PR$. This function can also return the distribution of these three statistics under the three associated null models (respectively \textbf{local}, \textbf{regional.ind} and \textbf{regional.pop}).
 \\
 
 \textbf{Reference}: Violle, C., Enquist, B.J., McGill, B.J., Jiang, L., Albert, C., Hulshof, C., Jung, V. and Messier, J. (2012) The return of the variance: intraspecific variability in community ecology. Trends in Ecology and Evolution, 27, 244-252.
@@ -660,41 +709,85 @@ The funcion Tstats computes observed T-statistics (T for Traits; Violle et al (2
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{res.finch}\hlkwb{<-}\hlkwd{Tstats}\hlstd{(traits.finch,} \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{sp}\hlstd{=sp.finch,}
-                  \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+\hlstd{res.finch}\hlkwb{<-}\hlkwd{Tstats}\hlstd{(traits.finch,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{sp} \hlstd{= sp.finch,}
+         \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \hlstd{res.finch}
 \end{alltt}
 \begin{verbatim}
-## $Tstats
-##            Length Class  Mode   
-## T_IP.IC     24    -none- numeric
-## T_IC.IR     24    -none- numeric
-## T_PC.PR     24    -none- numeric
-## T_IP.IC_nm 216    -none- numeric
-## T_IC.IR_nm 216    -none- numeric
-## T_PC.PR_nm 216    -none- numeric
+## 	##################
+## 	# T-statistiques #
+## 	##################
+## class: Tstats
+## $call: Tstats(traits = traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
+##     nperm = 9, printprogress = FALSE)
 ## 
-## $variances
-##              Length Class  Mode   
-## var_IP        156   -none- numeric
-## var_PC         24   -none- numeric
-## var_CR          4   -none- numeric
-## var_IC         24   -none- numeric
-## var_PR          4   -none- numeric
-## var_IR          4   -none- numeric
-## var_IP_nm1   1404   -none- numeric
-## var_PC_nm2sp  216   -none- numeric
-## var_IC_nm1    216   -none- numeric
-## var_IC_nm2    216   -none- numeric
-## var_PR_nm2sp   36   -none- numeric
-## var_IR_nm2     36   -none- numeric
+## ###############
+## $Tstats: list of observed and null T-statistics
+## 
+## Observed values
+## 	$T_IP.IC: ratio of within-population variance to total within-community variance
+## 	$T_IC.IR: community-wide variance relative to the total variance in the regional pool
+## 	$T_PC.PR: inter-community variance relative to the total variance in the regional pool
+## 
+## Null values, number of permutation: 9
+## 	$T_IP.IC_nm: distribution of T_IP.IC value under the null model local
+## 	$T_IC.IR_nm: distribution of T_IC.IR value under the null model regional.ind 
+## 	$T_PC.PR_nm: distribution of T_PC.PR value under the null model regional.pop
+## 
+## ###############
+## $variances: list of observed and null variances
+## 
+## ###############
+## data used
+##   data      class      dim   
+## 1 $traits   data.frame 2513,4
+## 2 $ind.plot factor     2513  
+## 3 $sp       factor     2513  
+##   content                                             
+## 1 traits data                                         
+## 2 name of the plot in which the individual is         
+## 3 groups (e.g. species) which the individual belong to
+## 
+## ###############
+## others
+## 	$namestraits: 4 traits
+## [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
+## 
+## 	$sites_richness:
+## 	ind.plot
+##     DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
+##       50      267      981      258      270      687
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 
 \subsubsection{S3 methods for class Tstats}
-Tstats class is associated to S3 methods plot, barplot, print and summary
+Tstats class is associated to S3 methods plot, barplot, print and summary. We have already used the print function in the above script line. Now, how to plot the result of the function \texttt{Tstats}?
+
+We can represent observed values thanks to the \texttt{barplot} function.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{barplot}\hlstd{(res.finch,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{3.5}\hlstd{))}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-33} 
+
+}
+
+
+
+\end{knitrout}
+
+One can be more interested in the significance  and the effect size available thanks to null model. In that case, the standardized effect size can be easily plot. Note that the function \texttt{ses} can be use directly to calculate standardized effect size without plotting. The Standardized Effect Size (ses) is define as : 
+
+\begin{center}
+$SES = (I_obs – I_sim) / \delta_{sim}$
+\end{center}
+
+where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -703,7 +796,7 @@ Tstats class is associated to S3 methods plot, barplot, print and summary
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-29} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-34} 
 
 }
 
@@ -711,83 +804,81 @@ Tstats class is associated to S3 methods plot, barplot, print and summary
 
 \end{knitrout}
 
-There is multiple kind of representation avaible
+There is multiple kind of representation avaible.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"simple"}\hlstd{)}
+\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"simple"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-301} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-351} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"simple_range"}\hlstd{)}
+\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"simple_range"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-302} 
-
-}
-
-
-\begin{kframe}\begin{verbatim}
-## [1] "Error: simple_range is not a valid type of plot"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"barplot"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-303} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-352} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"bytraits"}\hlstd{)}
+\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-304} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-353} 
 
 }
 
 
-\begin{kframe}\begin{verbatim}
-## [1] "Error: bytraits is not a valid type of plot"
-\end{verbatim}
+
+\end{knitrout}
+
+If you want to specifically look at traits or sites statistics, use the argument \texttt{type = "bytraits"} or \texttt{"bysites"}.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type}\hlstd{=}\hlstr{"bysites"}\hlstd{)}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+
+\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"bytraits"}\hlstd{)}
 \end{alltt}
-\begin{verbatim}
-## [1] "Error: bysites is not a valid type of plot"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{par}\hlstd{(old.par)}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-361} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"bysites"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-362} 
+
+}
+
+
+
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-363} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{par}\hlstd{(old.par)} \hlcom{# reset default graphical parameters}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
 \newpage
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{barplot}\hlstd{(res.finch,} \hlkwc{ylim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{3.5}\hlstd{))}
-\end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-31} 
-
-}
-
-
-
-\end{knitrout}
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -823,7 +914,7 @@ There is multiple kind of representation avaible
 ##  3rd Qu.:1.474   3rd Qu.:1.3286   3rd Qu.:1.215   3rd Qu.:1.351  
 ##  Max.   :1.762   Max.   :3.0016   Max.   :1.530   Max.   :1.585  
 ## 
-## [1] "Null values"
+## [1] "null values"
 ## $T_IP.IC_nm
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   0.422   0.961   0.992   1.000   1.020   3.230 
@@ -836,8 +927,14 @@ There is multiple kind of representation avaible
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##   0.003   0.438   0.838   1.160   1.390   7.460       2
 \end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{attributes}\hlstd{(}\hlkwd{sum_Tstats}\hlstd{(res.finch))} \hlcom{#An other mean to summarize Tstatistics}
+\hlkwd{attributes}\hlstd{(}\hlkwd{sum_Tstats}\hlstd{(res.finch))} \hlcom{#Another mean to summarize Tstatistics}
 \end{alltt}
 \begin{verbatim}
 ## $names
@@ -871,15 +968,15 @@ We can also see T-statistics correlations and theirs correlation with others var
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
-\hlkwd{plotCorTstats}\hlstd{(res.finch,} \hlkwc{plot.ask}\hlstd{=}\hlnum{FALSE}\hlstd{,} \hlkwc{multipanel}\hlstd{=F)}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
+\hlkwd{plotCorTstats}\hlstd{(res.finch,} \hlkwc{plot.ask} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{multipanel} \hlstd{= F)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-331} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-391} 
 
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-332} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-392} 
 
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-333} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-393} 
 
 \end{knitrout}
 
@@ -888,115 +985,122 @@ Here we plot T-statistics (in the standardized effect size SES form) in function
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
 \hlstd{species.richness}\hlkwb{<-}\hlkwd{table}\hlstd{(ind.plot.finch)}
 \hlkwd{plotSESvar}\hlstd{(}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(res.finch)), species.richness,}
-             \hlkwc{multipanel}\hlstd{=F)}
+       \hlkwc{multipanel} \hlstd{= F)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-34} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-40} 
 
 \end{knitrout}
 
-Same plot with \tt{resume=TRUE}.
+Same plot with \texttt{resume = TRUE}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
 \hlkwd{plotSESvar}\hlstd{(}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(res.finch)), species.richness,}
-             \hlkwc{resume}\hlstd{=T,} \hlkwc{multipanel}\hlstd{=F)}
+       \hlkwc{resume} \hlstd{= T,} \hlkwc{multipanel} \hlstd{= F)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-35} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-41} 
 \begin{kframe}\begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
 
 \newpage
-\subsection{Others univariates metrics: function \tt{ComIndex} and \tt{ComIndexMulti}}
+\subsection{Others univariates or multivariates metrics: function \texttt{ComIndex} and \texttt{ComIndexMulti}}
 
-The function \tt{ComIndex} allow to choose your own function (like mean, range, variance...) to calculate customize metrics. Here CVNND refers to the Coefficient of Variation of the Nearest Neighborhood Distance. ComIndexMulti do the same things for multivariate metrics. 
+The function \texttt{ComIndex} allow choosing your own function (like mean, range, variance, ...) to calculate customize metrics. Here \texttt{CVNND} refers to the Coefficient of Variation of the Nearest Neighborhood Distance. \texttt{ComIndexMulti} do the same things for multivariate metrics. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{#Define the funcions to calculate}
-\hlstd{funct}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"mean(x, na.rm=T)"}\hlstd{,} \hlstr{"kurtosis(x, na.rm=T)"}\hlstd{,}
-         \hlstr{"max(x, na.rm=T) - min(x, na.rm=T)"}\hlstd{,} \hlstr{"CVNND(x)"}  \hlstd{)}
+\hlcom{#Define the function s to calculate}
+\hlstd{funct}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"mean(x, na.rm = T)"}\hlstd{,} \hlstr{"kurtosis(x, na.rm = T)"}\hlstd{,}
+     \hlstr{"max(x, na.rm = T) - min(x, na.rm = T)"}\hlstd{,} \hlstr{"CVNND(x)"} \hlstd{)}
 
-\hlcom{#Test against the null model 2}
-\hlstd{res.finch.sp_mn2}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{index}\hlstd{=funct,} \hlkwc{sp}\hlstd{=sp.finch,}
-                           \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),} \hlkwc{ind.plot}\hlstd{=ind.plot.finch,}
-                           \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+\hlcom{#Test against the null model regional.ind}
+\hlstd{res.finch.sp_regional.ind}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct,} \hlkwc{sp} \hlstd{= sp.finch,}
+                           \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,}
+                            \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 
-\hlcom{#Test against the null model 2sp}
-\hlstd{res.finch.sp_mn2sp}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{index}\hlstd{=funct,} \hlkwc{sp}\hlstd{=sp.finch,}
-                             \hlkwc{nullmodels}\hlstd{=}\hlkwd{rep}\hlstd{(}\hlstr{"2sp"}\hlstd{,}\hlnum{4}\hlstd{),} \hlkwc{ind.plot}\hlstd{=ind.plot.finch,}
-                             \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+\hlcom{#Test against the null model regional.pop}
+\hlcom{#Individuals values are transformed in populational values}
+\hlstd{res.finch.sp_regional.pop}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct,} \hlkwc{sp} \hlstd{= sp.finch,}
+               \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.pop"}\hlstd{,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,}
+               \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
-These two functions allows to calcul index by sites for example using \code{"tapply(x, sites, mean)"}.
+These two functions allows to calculate  index by sites for example using \code{"tapply(x, sites, mean)"}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{funct}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))"}\hlstd{,}
-         \hlstr{"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))"}\hlstd{,}
-         \hlstr{"tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T))"}\hlstd{,}
-         \hlstr{"tapply(x, ind.plot.finch, function(x) CVNND(x))"}  \hlstd{)}
+\hlstd{funct}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))"}\hlstd{,}
+     \hlstr{"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))"}\hlstd{,}
+     \hlstr{"tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))"}\hlstd{,}
+     \hlstr{"tapply(x, ind.plot.finch, function(x) CVNND(x))"} \hlstd{)}
 
-\hlcom{##Null model 1 is trivial for this function}
-\hlcom{##because randomisation is within community only}
+\hlcom{##Null model local is trivial for these functions}
+\hlcom{##because randomization is within community only}
 
-\hlstd{res.finch.ind_mn1}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{index}\hlstd{=funct,} \hlkwc{sp}\hlstd{=sp.finch,}
-                             \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{),} \hlkwc{ind.plot}\hlstd{=ind.plot.finch,}
-                             \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
-\hlstd{res.finch.ind_mn2}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{index}\hlstd{=funct,} \hlkwc{sp}\hlstd{=sp.finch,}
-                             \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),} \hlkwc{ind.plot}\hlstd{=ind.plot.finch,}
-                             \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+\hlstd{res.finch.ind_mn1}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct,} \hlkwc{sp} \hlstd{= sp.finch,}
+               \hlkwc{nullmodels} \hlstd{=} \hlstr{"local"}\hlstd{,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,}
+               \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlstd{res.finch.ind_mn2}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct,} \hlkwc{sp} \hlstd{= sp.finch,}
+               \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,}
+               \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
 
-We can calcul index with or without intraspecific variance.
+We can calculate index with or without intraspecific variance.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{#Calcul of means by population (name_sp_site is a name of a population) }
-\hlcom{#like in the function ComIndex and determine the site for each population (sites_bypop)}
+\hlcom{#calculate  of means by population (name_sp_site is a name of a population) }
+\hlcom{#determine the site for each population (sites_bypop)}
 
-\hlstd{name_sp_sites}\hlkwb{=}\hlkwd{paste}\hlstd{(sp.finch, ind.plot.finch,}\hlkwc{sep}\hlstd{=}\hlstr{"_"}\hlstd{)}
+\hlstd{name_sp_sites} \hlkwb{=} \hlkwd{paste}\hlstd{(sp.finch, ind.plot.finch,}\hlkwc{sep} \hlstd{=} \hlstr{"_"}\hlstd{)}
 \hlstd{traits.by.pop}\hlkwb{<-}\hlkwd{apply}\hlstd{(traits.finch,} \hlnum{2} \hlstd{,}
-                     \hlkwa{function} \hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{tapply}\hlstd{(x, name_sp_sites, mean ,} \hlkwc{na.rm}\hlstd{=T))}
+           \hlkwa{function} \hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{tapply}\hlstd{(x, name_sp_sites, mean ,} \hlkwc{na.rm} \hlstd{= T))}
 
-\hlstd{sites_bypop}\hlkwb{<-}\hlkwd{lapply}\hlstd{(}\hlkwd{strsplit}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlkwd{rownames}\hlstd{(traits.by.pop),} \hlkwc{sep}\hlstd{=}\hlstr{"_"}\hlstd{),} \hlkwc{split}\hlstd{=}\hlstr{"_"}\hlstd{),}
-                    \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{) x[}\hlnum{3}\hlstd{])}
+\hlstd{sites_bypop}\hlkwb{<-}\hlkwd{lapply}\hlstd{(}\hlkwd{strsplit}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlkwd{rownames}\hlstd{(traits.by.pop),} \hlkwc{sep} \hlstd{=} \hlstr{"_"}\hlstd{),} \hlkwc{split} \hlstd{=} \hlstr{"_"}\hlstd{),}
+          \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{) x[}\hlnum{3}\hlstd{])}
 
 \hlcom{#We use the precedent list of function "funct"}
 \hlstd{funct.withIV}\hlkwb{<-}\hlstd{funct}
 
 \hlstd{fact}\hlkwb{<-}\hlkwd{unlist}\hlstd{(sites_bypop)}
-\hlstd{funct.withoutIV}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"tapply(x, fact, function(x) mean(x, na.rm=T))"}\hlstd{,}
-                   \hlstr{"tapply(x, fact, function(x) kurtosis(x, na.rm=T))"}\hlstd{,}
-                   \hlstr{"tapply(x, fact, function(x) max(x, na.rm=T)-min(x, na.rm=T))"}\hlstd{,}
-                   \hlstr{"tapply(x, fact, function(x) CVNND(x))"}\hlstd{)}
+\hlstd{funct.withoutIV}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"tapply(x, fact, function(x) mean(x, na.rm = T))"}\hlstd{,}
+          \hlstr{"tapply(x, fact, function(x) kurtosis(x, na.rm = T))"}\hlstd{,}
+          \hlstr{"tapply(x, fact, function(x) max(x, na.rm = T)-min(x, na.rm = T))"}\hlstd{,}
+          \hlstr{"tapply(x, fact, function(x) CVNND(x))"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
+Now calculate index with or without intraspecific variance thanks to function \texttt{ComIndex}.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{res.finch.withIV}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct.withIV,}
+               \hlkwc{sp} \hlstd{= sp.finch,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,}
+               \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 
-\hlstd{res.finch.withIV}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{index}\hlstd{=funct.withIV,}
-                             \hlkwc{sp}\hlstd{=sp.finch,} \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),}
-                             \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
-
-\hlstd{res.finch.withoutIV}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits}\hlstd{=traits.finch,} \hlkwc{index}\hlstd{=funct.withoutIV,}
-                             \hlkwc{sp}\hlstd{=sp.finch,} \hlkwc{nullmodels}\hlstd{=}\hlkwd{rep}\hlstd{(}\hlstr{"2sp"}\hlstd{,}\hlnum{4}\hlstd{),}
-                             \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{print}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+\hlstd{res.finch.withoutIV}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct.withoutIV,}
+               \hlkwc{sp} \hlstd{= sp.finch,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.pop"}\hlstd{,}
+               \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -1004,7 +1108,7 @@ We can calcul index with or without intraspecific variance.
 
 
 \subsubsection{S3 methods for class ComIndex and ComIndexMulti}
-Tstats class is associated to S3 methods plot, print and summary
+ComIndex and ComIndexMulti class are associated to S3 methods plot, print and summary.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1012,32 +1116,53 @@ Tstats class is associated to S3 methods plot, print and summary
 \hlstd{res.finch.withIV}
 \end{alltt}
 \begin{verbatim}
-## List of 1
-##  $ obs:List of 4
-##   ..$ tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))               : num [1:6, 1:4] NULL ...
-##   .. ..- attr(*, "dimnames")=List of 2
-##   ..$ tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))           : num [1:6, 1:4] NULL ...
-##   .. ..- attr(*, "dimnames")=List of 2
-##   ..$ tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T)): num [1:6, 1:4] NULL ...
-##   .. ..- attr(*, "dimnames")=List of 2
-##   ..$ tapply(x, ind.plot.finch, function(x) CVNND(x))                       : num [1:6, 1:4] NULL ...
-##   .. ..- attr(*, "dimnames")=List of 2
-## NULL
-## List of 5
-##  $ Null          :List of 4
-##  $ list.index    :List of 8
-##  $ list.index.t  :List of 8
-##  $ sites_richness: Named num [1:6] NULL ...
-##   ..- attr(*, "names")= chr [1:6]  ...
-##  $ namestraits   : chr [1:4]  ...
-## NULL
+## 	#################################
+## 	# Community metrics calculation #
+## 	#################################
+## class: ComIndex
+## $call: ComIndex(traits = traits.finch, index = funct.withIV, nullmodels = "regional.ind", 
+##     ind.plot = ind.plot.finch, sp = sp.finch, nperm = 9, printprogress = FALSE)
+## 
+## ###############
+## $obs: list of observed values
+## 	$tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))
+## 	$tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))
+## 	$tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))
+## 	$tapply(x, ind.plot.finch, function(x) CVNND(x))
+## 
+## ###############
+## $null: list of null values, number of permutation: 9 
+## 	$tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))_nm ... null model = regional.ind
+## 	$tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))_nm ... null model = regional.ind
+## 	$tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))_nm ... null model = regional.ind
+## 	$tapply(x, ind.plot.finch, function(x) CVNND(x))_nm ... null model = regional.ind
+## 
+## ###############
+## data used
+##   data      class      dim   
+## 1 $traits   data.frame 2513,4
+## 2 $ind.plot factor     2513  
+## 3 $sp       factor     2513  
+##   content                                             
+## 1 traits data                                         
+## 2 name of the plot in which the individual is         
+## 3 groups (e.g. species) which the individual belong to
+## 
+## ###############
+## others
+## 	$namestraits: 4 traits
+## [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
+## 
+## 	$sites_richness:
+## 	    DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
+##       50      267      981      258      270      687
 \end{verbatim}
 \begin{alltt}
 \hlkwd{summary}\hlstd{(res.finch.withIV)}
 \end{alltt}
 \begin{verbatim}
 ## [1] "Observed values"
-## $`tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))`
+## $`tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))`
 ##      WingL          BeakH           UBeakL         N.UBkL    
 ##  Min.   :67.0   Min.   : 9.71   Min.   :14.8   Min.   :10.1  
 ##  1st Qu.:67.6   1st Qu.: 9.99   1st Qu.:15.4   1st Qu.:10.7  
@@ -1046,7 +1171,7 @@ Tstats class is associated to S3 methods plot, print and summary
 ##  3rd Qu.:67.8   3rd Qu.:11.36   3rd Qu.:18.0   3rd Qu.:11.6  
 ##  Max.   :68.3   Max.   :11.71   Max.   :18.7   Max.   :12.1  
 ## 
-## $`tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))`
+## $`tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))`
 ##      WingL            BeakH            UBeakL           N.UBkL      
 ##  Min.   :-1.466   Min.   :-1.360   Min.   :-1.600   Min.   :-1.752  
 ##  1st Qu.:-1.252   1st Qu.:-0.642   1st Qu.:-1.185   1st Qu.:-1.449  
@@ -1055,7 +1180,7 @@ Tstats class is associated to S3 methods plot, print and summary
 ##  3rd Qu.:-0.274   3rd Qu.: 0.646   3rd Qu.:-0.876   3rd Qu.:-0.946  
 ##  Max.   : 0.865   Max.   : 1.087   Max.   : 2.414   Max.   : 1.950  
 ## 
-## $`tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T))`
+## $`tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))`
 ##      WingL          BeakH          UBeakL         N.UBkL     
 ##  Min.   :11.0   Min.   : 4.3   Min.   : 8.7   Min.   : 6.50  
 ##  1st Qu.:34.2   1st Qu.:14.6   1st Qu.:11.1   1st Qu.: 8.88  
@@ -1065,107 +1190,47 @@ Tstats class is associated to S3 methods plot, print and summary
 ##  Max.   :38.0   Max.   :19.4   Max.   :13.6   Max.   :10.50  
 ## 
 ## $`tapply(x, ind.plot.finch, function(x) CVNND(x))`
-##      WingL           BeakH         UBeakL         N.UBkL     
-##  Min.   :0.139   Min.   : NA   Min.   :1.21   Min.   :0.959  
-##  1st Qu.:0.139   1st Qu.: NA   1st Qu.:1.21   1st Qu.:0.959  
-##  Median :0.139   Median : NA   Median :1.21   Median :0.959  
-##  Mean   :0.139   Mean   :NaN   Mean   :1.21   Mean   :0.959  
-##  3rd Qu.:0.139   3rd Qu.: NA   3rd Qu.:1.21   3rd Qu.:0.959  
-##  Max.   :0.139   Max.   : NA   Max.   :1.21   Max.   :0.959  
-##  NA's   :5       NA's   :6     NA's   :5      NA's   :5      
+##      WingL            BeakH           UBeakL          N.UBkL      
+##  Min.   :0.0000   Min.   :0.268   Min.   :0.139   Min.   :0.0321  
+##  1st Qu.:0.0000   1st Qu.:0.613   1st Qu.:0.278   1st Qu.:0.2086  
+##  Median :0.0000   Median :0.651   Median :0.553   Median :0.3482  
+##  Mean   :0.0374   Mean   :0.602   Mean   :0.666   Mean   :0.4112  
+##  3rd Qu.:0.0643   3rd Qu.:0.695   3rd Qu.:1.112   3rd Qu.:0.5505  
+##  Max.   :0.1386   Max.   :0.732   Max.   :1.267   Max.   :0.9588  
 ## 
-## [1] "Null values"
-## $`tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))`
+## [1] "null values"
+## $`tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    9.66   10.60   13.30   26.20   29.20   70.30 
 ## 
-## $`tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))`
+## $`tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  -1.360  -0.951  -0.653  -0.445  -0.176   1.590 
 ## 
-## $`tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T))`
+## $`tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     8.7    11.4    15.9    19.8    20.8    39.0 
 ## 
 ## $`tapply(x, ind.plot.finch, function(x) CVNND(x))`
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##    0.14    0.31    0.41    0.54    0.74    1.26     204
-\end{verbatim}
-\begin{alltt}
-\hlkwd{summary}\hlstd{(res.finch.withoutIV)}
-\end{alltt}
-\begin{verbatim}
-## [1] "Observed values"
-## $`tapply(x, fact, function(x) mean(x, na.rm=T))`
-##      WingL          BeakH           UBeakL         N.UBkL    
-##  Min.   :65.9   Min.   : 9.55   Min.   :15.5   Min.   :10.6  
-##  1st Qu.:67.2   1st Qu.:10.06   1st Qu.:15.7   1st Qu.:10.7  
-##  Median :68.7   Median :10.15   Median :16.4   Median :11.0  
-##  Mean   :68.1   Mean   :10.37   Mean   :16.6   Mean   :11.1  
-##  3rd Qu.:69.1   3rd Qu.:10.68   3rd Qu.:17.1   3rd Qu.:11.2  
-##  Max.   :69.2   Max.   :11.50   Max.   :18.5   Max.   :11.9  
-## 
-## $`tapply(x, fact, function(x) kurtosis(x, na.rm=T))`
-##      WingL            BeakH             UBeakL          N.UBkL     
-##  Min.   :-2.333   Min.   :-2.3333   Min.   :-2.33   Min.   :-2.33  
-##  1st Qu.:-1.954   1st Qu.:-2.0761   1st Qu.:-2.27   1st Qu.:-2.04  
-##  Median :-1.760   Median :-1.4834   Median :-1.98   Median :-1.87  
-##  Mean   :-1.559   Mean   :-1.2609   Mean   :-1.99   Mean   :-1.84  
-##  3rd Qu.:-1.033   3rd Qu.:-0.4232   3rd Qu.:-1.77   3rd Qu.:-1.60  
-##  Max.   :-0.693   Max.   : 0.0779   Max.   :-1.60   Max.   :-1.37  
-## 
-## $`tapply(x, fact, function(x) max(x, na.rm=T)-min(x, na.rm=T))`
-##      WingL           BeakH           UBeakL          N.UBkL    
-##  Min.   : 8.33   Min.   : 2.35   Min.   : 7.14   Min.   :5.66  
-##  1st Qu.:26.21   1st Qu.:12.08   1st Qu.: 8.71   1st Qu.:7.07  
-##  Median :29.21   Median :14.29   Median :10.06   Median :7.38  
-##  Mean   :25.41   Mean   :12.36   Mean   : 9.42   Mean   :7.22  
-##  3rd Qu.:29.87   3rd Qu.:14.81   3rd Qu.:10.26   3rd Qu.:7.64  
-##  Max.   :30.41   Max.   :16.93   Max.   :10.67   Max.   :8.20  
-## 
-## $`tapply(x, fact, function(x) CVNND(x))`
-##      WingL            BeakH            UBeakL          N.UBkL     
-##  Min.   :0.0132   Min.   :0.0944   Min.   :0.407   Min.   :0.323  
-##  1st Qu.:0.1538   1st Qu.:0.6984   1st Qu.:0.407   1st Qu.:0.356  
-##  Median :0.3944   Median :1.0743   Median :0.407   Median :0.611  
-##  Mean   :0.5963   Mean   :0.9484   Mean   :0.407   Mean   :0.606  
-##  3rd Qu.:1.1147   3rd Qu.:1.3243   3rd Qu.:0.407   3rd Qu.:0.835  
-##  Max.   :1.3475   Max.   :1.5508   Max.   :0.407   Max.   :0.913  
-##                   NA's   :2        NA's   :5                      
-## 
-## [1] "Null values"
-## $`tapply(x, fact, function(x) mean(x, na.rm=T))`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    15.6    24.7    26.7    27.0    28.6    40.3 
-## 
-## $`tapply(x, fact, function(x) kurtosis(x, na.rm=T))`
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  -2.380  -2.000  -1.420  -1.200  -0.856   3.270 
-## 
-## $`tapply(x, fact, function(x) max(x, na.rm=T)-min(x, na.rm=T))`
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    1.98   10.00   14.10   18.90   21.40   75.30 
-## 
-## $`tapply(x, fact, function(x) CVNND(x))`
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##   0.016   0.680   1.050   1.080   1.420   2.630       5
+##   0.000   0.097   0.272   0.382   0.613   1.790
 \end{verbatim}
 \begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch.withIV)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-391} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-461} 
 \begin{kframe}\begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch.withoutIV)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-392} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-462} 
 
 \end{knitrout}
 
 
 \subsubsection{Plot Tstats and other uni/multivariates metrics together}
-The class listofindex permit to stock differents metrics computed using Tstats, ComIndex and ComIndexMulti and compared to different null model. To do that we can use the Standardized Effect Size (ses) define as : 
+The class listofindex permits to stock different metrics computed using \texttt{Tstats}, \texttt{ComIndex} and \texttt{ComIndexMulti} and compared to different null model. To do that we can use the Standardized Effect Size (ses) define as : 
 
 \begin{center}
 $SES = (I_obs – I_sim) / \delta_{sim}$
@@ -1189,11 +1254,11 @@ where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from 
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{list.ind}\hlkwb{<-}\hlkwd{list}\hlstd{(res.finch.withIV, res.finch.withoutIV, res.finch)}
-\hlstd{namesindex.i.l1}\hlkwb{=}\hlkwd{c}\hlstd{(}\hlstr{"mean"}\hlstd{,} \hlstr{"kurtosis"}\hlstd{,} \hlstr{"range"}\hlstd{,} \hlstr{"CVNND"}\hlstd{,}
-                  \hlstr{"mean.pop"}\hlstd{,} \hlstr{"kurtosis.pop"}\hlstd{,} \hlstr{"range.pop"}\hlstd{,} \hlstr{"CVNND.pop"}\hlstd{,}
-                  \hlstr{"T_IP.IC"}\hlstd{,} \hlstr{"T_IC.IR"}\hlstd{,} \hlstr{"T_PC.PR"}\hlstd{)}
+\hlstd{namesindex.i.l1} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"mean"}\hlstd{,} \hlstr{"kurtosis"}\hlstd{,} \hlstr{"range"}\hlstd{,} \hlstr{"CVNND"}\hlstd{,}
+         \hlstr{"mean.pop"}\hlstd{,} \hlstr{"kurtosis.pop"}\hlstd{,} \hlstr{"range.pop"}\hlstd{,} \hlstr{"CVNND.pop"}\hlstd{,}
+         \hlstr{"T_IP.IC"}\hlstd{,} \hlstr{"T_IC.IR"}\hlstd{,} \hlstr{"T_PC.PR"}\hlstd{)}
 
-\hlstd{i.l1}\hlkwb{<-}\hlkwd{as.listofindex}\hlstd{(list.ind,} \hlkwc{namesindex}\hlstd{=namesindex.i.l1)}
+\hlstd{i.l1}\hlkwb{<-}\hlkwd{as.listofindex}\hlstd{(list.ind,} \hlkwc{namesindex} \hlstd{= namesindex.i.l1)}
 
 \hlkwd{class}\hlstd{(i.l1)}
 \end{alltt}
@@ -1203,53 +1268,54 @@ where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from 
 \end{kframe}
 \end{knitrout}
 
-The plot type \tt{bytraits} allows to plot all SES traits values for all sites or all traits
+The plot type \texttt{bytraits} allows plotting all SES traits values for all sites or all traits
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type}\hlstd{=}\hlstr{"bysites"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "Error: bysites is not a valid type of plot"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type}\hlstd{=}\hlstr{"bytraits"}\hlstd{)}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
+\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"bysites"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-42} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-491} 
+\begin{kframe}\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"bytraits"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-492} 
+\begin{kframe}\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
+\end{alltt}
+\end{kframe}
 \end{knitrout}
 
-The other plot type are the same as plot.Tstats
+The other plot types are the same as plot.Tstats.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
 \hlkwd{plot}\hlstd{(i.l1)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-431} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-501} 
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type}\hlstd{=}\hlstr{"simple_range"}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: valeur manquante là où TRUE / FALSE est requis}}\begin{alltt}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type}\hlstd{=}\hlstr{"normal"}\hlstd{)}
+\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"simple_range"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-432} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-502} 
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type}\hlstd{=}\hlstr{"barplot"}\hlstd{)}
+\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"normal"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-433} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-503} 
 \begin{kframe}\begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
+\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-504} 
+\begin{kframe}\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -1258,9 +1324,9 @@ The other plot type are the same as plot.Tstats
 
 \newpage
 
-\subsection{Multivariates index}
+\subsection{More information ond multivariates index}
 
-For most multivariate functions we need to replace (or exclude) NA values. For this example, we use the package mice to complete the data.
+For most multivariate functions we need to replace (or exclude) NA values. For this example, we use the package \texttt{mice} to complete the data.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1268,64 +1334,96 @@ For most multivariate functions we need to replace (or exclude) NA values. For t
 \hlstd{comm}\hlkwb{<-}\hlkwd{t}\hlstd{(}\hlkwd{table}\hlstd{(ind.plot.finch,}\hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(ind.plot.finch)))}
 
 \hlkwd{require}\hlstd{(mice)}
-\hlstd{traits}\hlkwb{=}\hlstd{traits.finch}
+\hlstd{traits} \hlkwb{=} \hlstd{traits.finch}
 \hlstd{mice}\hlkwb{<-}\hlkwd{mice}\hlstd{(traits.finch)}
 \hlstd{traits.finch.mice}\hlkwb{<-}\hlkwd{complete}\hlstd{(mice)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
-A simple example to illustrate the concept of the function \tt{ComIndexMulti}
+A simple example to illustrate the concept of the function \texttt{ComIndexMulti}
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{n_sp_plot}\hlkwb{<-}\hlkwd{as.factor}\hlstd{(}\hlkwd{paste}\hlstd{(sp.finch, ind.plot.finch,} \hlkwc{sep}\hlstd{=}\hlstr{"_"}\hlstd{))}
+\hlstd{n_sp_plot}\hlkwb{<-}\hlkwd{as.factor}\hlstd{(}\hlkwd{paste}\hlstd{(sp.finch, ind.plot.finch,} \hlkwc{sep} \hlstd{=} \hlstr{"_"}\hlstd{))}
 \hlstd{res.sum.1}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch,}
-                           \hlkwc{index}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"sum(scale(x), na.rm=T)"}\hlstd{,} \hlstr{"sum(x, na.rm=T)"}\hlstd{),}
-                           \hlkwc{by.factor}\hlstd{=n_sp_plot,} \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),}
-                           \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{sp}\hlstd{=sp.finch)}
+              \hlkwc{index} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"sum(scale(x), na.rm = T)"}\hlstd{,} \hlstr{"sum(x, na.rm = T)"}\hlstd{),}
+              \hlkwc{by.factor} \hlstd{= n_sp_plot,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,}
+              \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch)}
 \end{alltt}
 \begin{verbatim}
 ## [1] "creating null models"
-## [1] "nm.2 25 %"
-## [1] "nm.2 50 %"
-## [1] "nm.2 75 %"
-## [1] "nm.2 100 %"
+## [1] "regional.ind 25 %"
+## [1] "regional.ind 50 %"
+## [1] "regional.ind 75 %"
+## [1] "regional.ind 100 %"
 ## [1] "calculation of null values using null models"
-## [1] "sum(scale(x), na.rm=T) 50 %"
-## [1] "sum(x, na.rm=T) 100 %"
+## [1] "sum(scale(x), na.rm = T) 50 %"
+## [1] "sum(x, na.rm = T) 100 %"
 ## [1] "calculation of observed values"
 ## [1] "50 %"
 ## [1] "100 %"
 \end{verbatim}
 \begin{alltt}
-\hlkwd{attributes}\hlstd{(}\hlkwd{ses.listofindex}\hlstd{(}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(res.sum.1))))}
+\hlstd{res.sum.1}
 \end{alltt}
 \begin{verbatim}
-## $names
-## [1] "index_1_1" "index_1_2"
+## 	#################################
+## 	# Community metrics calculation #
+## 	#################################
+## class: ComIndexMulti
+## $call: ComIndexMulti(traits = traits.finch, index = c("sum(scale(x), na.rm = T)", 
+##     "sum(x, na.rm = T)"), by.factor = n_sp_plot, nullmodels = "regional.ind", 
+##     ind.plot = ind.plot.finch, sp = sp.finch, nperm = 9)
 ## 
-## $class
-## [1] "ses.list"
+## ###############
+## $obs: list of observed values
+## 	$sum(scale(x), na.rm = T)
+## 	$sum(x, na.rm = T)
+## 
+## ###############
+## $null: list of null values, number of permutation: NA 
+## 	$sum(scale(x), na.rm = T)_nm ... null model = regional.ind
+## 	$sum(x, na.rm = T)_nm ... null model = regional.ind
+## 
+## ###############
+## data used
+##   data      class      dim   
+## 1 $traits   data.frame 2513,4
+## 2 $ind.plot factor     2513  
+## 3 $sp       factor     2513  
+##   content                                             
+## 1 traits data                                         
+## 2 name of the plot in which the individual is         
+## 3 groups (e.g. species) which the individual belong to
+## 
+## ###############
+## others
+## 	$namestraits: 4 traits
+## [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
+## 
+## 	$sites_richness:
+## 	    DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
+##       50      267      981      258      270      687
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 \newpage
-A more interesting example using the function \tt{hypervolume} from the package ... hypervolume.  We show here several results which differe in there factor that delimit the group to calculate different hypervolume (argument "byfactor"). 
+A more interesting example using the function \texttt{hypervolume} from the package ... \texttt{hypervolume} (Blonder et al., 2014). We show here several results which differed in there factor that delimit the group to calculate different hypervolume (argument \texttt{byfactor}). 
 
-First, let's try the hypervolume function one finch data.
+First, let's try the \texttt{hypervolume} function one finch data.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{hv}\hlkwb{<-}\hlkwd{hypervolume}\hlstd{(traits.finch.mice,}
-                \hlkwc{reps}\hlstd{=}\hlnum{100}\hlstd{,}\hlkwc{bandwidth}\hlstd{=}\hlnum{0.2}\hlstd{,}
-                \hlkwc{verbose}\hlstd{=F,} \hlkwc{warnings}\hlstd{=F)}
+        \hlkwc{reps} \hlstd{=} \hlnum{100}\hlstd{,}\hlkwc{bandwidth} \hlstd{=} \hlnum{0.2}\hlstd{,}
+        \hlkwc{verbose} \hlstd{= F,} \hlkwc{warnings} \hlstd{= F)}
 \hlkwd{plot}\hlstd{(hv)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-46} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-53} 
 
 \end{knitrout}
 
@@ -1338,9 +1436,9 @@ Now, we can do the same analysis for each species.
 \hlstd{hv.list2}\hlkwb{<-}\hlkwd{list}\hlstd{()}
 
 \hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:} \hlkwd{length}\hlstd{(}\hlkwd{table}\hlstd{(sp.finch))) \{}
-  \hlstd{hv.list2[[i]]}\hlkwb{<-}\hlkwd{hypervolume}\hlstd{(traits.finch.mice[sp.finch}\hlopt{==}\hlkwd{levels}\hlstd{(sp.finch)[i], ],}
-                \hlkwc{reps}\hlstd{=}\hlnum{1000}\hlstd{,}\hlkwc{bandwidth}\hlstd{=}\hlnum{0.2}\hlstd{,}
-                \hlkwc{verbose}\hlstd{=F,} \hlkwc{warnings}\hlstd{=F)}
+ \hlstd{hv.list2[[i]]}\hlkwb{<-}\hlkwd{hypervolume}\hlstd{(traits.finch.mice[sp.finch} \hlopt{==} \hlkwd{levels}\hlstd{(sp.finch)[i], ],}
+        \hlkwc{reps} \hlstd{=} \hlnum{1000}\hlstd{,}\hlkwc{bandwidth} \hlstd{=} \hlnum{0.2}\hlstd{,}
+        \hlkwc{verbose} \hlstd{= F,} \hlkwc{warnings} \hlstd{= F)}
 \hlstd{\}}
 
 \hlstd{hv.list}\hlopt{@}\hlkwc{HVList}\hlkwb{<-}\hlstd{hv.list2}
@@ -1349,165 +1447,35 @@ Now, we can do the same analysis for each species.
 
 
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: adegenet\\\#\#\ \ \ \ ==========================\\\#\#\ \ \ \  adegenet 1.4-2 is loaded\\\#\#\ \ \ \ ==========================\\\#\# \\\#\#\ \ - to start, type '?adegenet'\\\#\#\ \ - to browse adegenet website, type 'adegenetWeb()'\\\#\#\ \ - to post questions/comments: adegenet-forum@lists.r-forge.r-project.org}}\begin{alltt}
-\hlstd{colorhv}\hlkwb{<-}\hlkwd{transp}\hlstd{(}\hlkwd{funky}\hlstd{(}\hlkwd{nlevels}\hlstd{(sp.finch)),} \hlkwc{alpha}\hlstd{=}\hlnum{0.8}\hlstd{)}
+\hlstd{colorhv}\hlkwb{<-}\hlkwd{transp}\hlstd{(}\hlkwd{funky}\hlstd{(}\hlkwd{nlevels}\hlstd{(sp.finch)),} \hlkwc{alpha} \hlstd{=} \hlnum{0.8}\hlstd{)}
 
-\hlkwd{plot}\hlstd{(hv.list,} \hlkwc{colors}\hlstd{=colorhv,} \hlkwc{darkfactor}\hlstd{=}\hlnum{0.8}\hlstd{)}
+\hlkwd{plot}\hlstd{(hv.list,} \hlkwc{colors} \hlstd{= colorhv,} \hlkwc{darkfactor} \hlstd{=} \hlnum{0.8}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-471} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-541} 
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(hv.list,} \hlkwc{colors}\hlstd{=colorhv,} \hlkwc{darkfactor}\hlstd{=}\hlnum{0.8}\hlstd{,} \hlkwc{showdata}\hlstd{=F,} \hlkwc{npmax} \hlstd{=} \hlnum{200}\hlstd{,} \hlkwc{cex.random} \hlstd{=}\hlnum{1}\hlstd{)}
+\hlkwd{plot}\hlstd{(hv.list,} \hlkwc{colors} \hlstd{= colorhv,} \hlkwc{darkfactor} \hlstd{=} \hlnum{0.8}\hlstd{,} \hlkwc{showdata} \hlstd{= F,} \hlkwc{npmax} \hlstd{=} \hlnum{200}\hlstd{,} \hlkwc{cex.random} \hlstd{=} \hlnum{1}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-472} 
-\begin{kframe}\begin{alltt}
-\hlkwd{summary}\hlstd{(hv.list)}
-\end{alltt}
-\begin{verbatim}
-## HypervolumeList with 12 elements:
-## 
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 23
-## 	Dimensionality: 4
-## 	Volume: 0.581274
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.987217
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 14385
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 172
-## 	Dimensionality: 4
-## 	Volume: 3.508501
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.796807
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 91104
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 142
-## 	Dimensionality: 4
-## 	Volume: 2.957552
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.813587
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 76385
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 73
-## 	Dimensionality: 4
-## 	Volume: 1.729685
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.925559
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 43564
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 299
-## 	Dimensionality: 4
-## 	Volume: 4.127026
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.539170
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 114079
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 206
-## 	Dimensionality: 4
-## 	Volume: 5.070588
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.961504
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 126546
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 125
-## 	Dimensionality: 4
-## 	Volume: 2.734825
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.854633
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 69799
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 548
-## 	Dimensionality: 4
-## 	Volume: 11.785994
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.840128
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 302349
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 386
-## 	Dimensionality: 4
-## 	Volume: 6.293490
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.636890
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 170580
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 126
-## 	Dimensionality: 4
-## 	Volume: 3.180147
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.985909
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 78794
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 284
-## 	Dimensionality: 4
-## 	Volume: 6.331289
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.870831
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 161250
-## Hypervolume
-## 	Name: untitled
-## 	Nr. of observations: 129
-## 	Dimensionality: 4
-## 	Volume: 2.871520
-## 	Bandwidth: 0.2 0.2 0.2 0.2
-## 	Disjunct factor: 0.869525
-## 	Quantile desired: 0.000000
-## 	Quantile obtained: 0.000000
-## 	Nr. of repetitions per point: 1000
-## 	Number of random points: 72987
-\end{verbatim}
-\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-542} 
+
 \end{knitrout}
-
-The standard example of the hypervolume package also use finch data but at the species level.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{demo}\hlstd{(}\hlstr{'finch'}\hlstd{,} \hlkwc{package}\hlstd{=}\hlstr{'hypervolume'}\hlstd{)}
+\hlkwd{summary}\hlstd{(hv.list)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+The standard example of the \texttt{hypervolume} package also use finch data but at the species level.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{doHypervolumeFinchDemo}\hlkwb{=}\hlnum{TRUE}
+\hlkwd{demo}\hlstd{(}\hlstr{'finch'}\hlstd{,} \hlkwc{package} \hlstd{=} \hlstr{'hypervolume'}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## 
@@ -1576,94 +1544,269 @@ The standard example of the hypervolume package also use finch data but at the s
 ## +   message('\tdemo(finch)')
 ## +   message('at the R command line prompt.')
 ## + }
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 5.26316e-006  0.0526368  0.105268  0.1579  0.210532  0.263163  0.315795  0.368426  0.421058  0.473689  0.526321  0.578953  0.631584  0.684216  0.736847  0.789479  0.842111  0.894742  0.947374  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.00   obtained: 0.00
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 7.69231e-006  0.0769308  0.153854  0.230777  0.3077  0.384623  0.461546  0.538469  0.615392  0.692315  0.769238  0.846162  0.923085  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.00   obtained: 0.00
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 1.23457e-006  0.0123469  0.0246926  0.0370383  0.049384  0.0617296  0.0740753  0.086421  0.0987667  0.111112  0.123458  0.135804  0.148149  0.160495  0.172841  0.185186  0.197532  0.209878  0.222223  0.234569  0.246915  0.25926  0.271606  0.283952  0.296298  0.308643  0.320989  0.333335  0.34568  0.358026  0.370372  0.382717  0.395063  0.407409  0.419754  0.4321  0.444446  0.456791  0.469137  0.481483  0.493828  0.506174  0.51852  0.530865  0.543211  0.555557  0.567902  0.580248  0.592594  0.60494  0.617285  0.629631  0.641977  0.654322  0.666668  0.679014  0.691359  0.703705  0.716051  0.728396  0.740742  0.753088  0.765433  0.777779  0.790125  0.80247  0.814816  0.827162  0.839507  0.851853  0.864199  0.876544  0.88889  0.901236  0.913581  0.925927  0.938273  0.950619  0.962964  0.97531  0.987656  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.00   obtained: 0.00
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 4.54545e-006  0.0454591  0.0909136  0.136368  0.181823  0.227277  0.272732  0.318186  0.363641  0.409095  0.45455  0.500005  0.545459  0.590914  0.636368  0.681823  0.727277  0.772732  0.818186  0.863641  0.909095  0.95455  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.00   obtained: 0.00
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 9.09091e-006  0.0909182  0.181827  0.272736  0.363645  0.454555  0.545464  0.636373  0.727282  0.818191  0.9091  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.00   obtained: 0.00
+## Retaining 30621 points in hv1 and 39557 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 2.528e-005  0.252825  0.505625  0.758425  done.
+## Building tree... done.
+## Querying tree... 3.26573e-005  0.326606  0.653179  0.979752  done.
+## Finished ball queries. 
+## Retaining 57690 points in hv1 and 56159 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 1.78066e-005  0.178084  0.35615  0.534215  0.712281  0.890347  done.
+## Building tree... done.
+## Querying tree... 1.7334e-005  0.173358  0.346698  0.520038  0.693378  0.866719  done.
+## Finished ball queries. 
+## Retaining 1265 points in hv1 and 61559 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 1.62446e-005  0.162462  0.324908  0.487354  0.649799  0.812245  0.974691  done.
+## Building tree... done.
+## Querying tree... 0.000790514  done.
+## Finished ball queries. 
+## Retaining 428 points in hv1 and 31493 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 3.17531e-005  0.317563  0.635094  0.952624  done.
+## Building tree... done.
+## Querying tree... 0.00233645  done.
+## Finished ball queries. 
+## Retaining 39557 points in hv1 and 29809 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 3.35469e-005  0.335503  0.670972  done.
+## Building tree... done.
+## Querying tree... 2.528e-005  0.252825  0.505625  0.758425  done.
+## Finished ball queries. 
+## Retaining 1634 points in hv1 and 61559 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 1.62446e-005  0.162462  0.324908  0.487354  0.649799  0.812245  0.974691  done.
+## Building tree... done.
+## Querying tree... 0.000611995  done.
+## Finished ball queries. 
+## Retaining 553 points in hv1 and 31493 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 3.17531e-005  0.317563  0.635094  0.952624  done.
+## Building tree... done.
+## Querying tree... 0.00180832  done.
+## Finished ball queries. 
+## Retaining 1231 points in hv1 and 61559 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 1.62446e-005  0.162462  0.324908  0.487354  0.649799  0.812245  0.974691  done.
+## Building tree... done.
+## Querying tree... 0.000812348  done.
+## Finished ball queries. 
+## Retaining 417 points in hv1 and 31493 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 3.17531e-005  0.317563  0.635094  0.952624  done.
+## Building tree... done.
+## Querying tree... 0.00239808  done.
+## Finished ball queries. 
+## Retaining 20847 points in hv1 and 31493 points in hv2.
+## Beginning ball queries... 
+## Building tree... done.
+## Querying tree... 3.17531e-005  0.317563  0.635094  0.952624  done.
+## Building tree... done.
+## Querying tree... 4.79685e-005  0.479733  0.959419  done.
+## Finished ball queries.
 \end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-561} 
 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-562} 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Demo does not run by default to meet CRAN runtime requirements.\\\#\# This demo requires approximately 3 minutes to run.\\\#\# To run the demo, type\\\#\# 	doHypervolumeFinchDemo=TRUE\\\#\# 	demo(finch)\\\#\# at the R command line prompt.}}\end{kframe}
 \end{knitrout}
 
-\tt{ComIndexMulti} takes the same arguments as \tt{ComIndex} and an argument by factor to apply the index on different factors.
+\texttt{ComIndexMulti} takes the same arguments as \texttt{ComIndex} and an argument by factor to apply the index on different factors.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{#all individual are put in the same group: calcul the hypervolume without by.factor}
+\hlcom{#all individual are put in the same group: calculate the hypervolume without by.factor}
 \hlstd{hv.1}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch.mice,}
-                          \hlkwc{index}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps=100, 
-                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"}\hlstd{),}
-                          \hlkwc{by.factor}\hlstd{=}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,}\hlkwd{length}\hlstd{(n_sp_plot)),} \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),}
-                          \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{sp}\hlstd{=sp.finch)}
+             \hlkwc{index} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps = 100, 
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"}\hlstd{),}
+             \hlkwc{by.factor} \hlstd{=} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,}\hlkwd{length}\hlstd{(n_sp_plot)),} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,}
+             \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch)}
 \end{alltt}
 \begin{verbatim}
 ## [1] "creating null models"
-## [1] "nm.2 25 %"
-## [1] "nm.2 50 %"
-## [1] "nm.2 75 %"
-## [1] "nm.2 100 %"
+## [1] "regional.ind 25 %"
+## [1] "regional.ind 50 %"
+## [1] "regional.ind 75 %"
+## [1] "regional.ind 100 %"
 ## [1] "calculation of null values using null models"
-## [1] "as.numeric(try(hypervolume(na.omit(x), reps=100, \n                                  bandwidth=0.2, verbose=F, warnings=F)@Volume)) 100 %"
+## [1] "as.numeric(try(hypervolume(na.omit(x), reps = 100, \n                 bandwidth = 0.2, verbose = F, warnings = F)@Volume)) 100 %"
 ## [1] "calculation of observed values"
 ## [1] "100 %"
 \end{verbatim}
 \begin{alltt}
 \hlstd{hv.2}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch.mice,}
-                          \hlkwc{index}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps=100, 
-                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"}\hlstd{),}
-                          \hlkwc{by.factor}\hlstd{=n_sp_plot,} \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),}
-                          \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{sp}\hlstd{=sp.finch)}
-\end{alltt}
-\begin{verbatim}
-## [1] "creating null models"
-## [1] "nm.2 25 %"
-## [1] "nm.2 50 %"
-## [1] "nm.2 75 %"
-## [1] "nm.2 100 %"
-## [1] "calculation of null values using null models"
-## [1] "as.numeric(try(hypervolume(na.omit(x), reps=100, \n                                  bandwidth=0.2, verbose=F, warnings=F)@Volume)) 100 %"
-## [1] "calculation of observed values"
-## [1] "100 %"
-\end{verbatim}
-\begin{alltt}
+             \hlkwc{index} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps = 100, 
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"}\hlstd{),}
+             \hlkwc{by.factor} \hlstd{= n_sp_plot,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,}
+             \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+
 \hlstd{hv.3}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch.mice,}
-                          \hlkwc{index}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps=100,
-                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"}\hlstd{),}
-                          \hlkwc{by.factor}\hlstd{=ind.plot.finch,} \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),}
-                          \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{sp}\hlstd{=sp.finch)}
-\end{alltt}
-\begin{verbatim}
-## [1] "creating null models"
-## [1] "nm.2 25 %"
-## [1] "nm.2 50 %"
-## [1] "nm.2 75 %"
-## [1] "nm.2 100 %"
-## [1] "calculation of null values using null models"
-## [1] "as.numeric(try(hypervolume(na.omit(x), reps=100,\n                                  bandwidth=0.2, verbose=F, warnings=F)@Volume)) 100 %"
-## [1] "calculation of observed values"
-## [1] "100 %"
-\end{verbatim}
-\begin{alltt}
+             \hlkwc{index} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps = 100,
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"}\hlstd{),}
+             \hlkwc{by.factor} \hlstd{= ind.plot.finch,} \hlkwc{nullmodels} \hlstd{=}\hlstr{"regional.ind"}\hlstd{,}
+             \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+
 \hlstd{hv.4}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch.mice,}
-                          \hlkwc{index}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps=100, 
-                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"}\hlstd{),}
-                          \hlkwc{by.factor}\hlstd{=sp.finch,} \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),}
-                          \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{sp}\hlstd{=sp.finch)}
-\end{alltt}
-\begin{verbatim}
-## [1] "creating null models"
-## [1] "nm.2 25 %"
-## [1] "nm.2 50 %"
-## [1] "nm.2 75 %"
-## [1] "nm.2 100 %"
-## [1] "calculation of null values using null models"
-## [1] "as.numeric(try(hypervolume(na.omit(x), reps=100, \n                                  bandwidth=0.2, verbose=F, warnings=F)@Volume)) 100 %"
-## [1] "calculation of observed values"
-## [1] "100 %"
-\end{verbatim}
-\begin{alltt}
+             \hlkwc{index} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps = 100, 
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"}\hlstd{),}
+             \hlkwc{by.factor} \hlstd{= sp.finch,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,}
+             \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+
 \hlstd{list.ind.multi}\hlkwb{<-}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(hv.2, hv.3, hv.4))}
 
 \hlstd{ses.list.multi}\hlkwb{<-}\hlkwd{ses.listofindex}\hlstd{(list.ind.multi)}
+\hlstd{ses.list.multi}
 \end{alltt}
+\begin{verbatim}
+## $index_1_1
+## $ses
+##            [,1]
+##  [1,]       NaN
+##  [2,]      -Inf
+##  [3,] -14880.27
+##  [4,]    -27.88
+##  [5,]    -68.29
+##  [6,]      -Inf
+##  [7,]      -Inf
+##  [8,]       NaN
+##  [9,]      -Inf
+## [10,]      -Inf
+## [11,]      -Inf
+## [12,]      -Inf
+## [13,]      -Inf
+## [14,]   -248.58
+## [15,]    -41.35
+## [16,]  -2227.79
+## [17,]      -Inf
+## [18,]      -Inf
+## [19,]      -Inf
+## [20,]   -126.18
+## [21,]       NaN
+## [22,]      -Inf
+## [23,]   -346.94
+## [24,]      -Inf
+## [25,]      -Inf
+## [26,]  -6984.64
+## [27,]      -Inf
+## [28,]   -256.49
+## [29,]       NaN
+## [30,]      -Inf
+## [31,]      -Inf
+## [32,]      -Inf
+## [33,]       NaN
+## [34,]   -528.92
+## [35,]      -Inf
+## [36,]   -104.23
+## [37,]      -Inf
+## [38,]       NaN
+## [39,]      -Inf
+## 
+## $ses.inf
+##  [1]    NaN    NaN -2.067 -2.067 -2.068    NaN    Inf    NaN    NaN    NaN
+## [11]    NaN    NaN    NaN -1.821 -2.128 -2.067    NaN    NaN    NaN -1.904
+## [21]    NaN    NaN -2.067    NaN    NaN -2.067    NaN -2.098    NaN    NaN
+## [31]    NaN    NaN    NaN -1.601    NaN -2.067    NaN    NaN    NaN
+## 
+## $ses.sup
+##  [1]    NaN    NaN 0.3333 0.3333 0.5415    NaN    Inf    NaN    NaN    NaN
+## [11]   -Inf    NaN    NaN 0.5033 0.3947 0.3333    NaN    NaN    NaN 0.6916
+## [21]    NaN   -Inf 0.3333    NaN    NaN 0.3333    NaN 0.4611    NaN    NaN
+## [31]    NaN    NaN    NaN 0.6405    NaN 0.3333   -Inf    NaN    NaN
+## 
+## attr(,"class")
+## [1] "ses"
+## 
+## $index_2_1
+## $ses
+##        [,1]
+## [1,]   -Inf
+## [2,] -455.0
+## [3,] -112.4
+## [4,] -121.3
+## [5,] -108.8
+## [6,] -131.7
+## 
+## $ses.inf
+## [1]    NaN -2.004 -1.565 -1.874 -1.773 -1.575
+## 
+## $ses.sup
+## [1]    NaN 0.4887 1.3537 0.9605 0.5462 1.6297
+## 
+## attr(,"class")
+## [1] "ses"
+## 
+## $index_3_1
+## $ses
+##          [,1]
+##  [1,]    -Inf
+##  [2,] -139.76
+##  [3,] -189.51
+##  [4,]    -Inf
+##  [5,] -468.20
+##  [6,]  -62.76
+##  [7,] -250.55
+##  [8,] -383.94
+##  [9,] -387.96
+## [10,]  -28.48
+## [11,] -351.48
+## [12,] -289.97
+## 
+## $ses.inf
+##  [1]    NaN -2.075 -2.110    NaN -1.975 -1.868 -2.079 -1.839 -1.996 -2.126
+## [11] -1.559 -2.104
+## 
+## $ses.sup
+##  [1]    NaN 0.5035 0.4827    NaN 0.7727 0.5568 0.4695 0.8403 0.7624 0.3916
+## [11] 1.1508 0.3645
+## 
+## attr(,"class")
+## [1] "ses"
+## 
+## attr(,"class")
+## [1] "ses.list"
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -1673,16 +1816,27 @@ The standard example of the hypervolume package also use finch data but at the s
 \hlkwd{plot}\hlstd{(list.ind.multi)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-501} 
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-581} 
+
+}
+
+
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(list.ind.multi,} \hlkwc{xlim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{200}\hlstd{,}\hlnum{20}\hlstd{))}
+\hlcom{#Try a zoom on the area near zero}
+\hlkwd{plot}\hlstd{(list.ind.multi,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{200}\hlstd{,}\hlnum{20}\hlstd{))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-502} 
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-582} 
+
+}
+
+
 
 \end{knitrout}
 
-Compare hypervolume to Villéger metrics convex hull.
+Compare hypervolume to Villéger's metrics convex hull.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1695,19 +1849,19 @@ Compare hypervolume to Villéger metrics convex hull.
 \hlstd{FA}\hlkwb{<-}\hlkwd{as.character}\hlstd{(}\hlstr{"FA"}\hlstd{)}
 \hlstd{funct}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"round(convhulln(x,FA)$vol,6)"}\hlstd{)}
 
-\hlcom{##Null model 1 is trivial for this function}
-\hlcom{##because randomisation is within community only}
+\hlcom{##Null model local is trivial for this function}
+\hlcom{##because randomization is within community only}
 \hlstd{Fdis.finch}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch.mice,}
-                          \hlkwc{index}\hlstd{=funct,}
-                          \hlkwc{by.factor}\hlstd{=ind.plot.finch,} \hlkwc{nullmodels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{),}
-                          \hlkwc{ind.plot}\hlstd{=ind.plot.finch,} \hlkwc{nperm}\hlstd{=}\hlnum{9}\hlstd{,} \hlkwc{sp}\hlstd{=sp.finch)}
+             \hlkwc{index} \hlstd{= funct,}
+             \hlkwc{by.factor} \hlstd{= ind.plot.finch,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"local"}\hlstd{,}
+             \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch)}
 \end{alltt}
 \begin{verbatim}
 ## [1] "creating null models"
-## [1] "nm.2 25 %"
-## [1] "nm.2 50 %"
-## [1] "nm.2 75 %"
-## [1] "nm.2 100 %"
+## [1] "local 25 %"
+## [1] "local 50 %"
+## [1] "local 75 %"
+## [1] "local 100 %"
 ## [1] "calculation of null values using null models"
 ## [1] "round(convhulln(x,FA)$vol,6) 100 %"
 ## [1] "calculation of observed values"
@@ -1727,30 +1881,30 @@ Compare hypervolume to Villéger metrics convex hull.
 \hlkwd{plot}\hlstd{(list.ind.multi2)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-52} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-60} 
 
 \end{knitrout}
 
 \section{Others graphics functions}
 
-Using rasterVis to obtain more color schemes. 
+Use rasterVis to obtain more color schemes. 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: rasterVis\\\#\# Loading required package: raster\\\#\# Loading required package: sp\\\#\# \\\#\# Attaching package: 'raster'\\\#\# \\\#\# The following object is masked from 'package:magic':\\\#\# \\\#\#\ \ \ \  shift\\\#\# \\\#\# The following objects are masked from 'package:ape':\\\#\# \\\#\#\ \ \ \  edges, rotate, zoom\\\#\# \\\#\# The following object is masked from 'package:nlme':\\\#\# \\\#\#\ \ \ \  getData\\\#\# \\\#\# Loading required package: latticeExtra\\\#\# Loading required package: RColorBrewer\\\#\# Loading required package: hexbin}}\end{kframe}
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: rasterVis\\\#\# Loading required package: raster\\\#\# Loading required package: sp\\\#\# \\\#\# Attaching package: 'raster'\\\#\# \\\#\# The following object is masked from 'package:magic':\\\#\# \\\#\#\ \ \ \  shift\\\#\# \\\#\# The following objects are masked from 'package:ape':\\\#\# \\\#\#\ \ \ \  rotate, zoom\\\#\# \\\#\# The following object is masked from 'package:nlme':\\\#\# \\\#\#\ \ \ \  getData\\\#\# \\\#\# Loading required package: latticeExtra\\\#\# Loading required package: RColorBrewer\\\#\# Loading required package: hexbin}}\end{kframe}
 \end{knitrout}
 
-Plot the p-value or the ses values using the function \tt{levelplot}.
+Plot the p-value or the ses values using the function \texttt{levelplot}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{levelplot}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{sum_Tstats}\hlstd{(res.finch)}\hlopt{$}\hlstd{p.value),}
-          \hlkwc{colorkey}\hlstd{=my.ckey,} \hlkwc{par.settings}\hlstd{=my.theme,}\hlkwc{border}\hlstd{=}\hlstr{"black"}\hlstd{)}
+     \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-54} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-62} 
 
 \end{knitrout}
 
@@ -1759,22 +1913,22 @@ Plot the p-value or the ses values using the function \tt{levelplot}.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{levelplot}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses),}
-          \hlkwc{colorkey}\hlstd{=my.ckey,} \hlkwc{par.settings}\hlstd{=my.theme,}\hlkwc{border}\hlstd{=}\hlstr{"black"}\hlstd{)}
+     \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-551} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-631} 
 \begin{kframe}\begin{alltt}
 \hlkwd{levelplot}\hlstd{(}\hlkwd{cbind}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses),}
-                \hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IC.IR, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses),}
-                \hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_PC.PR, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses))}
-          \hlstd{,} \hlkwc{colorkey}\hlstd{=my.ckey,} \hlkwc{par.settings}\hlstd{=my.theme,}\hlkwc{border}\hlstd{=}\hlstr{"black"}\hlstd{)}
+        \hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IC.IR, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses),}
+        \hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_PC.PR, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses))}
+     \hlstd{,} \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-552} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-632} 
 
 \end{knitrout}
 
-An other example using \tt{ses.listofindex}. The first plot represent "ses" values and the second one the result of a test with H0: observed index value are greater than what we can expect using the null model (alpha=2.5\%).
+Another example using \texttt{ses.listofindex}. The first plot represent "ses" values and the second one the result of a test with H0: observed index value are greater than what we can expect using the null model (alpha = 2.5\%).
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1782,20 +1936,20 @@ An other example using \tt{ses.listofindex}. The first plot represent "ses" valu
 \hlstd{ses.list}\hlkwb{<-}\hlkwd{ses.listofindex}\hlstd{(i.l1)}
 
 \hlkwd{levelplot}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{rbind}\hlstd{(ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses, ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses,}
-                  \hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses,  ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses)),}
-          \hlkwc{colorkey}\hlstd{=my.ckey,} \hlkwc{par.settings}\hlstd{=my.theme,}\hlkwc{border}\hlstd{=}\hlstr{"black"}\hlstd{)}
+         \hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses, ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses)),}
+     \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-561} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-641} 
 \begin{kframe}\begin{alltt}
 \hlkwd{levelplot}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{rbind}\hlstd{(ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses.sup,}
-                  \hlstd{ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses.sup,}
-                  \hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses.sup,}
-                  \hlstd{ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses.sup)),}
-          \hlkwc{colorkey}\hlstd{=my.ckey,} \hlkwc{par.settings}\hlstd{=my.theme,}\hlkwc{border}\hlstd{=}\hlstr{"black"}\hlstd{)}
+         \hlstd{ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses.sup,}
+         \hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses.sup,}
+         \hlstd{ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses.sup)),}
+     \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-562} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-642} 
 
 \end{knitrout}
 
@@ -1804,47 +1958,47 @@ Compare metrics calculate on individual against metrics calculate after populati
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{ses.ind}\hlkwb{<-}\hlkwd{t}\hlstd{(}\hlkwd{rbind}\hlstd{(ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses,}
-           \hlstd{ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses,}
-           \hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses,}
-           \hlstd{ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses))}
+      \hlstd{ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses,}
+      \hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses,}
+      \hlstd{ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses))}
 
 \hlstd{ses.sp}\hlkwb{<-}\hlkwd{t}\hlstd{(}\hlkwd{rbind}\hlstd{(ses.list[[}\hlnum{5}\hlstd{]]}\hlopt{$}\hlstd{ses,}
-          \hlstd{ses.list[[}\hlnum{6}\hlstd{]]}\hlopt{$}\hlstd{ses,}
-          \hlstd{ses.list[[}\hlnum{7}\hlstd{]]}\hlopt{$}\hlstd{ses,}
-          \hlstd{ses.list[[}\hlnum{8}\hlstd{]]}\hlopt{$}\hlstd{ses))}
+     \hlstd{ses.list[[}\hlnum{6}\hlstd{]]}\hlopt{$}\hlstd{ses,}
+     \hlstd{ses.list[[}\hlnum{7}\hlstd{]]}\hlopt{$}\hlstd{ses,}
+     \hlstd{ses.list[[}\hlnum{8}\hlstd{]]}\hlopt{$}\hlstd{ses))}
 
-\hlkwd{levelplot}\hlstd{(ses.ind,} \hlkwc{colorkey}\hlstd{=my.ckey,}
-          \hlkwc{par.settings}\hlstd{=my.theme,}\hlkwc{border}\hlstd{=}\hlstr{"black"}\hlstd{)}
+\hlkwd{levelplot}\hlstd{(ses.ind,} \hlkwc{colorkey} \hlstd{= my.ckey,}
+     \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-571} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-651} 
 \begin{kframe}\begin{alltt}
-\hlkwd{levelplot}\hlstd{(ses.sp,} \hlkwc{colorkey}\hlstd{=my.ckey,}
-          \hlkwc{par.settings}\hlstd{=my.theme,}\hlkwc{border}\hlstd{=}\hlstr{"black"}\hlstd{)}
+\hlkwd{levelplot}\hlstd{(ses.sp,} \hlkwc{colorkey} \hlstd{= my.ckey,}
+     \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-572} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-652} 
 
 \end{knitrout}
 
-\section{Conclusion}
-To finish, we can do a multivariate analysis of the metrics obtain during this tutorial. Analysis dudi 1 put together all traits by meaning the SES values for each metrics in each sites whereas analysis dudi 2 analyse all combination of traits / sites / metrics
+\section{Multivariate analysis of metrics}
+To finish, we can do a multivariate analysis of the metrics obtain during this tutorial using the package \texttt{ade4}. Analysis dudi 1 puts together all traits by meaning the SES values for each metrics in each sites whereas analysis dudi 2 analyses all combination of traits / sites / metrics.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{library}\hlstd{(ade4)}
 
- \hlstd{matfordudi}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlkwc{nrow}\hlstd{=}\hlkwd{length}\hlstd{(}\hlkwd{colMeans}\hlstd{(ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses)),} \hlkwc{ncol}\hlstd{=}\hlkwd{length}\hlstd{(}\hlkwd{names}\hlstd{(ses.list)))}
+ \hlstd{matfordudi}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlkwc{nrow} \hlstd{=} \hlkwd{length}\hlstd{(}\hlkwd{colMeans}\hlstd{(ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses)),} \hlkwc{ncol} \hlstd{=} \hlkwd{length}\hlstd{(}\hlkwd{names}\hlstd{(ses.list)))}
  \hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:} \hlkwd{length}\hlstd{(}\hlkwd{names}\hlstd{(ses.list)))\{}
-   \hlstd{matfordudi[,i]}\hlkwb{<-}\hlkwd{colMeans}\hlstd{(ses.list[[i]]}\hlopt{$}\hlstd{ses)}
+  \hlstd{matfordudi[,i]}\hlkwb{<-}\hlkwd{colMeans}\hlstd{(ses.list[[i]]}\hlopt{$}\hlstd{ses)}
  \hlstd{\}}
  \hlkwd{colnames}\hlstd{(matfordudi)}\hlkwb{<-}\hlkwd{names}\hlstd{(ses.list)}
  \hlkwd{rownames}\hlstd{(matfordudi)}\hlkwb{<-}\hlkwd{colnames}\hlstd{(traits.finch)}
 
- \hlstd{matfordudi2}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlkwc{nrow}\hlstd{=}\hlkwd{length}\hlstd{(}\hlkwd{as.vector}\hlstd{(ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses)),} \hlkwc{ncol}\hlstd{=}\hlkwd{length}\hlstd{(}\hlkwd{names}\hlstd{(ses.list)))}
+ \hlstd{matfordudi2}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlkwc{nrow} \hlstd{=} \hlkwd{length}\hlstd{(}\hlkwd{as.vector}\hlstd{(ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses)),} \hlkwc{ncol} \hlstd{=} \hlkwd{length}\hlstd{(}\hlkwd{names}\hlstd{(ses.list)))}
  \hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:} \hlkwd{length}\hlstd{(}\hlkwd{names}\hlstd{(ses.list)))\{}
-   \hlstd{matfordudi2[,i]}\hlkwb{<-}\hlkwd{as.vector}\hlstd{(ses.list[[i]]}\hlopt{$}\hlstd{ses)}
+  \hlstd{matfordudi2[,i]}\hlkwb{<-}\hlkwd{as.vector}\hlstd{(ses.list[[i]]}\hlopt{$}\hlstd{ses)}
  \hlstd{\}}
  \hlkwd{colnames}\hlstd{(matfordudi2)}\hlkwb{<-}\hlkwd{names}\hlstd{(ses.list)}
 \end{alltt}
@@ -1865,56 +2019,42 @@ To finish, we can do a multivariate analysis of the metrics obtain during this t
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{res.dudi}\hlkwb{<-}\hlkwd{dudi.pca}\hlstd{(}\hlkwd{t}\hlstd{(matfordudi),} \hlkwc{scan}\hlstd{=F,} \hlkwc{nf}\hlstd{=}\hlnum{2}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: na entries in table}}\begin{alltt}
+\hlstd{res.dudi}\hlkwb{<-}\hlkwd{dudi.pca}\hlstd{(}\hlkwd{t}\hlstd{(matfordudi),} \hlkwc{scan} \hlstd{= F,} \hlkwc{nf} \hlstd{=} \hlnum{2}\hlstd{)}
 \hlkwd{s.corcircle}\hlstd{(res.dudi}\hlopt{$}\hlstd{co)}
+\hlkwd{s.label}\hlstd{(res.dudi}\hlopt{$}\hlstd{li,} \hlkwc{add.plot} \hlstd{= T,} \hlkwc{clabel} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{pch} \hlstd{=} \hlnum{16}\hlstd{)}
+\hlkwd{s.label}\hlstd{(res.dudi}\hlopt{$}\hlstd{li}\hlopt{+}\hlnum{0.05}\hlstd{,} \hlkwc{add.plot} \hlstd{= T,} \hlkwc{boxes} \hlstd{= F)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi' introuvable}}\begin{alltt}
-\hlkwd{s.label}\hlstd{(res.dudi}\hlopt{$}\hlstd{li,} \hlkwc{add.plot}\hlstd{=T,} \hlkwc{clabel} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{pch}\hlstd{=}\hlnum{16}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi' introuvable}}\begin{alltt}
-\hlkwd{s.label}\hlstd{(res.dudi}\hlopt{$}\hlstd{li}\hlopt{+}\hlnum{0.05}\hlstd{,} \hlkwc{add.plot}\hlstd{=T,} \hlkwc{boxes}\hlstd{=F)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi' introuvable}}\begin{alltt}
-\hlstd{res.dudi2}\hlkwb{<-}\hlkwd{dudi.pca}\hlstd{(matfordudi2,} \hlkwc{scan}\hlstd{=F,} \hlkwc{nf}\hlstd{=}\hlnum{2}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: na entries in table}}\begin{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-681} 
+\begin{kframe}\begin{alltt}
+\hlstd{res.dudi2}\hlkwb{<-}\hlkwd{dudi.pca}\hlstd{(matfordudi2,} \hlkwc{scan} \hlstd{= F,} \hlkwc{nf} \hlstd{=} \hlnum{2}\hlstd{)}
 \hlkwd{scatter}\hlstd{(res.dudi2)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi2' introuvable}}\begin{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-682} 
+\begin{kframe}\begin{alltt}
 \hlkwd{s.corcircle}\hlstd{(res.dudi2}\hlopt{$}\hlstd{co)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi2' introuvable}}\begin{alltt}
-\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"WingL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"BeakH"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"UBeakL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"N.UBkL"}\hlstd{,}\hlnum{6}\hlstd{))),} \hlkwc{col}\hlstd{=}\hlkwd{funky}\hlstd{(}\hlnum{4}\hlstd{))}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-683} 
+\begin{kframe}\begin{alltt}
+\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"WingL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"BeakH"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"UBeakL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"N.UBkL"}\hlstd{,}\hlnum{6}\hlstd{))),} \hlkwc{col} \hlstd{=} \hlkwd{funky}\hlstd{(}\hlnum{4}\hlstd{))}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi2' introuvable}}\begin{alltt}
-\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"DMaj"}\hlstd{,}\hlstr{"EspHd"}\hlstd{,}\hlstr{"FlorChrl"}\hlstd{,}\hlstr{"GnovTwr"}\hlstd{,}\hlstr{"MrchBndl"}\hlstd{,}\hlstr{"SCruInde"}\hlstd{),}\hlnum{4} \hlstd{)),} \hlkwc{col}\hlstd{=}\hlkwd{funky}\hlstd{(}\hlnum{6}\hlstd{))}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-684} 
+\begin{kframe}\begin{alltt}
+\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"DMaj"}\hlstd{,}\hlstr{"EspHd"}\hlstd{,}\hlstr{"FlorChrl"}\hlstd{,}\hlstr{"GnovTwr"}\hlstd{,}\hlstr{"MrchBndl"}\hlstd{,}\hlstr{"SCruInde"}\hlstd{),}\hlnum{4} \hlstd{)),} \hlkwc{col} \hlstd{=} \hlkwd{funky}\hlstd{(}\hlnum{6}\hlstd{))}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-685} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi2' introuvable}}\end{kframe}
 \end{knitrout}
 
 \section{Conclusion}
-\section{Acknowledgment}
+This is the end of the tutorial. The up to date version of this tutorial is available \href{here}{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}.
 
+\section{Acknowledgment}
+Great thanks to Thibault Jombart for his help on building R packages and writing tutorial with \href{http://yihui.name/knitr/}{knitR}.
 \end{document}
 
 

@@ -1,0 +1,10 @@
+citHeader("To cite the cati package:")
+
+citEntry(
+textVersion = "Taudiere and Violle. 2014. cati (Community Assembly by Traits: Individuals and beyond  ): a R package to detect and quantify multi-level assembly processes using functional traits.",
+entry = "unpublished",
+title = "cati (Community Assembly by Traits: Individuals and beyond  ): a R package to detect and quantify multi-level assembly processes using functional traits",
+year = "2014",
+author = "A. Taudiere and C. Violle",
+note="submitted"
+)

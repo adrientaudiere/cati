@@ -39,9 +39,9 @@
 	}
 	
 	\item{nullmodels}{
-		A vector of values corresponding to null models tu use for each index. A value of 1 corresponds to a randomization of individual values within a given community. A value of 2 corresponds to randomization of individual values within region, ie within all the dataset. A value of 2sp corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. Finally a value of 2sp.prab mirror null model 2 but without taking indo account species abundance. For example, if nullmodels = c(1,2), the first index will be calculated on the null model 1 and the second index on the null model 2.
+		A vector of names corresponding to null models tu use for each index. \strong{local} (or 1) corresponds to a randomization of individual values within a given community. \strong{regional.ind} (or 2) corresponds to randomization of individual values within region, ie within all the dataset. A value of \strong{regional.pop} (or 2sp) corresponds to randomization of population values (each individual value are replaced by the mean value of it population) within region. Finally a value of \strong{regional.pop.prab} (or 2sp.prab)  mirror null model \strong{regional.pop} but without taking indo account species abundance. For example, if nullmodels = c("local", "regional.ind"), the first index will be calculated on the null model \strong{local}  and the second index on the null model \strong{regional.ind}.
 		
-		If only one value is given, all the the null model will be determined by this value.
+		If only one value is given, all the the null model will be determined by this value. 
 	}
 	
 	\item{ind.plot}{
@@ -103,25 +103,23 @@
 	
 	\item{val.quant}{
 		Numeric vectors of length 2, giving the quantile to calculate confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
-	}
-	
+	}	
 	
 	\item{\dots}{
 		Any additional arguments are passed to the plot, print or summary function. See \code{\link{plot.listofindex}} for more arguments.
-	}
-	
+	}	
 }
 
 \details{
 	Compute statistics (e.g. mean, range, CVNND and kurtosis) to test community assembly using null models.
 	For each statistic this function returns observed values and the related null distribution.
-	This function implement three null models which keep unchanged the number of individual per community.
-	Model 1 corresponds to randomization of individual values within community.
-	Model 2 corresponds to randomization of individual values within region.
-	Model 2sp corresponds to randomization of population values within region.
-	Model 2sp.prab corresponds to randomization of population values within region but whitout taking into account for abundance.
+	This function implement four null models which keep unchanged the number of individual per community.
+	Model \strong{local} (1) corresponds to randomization of individual values within community.
+	Model \strong{regional.ind} (2) corresponds to randomization of individual values within region.
+	Model \strong{regional.pop} (2sp) corresponds to randomization of population values within region.
+	Model \strong{regional.pop.prab} (2sp.prab) corresponds to randomization of population values within region but whitout taking into account for abundance.
 	
-	In most cases, models 1 and 2 correspond to index at the individual level and the model 2sp and 2sp.prab to index at the species level (or any other aggregate variable like genus, family or functionnal group).
+	In most cases, models \strong{local} and \strong{regional.ind} correspond to index at the individual level and the model \strong{regional.pop} and \strong{regional.pop.prab} to index at the species level (or any other aggregate variable like genus, family or functionnal group).
 	
 	S3 method plot for class listofindex:
 	-Normal type plot means, standard deviations, ranges and confidence intervals of T-statistics.
@@ -149,6 +147,8 @@
  	\item{$ind.plot}{name of the plot in which the individual is}
  	\item{$sp}{groups (e.g. species) which the individual belong to}
  	
+ 	\item{$nullmodels}{List of null models used for each indices.}
+ 		
  	\item{$call}{call of the function Tstats}
 }
 

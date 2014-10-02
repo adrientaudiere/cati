@@ -76,7 +76,7 @@
 	}
 	
 	\item{silent}{
-		Logical value, if resume = FALSE do not print warnings argument.
+		Logical value, if resume = FALSE do not print warning argument.
 	}
 }
 
