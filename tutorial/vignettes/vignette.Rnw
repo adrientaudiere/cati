@@ -3,23 +3,22 @@
 \usepackage{graphicx}
 \usepackage{color}
 \definecolor{blue1}{RGB}{0,102,204}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[colorlinks = true,linkcolor = blue,citecolor = blue,urlcolor = blue]{hyperref}
 \usepackage{array}
 \usepackage[english]{babel}
 \usepackage{amsfonts}
 \usepackage{url}
 \usepackage{bm}
-\usepackage[margin=1.5cm]{geometry}
+\usepackage[margin = 1.5cm]{geometry}
 \usepackage[affil-it]{authblk}
+\usepackage{hyperref}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\code}[1]{{{\tt #1}}}
 
 
 \title{Illustrating package cati (Community Assembly by Traits: Individuals and beyond) using Darwin finches data}
-\author{Adrien Taudiere and Cyrille Violle
-\thanks{\texttt{adrien.taudiere@cefe.cnrs.fr}}
-}
+\author{Adrien Taudiere\thanks{\texttt{adrien.taudiere@cefe.cnrs.fr}} and Cyrille Violle}
 
 \affil{{\footnotesize CEFE - Centre d'Ecologie Fonctionnelle et Evolutive, Montpellier: France}}
 
@@ -35,16 +34,29 @@
 
 \selectlanguage{english}
 
-<<include=FALSE>>=
+<<include = FALSE>>=
 library(knitr)
-opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE, warning=FALSE, fig.show="asis")
+opts_chunk$set(fig.keep = 'high', dev = 'pdf', fig.width = 7, fig.height = 7, tidy = FALSE, warning = FALSE, fig.show = "asis")
 @
 
 \maketitle
 
 \begin{abstract}
-  This vignette present the \textit(cati) package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
+1) The description of species by functional traits and the subsequent quantification of the functional structure of ecological communities have recently stimulated the field of community ecology. Patterns of trait distribution within communities are increasingly reliable indicator of community assembly processes. Myriad functional diversity indices and analytical tools – including the implementation of null models of community assembly – have been developed to detect and quantify different assembly process. With increased methodological complexities, such as the incorporation of intraspecific trait variation, the construction of a unified R package to test community assembly using functional traits, and its scale-dependency, is imperative and timely particularly to take into account the role of intraspecific variation in community ecology.
+\\
+
+2) We introduce the R package cati, available on CRAN, specifically dedicated to community assembly analyses using functional traits. The package includes: (i) the use of single-trait and multi-trait indices to characterize the functional structure of communities; (ii) the partitioning of functional trait variation across spatial scales and organizational levels, noticeably to account for individual differences and their implications for community assembly and the maintenance of species coexistence; (iii) the implementation of flexible null models to detect and quantify environmental filters.
+\\
+
+3) cati offers a comprehensive tool to detect and quantify assembly processes and can be applied to any kind of community (plant, animal, fungi…). Moreover, the possibility to import any type of ecological distances (notably phylogenetic and genetic distances) in cati allows a test of the response of different facets of biodiversity to assembly processes.
 \end{abstract}
+
+\\
+\textbf{Key words:}
+Functional space, functional structure, community assembly, ecological niche, environmental filter, individual differences, intraspecific variation, null model, trait, variance decomposition
+
+\hfill
+The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.
 
 \newpage
 \tableofcontents
@@ -53,12 +65,12 @@ opts_chunk$set(fig.keep='high', dev='pdf', fig.width=7, fig.height=7, tidy=FALSE
 
 
 \section{Introduction}
-This vignette present the \textit(cati) package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
+This vignette present the \texttt{cati} package for R (Community Assembly by Traits: Individuals and beyond) using Darwin finches data.
 
 \section{Getting started}
-\subsection{Installing the package \textit(cati)}
+\subsection{Installing the package \texttt{cati}}
 
-Before going further, we shall make sure that \textit{cati} is well installed
+Before going further, we shall make sure that \texttt{cati} is well installed
 on the computer.
 The current version of the package is \Sexpr{packageDescription("cati", fields = "Version")}.
 Make sure you have a recent version of R ($\geq 3.0.2$) by typing:
@@ -67,15 +79,14 @@ Make sure you have a recent version of R ($\geq 3.0.2$) by typing:
 R.version.string
 @
 
-Then, install \textit{cati} with dependencies using:
-<<results='hide'>>=
-#install.packages("cati", dep=TRUE)
-install.packages("C:/Users/taudiere/Desktop/cati/pkg/cati_0.92.zip", repos=NULL)
+Then, install \texttt{cati} with dependencies using:
+<<results = 'hide'>>=
+install.packages("cati")
 library("cati")
 @
 
 We can now load the package alongside other useful packages:
-<<results="hide">>=
+<<results = "hide">>=
 library("mice")
 library("hypervolume")
 @
@@ -84,7 +95,7 @@ library("hypervolume")
 <<>>=
 packageDescription("cati", fields = "Version")
 @
-\textit{cati} version should read \Sexpr{packageDescription("cati", fields = "Version")}.
+\texttt{cati} version should read \Sexpr{packageDescription("cati", fields = "Version")}.
 
 \subsection{Getting help}
 
@@ -92,39 +103,37 @@ To get help for a given function, use \texttt{?foo} where \texttt{foo} is the
 function of interest.
 For instance:
 
- <<eval=FALSE>>=
+ <<eval = FALSE>>=
 ?Tstats
 @
 
-will open up the manpage of T-statistics function (\textit{Tstats}).
-An `example' section will shows how to use a function at the end of the manpage. 
+will open up the manpage of T-statistics function (\texttt{Tstats}).
+An 'example' section will shows how to use a function at the end of the manpage. 
 
 Note that you can also browse help pages as html pages, using:
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 help.start()
 @
-To go to the \textit{cati} page, click `packages', `cati', and
-`cati-package'.
+
+To go to the \texttt{cati} man page on Rstudio, click 'packages' in the lower right windows, then clik 'cati', and 'cati-package'.
 
 \subsection{Data presentation: Darwin finches in Galapagos Island}
 
 First we need to load the data.
-<<results='hide', message=FALSE, warning=FALSE>>= 
+<<results = 'hide', message = FALSE, warning = FALSE>>=
 data(finch.ind)
 
 #Save default parameters
 old.par<-par(no.readonly = TRUE)
 @
 
-Now we can see 3 objects: a traits matrix traits.finch, a vector of species names sp.finch and a vector of sites names ind.plot. 
-<<results='hide', message=FALSE, warning=FALSE>>= 
+Now we can see 3 objects: a traits matrix \texttt{traits.finch}, a vector of species names \texttt{sp.finch} and a vector of sites names \texttt{ind.plot}. 
+<<results = 'hide', message = FALSE, warning = FALSE>>=
 dim(traits.finch) 
 #the trait matrix contains 2513 individuals values for 4 traits
-
 table(sp.finch) 
 #the species names vector contains 
 #2513 individuals belonging to 12 species
-
 table(ind.plot.finch)
 #the sites names vector contains
 #2513 individuals belonging to 6 sites (Here 6 Island)
@@ -133,7 +142,7 @@ table(ind.plot.finch)
 The four traits correspond to three beak traits and one wing trait.
 
 \begin{center}
-\includegraphics[width=\textwidth]{figs/darwinfinch.pdf}
+\includegraphics[width = 10cm]{figs/darwinfinch.pdf}
 \end{center}
 
 \newpage
@@ -145,47 +154,48 @@ The four traits correspond to three beak traits and one wing trait.
 
 \subsection{Plot the kernel density of traits}
 
-Plot the distribution of traits values for populations, species, sites and regional scales. First, let try the distribution for all populations of Darwin finches.
+Plot the distribution of traits values for populations, species, sites and regional scales. First, let try the distribution for all populations of Darwin finches. In R, FALSE and TRUE can be written respectively \texttt{F} and \texttt{T}.
 
-<<dev='pdf'>>=
-par(mfrow=c(4,4), cex=0.5)
+<<dev = 'pdf'>>=
+par(mfrow = c(4,4), cex = 0.5)
 plotDistri(traits.finch, sp.finch, ind.plot.finch, 
-          ylim.cex=3, plot.ask=F, multipanel=F, leg=F)
+     ylim.cex = 3, plot.ask = F, multipanel = F, leg = F)
 @
+The argument \texttt{ylim.cex} define the magnification to be used for range of y axe. To understand the other argument, type \texttt{?plotDistri}.
 
 \newpage
 
 Then we can inverse the second and the third arguments to plot the distribution for all finches species. 
 
-<<dev='pdf'>>=
-par(mfrow=c(4,4), cex=0.5)
+<<dev = 'pdf'>>=
+par(mfrow = c(4,4), cex = 0.5)
 plotDistri(traits.finch, ind.plot.finch, sp.finch, 
-           ylim.cex=8, plot.ask=F, multipanel=F, leg=F)
+      ylim.cex = 8, plot.ask = F, multipanel = F, leg = F)
 @
 
-Only one trait to plot using leg=T to plot the legend.
+Now, see the result for only one trait with the legend (\texttt{leg = TRUE}). \texttt{cex.leg} specify the magnification of legend. 
 
- <<dev='pdf',  fig.height=5>>=
-par(mfrow=c(2,3))
+ <<dev = 'pdf', fig.height = 5>>=
+par(mfrow = c(2,3))
 plotDistri(as.matrix(traits.finch[,1]), ind.plot.finch, sp.finch, 
-           ylim.cex=8, plot.ask=F, multipanel=F, leg=T, cex.leg=0.5)
+      ylim.cex = 8, plot.ask = F, multipanel = F, leg = T, cex.leg = 0.5)
  
 @
 
-If we want to plot all the sites (regional distribution) or all the species: we can use the folowing code:
-<<dev='pdf'>>=
-par(mfrow=c(4,4), cex=0.5)
-plotDistri(traits.finch, rep("region", times=dim(traits.finch)[1]), 
-          sp.finch, ylim.cex=6, plot.ask=F, leg=F)
+If we want to plot all the sites (regional distribution) or all the species: we can use the following code:
+<<dev = 'pdf', fig.width = 7>>=
+par(mfrow = c(4,4), cex = 0.5)
+plotDistri(traits.finch, rep("region", times = dim(traits.finch)[1]), 
+     sp.finch, ylim.cex = 6, plot.ask = F, leg = F)
 @
 
-<<dev='pdf'>>=
-plotDistri(traits.finch, rep("toutes_sp", times=dim(traits.finch)[1]),
-          ind.plot.finch, ylim.cex=3, plot.ask=F, cex.leg=0.5)
+<<dev = 'pdf', fig.width = 7>>=
+plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]),
+     ind.plot.finch, ylim.cex = 3, plot.ask = F, cex.leg = 0.5)
 @
 
-Reset the default parameter
-<<dev='pdf'>>=
+Now we can reset the default graphical parameter:
+<<dev = 'pdf'>>=
 par(old.par)
 @
 \newpage
@@ -202,14 +212,14 @@ The Rao function computes α, γ and β -components for taxonomic, functional an
 $\gamma = mean \alpha + \beta$
 \end{center}
 
-Where: \gamma is the diversity of the regional pool, \alpha is the diversity of the local community and \beta is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices.
+Where: \gamma is the diversity of the regional pool, \alpha is the diversity of the local community and \beta is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 \\
 
 \textbf{Reference}: de Bello, F., Lavorel, S., Albert, C.H., Thuiller, W., Grigulis, K., Dolezal, J., Janecek, S. and Leps, J. (2011) Quantifying the relevance of intraspecific trait variability for functional diversity. Methods in Ecology and Evolution, 2, 163-174.
 
 
 \subsubsection{Multitraits analysis}
-First, rao diversity can be calculated on the functionnal space (i.e. considering all traits together).
+First, rao diversity can be calculated on the functional  space (i.e. considering all traits together).
 
 <<>>=
 #create individuals community matrix
@@ -219,17 +229,17 @@ comm.sp<-table(sp.finch, ind.plot.finch)
 class(comm.sp)<-"matrix"
 
 traits.finch.sp<-apply( apply(traits.finch, 2, scale ), 2, 
-                        function(x) tapply(x, sp.finch, mean, na.rm=T))
+            function(x) tapply(x, sp.finch, mean, na.rm = T))
 
 mat.dist<-as.matrix(dist(traits.finch.sp))^2
 
-res.rao<-RaoRel(sample=as.matrix(comm.sp), 
-                dfunc=mat.dist, dphyl=NULL, 
-                weight=F, Jost=F, structure=NULL)
+res.rao<-RaoRel(sample = as.matrix(comm.sp), 
+        dfunc = mat.dist, dphyl = NULL, 
+        weight = F, Jost = F, structure = NULL)
 
-witRao<-res.rao$FD$Mean_Alpha  #overall within species variance
-betRao<-res.rao$FD$Beta_add    #between species variance
-totRao<-res.rao$FD$Gamma       #the total variance
+witRao<-res.rao$FD$Mean_Alpha #overall within species variance
+betRao<-res.rao$FD$Beta_add  #between species variance
+totRao<-res.rao$FD$Gamma    #the total variance
 
 #Check that the total variance is equal
 #to between species + within species variances
@@ -237,39 +247,39 @@ witRao+betRao
 totRao
 @
 
-Now let's take the abundance to calculate Rao diversity.
+Now let's take the abundance into account to calculate Rao diversity.
 
 <<>>=
-res.rao.w<-RaoRel(sample=as.matrix(comm.sp), 
-                  dfunc=mat.dist, dphyl=NULL, 
-                  weight=T, Jost=F, structure=NULL)
+res.rao.w<-RaoRel(sample = as.matrix(comm.sp), 
+         dfunc = mat.dist, dphyl = NULL, 
+         weight = T, Jost = F, structure = NULL)
 
-witRao.w<-res.rao.w$FD$Mean_Alpha  #overall within species variance
-betRao.w<-res.rao.w$FD$Beta_add    #between species variance
-totRao.w<-res.rao.w$FD$Gamma       #the total variance
+witRao.w<-res.rao.w$FD$Mean_Alpha #overall within species variance
+betRao.w<-res.rao.w$FD$Beta_add  #between species variance
+totRao.w<-res.rao.w$FD$Gamma    #the total variance
 
 witRao.w
 betRao.w
 @
 
-Plot the results
+Plot the results.
 
-<<dev='pdf', fig.width=5, fig.height=5, fig.align='center'>>=
+<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align = 'center'>>=
 barplot(cbind(c(witRao.w, betRao.w), c(witRao, betRao)), 
-        names.arg =c("abundance" ,"presence"), 
-        legend.text=c("within species", "between species"), 
-        ylab="Rao", ylim=c(0,10))
+    names.arg = c("abundance" ,"presence"), 
+    legend.text = c("within species", "between species"), 
+    ylab = "Rao", ylim = c(0,10))
 @
 
 
 \subsubsection{Unitraits analysis}
-We can also do this analysis for each trait separately. We need to replace (or exclude) NA values. For this example, we use the package mice to complete the data.
+We can also do this analysis for each trait separately. We need to replace (or exclude) NA values. For this example, we use the package \texttt{mice} to complete the data.
 
-<<results='hide'>>=
+<<results = 'hide'>>=
 comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
 
 require(mice)
-traits=traits.finch
+traits = traits.finch
 mice<-mice(traits.finch)
 traits.finch.mice<-complete(mice)
 @
@@ -278,28 +288,28 @@ traits.finch.mice<-complete(mice)
 <<>>=
 #Calculate the mean traits value by population using the mice dataset
 traits.finch.mice.sp<-apply(apply(traits.finch.mice, 2, scale ), 2, 
-                            function(x) tapply(x, sp.finch, mean, na.rm=T))
+              function(x) tapply(x, sp.finch, mean, na.rm = T))
 
 trait.rao.w<-list()
 witRao.w.bytrait<-c()
 betRao.w.bytrait<-c()
 for(t in 1 : 4){
-  trait.rao.w[[t]]<-RaoRel(sample=as.matrix(comm.sp), 
-                           dfunc=dist(traits.finch.mice.sp[,t]), 
-                           dphyl=NULL, weight=T, Jost=F, structure=NULL)
-  witRao.w.bytrait<-c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
-  betRao.w.bytrait<-c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
+ trait.rao.w[[t]]<-RaoRel(sample = as.matrix(comm.sp), 
+              dfunc = dist(traits.finch.mice.sp[,t]), 
+              dphyl = NULL, weight = T, Jost = F, structure = NULL)
+ witRao.w.bytrait<-c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
+ betRao.w.bytrait<-c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
 }
 
 @
 
 Plot the results by traits.
 
-<<dev='pdf', fig.width=5, fig.height=5>>=
+<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align = 'center'>>=
 barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)), 
-        names.arg = colnames(traits.finch),
-        legend.text=c("within species", "between species"), 
-        ylab="Rao", ylim=c(0,1.5))
+    names.arg = colnames(traits.finch),
+    legend.text = c("within species", "between species"), 
+    ylab = "Rao", ylim = c(0,1.5))
 @
 
 
@@ -307,15 +317,17 @@ barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)),
 
 \textbf{Reference}: Leps, J., de Bello, F., Smilauer, P. and Dolezal, J. (2011) Community trait response to environment: disentangling species turnover vs intraspecific trait variability effects. Ecography, 34, 856-863.
 
-<<dev='pdf', fig.width=6, fig.height=6, fig.align='center'>>=
-res.decomp<-decompCTRE(traits=traits.finch, sp=sp.finch, 
-                           ind.plot=ind.plot.finch, print=FALSE)
+<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align = 'center'>>=
+res.decomp<-decompCTRE(traits = traits.finch, sp = sp.finch, 
+              ind.plot = ind.plot.finch, print = FALSE)
 
 barplot(res.decomp)
+@
 
-par(mfrow=c(2,2))
-barplot(res.decomp, resume=F)
-par(mfrow=c(1,1))
+<<dev = 'pdf', fig.width = 6, fig.height = 6, fig.align = 'center'>>=
+par(mfrow = c(2,2))
+barplot(res.decomp, resume = F)
+par(mfrow = c(1,1))
 @
 
 \newpage
@@ -327,68 +339,74 @@ Variance partitioning across nested scales using the decomposition of variance o
 
 \textbf{Reference}: Messier, J., McGill, B. and Lechowicz, M. (2010) How do traits vary across ecological scales? A case for trait-based ecology. Ecology Letters, 13, 838-848.
 
-<<results='hide'>>=
-vec<- seq(1,length(sp.finch)*2, by=2)
+<<results = 'hide'>>=
+vec<- seq(1,length(sp.finch)*2, by = 2)
 genus<-as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[vec])
-fact<-cbind(genus=as.factor(genus),  
-            species=as.factor(as.vector(sp.finch)),
-            sites=as.factor(as.vector(ind.plot.finch)))
+fact<-cbind(genus = as.factor(genus), 
+      species = as.factor(as.vector(sp.finch)),
+      sites = as.factor(as.vector(ind.plot.finch)))
 
-res.partvar.finch<-partvar(traits=traits.finch, factors=fact)
+res.partvar.finch<-partvar(traits = traits.finch, factors = fact)
  
 res.partvar.finch
 @
 
 
-<<dev='pdf', fig.width=4, fig.height=4, fig.align='center'>>=
-par(mfrow=c(2,2), mai=c(0.2,0.2,0.2,0.2))
-colors<-c(rgb(102,167,0,  maxColorValue = 255), 
-          rgb(185,210,0,  maxColorValue = 255), 
-          rgb(98,174,255,  maxColorValue = 255),
-          rgb(158,30,240,  maxColorValue = 255))
+<<dev = 'pdf', fig.width = 4, fig.height = 4, fig.align = 'center'>>=
+par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2)) #save graphical parameters
+colors<-c(rgb(102,167,0, maxColorValue = 255), 
+     rgb(185,210,0, maxColorValue = 255), 
+     rgb(98,174,255, maxColorValue = 255),
+     rgb(158,30,240, maxColorValue = 255))
  
-piePartvar(res.partvar.finch, col=colors)
- 
-par(old.par)
-barPartvar(res.partvar.finch, col=colors,
-            leg=TRUE)
+piePartvar(res.partvar.finch, col = colors)
+par(old.par) #reset old graphical parameters
 @
 
+<<dev = 'pdf', fig.width = 6, fig.height = 6, fig.align = 'center'>>=
+barPartvar(res.partvar.finch, col = colors, leg = TRUE)
+@
 
 
 \newpage
 
 \subsection{Plot the relation between populational trait means and sites traits means.}
 
-For an example of utilisation see: Cornwell, W.K. and Ackerly, D.D., 2009. Community assembly and shifts in plant trait distributions across an environmental gradient in coastal California. Ecological Monographs 79, 109-126.
+For an example of utilisation see: Cornwell, W.K. and Ackerly, D.D., 2009. Community assembly and shifts in plant trait distributions across an environmental gradient in coastal California. Ecological Monographs, 79, 109-126.
 
-<<dev='pdf'>>=
-plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent=TRUE)
+<<dev = 'pdf'>>=
+plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE)
 @
 
-If we change the value of the threshold (alpha=10\% instead of 5\% and the minimum individual to represent singificativity fixed to 3 instead of 10 by default) we can see some significant relationships.
+If we change the value of two arguments we can see some significant relationships. Here let's try a more permissive threshold: alpha = 10\% instead of 5\% (\texttt{p.val}) and define a lower minimum of values to represent significance  fixed to 3 instead of 10 by default (\texttt{min.ind.signif}). 
 
 \newpage
 
-<<dev='pdf'>>=
+<<dev = 'pdf'>>=
 plotSpPop(traits.finch, ind.plot.finch, sp.finch, 
-           p.val=0.1,  min.ind.signif=3, silent=TRUE)
+      p.val = 0.1, min.ind.signif = 3, silent = TRUE)
 @
 
 \newpage
 
-For a more simple figure, add the option resume=TRUE. Again if we change the value of the threshold (alpha=10\% instead of 5\% and the minimum individual to represent singificativity fixed to 3 instead of 10 by default) we can see some significant relationships.
-
-<<dev='pdf'>>=
+For a more simple figure, add the option resume = TRUE. 
+<<dev = 'pdf'>>=
 plotSpPop(traits.finch, ind.plot.finch, sp.finch,
-           silent=TRUE, resume=TRUE, col.pop="grey")
+      silent = TRUE, resume = TRUE, col.pop = "grey")
+@
 
+If you are fed up with colors, try this:
+<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align = 'center'>>=
 plotSpPop(traits.finch, ind.plot.finch, sp.finch, 
-           silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black")
+      silent = TRUE, resume = TRUE, col.pop = "grey", col.sp = "black")
+@
 
+Again if we change the value of the threshold (\texttt{p.val} = 0.1 and \texttt{min.ind.signif} = 3) we can see some significant relationships.
+
+<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align = 'center'>>=
 plotSpPop(traits.finch, ind.plot.finch, sp.finch, 
-           silent=TRUE, resume=TRUE, col.pop="grey", col.sp="black", 
-           p.val=0.1,  min.ind.signif=3)
+      silent = TRUE, resume = TRUE, col.pop = "grey", col.sp = "black", 
+      p.val = 0.1, min.ind.signif = 3)
 @
 
 
@@ -400,46 +418,64 @@ plotSpPop(traits.finch, ind.plot.finch, sp.finch,
 
 \subsection{Ratio of variances: T-statistics}
 
-The funcion Tstats computes observed T-statistics (T for Traits; Violle et al (2012)) as three ratios of variance, namely $T_IP/IC$, $T_IC/IR$ and $T_PC/PR$. This function can also return the distribution of these three statistics under null models.
+The function \texttt{Tstat} computes observed T-statistics (T for Traits; Violle et al (2012)) as three ratios of variance, namely $T_IP/IC$, $T_IC/IR$ and $T_PC/PR$. This function can also return the distribution of these three statistics under the three associated null models (respectively \textbf{local}, \textbf{regional.ind} and \textbf{regional.pop}).
 \\
 
 \textbf{Reference}: Violle, C., Enquist, B.J., McGill, B.J., Jiang, L., Albert, C., Hulshof, C., Jung, V. and Messier, J. (2012) The return of the variance: intraspecific variability in community ecology. Trends in Ecology and Evolution, 27, 244-252.
 
 <<>>=
-res.finch<-Tstats(traits.finch, ind.plot=ind.plot.finch, sp=sp.finch,
-                  nperm=9, print=FALSE)
+res.finch<-Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch,
+         nperm = 9, print = FALSE)
 res.finch
 @
 
 
 \subsubsection{S3 methods for class Tstats}
-Tstats class is associated to S3 methods plot, barplot, print and summary
+Tstats class is associated to S3 methods plot, barplot, print and summary. We have already used the print function in the above script line. Now, how to plot the result of the function \texttt{Tstats}?
 
-<<dev='pdf', fig.width=6, fig.height=6, fig.align='center'>>=
+We can represent observed values thanks to the \texttt{barplot} function.
+<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align = 'center'>>=
+barplot(res.finch, ylim = c(0,3.5))
+@
+
+One can be more interested in the significance  and the effect size available thanks to null model. In that case, the standardized effect size can be easily plot. Note that the function \texttt{ses} can be use directly to calculate standardized effect size without plotting. The Standardized Effect Size (ses) is define as : 
+
+\begin{center}
+$SES = (I_obs – I_sim) / \delta_{sim}$
+\end{center}
+
+where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
+
+<<dev = 'pdf', fig.width = 6, fig.height = 6, fig.align = 'center'>>=
 plot(res.finch)
 @
 
-There is multiple kind of representation avaible
-<<dev='pdf', fig.width=4.5, fig.height=3.5, fig.align='center'>>=
-plot(res.finch, type="simple")
-plot(res.finch, type="simple_range")
-plot(res.finch, type="barplot")
-plot(res.finch, type="bytraits")
-plot(res.finch, type="bysites")
+There is multiple kind of representation avaible.
+<<dev = 'pdf', fig.width = 4.5, fig.height = 3.5, fig.align = 'center'>>=
+plot(res.finch, type = "simple")
+plot(res.finch, type = "simple_range")
+plot(res.finch, type = "barplot")
+@
 
-par(old.par)
+If you want to specifically look at traits or sites statistics, use the argument \texttt{type = "bytraits"} or \texttt{"bysites"}.
+<<dev = 'pdf', fig.align = 'center'>>=
+par(mfrow=c(2,2))
+
+plot(res.finch, type = "bytraits")
+plot(res.finch, type = "bysites")
+
+par(old.par) # reset default graphical parameters
 @
 
 \newpage
 
-<<dev='pdf', fig.width=5, fig.height=5, fig.align='center'>>=
-barplot(res.finch, ylim=c(0,3.5))
+<<>>=
+summary(res.finch) #S3 summary method for class Tstats
 @
 
-<<dev='pdf'>>=
-summary(res.finch) #S3 summary method for class Tstats
- 
-attributes(sum_Tstats(res.finch)) #An other mean to summarize Tstatistics
+
+<<>>=
+attributes(sum_Tstats(res.finch)) #Another mean to summarize Tstatistics
 head(sum_Tstats(res.finch)$p.value, 10)
 @
 
@@ -449,119 +485,121 @@ head(sum_Tstats(res.finch)$p.value, 10)
 
 We can also see T-statistics correlations and theirs correlation with others variables (e.g. a gradient variable, or the species richness).
 
-<<dev='pdf'>>=
-par(mfrow=c(2,3))
-plotCorTstats(res.finch, plot.ask=FALSE, multipanel=F)
+<<dev = 'pdf'>>=
+par(mfrow = c(2,3))
+plotCorTstats(res.finch, plot.ask = FALSE, multipanel = F)
 @
 
 Here we plot T-statistics (in the standardized effect size SES form) in function of species richness by sites.
 
-<<dev='pdf'>>=
-par(mfrow=c(2,2))
+<<dev = 'pdf'>>=
+par(mfrow = c(2,2))
 species.richness<-table(ind.plot.finch)
 plotSESvar(as.listofindex(list(res.finch)), species.richness, 
-             multipanel=F)
+       multipanel = F)
 @
 
-Same plot with \tt{resume=TRUE}.
+Same plot with \texttt{resume = TRUE}.
 
-<<dev='pdf'>>=
-par(mfrow=c(2,2))
+<<dev = 'pdf'>>=
+par(mfrow = c(2,2))
 plotSESvar(as.listofindex(list(res.finch)), species.richness, 
-             resume=T, multipanel=F)
-par(mfrow=c(1,1))
+       resume = T, multipanel = F)
+par(mfrow = c(1,1))
 @
 
 
 \newpage
-\subsection{Others univariates metrics: function \tt{ComIndex} and \tt{ComIndexMulti}}
+\subsection{Others univariates or multivariates metrics: function \texttt{ComIndex} and \texttt{ComIndexMulti}}
 
-The function \tt{ComIndex} allow to choose your own function (like mean, range, variance...) to calculate customize metrics. Here CVNND refers to the Coefficient of Variation of the Nearest Neighborhood Distance. ComIndexMulti do the same things for multivariate metrics. 
+The function \texttt{ComIndex} allow choosing your own function (like mean, range, variance, ...) to calculate customize metrics. Here \texttt{CVNND} refers to the Coefficient of Variation of the Nearest Neighborhood Distance. \texttt{ComIndexMulti} do the same things for multivariate metrics. 
 
 <<>>=
-#Define the funcions to calculate
-funct<-c("mean(x, na.rm=T)", "kurtosis(x, na.rm=T)",
-         "max(x, na.rm=T) - min(x, na.rm=T)", "CVNND(x)"  )
+#Define the function s to calculate
+funct<-c("mean(x, na.rm = T)", "kurtosis(x, na.rm = T)",
+     "max(x, na.rm = T) - min(x, na.rm = T)", "CVNND(x)" )
 
-#Test against the null model 2
-res.finch.sp_mn2<-ComIndex(traits=traits.finch, index=funct, sp=sp.finch, 
-                           nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch,
-                           nperm=9, print=FALSE)
+#Test against the null model regional.ind
+res.finch.sp_regional.ind<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
+                           nullmodels = "regional.ind", ind.plot = ind.plot.finch,
+                            nperm = 9, print = FALSE)
  
-#Test against the null model 2sp
-res.finch.sp_mn2sp<-ComIndex(traits=traits.finch, index=funct, sp=sp.finch,
-                             nullmodels=rep("2sp",4), ind.plot=ind.plot.finch, 
-                             nperm=9, print=FALSE)
+#Test against the null model regional.pop
+#Individuals values are transformed in populational values
+res.finch.sp_regional.pop<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
+               nullmodels = "regional.pop", ind.plot = ind.plot.finch, 
+               nperm = 9, print = FALSE)
 @
 
-These two functions allows to calcul index by sites for example using \code{"tapply(x, sites, mean)"}.
+These two functions allows to calculate  index by sites for example using \code{"tapply(x, sites, mean)"}.
 
 <<>>=
-funct<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm=T))",
-         "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm=T))",
-         "tapply(x, ind.plot.finch, function(x) max(x, na.rm=T)-min(x, na.rm=T))", 
-         "tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
+funct<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))",
+     "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))",
+     "tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))", 
+     "tapply(x, ind.plot.finch, function(x) CVNND(x))" )
 
-##Null model 1 is trivial for this function
-##because randomisation is within community only
+##Null model local is trivial for these functions
+##because randomization is within community only
  
-res.finch.ind_mn1<-ComIndex(traits=traits.finch, index=funct, sp=sp.finch,
-                             nullmodels=c(1,1,1,1), ind.plot=ind.plot.finch,
-                             nperm=9, print=FALSE)
-res.finch.ind_mn2<-ComIndex(traits=traits.finch, index=funct, sp=sp.finch, 
-                             nullmodels=c(2,2,2,2), ind.plot=ind.plot.finch,
-                             nperm=9, print=FALSE)
+res.finch.ind_mn1<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
+               nullmodels = "local", ind.plot = ind.plot.finch,
+               nperm = 9, print = FALSE)
+res.finch.ind_mn2<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch, 
+               nullmodels = "regional.ind", ind.plot = ind.plot.finch,
+               nperm = 9, print = FALSE)
 @
 
 
-We can calcul index with or without intraspecific variance.
+We can calculate index with or without intraspecific variance.
 
 <<>>=
-#Calcul of means by population (name_sp_site is a name of a population) 
-#like in the function ComIndex and determine the site for each population (sites_bypop)
+#calculate  of means by population (name_sp_site is a name of a population) 
+#determine the site for each population (sites_bypop)
  
-name_sp_sites=paste(sp.finch, ind.plot.finch,sep="_")
+name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
 traits.by.pop<-apply(traits.finch, 2 , 
-                     function (x) tapply(x, name_sp_sites, mean , na.rm=T))
+           function (x) tapply(x, name_sp_sites, mean , na.rm = T))
 
-sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep="_"), split="_"), 
-                    function(x) x[3])
+sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), split = "_"), 
+          function(x) x[3])
 
 #We use the precedent list of function "funct"
 funct.withIV<-funct
 
 fact<-unlist(sites_bypop)
-funct.withoutIV<-c("tapply(x, fact, function(x) mean(x, na.rm=T))",
-                   "tapply(x, fact, function(x) kurtosis(x, na.rm=T))",
-                   "tapply(x, fact, function(x) max(x, na.rm=T)-min(x, na.rm=T))", 
-                   "tapply(x, fact, function(x) CVNND(x))")
+funct.withoutIV<-c("tapply(x, fact, function(x) mean(x, na.rm = T))",
+          "tapply(x, fact, function(x) kurtosis(x, na.rm = T))",
+          "tapply(x, fact, function(x) max(x, na.rm = T)-min(x, na.rm = T))", 
+          "tapply(x, fact, function(x) CVNND(x))")
+@
 
+Now calculate index with or without intraspecific variance thanks to function \texttt{ComIndex}.
+<<>>=
+res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.withIV,
+               sp = sp.finch, nullmodels = "regional.ind",
+               ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 
-res.finch.withIV<-ComIndex(traits=traits.finch, index=funct.withIV,
-                             sp=sp.finch, nullmodels=c(2,2,2,2),
-                             ind.plot=ind.plot.finch, nperm=9, print=FALSE)
-
-res.finch.withoutIV<-ComIndex(traits=traits.finch, index=funct.withoutIV, 
-                             sp=sp.finch, nullmodels=rep("2sp",4), 
-                             ind.plot=ind.plot.finch, nperm=9, print=FALSE)
+res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.withoutIV, 
+               sp = sp.finch, nullmodels = "regional.pop", 
+               ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 @
 
 
 
 \subsubsection{S3 methods for class ComIndex and ComIndexMulti}
-Tstats class is associated to S3 methods plot, print and summary
+ComIndex and ComIndexMulti class are associated to S3 methods plot, print and summary.
 
-<<fig.width=5, fig.height=5>>=
+<<fig.width = 7, fig.height = 4>>=
 res.finch.withIV
 summary(res.finch.withIV)
-summary(res.finch.withoutIV)
 plot(res.finch.withIV)
 plot(res.finch.withoutIV)
 @
 
 
 \subsubsection{Plot Tstats and other uni/multivariates metrics together}
-The class listofindex permit to stock differents metrics computed using Tstats, ComIndex and ComIndexMulti and compared to different null model. To do that we can use the Standardized Effect Size (ses) define as : 
+The class listofindex permits to stock different metrics computed using \texttt{Tstats}, \texttt{ComIndex} and \texttt{ComIndexMulti} and compared to different null model. To do that we can use the Standardized Effect Size (ses) define as : 
 
 \begin{center}
 $SES = (I_obs – I_sim) / \delta_{sim}$
@@ -570,7 +608,7 @@ $SES = (I_obs – I_sim) / \delta_{sim}$
 where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
 
 
-<<dev='pdf', eval=FALSE>>=
+<<dev = 'pdf', eval = FALSE>>=
 list.ind1<-list(res.finch.withIV, res.finch.withoutIV)
 index.list1<-as.listofindex(list.ind1)
 
@@ -579,144 +617,148 @@ plot(index.list1)
 
 <<>>=
 list.ind<-list(res.finch.withIV, res.finch.withoutIV, res.finch)
-namesindex.i.l1=c("mean", "kurtosis", "range", "CVNND",
-                  "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
-                  "T_IP.IC", "T_IC.IR", "T_PC.PR")
+namesindex.i.l1 = c("mean", "kurtosis", "range", "CVNND",
+         "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
+         "T_IP.IC", "T_IC.IR", "T_PC.PR")
 
-i.l1<-as.listofindex(list.ind, namesindex=namesindex.i.l1)                                 
+i.l1<-as.listofindex(list.ind, namesindex = namesindex.i.l1)                 
 
 class(i.l1)
 @
 
-The plot type \tt{bytraits} allows to plot all SES traits values for all sites or all traits
-<<dev='pdf'>>=
-par(mfrow=c(2,3))
-plot(i.l1,type="bysites")
+The plot type \texttt{bytraits} allows plotting all SES traits values for all sites or all traits
+<<dev = 'pdf'>>=
+par(mfrow = c(2,3))
+plot(i.l1,type = "bysites")
 
-par(mfrow=c(2,2))
-plot(i.l1,type="bytraits")
-par(mfrow=c(1,1))
+par(mfrow = c(2,2))
+plot(i.l1,type = "bytraits")
+par(mfrow = c(1,1))
 @
 
-The other plot type are the same as plot.Tstats
+The other plot types are the same as plot.Tstats.
 
-<<dev='pdf'>>=
-par(mfrow=c(2,2))
+<<dev = 'pdf', fig.width = 7, fig.height = 7>>=
+par(mfrow = c(2,2))
 plot(i.l1)
-plot(i.l1,type="simple_range")
-plot(i.l1,type="normal")
-plot(i.l1,type="barplot")
-par(mfrow=c(1,1))
+plot(i.l1,type = "simple_range")
+plot(i.l1,type = "normal")
+plot(i.l1,type = "barplot")
+par(mfrow = c(1,1))
 @
 
 
 
 \newpage
 
-\subsection{Multivariates index}
+\subsection{More information ond multivariates index}
 
-For most multivariate functions we need to replace (or exclude) NA values. For this example, we use the package mice to complete the data.
+For most multivariate functions we need to replace (or exclude) NA values. For this example, we use the package \texttt{mice} to complete the data.
 
-<<results='hide', eval=FALSE>>=
+<<results = 'hide', eval = FALSE>>=
 comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
 
 require(mice)
-traits=traits.finch
+traits = traits.finch
 mice<-mice(traits.finch)
 traits.finch.mice<-complete(mice)
 @
 
-A simple example to illustrate the concept of the function \tt{ComIndexMulti}
+A simple example to illustrate the concept of the function \texttt{ComIndexMulti}
 
 <<>>=
-n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep="_")) 
+n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
 res.sum.1<-ComIndexMulti(traits.finch, 
-                           index=c("sum(scale(x), na.rm=T)", "sum(x, na.rm=T)"), 
-                           by.factor=n_sp_plot, nullmodels=c(2,2), 
-                           ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+              index = c("sum(scale(x), na.rm = T)", "sum(x, na.rm = T)"), 
+              by.factor = n_sp_plot, nullmodels = "regional.ind", 
+              ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 
-attributes(ses.listofindex(as.listofindex(list(res.sum.1))))
+res.sum.1
 @
 
 \newpage
-A more interesting example using the function \tt{hypervolume} from the package ... hypervolume.  We show here several results which differe in there factor that delimit the group to calculate different hypervolume (argument "byfactor"). 
+A more interesting example using the function \texttt{hypervolume} from the package ... \texttt{hypervolume} (Blonder et al., 2014). We show here several results which differed in there factor that delimit the group to calculate different hypervolume (argument \texttt{byfactor}). 
 
-First, let's try the hypervolume function one finch data.
-<<dev='pdf'>>=
+First, let's try the \texttt{hypervolume} function one finch data.
+<<dev = 'pdf'>>=
 hv<-hypervolume(traits.finch.mice, 
-                reps=100,bandwidth=0.2, 
-                verbose=F, warnings=F)
+        reps = 100,bandwidth = 0.2, 
+        verbose = F, warnings = F)
 plot(hv)
 @
 
 Now, we can do the same analysis for each species.
 
-<<dev='pdf'>>=
+<<dev = 'pdf'>>=
 hv.list<-new("HypervolumeList")
 hv.list2<-list()
 
 for(i in 1: length(table(sp.finch))) {
-  hv.list2[[i]]<-hypervolume(traits.finch.mice[sp.finch==levels(sp.finch)[i], ], 
-                reps=1000,bandwidth=0.2, 
-                verbose=F, warnings=F)
+ hv.list2[[i]]<-hypervolume(traits.finch.mice[sp.finch == levels(sp.finch)[i], ], 
+        reps = 1000,bandwidth = 0.2, 
+        verbose = F, warnings = F)
 }
 
 hv.list@HVList<-hv.list2
 require(adegenet)
-colorhv<-transp(funky(nlevels(sp.finch)), alpha=0.8)
+colorhv<-transp(funky(nlevels(sp.finch)), alpha = 0.8)
 
-plot(hv.list, colors=colorhv, darkfactor=0.8)
-plot(hv.list, colors=colorhv, darkfactor=0.8, showdata=F, npmax = 200, cex.random =1)
- 
+plot(hv.list, colors = colorhv, darkfactor = 0.8)
+plot(hv.list, colors = colorhv, darkfactor = 0.8, showdata = F, npmax = 200, cex.random = 1)
+@
+
+<<results='hide'>>=
 summary(hv.list)
- 
 @
 
-The standard example of the hypervolume package also use finch data but at the species level.
+The standard example of the \texttt{hypervolume} package also use finch data but at the species level.
 
-<<dev='pdf'>>=
-demo('finch', package='hypervolume')
+<<dev = 'pdf'>>=
+doHypervolumeFinchDemo=TRUE
+demo('finch', package = 'hypervolume')
 @
 
-\tt{ComIndexMulti} takes the same arguments as \tt{ComIndex} and an argument by factor to apply the index on different factors.
+\texttt{ComIndexMulti} takes the same arguments as \texttt{ComIndex} and an argument by factor to apply the index on different factors.
 
-<<result='hide'>>=
-#all individual are put in the same group: calcul the hypervolume without by.factor
+<<result = 'hide'>>=
+#all individual are put in the same group: calculate the hypervolume without by.factor
 hv.1<-ComIndexMulti(traits.finch.mice, 
-                          index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, 
-                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"),
-                          by.factor=rep(1,length(n_sp_plot)), nullmodels=c(2,2),
-                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch) 
+             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"),
+             by.factor = rep(1,length(n_sp_plot)), nullmodels = "regional.ind",
+             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch) 
 
 hv.2<-ComIndexMulti(traits.finch.mice, 
-                          index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, 
-                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"), 
-                          by.factor=n_sp_plot, nullmodels=c(2,2), 
-                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
+             by.factor = n_sp_plot, nullmodels = "regional.ind", 
+             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch, print = FALSE)
 
 hv.3<-ComIndexMulti(traits.finch.mice, 
-                          index=c("as.numeric(try(hypervolume(na.omit(x), reps=100,
-                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"), 
-                          by.factor=ind.plot.finch, nullmodels=c(2,2), 
-                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100,
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
+             by.factor = ind.plot.finch, nullmodels ="regional.ind", 
+             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch, print = FALSE)
 
 hv.4<-ComIndexMulti(traits.finch.mice, 
-                          index=c("as.numeric(try(hypervolume(na.omit(x), reps=100, 
-                                  bandwidth=0.2, verbose=F, warnings=F)@Volume))"), 
-                          by.factor=sp.finch, nullmodels=c(2,2), 
-                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
+             by.factor = sp.finch, nullmodels = "regional.ind", 
+             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch, print = FALSE)
 
 list.ind.multi<-as.listofindex(list(hv.2, hv.3, hv.4))
 
 ses.list.multi<-ses.listofindex(list.ind.multi)
+ses.list.multi
 @
 
-<<dev='pdf', fig.width=4, fig.height=4>>=
+<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align='center'>>=
 plot(list.ind.multi)
-plot(list.ind.multi, xlim=c(-200,20))
+#Try a zoom on the area near zero
+plot(list.ind.multi, xlim = c(-200,20))
 @
 
-Compare hypervolume to Villéger metrics convex hull.
+Compare hypervolume to Villéger's metrics convex hull.
 
 <<>>=
 require("geometry")
@@ -724,131 +766,133 @@ require("geometry")
 FA<-as.character("FA")
 funct<-c("round(convhulln(x,FA)$vol,6)")
 
-##Null model 1 is trivial for this function
-##because randomisation is within community only
+##Null model local is trivial for this function
+##because randomization is within community only
 Fdis.finch<-ComIndexMulti(traits.finch.mice, 
-                          index=funct,
-                          by.factor=ind.plot.finch, nullmodels=c(2,2),
-                          ind.plot=ind.plot.finch, nperm=9, sp=sp.finch)
+             index = funct,
+             by.factor = ind.plot.finch, nullmodels = "local",
+             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 
 list.ind.multi2<-as.listofindex(list(hv.3, Fdis.finch))
 
 ses.list.multi2<-ses.listofindex(list.ind.multi2)
 @
 
-<<dev='pdf', fig.width=4, fig.height=4>>=
+<<dev = 'pdf', fig.width = 4, fig.height = 4>>=
 plot(list.ind.multi2)
 @
 
 \section{Others graphics functions}
 
-Using rasterVis to obtain more color schemes. 
-<<echo=FALSE>>=
+Use rasterVis to obtain more color schemes. 
+<<echo = FALSE>>=
 require(rasterVis)
 # Custom theme (from rasterVis package)
 my.theme <- BuRdTheme()
 # Customize the colorkey
-my.ckey <- list(col=my.theme$regions$col)
+my.ckey <- list(col = my.theme$regions$col)
 @
 
-Plot the p-value or the ses values using the function \tt{levelplot}.
+Plot the p-value or the ses values using the function \texttt{levelplot}.
 
-<<dev='pdf'>>=
+<<dev = 'pdf', fig.height = 7>>=
 levelplot(t(sum_Tstats(res.finch)$p.value), 
-          colorkey=my.ckey, par.settings=my.theme,border="black")
+     colorkey = my.ckey, par.settings = my.theme,border = "black")
 @
 
 
-<<dev='pdf'>>=
+<<dev = 'pdf', fig.height = 7>>=
 levelplot(t(ses(res.finch$Tstats$T_IP.IC, res.finch$Tstats$T_IP.IC_nm)$ses), 
-          colorkey=my.ckey, par.settings=my.theme,border="black")
+     colorkey = my.ckey, par.settings = my.theme,border = "black")
 
 levelplot(cbind(t(ses(res.finch$Tstats$T_IP.IC, res.finch$Tstats$T_IP.IC_nm)$ses), 
-                t(ses(res.finch$Tstats$T_IC.IR, res.finch$Tstats$T_IP.IC_nm)$ses),
-                t(ses(res.finch$Tstats$T_PC.PR, res.finch$Tstats$T_IP.IC_nm)$ses))
-          , colorkey=my.ckey, par.settings=my.theme,border="black")
+        t(ses(res.finch$Tstats$T_IC.IR, res.finch$Tstats$T_IP.IC_nm)$ses),
+        t(ses(res.finch$Tstats$T_PC.PR, res.finch$Tstats$T_IP.IC_nm)$ses))
+     , colorkey = my.ckey, par.settings = my.theme,border = "black")
 @
 
-An other example using \tt{ses.listofindex}. The first plot represent "ses" values and the second one the result of a test with H0: observed index value are greater than what we can expect using the null model (alpha=2.5\%).
+Another example using \texttt{ses.listofindex}. The first plot represent "ses" values and the second one the result of a test with H0: observed index value are greater than what we can expect using the null model (alpha = 2.5\%).
 
-<<dev='pdf'>>=
+<<dev = 'pdf', fig.height = 7>>=
 
 ses.list<-ses.listofindex(i.l1)
 
 levelplot(t(rbind(ses.list[[1]]$ses, ses.list[[2]]$ses, 
-                  ses.list[[3]]$ses,  ses.list[[4]]$ses)),
-          colorkey=my.ckey, par.settings=my.theme,border="black")
+         ses.list[[3]]$ses, ses.list[[4]]$ses)),
+     colorkey = my.ckey, par.settings = my.theme,border = "black")
 
 levelplot(t(rbind(ses.list[[1]]$ses>ses.list[[1]]$ses.sup, 
-                  ses.list[[2]]$ses>ses.list[[2]]$ses.sup,
-                  ses.list[[3]]$ses>ses.list[[3]]$ses.sup,
-                  ses.list[[4]]$ses>ses.list[[4]]$ses.sup)),
-          colorkey=my.ckey, par.settings=my.theme,border="black")
+         ses.list[[2]]$ses>ses.list[[2]]$ses.sup,
+         ses.list[[3]]$ses>ses.list[[3]]$ses.sup,
+         ses.list[[4]]$ses>ses.list[[4]]$ses.sup)),
+     colorkey = my.ckey, par.settings = my.theme,border = "black")
  
 
 @
 
 Compare metrics calculate on individual against metrics calculate after populationnal meaning
-<<dev='pdf'>>=
+<<dev = 'pdf', fig.height = 7>>=
 ses.ind<-t(rbind(ses.list[[1]]$ses, 
-           ses.list[[2]]$ses,
-           ses.list[[3]]$ses,
-           ses.list[[4]]$ses))
+      ses.list[[2]]$ses,
+      ses.list[[3]]$ses,
+      ses.list[[4]]$ses))
 
 ses.sp<-t(rbind(ses.list[[5]]$ses, 
-          ses.list[[6]]$ses,
-          ses.list[[7]]$ses,
-          ses.list[[8]]$ses))
+     ses.list[[6]]$ses,
+     ses.list[[7]]$ses,
+     ses.list[[8]]$ses))
 
-levelplot(ses.ind, colorkey=my.ckey, 
-          par.settings=my.theme,border="black")
-levelplot(ses.sp, colorkey=my.ckey, 
-          par.settings=my.theme,border="black")
+levelplot(ses.ind, colorkey = my.ckey, 
+     par.settings = my.theme,border = "black")
+levelplot(ses.sp, colorkey = my.ckey, 
+     par.settings = my.theme,border = "black")
 @
 
-\section{Conclusion}
-To finish, we can do a multivariate analysis of the metrics obtain during this tutorial. Analysis dudi 1 put together all traits by meaning the SES values for each metrics in each sites whereas analysis dudi 2 analyse all combination of traits / sites / metrics
+\section{Multivariate analysis of metrics}
+To finish, we can do a multivariate analysis of the metrics obtain during this tutorial using the package \texttt{ade4}. Analysis dudi 1 puts together all traits by meaning the SES values for each metrics in each sites whereas analysis dudi 2 analyses all combination of traits / sites / metrics.
 
-<<dev='pdf'>>=
+<<dev = 'pdf'>>=
 library(ade4)
  
- matfordudi<-matrix(nrow=length(colMeans(ses.list[[1]]$ses)), ncol=length(names(ses.list)))
+ matfordudi<-matrix(nrow = length(colMeans(ses.list[[1]]$ses)), ncol = length(names(ses.list)))
  for(i in 1: length(names(ses.list))){
-   matfordudi[,i]<-colMeans(ses.list[[i]]$ses)
+  matfordudi[,i]<-colMeans(ses.list[[i]]$ses)
  }
  colnames(matfordudi)<-names(ses.list)
  rownames(matfordudi)<-colnames(traits.finch)
  
- matfordudi2<-matrix(nrow=length(as.vector(ses.list[[1]]$ses)), ncol=length(names(ses.list)))
+ matfordudi2<-matrix(nrow = length(as.vector(ses.list[[1]]$ses)), ncol = length(names(ses.list)))
  for(i in 1: length(names(ses.list))){
-   matfordudi2[,i]<-as.vector(ses.list[[i]]$ses)
+  matfordudi2[,i]<-as.vector(ses.list[[i]]$ses)
  }
  colnames(matfordudi2)<-names(ses.list)
 @
 
-<<results='hide'>>=
+<<results = 'hide'>>=
 #Use mice for the purpose of this example
 matfordudi<-complete(mice(matfordudi))
 matfordudi2<-complete(mice(matfordudi2))
 @
 
 
-<<dev='pdf'>>=  
-res.dudi<-dudi.pca(t(matfordudi), scan=F, nf=2) 
+<<dev = 'pdf'>>= 
+res.dudi<-dudi.pca(t(matfordudi), scan = F, nf = 2) 
 s.corcircle(res.dudi$co)
-s.label(res.dudi$li, add.plot=T, clabel = 0, pch=16)
-s.label(res.dudi$li+0.05, add.plot=T, boxes=F)
+s.label(res.dudi$li, add.plot = T, clabel = 0, pch = 16)
+s.label(res.dudi$li+0.05, add.plot = T, boxes = F)
  
-res.dudi2<-dudi.pca(matfordudi2, scan=F, nf=2) 
+res.dudi2<-dudi.pca(matfordudi2, scan = F, nf = 2) 
 scatter(res.dudi2)
 s.corcircle(res.dudi2$co)
-s.class(res.dudi2$li, as.factor(c(rep("WingL",6), rep("BeakH",6), rep("UBeakL",6), rep("N.UBkL",6))), col=funky(4))
-s.class(res.dudi2$li, as.factor(rep(c("DMaj","EspHd","FlorChrl","GnovTwr","MrchBndl","SCruInde"),4 )), col=funky(6))
+s.class(res.dudi2$li, as.factor(c(rep("WingL",6), rep("BeakH",6), rep("UBeakL",6), rep("N.UBkL",6))), col = funky(4))
+s.class(res.dudi2$li, as.factor(rep(c("DMaj","EspHd","FlorChrl","GnovTwr","MrchBndl","SCruInde"),4 )), col = funky(6))
 @
 
 \section{Conclusion}
-\section{Acknowledgment}
+This is the end of the tutorial. The up to date version of this tutorial is available \href{here}{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}.
 
+\section{Acknowledgment}
+Great thanks to Thibault Jombart for his help on building R packages and writing tutorial with \href{http://yihui.name/knitr/}{knitR}.
 \end{document}
 
 
