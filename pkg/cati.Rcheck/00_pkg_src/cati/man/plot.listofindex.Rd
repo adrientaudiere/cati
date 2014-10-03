@@ -107,126 +107,37 @@
 
 \examples{	
 	data(finch.ind)
-	oldpar <- par(no.readonly = TRUE)
-	
-	####
-	#The function ComIndex allow to choose your own function 
-	#(like mean, range, variance...) to calculate customize index.
-	
-	require(e1071)
 
-	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
-	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)")
-	
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	sp = sp.finch, nperm = 9, print = FALSE)
+
 	\dontrun{
-		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = "2", ind.plot = ind.plot.finch, 
-		nperm = 9, print = FALSE)
-
-		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = "2sp", ind.plot = ind.plot.finch, 
-		nperm = 9, print = FALSE)
-
-		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = "2sp", ind.plot = ind.plot.finch, 
-		nperm = 9, print = FALSE)
-		
-		####
-		#We can represent Standardized Effect Size (ses)
-		#using the function plot(as.listofindex(list1, list2, list3))
-		
-		list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
-		index.list2 <- as.listofindex(list.ind2)
-		
-		plot(index.list2, type = "bytraits")
-		
-		plot(index.list2)
-	}
+		#### Use a different regional pool than the binding of studied communities
+		#create a random regional pool for the example
 	
-	####
-	#This allows to calculation index per site 
-	#for example using "tapply(x, sites, mean)".
+		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
 	
-	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
-	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
-	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
-	min(x, na.rm = TRUE) )")
+		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+	    
+	    plot(as.listofindex(list(res.finch,res.finch2)))
+    
+    
+	    #### Use a different regional pool for each communities
+		#create a random regional pool for each communities for the example
+		list.reg.p <- list(
+		traits.finch[sample(1:290,200), ], traits.finch[sample(100:1200,300), ], 
+		traits.finch[sample(100:1500, 1000), ], traits.finch[sample(300:800,300), ],
+		traits.finch[sample(1000:2000, 500), ], traits.finch[sample(100:900, 700), ] )
 
-	##Null model 1 is trivial for this function 
-	#because randomisation is within community only
-	
-	\dontrun{
-
-		res.finch.ind_mn1 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c(1,1,1), ind.plot = ind.plot.finch, 
-		nperm = 9, print = FALSE)
+		# Warning: the regional pool need to be larger than the observed communities
+		table(ind.plot.finch)
+		# For exemple, the third community need a regional pool of more than 981 individuals
 		
-		res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-		sp = sp.finch, nullmodels = c("2","2","2"), ind.plot = ind.plot.finch, 
-		nperm = 9, print = FALSE)
-
-		
-		####
-		#We can calculation metrics with or without intraspecific variance.
-		#Calculation of trait averages per population 
-		#(name_sp_site is a name of a population) 
-		#like in the function ComIndex
-		#and determine the site for each population (sites_bypop)
-		
-		name_sp_sites = paste(sp.finch, ind.plot.finch, sep = "_")
-		
-		traits.by.pop <- apply(traits.finch, 2 , function (x) 
-
-		tapply(x, name_sp_sites, mean , na.rm = TRUE))
-		
-		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
-		split = "_"), function(x) x[3])
-		
-		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
-		function(x) mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
-		function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )")
-		
-			
-		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
-		mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )")
-		
-		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
-		sp = sp.finch, nullmodels = c("2","2","2"), ind.plot = ind.plot.finch, 
-		nperm = 9, print = FALSE)
-				
-		res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
-		sp = sp.finch, nullmodels = c("2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
-		nperm = 9, print = FALSE)
-	}
-	
-	####
-	#We can also represent T-statistics and custom index thanks to
-	#the plot.listofindex function.
-	
-	\dontrun{
-		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
-		nperm = 9, print = FALSE)
-		
-		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
-		
-		index.list1 <- as.listofindex(list.ind, namesindex = 
-		c("mean", "kurtosis", "range", "mean.pop", "kurtosis.pop", "range.pop", 
-		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
-		
-		class(index.list1)
-		
-		plot(index.list1, type = "simple")
-		plot(index.list1, type = "simple_range")
-		plot(index.list1, type = "barplot")
-		plot(index.list1, type = "normal")
-		
-				
-		plot(index.list1, type = "bysites")
-		
-		plot(index.list1,type = "bytraits")
+		res.finch3 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	    sp = sp.finch, reg.pool=list.reg.p, nperm = 9, print = FALSE)	
+	    
+	    plot(as.listofindex(list(res.finch, res.finch2, res.finch3)))	
 	}
 }
 

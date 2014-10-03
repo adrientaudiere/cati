@@ -36,48 +36,40 @@
 }
 
 \examples{
-data(finch.ind)
-oldpar <- par(no.readonly = TRUE)
+	data(finch.ind)
 
-####
-#The function ComIndex allow to choose your own function 
-#(like mean, range, variance...) to calculate customize index.
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	sp = sp.finch, nperm = 9, print = FALSE)
 
-require(e1071)
+	\dontrun{
+		#### Use a different regional pool than the binding of studied communities
+		#create a random regional pool for the example
+	
+		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+	
+		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+	    
+	    plot(as.listofindex(list(res.finch,res.finch2)))
+    
+    
+	    #### Use a different regional pool for each communities
+		#create a random regional pool for each communities for the example
+		list.reg.p <- list(
+		traits.finch[sample(1:290,200), ], traits.finch[sample(100:1200,300), ], 
+		traits.finch[sample(100:1500, 1000), ], traits.finch[sample(300:800,300), ],
+		traits.finch[sample(1000:2000, 500), ], traits.finch[sample(100:900, 700), ] )
 
+		# Warning: the regional pool need to be larger than the observed communities
+		table(ind.plot.finch)
+		# For exemple, the third community need a regional pool of more than 981 individuals
+		
+		res.finch3 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	    sp = sp.finch, reg.pool=list.reg.p, nperm = 9, print = FALSE)	
+	    
+	    plot(as.listofindex(list(res.finch, res.finch2, res.finch3)))	
+	}
 
-funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)",
-"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)" )
-
-\dontrun{
-
-res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
-nperm = 9, print = FALSE)
-
-res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), 
-ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
-
-res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
-nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, nperm = 9,
-print = FALSE)
-
-funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
-"max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)" )
-
-
-####
-#We can represent Standardized Effect Size (ses) 
-#using the function plot(as.listofindex(list1, list2, list3))
-
-list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
-index.list2 <- as.listofindex(list.ind2)
-
-plot(index.list2, type = "bytraits")
-
-plot(index.list2)
-}
 
 }
 
