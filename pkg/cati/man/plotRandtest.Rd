@@ -10,7 +10,7 @@
 }
 
 \usage{
-	plotRandtest(x, alternative = c("greater", "less", "two-sided"), ...)
+	plotRandtest(x, alternative = "two-sided", ...)
 }
 
 \arguments{
@@ -53,7 +53,7 @@
 	par(mfrow = c(4,4))
 	
 	plotRandtest(res.finch)
-	plotRandtest(res.finch, alter = "two-sided")
+	plotRandtest(res.finch, alter = "less")
 	}
 }
 

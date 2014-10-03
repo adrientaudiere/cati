@@ -165,77 +165,44 @@
 \examples{
 data(finch.ind)
 
-####
-#For most multivariate functions we need to replace (or exclude)
-#NA values.
-
+\dontrun{
+#For most multivariate functions we need to replace (or exclude) NA values. 
 #For this example, we use the package mice to complete the data.
 
-\dontrun{
-names.sp_ind.plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
-
-comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
+comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
 
 library(mice)
 traits = traits.finch
-mice <- mice(traits.finch)
-traits.finch.mice <- complete(mice)
-
-####
-#A simple example to illustrate the concept of the function 
-#ComIndexMulti
-
-res.sum.1 <- ComIndexMulti(traits.finch, 
-index = c("sum(scale(x), na.rm = TRUE)", "sum(x, na.rm = TRUE)"), 
-by.factor = names.sp_ind.plot, nullmodels = c(2,2), 
-ind.plot = ind.plot.finch, nperm = 50, sp = sp.finch)
-
-attributes(ses.listofindex(as.listofindex(res.sum.1)))
-
-####
-#A more interesting example using the function hypervolume 
-#from the package hypervolume. 
-#We show here several results which differe in there factor 
-#that delimit the group to calculate different hypervolume 
-#(argument by_factor). 
-
-require(hypervolume)
-
-res.hv.1 <- ComIndexMulti(traits.finch.mice, index = 
-paste("as.numeric (try(hypervolume(na.omit(x), warnings = FALSE,", 
-"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-by.factor = rep(1,length(names.sp_ind.plot)), nullmodels = c(2,2), 
-ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-
-res.hv.2 <- ComIndexMulti(traits.finch.mice, index = 
-paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
-"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-by.factor = names.sp_ind.plot, nullmodels = c(2,2), 
-ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-
-res.hv.3 <- ComIndexMulti(traits.finch.mice, index = 
-paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,"
-"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-c("as.numeric (try(hypervolume(na.omit(x), 
-warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-by.factor = rep(1,length(names.sp_ind.plot)), nullmodels = c(2,2), 
-ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-
-res.hv.4 <- ComIndexMulti(traits.finch.mice, index = 
-paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
-"bandwidth=0.2, verbose=FALSE)@Volume))"), 
-c("as.numeric(try(hypervolume(na.omit(x), 
-warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-by.factor = sp.finch, nullmodels = c(2,2), ind.plot = ind.plot.finch, 
-nperm = 9, sp = sp.finch)
+mice<-mice(traits.finch)
+traits.finch.mice<-complete(mice)
 
 
-list.ind.multi <- as.listofindex(list(res.hv.2, res.hv.3, res.hv.4))
+#A simple example to illustrate the concept of the function ComIndexMulti
 
-ses.listofindex(list.ind.multi)
+n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
+res.sum.1<-ComIndexMulti(traits.finch, 
+              index = c("sum(scale(x), na.rm = T)", "sum(x, na.rm = T)"), 
+              by.factor = n_sp_plot, nullmodels = "regional.ind", 
+              ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+res.sum.1
 
-plot(list.ind.multi)
-plot(list.ind.multi, xlim = c(-200,20))
+
+
+#A more interesting example using the function hypervolume
+library(hypervolume)
+
+hv<-hypervolume(traits.finch.mice, 
+        reps = 100,bandwidth = 0.2, 
+        verbose = F, warnings = F)
+plot(hv)
+
+hv.1<-ComIndexMulti(traits.finch.mice, 
+             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
+                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"),
+             by.factor = rep(1,length(n_sp_plot)), nullmodels = "regional.ind",
+             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch) 
+
+hv.1
+
 }
 }
-
