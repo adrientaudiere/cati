@@ -60,6 +60,7 @@ Functional space, functional structure, community assembly, ecological niche, en
 \textbf{The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.}
 \end{center}
 
+
 \newpage
 \tableofcontents
 
@@ -83,7 +84,6 @@ R.version.string
 
 Then, install \texttt{cati} with dependencies using:
 <<results = 'hide'>>=
-#install.packages("cati", repos = "http://cran.us.r-project.org", dependencies = TRUE)
 library("cati")
 @
 
@@ -211,7 +211,6 @@ par(old.par)
 The Rao function computes $\alpha$, $\beta$ and $\gamma$ -components for taxonomic, functional and/or phylogenetic diversity with:
 
 $$ \gamma = mean (\alpha) + \beta $$
-
 
 Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 
@@ -445,10 +444,6 @@ One can be more interested in the significance  and the effect size available th
 \begin{center}
 $$ SES = (I_{obs} – I{_sim}) / \delta_{sim} $$
 \end{center}
-
-
-where $I_{obs}$ is the observed value, $I_{sim}$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
-
 
 where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
 
