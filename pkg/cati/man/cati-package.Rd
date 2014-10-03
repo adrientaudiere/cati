@@ -21,7 +21,9 @@
 		Imports: \tab e1071, mice, rasterVis, hypervolume \cr
 		Suggests: \tab lattice, vegan, FD, spacodiR, entropart, fBasics, picante \cr  
 	}
-	This package provides functions to calculate T-statistics (Tstats function) and other uni-traits metrics (ComIndex function) to test community assembly traits measured on individuals and beyond (e.g. populations, functional groups). Variance partitioning  (partvar function) and density plot (plotDistri function) are also available. Finaly, this package includes functions to summarize community assembly metrics and functions to plot standardized effect size of index. 
+	This package provides functions to calculate T-statistics (Tstats function) and other uni-traits metrics (ComIndex function) to test community assembly traits measured on individuals and beyond (e.g. populations, functional groups). Variance partitioning  (partvar function) and density plot (plotDistri function) are also available. Finaly, this package includes functions to summarize community assembly metrics and functions to plot standardized effect size of index.  
+	
+	Development versions, forum, Darwin finches's dataset, and tutorial are available at http://sourceforge.net/p/cati-r/code/ci/master/tree/. The reference manual is available at http://cran.r-project.org/web/packages/cati/cati.pdf and the tutorial at http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf. 
 }
 
 \author{

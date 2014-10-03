@@ -60,231 +60,73 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### ** Examples
 	
 data(finch.ind)
-oldpar <- par(no.readonly = TRUE)
-
-####
-#The function ComIndex allow to choose your own function 
-#(like mean, range, variance...) to calculate customize index.
-
-require(e1071)
-
-funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
-"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
 
 ## Not run: 
+##D #Define the functions that will be calculating
+##D funct<-c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)",
+##D      "max(x, na.rm = TRUE) - min(x, na.rm = TRUE)" )
 ##D 
-##D res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-##D sp = sp.finch, nullmodels = c("2","2","2","2"), 
-##D ind.plot = ind.plot.finch,	nperm = 9, print = FALSE)
-##D 
-##D res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-##D sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), 
-##D ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
-##D 
-##D ####
-##D #We can represent Standardized Effect Size (ses)
-##D #using the function plot(as.listofindex(list1, list2, list3))
-##D 
-##D list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
-##D index.list2 <- as.listofindex(list.ind2)
-##D 
-##D plot(index.list2)
-##D plot(index.list2, type = "bytraits")	
-##D 
-##D ####
-##D #This allows to calcul index per site 
-##D #for example using "tapply(x, sites, mean)".
-##D 
-##D funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
-##D "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
-##D "tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
-##D min(x, na.rm = TRUE) )", "tapply(x, ind.plot.finch, function(x) 
-##D CVNND(x))"  )
+##D #Test against the null model regional.ind
+##D res.finch.sp_regional.ind<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
+##D                            nullmodels = "regional.ind", ind.plot = ind.plot.finch,
+##D                             nperm = 9, print = FALSE)
+##D  
+##D #Test against the null model regional.pop
+##D #Individuals values are transformed in populational values
+##D res.finch.sp_regional.pop<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
+##D                nullmodels = "regional.pop", ind.plot = ind.plot.finch, 
+##D                nperm = 9, print = FALSE)
 ##D 
 ##D 
-##D ##Null model 1 is trivial for this function 
-##D #because randomisation is within community only
+##D #We can calculate index with or without intraspecific variance.
 ##D 
-##D res.finch.ind_mn1 <- ComIndex(traits = traits.finch, index = funct, 
-##D sp = sp.finch, nullmodels = c(1,1,1,1), ind.plot = ind.plot.finch, 
-##D nperm = 9, print = FALSE)
+##D #calculate  of means by population (name_sp_site is a name of a population) 
+##D #determine the site for each population (sites_bypop)
+##D  
+##D name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
+##D traits.by.pop<-apply(traits.finch, 2 , 
+##D            function (x) tapply(x, name_sp_sites, mean , na.rm = TRUE))
 ##D 
-##D res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-##D sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
-##D nperm = 9, print = FALSE)
+##D sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), split = "_"), 
+##D           function(x) x[3])
 ##D 
-##D 	
-##D ####
-##D #We can calcul metrics with or without intraspecific variance.
-##D #Calculation of trait averages per population 
-##D #(name_sp_site is a name of a population) 
-##D #like in the function ComIndex
-##D #and determine the site for each population (sites_bypop)
+##D #New list of function "funct"
 ##D 
-##D name_sp_sites = paste(sp.finch, ind.plot.finch, sep = "_")
-##D traits.by.pop <- apply(traits.finch, 2 , function (x) 
-##D tapply(x, name_sp_sites, mean , na.rm = TRUE))
+##D funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
+##D      "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
+##D      "tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
+##D      "tapply(x, ind.plot.finch, function(x) CVNND(x))" )
 ##D 
-##D sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
-##D split = "_"), function(x) x[3])
+##D fact<-unlist(sites_bypop)  
+##D funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = TRUE))",
+##D           "tapply(x, fact, function(x) kurtosis(x, na.rm = TRUE))",
+##D           "tapply(x, fact, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
+##D           "tapply(x, fact, function(x) CVNND(x))")
 ##D 
-##D funct.withoutIV <- c("tapply(x, unlist(sites_bypop), function(x) 
-##D mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), function(x) 
-##D kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), function(x) 
-##D max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-##D "tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
 ##D 
-##D funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
-##D mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-##D kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-##D max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-##D "tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
-##D 	
-##D res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
-##D sp = sp.finch, nullmodels = c("2","2","2","2"), ind.plot = ind.plot.finch, 
-##D nperm = 9, print = FALSE)
+##D res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.1,
+##D                sp = sp.finch, nullmodels = "regional.ind",
+##D                ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 ##D 
-##D res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
-##D sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), 
-##D ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+##D res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.2, 
+##D                sp = sp.finch, nullmodels = "regional.pop", 
+##D                ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 ##D 
-##D 	
-##D ####
-##D #We can also represent T-statistics and custom index thanks to
-##D #the plot.listofindex function.
+##D #ComIndex class are associated to S3 methods plot, print and summary.
 ##D 
-##D res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
-##D nperm = 9, print = FALSE)
+##D res.finch.withIV
+##D summary(res.finch.withIV)
+##D plot(res.finch.withIV)
+##D plot(res.finch.withoutIV)
 ##D 
-##D list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
-##D 
-##D index.list1 <- as.listofindex(list.ind, namesindex = c("mean", "kurtosis", 
-##D "range", "CVNND", "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
-##D "T_IP.IC", "T_IC.IR", "T_PC.PR"))
-##D 
-##D class(index.list1)
-##D 
-##D par(mfrow = c(2,3))
-##D plot(index.list1,type = "bysites")
-##D 
-##D par(mfrow = c(2,2))
-##D plot(index.list1,type = "bytraits")
-##D par(mfrow = c(1,1))
-##D 
-##D plot(index.list1,type = "simple")
-##D plot(index.list1,type = "simple_range")
-##D plot(index.list1,type = "normal")
-##D plot(index.list1,type = "barplot")
+##D plot(as.listofindex(list(res.finch.withIV, res.finch.withoutIV)))
 ## End(Not run)
-
-
-############################
-####Using  and community data matrix if there is no data 
-#available at the individual level.
-
-## Not run: 
-##D 
-##D #create traits data at the species level
-##D traits_by_sp <- apply(traits.finch,2,function(x) tapply(x,sp.finch,
-##D function(x) mean(x, na.rm = T)))  
-##D 
-##D #create traits data at the populational level
-##D names_sp_ind.plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "@")) 
-##D traits_by_pop <- apply(traits.finch,2,function(x) tapply(x,names_sp_ind.plot, 
-##D function(x) mean(x, na.rm = T) ))  
-##D 
-##D #create community data matrix at the species or populational level
-##D w1 <- table(sp.finch,ind.plot.finch)
-##D dim(w1)
-##D dim(traits_by_sp)
-##D 
-##D w2 <- table(names_sp_ind.plot,ind.plot.finch)
-##D dim(w2)
-##D dim(traits_by_pop)
-##D 
-##D #Choose indices
-##D require(e1071)
-##D 
-##D funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
-##D "max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)"  )
-##D 
-##D 
-##D #################
-##D #with species value
-##D 
-##D res <- AbToInd(traits_by_sp, w1)
-##D 
-##D ComIndex(traits_by_sp, nullmodels = 2,  index = funct, 
-##D sp = rownames(traits_by_sp), com = w1, nperm = 9)
-##D 
-##D 
-##D #################
-##D #with population value
-##D res <- AbToInd(traits_by_pop, w2)
-##D sp.sp <- unlist(strsplit(rownames(traits_by_pop),"@"))[seq(1,39*2,2)]
-##D 
-##D ComIndex(traits_by_pop, nullmodels = 2,  index = funct, 
-##D sp = sp.sp, com = w2)
-##D 	
-## End(Not run)
-
-############################
-####Simple example using null model 2sp.prab (species level without taking 
-# into acount for species abundance, prab for presence/absence)
-
-## Not run: 
-##D 
-##D traits_by_sp <- apply(traits.finch, 2, function(x) 
-##D tapply(x, name_sp_sites, mean, na.rm=T))
-##D 
-##D sites_bysp<-unlist(strsplit(rownames(traits_by_sp), 
-##D split="_"))[seq(3,3*dim(traits_by_sp)[1], by=3) ]
-##D 
-##D funct.withoutIV.prab <- c("tapply(x, unlist(sites_bysp), 
-##D 	function(x) mean(x, na.rm = TRUE))", 
-##D 	"tapply(x, unlist(sites_bysp), function(x) kurtosis(x, na.rm = TRUE))", 
-##D 	"tapply(x, unlist(sites_bysp), function(x) max(x, na.rm = TRUE) 
-##D 	- min(x, na.rm = TRUE) )", 
-##D 	"tapply(x, unlist(sites_bysp), function(x) CVNND(x))")
-##D 	
-##D res.finch.withoutIV.prab <- ComIndex(traits = traits.finch, 
-##D 	index = funct.withoutIV.prab, sp = sp.finch, 
-##D 	nullmodels = rep("2sp.prab", times=4), ind.plot = ind.plot.finch, 
-##D 
-##D traits_by_sp <- apply(traits.finch, 2, function(x) tapply(x, 
-##D name_sp_sites, mean, na.rm=T))
-##D sites_bysp<-unlist(strsplit(rownames(traits_by_sp), split="_"))
-##D [seq(3,3*dim(traits_by_sp)[1], by=3) ]
-##D 
-##D funct.withoutIV.prab <- c("tapply(x, unlist(sites_bysp), 
-##D 	function(x) mean(x, na.rm = TRUE))", 
-##D 	"tapply(x, unlist(sites_bysp), 
-##D 	function(x) kurtosis(x, na.rm = TRUE))", 
-##D 	"tapply(x, unlist(sites_bysp), 
-##D 	function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )", 
-##D 	"tapply(x, unlist(sites_bysp), 
-##D 	function(x) CVNND(x))")
-##D 	
-##D res.finch.withoutIV.prab <- ComIndex(traits = traits.finch, 
-##D 	index = funct.withoutIV.prab, sp = sp.finch, 
-##D 	nullmodels = rep("2sp.prab", times=4), ind.plot = ind.plot.finch,
-##D 	nperm = 9, print = FALSE)
-##D 
-##D list.ind2 <- list(res.finch.withoutIV, res.finch.withoutIV.prab)
-##D index.list2 <- as.listofindex(list.ind2, namesindex = 
-##D 	c("mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop", 
-##D 	"mean.prab", "kurtosis.prab", "range.prab", "CVNND.prab"))
-##D 
-##D plot(index.list2)
-## End(Not run)
-
 
 
 
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("ComIndex", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
-graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 cleanEx()
 nameEx("ComIndexMulti")
 ### * ComIndexMulti
@@ -302,77 +144,45 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 data(finch.ind)
 
-####
-#For most multivariate functions we need to replace (or exclude)
-#NA values.
-
-#For this example, we use the package mice to complete the data.
-
 ## Not run: 
-##D names.sp_ind.plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
+##D #For most multivariate functions we need to replace (or exclude) NA values. 
+##D #For this example, we use the package mice to complete the data.
 ##D 
-##D comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
+##D comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
 ##D 
 ##D library(mice)
 ##D traits = traits.finch
-##D mice <- mice(traits.finch)
-##D traits.finch.mice <- complete(mice)
-##D 
-##D ####
-##D #A simple example to illustrate the concept of the function 
-##D #ComIndexMulti
-##D 
-##D res.sum.1 <- ComIndexMulti(traits.finch, 
-##D index = c("sum(scale(x), na.rm = TRUE)", "sum(x, na.rm = TRUE)"), 
-##D by.factor = names.sp_ind.plot, nullmodels = c(2,2), 
-##D ind.plot = ind.plot.finch, nperm = 50, sp = sp.finch)
-##D 
-##D attributes(ses.listofindex(as.listofindex(res.sum.1)))
-##D 
-##D ####
-##D #A more interesting example using the function hypervolume 
-##D #from the package hypervolume. 
-##D #We show here several results which differe in there factor 
-##D #that delimit the group to calculate different hypervolume 
-##D #(argument by_factor). 
-##D 
-##D require(hypervolume)
-##D 
-##D res.hv.1 <- ComIndexMulti(traits.finch.mice, index = 
-##D paste("as.numeric (try(hypervolume(na.omit(x), warnings = FALSE,", 
-##D "bandwidth=0.2, verbose=FALSE)@Volume))"), 
-##D by.factor = rep(1,length(names.sp_ind.plot)), nullmodels = c(2,2), 
-##D ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-##D 
-##D res.hv.2 <- ComIndexMulti(traits.finch.mice, index = 
-##D paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
-##D "bandwidth=0.2, verbose=FALSE)@Volume))"), 
-##D by.factor = names.sp_ind.plot, nullmodels = c(2,2), 
-##D ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-##D 
-##D res.hv.3 <- ComIndexMulti(traits.finch.mice, index = 
-##D paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,"
-##D "bandwidth=0.2, verbose=FALSE)@Volume))"), 
-##D c("as.numeric (try(hypervolume(na.omit(x), 
-##D warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-##D by.factor = rep(1,length(names.sp_ind.plot)), nullmodels = c(2,2), 
-##D ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-##D 
-##D res.hv.4 <- ComIndexMulti(traits.finch.mice, index = 
-##D paste("as.numeric(try(hypervolume(na.omit(x), warnings = FALSE,",
-##D "bandwidth=0.2, verbose=FALSE)@Volume))"), 
-##D c("as.numeric(try(hypervolume(na.omit(x), 
-##D warnings = FALSE, bandwidth=0.2, verbose=FALSE)@Volume))"), 
-##D by.factor = sp.finch, nullmodels = c(2,2), ind.plot = ind.plot.finch, 
-##D nperm = 9, sp = sp.finch)
+##D mice<-mice(traits.finch)
+##D traits.finch.mice<-complete(mice)
 ##D 
 ##D 
-##D list.ind.multi <- as.listofindex(list(res.hv.2, res.hv.3, res.hv.4))
+##D #A simple example to illustrate the concept of the function ComIndexMulti
 ##D 
-##D ses.listofindex(list.ind.multi)
+##D n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
+##D res.sum.1<-ComIndexMulti(traits.finch, 
+##D               index = c("sum(scale(x), na.rm = T)", "sum(x, na.rm = T)"), 
+##D               by.factor = n_sp_plot, nullmodels = "regional.ind", 
+##D               ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+##D res.sum.1
 ##D 
-##D plot(list.ind.multi)
-##D plot(list.ind.multi, xlim = c(-200,20))
+##D 
+##D 
+##D #A more interesting example using the function hypervolume
+##D library(hypervolume)
+##D 
+##D hv<-hypervolume(traits.finch.mice, 
+##D         reps = 100,bandwidth = 0.2, 
+##D         verbose = F, warnings = F)
+##D plot(hv)
+##D 
+##D hv.1<-ComIndexMulti(traits.finch.mice, 
+##D              index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
+##D                  bandwidth = 0.2, verbose = F, warnings = F)@Volume))"),
+##D              by.factor = rep(1,length(n_sp_plot)), nullmodels = "regional.ind",
+##D              ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch) 
+##D 
+##D hv.1
+##D 
 ## End(Not run)
 
 
@@ -727,55 +537,47 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
-data(finch.ind)
-oldpar <- par(no.readonly = TRUE)
+	data(finch.ind)
 
-####
-#The function ComIndex allow to choose your own function 
-#(like mean, range, variance...) to calculate customize index.
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	sp = sp.finch, nperm = 9, print = FALSE)
 
-require(e1071)
-
-
-funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)",
-"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)", "CVNND(x)" )
-
-## Not run: 
+	## Not run: 
+##D 		#### Use a different regional pool than the binding of studied communities
+##D 		#create a random regional pool for the example
+##D 	
+##D 		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+##D 	
+##D 		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+##D 	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+##D 	    
+##D 	    plot(as.listofindex(list(res.finch,res.finch2)))
+##D     
+##D     
+##D 	    #### Use a different regional pool for each communities
+##D 		#create a random regional pool for each communities for the example
+##D 		list.reg.p <- list(
+##D 		traits.finch[sample(1:290,200), ], traits.finch[sample(100:1200,300), ], 
+##D 		traits.finch[sample(100:1500, 1000), ], traits.finch[sample(300:800,300), ],
+##D 		traits.finch[sample(1000:2000, 500), ], traits.finch[sample(100:900, 700), ] )
 ##D 
-##D res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-##D sp = sp.finch, nullmodels = c(2,2,2,2), ind.plot = ind.plot.finch, 
-##D nperm = 9, print = FALSE)
-##D 
-##D res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-##D sp = sp.finch, nullmodels = c("2sp","2sp","2sp","2sp"), 
-##D ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
-##D 
-##D res.finch.sp_mn3 <- ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
-##D nullmodels = c("2sp","2sp","2sp","2sp"), ind.plot = ind.plot.finch, nperm = 9,
-##D print = FALSE)
-##D 
-##D funct <- c("mean(x, na.rm=TRUE)", "kurtosis(x, na.rm=TRUE)", 
-##D "max(x, na.rm=TRUE) - min(x, na.rm=TRUE)", "CVNND(x)" )
-##D 
-##D 
-##D ####
-##D #We can represent Standardized Effect Size (ses) 
-##D #using the function plot(as.listofindex(list1, list2, list3))
-##D 
-##D list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
-##D index.list2 <- as.listofindex(list.ind2)
-##D 
-##D plot(index.list2, type = "bytraits")
-##D 
-##D plot(index.list2)
+##D 		# Warning: the regional pool need to be larger than the observed communities
+##D 		table(ind.plot.finch)
+##D 		# For exemple, the third community need a regional pool of more than 981 individuals
+##D 		
+##D 		res.finch3 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+##D 	    sp = sp.finch, reg.pool=list.reg.p, nperm = 9, print = FALSE)	
+##D 	    
+##D 	    plot(as.listofindex(list(res.finch, res.finch2, res.finch3)))	
+##D 	
 ## End(Not run)
+
 
 
 
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("as.listofindex", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
-graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 cleanEx()
 nameEx("decompCTRE")
 ### * decompCTRE
@@ -851,10 +653,10 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 	
 	oldpar<-par()
 	par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2))
-	piePartvar(res.partvar.finch, col = c("red", "olivedrab3", "blue", "purple"))
+	piePartvar(res.partvar.finch)
 	par(oldpar)
 	
-	barPartvar(res.partvar.finch, col = c("red", "olivedrab3", "blue", "purple"))
+	barPartvar(res.partvar.finch)
 
 
 
@@ -876,128 +678,37 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### ** Examples
 	
 	data(finch.ind)
-	oldpar <- par(no.readonly = TRUE)
-	
-	####
-	#The function ComIndex allow to choose your own function 
-	#(like mean, range, variance...) to calculate customize index.
-	
-	require(e1071)
 
-	funct <- c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)", 
-	"max(x, na.rm = TRUE) - min(x, na.rm = TRUE)")
-	
-	## Not run: 
-##D 		res.finch.sp_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-##D 		sp = sp.finch, nullmodels = "2", ind.plot = ind.plot.finch, 
-##D 		nperm = 9, print = FALSE)
-##D 
-##D 		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-##D 		sp = sp.finch, nullmodels = "2sp", ind.plot = ind.plot.finch, 
-##D 		nperm = 9, print = FALSE)
-##D 
-##D 		res.finch.sp_mn2sp <- ComIndex(traits = traits.finch, index = funct, 
-##D 		sp = sp.finch, nullmodels = "2sp", ind.plot = ind.plot.finch, 
-##D 		nperm = 9, print = FALSE)
-##D 		
-##D 		####
-##D 		#We can represent Standardized Effect Size (ses)
-##D 		#using the function plot(as.listofindex(list1, list2, list3))
-##D 		
-##D 		list.ind2 <- list(res.finch.sp_mn2, res.finch.sp_mn2sp)
-##D 		index.list2 <- as.listofindex(list.ind2)
-##D 		
-##D 		plot(index.list2, type = "bytraits")
-##D 		
-##D 		plot(index.list2)
-##D 	
-## End(Not run)
-	
-	####
-	#This allows to calculation index per site 
-	#for example using "tapply(x, sites, mean)".
-	
-	funct <- c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))", 
-	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))", 
-	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) - 
-	min(x, na.rm = TRUE) )")
+	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	sp = sp.finch, nperm = 9, print = FALSE)
 
-	##Null model 1 is trivial for this function 
-	#because randomisation is within community only
-	
 	## Not run: 
-##D 
-##D 		res.finch.ind_mn1 <- ComIndex(traits = traits.finch, index = funct, 
-##D 		sp = sp.finch, nullmodels = c(1,1,1), ind.plot = ind.plot.finch, 
-##D 		nperm = 9, print = FALSE)
-##D 		
-##D 		res.finch.ind_mn2 <- ComIndex(traits = traits.finch, index = funct, 
-##D 		sp = sp.finch, nullmodels = c("2","2","2"), ind.plot = ind.plot.finch, 
-##D 		nperm = 9, print = FALSE)
-##D 
-##D 		
-##D 		####
-##D 		#We can calculation metrics with or without intraspecific variance.
-##D 		#Calculation of trait averages per population 
-##D 		#(name_sp_site is a name of a population) 
-##D 		#like in the function ComIndex
-##D 		#and determine the site for each population (sites_bypop)
-##D 		
-##D 		name_sp_sites = paste(sp.finch, ind.plot.finch, sep = "_")
-##D 		
-##D 		traits.by.pop <- apply(traits.finch, 2 , function (x) 
-##D 
-##D 		tapply(x, name_sp_sites, mean , na.rm = TRUE))
-##D 		
-##D 		sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), 
-##D 		split = "_"), function(x) x[3])
-##D 		
-##D 		funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
-##D 		function(x) mean(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
-##D 		function(x) kurtosis(x, na.rm = TRUE))", "tapply(x, unlist(sites_bypop), 
-##D 		function(x) max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )")
-##D 		
-##D 			
-##D 		funct.withIV <- c("tapply(x, ind.plot.finch, function(x) 
-##D 		mean(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-##D 		kurtosis(x, na.rm = TRUE))", "tapply(x, ind.plot.finch, function(x) 
-##D 		max(x, na.rm = TRUE) - min(x, na.rm = TRUE) )")
-##D 		
-##D 		res.finch.withIV <- ComIndex(traits = traits.finch, index = funct.withIV, 
-##D 		sp = sp.finch, nullmodels = c("2","2","2"), ind.plot = ind.plot.finch, 
-##D 		nperm = 9, print = FALSE)
-##D 				
-##D 		res.finch.withoutIV <- ComIndex(traits = traits.finch, index = funct.withoutIV, 
-##D 		sp = sp.finch, nullmodels = c("2sp","2sp","2sp"), ind.plot = ind.plot.finch, 
-##D 		nperm = 9, print = FALSE)
+##D 		#### Use a different regional pool than the binding of studied communities
+##D 		#create a random regional pool for the example
 ##D 	
-## End(Not run)
-	
-	####
-	#We can also represent T-statistics and custom index thanks to
-	#the plot.listofindex function.
-	
-	## Not run: 
-##D 		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
-##D 		nperm = 9, print = FALSE)
+##D 		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
+##D 	
+##D 		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+##D 	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+##D 	    
+##D 	    plot(as.listofindex(list(res.finch,res.finch2)))
+##D     
+##D     
+##D 	    #### Use a different regional pool for each communities
+##D 		#create a random regional pool for each communities for the example
+##D 		list.reg.p <- list(
+##D 		traits.finch[sample(1:290,200), ], traits.finch[sample(100:1200,300), ], 
+##D 		traits.finch[sample(100:1500, 1000), ], traits.finch[sample(300:800,300), ],
+##D 		traits.finch[sample(1000:2000, 500), ], traits.finch[sample(100:900, 700), ] )
+##D 
+##D 		# Warning: the regional pool need to be larger than the observed communities
+##D 		table(ind.plot.finch)
+##D 		# For exemple, the third community need a regional pool of more than 981 individuals
 ##D 		
-##D 		list.ind <- list(res.finch.withIV, res.finch.withoutIV ,res.finch)
-##D 		
-##D 		index.list1 <- as.listofindex(list.ind, namesindex = 
-##D 		c("mean", "kurtosis", "range", "mean.pop", "kurtosis.pop", "range.pop", 
-##D 		"T_IP.IC", "T_IC.IR", "T_PC.PR"))
-##D 		
-##D 		class(index.list1)
-##D 		
-##D 		plot(index.list1, type = "simple")
-##D 		plot(index.list1, type = "simple_range")
-##D 		plot(index.list1, type = "barplot")
-##D 		plot(index.list1, type = "normal")
-##D 		
-##D 				
-##D 		plot(index.list1, type = "bysites")
-##D 		
-##D 		plot(index.list1,type = "bytraits")
+##D 		res.finch3 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+##D 	    sp = sp.finch, reg.pool=list.reg.p, nperm = 9, print = FALSE)	
+##D 	    
+##D 	    plot(as.listofindex(list(res.finch, res.finch2, res.finch3)))	
 ##D 	
 ## End(Not run)
 
@@ -1005,7 +716,6 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("plot.listofindex", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
-graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 cleanEx()
 nameEx("plotCorTstats")
 ### * plotCorTstats
@@ -1109,7 +819,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ##D 	par(mfrow = c(4,4))
 ##D 	
 ##D 	plotRandtest(res.finch)
-##D 	plotRandtest(res.finch, alter = "two-sided")
+##D 	plotRandtest(res.finch, alter = "less")
 ##D 	
 ## End(Not run)
 
@@ -1275,117 +985,6 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("ses", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
-cleanEx()
-nameEx("ses.listofindex")
-### * ses.listofindex
-
-flush(stderr()); flush(stdout())
-
-base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-### Name: ses.listofindex
-### Title: Standardized effect size for a list of index.
-### Aliases: ses.listofindex
-
-### ** Examples
-
-	data(finch.ind)
-
-	## Not run: 
-##D 
-##D 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
-##D 	nperm = 9, print = FALSE)
-##D 	
-##D 	#calculation of means by population (name_sp_site is a population) 
-##D 	#like in the function ComIndex and determine the site 
-##D 	#for each population (sites_bypop)
-##D 
-##D 	name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
-##D 	traits.by.pop <- apply(traits.finch, 2 , function (x) 
-##D 	tapply(x, name_sp_sites, mean , na.rm = TRUE))
-##D 	
-##D 	require(e1071)
-##D 	
-##D 	sites_bypop <- lapply(strsplit(paste(rownames(traits.by.pop), sep = "_")
-##D 	, split = "_"), function(x) x[3])
-##D 
-##D 	funct.withoutIV <- c("tapply(x, unlist(sites_bypop), 
-##D 	function(x) mean(x, na.rm=TRUE))",
-##D 	"tapply(x, unlist(sites_bypop), function(x) kurtosis(x, na.rm=TRUE))",
-##D 	"tapply(x, unlist(sites_bypop), function(x)	max(x, na.rm = TRUE) 
-##D 	- min(x, na.rm = TRUE) )", 
-##D 	"tapply(x, unlist(sites_bypop), function(x) CVNND(x))"  )
-##D 		
-##D 	funct.withIV <- c("tapply(x, ind.plot.finch, 
-##D 	function(x) mean(x, na.rm = TRUE))",
-##D 	"tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
-##D 	"tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE) 
-##D 	- min(x, na.rm = TRUE) )", 
-##D 	"tapply(x, ind.plot.finch, function(x) CVNND(x))"  )
-##D 
-##D 
-##D 	res.finch.withIV <- ComIndex(traits = traits.finch, 
-##D 	index = funct.withIV, sp = sp.finch, nullmodels = rep("2", times=4), 
-##D 	ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
-##D 
-##D 	res.finch.withoutIV <- ComIndex(traits = traits.finch, 
-##D 	index = funct.withoutIV, sp = sp.finch, nullmodels = rep("2sp", times=4), 
-##D 	ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
-##D 
-##D 	##Plot T-statistics and custom metrics thanks to 
-##D 	#the plot.listofindex function.
-##D 	
-##D 	list.ind <- list(res.finch.withIV, res.finch.withoutIV, res.finch)
-##D 	index.list <- as.listofindex(list.ind, 
-##D 				  namesindex=c("mean", "kurtosis", "range", "CVNND",
-##D 				  "mean.pop", "kurtosis.pop", "range.pop", "CVNND.pop",
-##D                   "T_IP.IC", "T_IC.IR", "T_PC.PR"))
-##D 	
-##D 	class(index.list)
-##D 	
-##D 	plot(index.list, plot.ask = FALSE)
-##D 
-##D 	ses.list <- ses.listofindex(index.list)
-##D 	ses.list
-##D 	attributes(ses.list)
-##D 	
-##D 	#### An other way to see "ses values" 
-##D 	
-##D 	# Custom theme (from rasterVis package)
-##D 	require(rasterVis)
-##D 	
-##D 	my.theme <- BuRdTheme()
-##D 	# Customize the colorkey
-##D 	my.ckey <- list(col = my.theme$regions$col)
-##D 	
-##D 	levelplot(t(rbind(ses.list[[1]]$ses, ses.list[[2]]$ses, 
-##D 	ses.list[[3]]$ses,  ses.list[[4]]$ses)), colorkey = my.ckey, 
-##D 	par.settings = my.theme,border = "black")
-##D 	
-##D 	levelplot(t(rbind(ses.list[[1]]$ses>ses.list[[1]]$ses.sup, 
-##D 	ses.list[[2]]$ses>ses.list[[2]]$ses.sup, 
-##D 	ses.list[[3]]$ses>ses.list[[3]]$ses.sup,
-##D 	ses.list[[4]]$ses>ses.list[[4]]$ses.sup)), 
-##D 	colorkey = my.ckey, par.settings = my.theme,border = "black")
-##D 	
-##D 
-##D 	#For all metrics of the list of index
-##D 	ses.list.levelplot <- c()
-##D 
-##D 	for(i in 1: length(ses.list)){
-##D 
-##D 		ses.list.levelplot <- rbind(ses.list.levelplot, ses.list[[i]]$ses)
-##D 	}
-##D 	
-##D 	levelplot(t(ses.list.levelplot), colorkey = my.ckey, 
-##D 	par.settings = my.theme,border = "black")
-##D 	
-##D 	
-## End(Not run)
-
-
-
-base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-base::cat("ses.listofindex", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 ### * <FOOTER>
 ###
 options(digits = 7L)

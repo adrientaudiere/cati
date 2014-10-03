@@ -80,10 +80,10 @@
 	
 	oldpar<-par()
 	par(mfrow = c(2,2), mai = c(0.2,0.2,0.2,0.2))
-	piePartvar(res.partvar.finch, col = c("red", "olivedrab3", "blue", "purple"))
+	piePartvar(res.partvar.finch)
 	par(oldpar)
 	
-	barPartvar(res.partvar.finch, col = c("red", "olivedrab3", "blue", "purple"))
+	barPartvar(res.partvar.finch)
 
 }
 
