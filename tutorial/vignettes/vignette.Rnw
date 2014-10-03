@@ -59,7 +59,17 @@ Functional space, functional structure, community assembly, ecological niche, en
 \begin{center}
 \textbf{The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.}
 \end{center}
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+
+\hfill
+The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.
+
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+>>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 
 \newpage
 \tableofcontents
@@ -84,6 +94,15 @@ R.version.string
 
 Then, install \texttt{cati} with dependencies using:
 <<results = 'hide'>>=
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+#install.packages("cati", repos = "http://cran.us.r-project.org", dependencies = TRUE)
+=======
+install.packages("cati", repos = "http://cran.us.r-project.org", 
+                 dependencies = TRUE)
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+>>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 library("cati")
 @
 
@@ -212,8 +231,22 @@ The Rao function computes $\alpha$, $\beta$ and $\gamma$ -components for taxonom
 
 $$ \gamma = mean (\alpha) + \beta $$
 
+<<<<<<< HEAD
 Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 
+=======
+
+<<<<<<< HEAD
+Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
+
+=======
+
+Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
+
+
+Where: \gamma is the diversity of the regional pool, \alpha is the diversity of the local community and \beta is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+>>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 \\
 
 \textbf{Reference}: de Bello, F., Lavorel, S., Albert, C.H., Thuiller, W., Grigulis, K., Dolezal, J., Janecek, S. and Leps, J. (2011) Quantifying the relevance of intraspecific trait variability for functional diversity. Methods in Ecology and Evolution, 2, 163-174.
@@ -444,6 +477,20 @@ One can be more interested in the significance  and the effect size available th
 \begin{center}
 $$ SES = (I_{obs} – I{_sim}) / \delta_{sim} $$
 \end{center}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+
+
+<<<<<<< HEAD
+where $I_{obs}$ is the observed value, $I_{sim}$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
+
+=======
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+>>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 
 where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
 
@@ -645,10 +692,24 @@ par(mfrow = c(1,1))
 The other plot types are the same as plot.Tstats.
 
 <<dev = 'pdf', fig.width = 7, fig.height = 7>>=
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+par(mfrow = c(2,2))
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+>>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 plot(i.l1)
 plot(i.l1,type = "simple_range")
 plot(i.l1,type = "normal")
 plot(i.l1,type = "barplot")
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+par(mfrow = c(1,1))
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+>>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 @
 
 
