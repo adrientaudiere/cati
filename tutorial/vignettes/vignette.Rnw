@@ -60,6 +60,10 @@ Functional space, functional structure, community assembly, ecological niche, en
 \textbf{The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.}
 \end{center}
 
+\hfill
+The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.
+
+
 \newpage
 \tableofcontents
 
@@ -83,7 +87,8 @@ R.version.string
 
 Then, install \texttt{cati} with dependencies using:
 <<results = 'hide'>>=
-install.packages("cati")
+install.packages("cati", repos = "http://cran.us.r-project.org", 
+                 dependencies = TRUE)
 library("cati")
 @
 
@@ -213,8 +218,11 @@ The Rao function computes $\alpha$, $\beta$ and $\gamma$ -components for taxonom
 \[ \gamma = mean \alpha + \beta \]
 
 
+
 Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 
+
+Where: \gamma is the diversity of the regional pool, \alpha is the diversity of the local community and \beta is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 \\
 
 \textbf{Reference}: de Bello, F., Lavorel, S., Albert, C.H., Thuiller, W., Grigulis, K., Dolezal, J., Janecek, S. and Leps, J. (2011) Quantifying the relevance of intraspecific trait variability for functional diversity. Methods in Ecology and Evolution, 2, 163-174.
@@ -446,7 +454,12 @@ One can be more interested in the significance  and the effect size available th
 $SES = (I_obs – I_sim) / \delta_{sim}$
 \end{center}
 
+
 where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
+
+
+where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
+
 
 <<dev = 'pdf', fig.width = 6, fig.height = 6, fig.align = 'center'>>=
 plot(res.finch)
@@ -536,18 +549,21 @@ res.finch.sp_regional.pop<-ComIndex(traits = traits.finch, index = funct, sp = s
 These two functions allows to calculate  index by sites for example using \code{"tapply(x, sites, mean)"}.
 
 <<>>=
-funct<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))",
+funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))",
      "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))",
      "tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))", 
      "tapply(x, ind.plot.finch, function(x) CVNND(x))" )
 
+#The function IndexByGroups permit to easily obtain the above lines 
+IndexByGroups(funct, "ind.plot.finch")
+
 ##Null model local is trivial for these functions
 ##because randomization is within community only
  
-res.finch.ind_mn1<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
+res.finch.ind_loc<-ComIndex(traits = traits.finch, index = funct.1, sp = sp.finch,
                nullmodels = "local", ind.plot = ind.plot.finch,
                nperm = 9, print = FALSE)
-res.finch.ind_mn2<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch, 
+res.finch.ind_reg<-ComIndex(traits = traits.finch, index = funct.1, sp = sp.finch, 
                nullmodels = "regional.ind", ind.plot = ind.plot.finch,
                nperm = 9, print = FALSE)
 @
@@ -559,18 +575,16 @@ We can calculate index with or without intraspecific variance.
 #calculate  of means by population (name_sp_site is a name of a population) 
 #determine the site for each population (sites_bypop)
  
-name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
+name_sp_sites = paste(sp.finch, ind.plot.finch, sep = "_")
 traits.by.pop<-apply(traits.finch, 2 , 
            function (x) tapply(x, name_sp_sites, mean , na.rm = T))
 
 sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), split = "_"), 
           function(x) x[3])
 
-#We use the precedent list of function "funct"
-funct.withIV<-funct
-
 fact<-unlist(sites_bypop)
-funct.withoutIV<-c("tapply(x, fact, function(x) mean(x, na.rm = T))",
+
+funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = T))",
           "tapply(x, fact, function(x) kurtosis(x, na.rm = T))",
           "tapply(x, fact, function(x) max(x, na.rm = T)-min(x, na.rm = T))", 
           "tapply(x, fact, function(x) CVNND(x))")
@@ -578,27 +592,30 @@ funct.withoutIV<-c("tapply(x, fact, function(x) mean(x, na.rm = T))",
 
 Now calculate index with or without intraspecific variance thanks to function \texttt{ComIndex}.
 <<>>=
-res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.withIV,
+res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.1,
                sp = sp.finch, nullmodels = "regional.ind",
                ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 
-res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.withoutIV, 
+res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.2, 
                sp = sp.finch, nullmodels = "regional.pop", 
                ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 @
 
 
-
 \subsubsection{S3 methods for class ComIndex and ComIndexMulti}
 ComIndex and ComIndexMulti class are associated to S3 methods plot, print and summary.
 
-<<fig.width = 7, fig.height = 4>>=
+<<dev='pdf', fig.width = 7, fig.height = 4, fig.align='center'>>=
 res.finch.withIV
 summary(res.finch.withIV)
 plot(res.finch.withIV)
 plot(res.finch.withoutIV)
 @
+Now plot the two analysis together.
 
+<<dev='pdf'>>=
+plot(as.listofindex(list(res.finch.withIV, res.finch.withoutIV)))
+@
 
 \subsubsection{Plot Tstats and other uni/multivariates metrics together}
 The class listofindex permits to stock different metrics computed using \texttt{Tstats}, \texttt{ComIndex} and \texttt{ComIndexMulti} and compared to different null model. To do that we can use the Standardized Effect Size (ses) define as : 
@@ -640,18 +657,20 @@ par(mfrow = c(1,1))
 
 The other plot types are the same as plot.Tstats.
 
-<<dev = 'pdf', fig.width = 7, fig.height = 7, fig.align='center'>>=
+<<dev = 'pdf', fig.width = 7, fig.height = 7>>=
+par(mfrow = c(2,2))
 plot(i.l1)
 plot(i.l1,type = "simple_range")
 plot(i.l1,type = "normal")
 plot(i.l1,type = "barplot")
+par(mfrow = c(1,1))
 @
 
 
 
 \newpage
 
-\subsection{More information ond multivariates index}
+\subsection{More information on multivariates index}
 
 For most multivariate functions we need to replace (or exclude) NA values. For this example, we use the package \texttt{mice} to complete the data.
 
@@ -901,6 +920,12 @@ Great thanks to Thibault Jombart for his help on building R packages and writing
 
 
 
+\section{Conclusion}
+This is the end of the tutorial. The up to date version of this tutorial is available \href{here}{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}.
+
+
+\section{Acknowledgment}
+Great thanks to Thibault Jombart for his help on building R packages and writing tutorial with \href{http://yihui.name/knitr/}{knitR}.
 \end{document}
 
 
