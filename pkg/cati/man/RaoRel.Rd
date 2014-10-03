@@ -41,7 +41,7 @@
 }
 
 \details{
-	NA are not allowed in "locabrel <- abundances/ablocist". NA are automatically replaced by 0 in "sample". This function use the function "Qdecomp" by Sebastien Villeger & David Mouillot (J Ecol, 2008) modified by Wilfried Thuiller and the function disc originally proposed by Sandrine Pavoine.
+	NA are automatically replaced by 0 in "sample". This function use the function "Qdecomp" by Sebastien Villeger & David Mouillot (J Ecol, 2008) modified by Wilfried Thuiller and the function disc originally proposed by Sandrine Pavoine.
 }
 
 \value{
@@ -120,10 +120,6 @@
 
 		res.rao.w <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
 		weight = TRUE, Jost = FALSE, structure = NULL)
-
-		res.rao.w <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
-		weight=TRUE, Jost=FALSE, structure=NULL)
-
 		
 		witRao.w <- res.rao.w$FD$Mean_Alpha  #overall within species variance
 		betRao.w <- res.rao.w$FD$Beta_add    #between species variance
@@ -151,23 +147,13 @@
 
 		traits = traits.finch
 
-		traits=traits.finch
-
 		mice <- mice(traits.finch)
 		traits.finch.mice <- complete(mice)
 		
-		
 		traits.finch.mice.sp <- apply(apply(traits.finch.mice, 2, scale ), 2, 
-
 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
 
 
-		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
-
-		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
-
-
-		
 		trait.rao.w <- list()
 		witRao.w.bytrait <- c()
 		betRao.w.bytrait <- c()
@@ -176,14 +162,7 @@
 		  trait.rao.w[[t]] <- RaoRel(sample = as.matrix(comm.sp), 
 		  dfunc = dist(traits.finch.mice.sp[,t]), dphyl = NULL, weight = TRUE, 
 		  Jost = FALSE, structure = NULL)
-		}
-		
-		for(t in 1 : 4){
-		  trait.rao.w[[t]] <- RaoRel(sample=as.matrix(comm.sp), 
-		  dfunc=dist(traits.finch.mice.sp[,t]), dphyl=NULL, weight=TRUE, 
-		  Jost=FALSE, structure=NULL)
-
-		  
+				  
 		  witRao.w.bytrait <- c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
 		  betRao.w.bytrait <- c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
 		}

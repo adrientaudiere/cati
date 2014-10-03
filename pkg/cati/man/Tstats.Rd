@@ -14,7 +14,8 @@
 }
 
 \usage{
-	Tstats(traits, ind.plot, sp, reg.pool = NULL, nperm = 99, printprogress = TRUE)
+	Tstats(traits, ind.plot, sp, SE = 0, reg.pool = NULL, 
+	SE.reg.pool = NULL, nperm = 99, printprogress = TRUE)
 	
 	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 		
@@ -42,9 +43,17 @@
 		Factor defining the species which the individual belong to.
 	}
 	
+	\item{SE}{
+		A single value or vector of standard errors associated with each traits. Especially allow to handle measurement errors.
+	}
+	
 	\item{reg.pool}{
-		Regional pool data for traits. If not informed, 'traits' is considered as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
+		Regional pool data for traits. If not informed, 'traits' is considered as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2 (regional.ind).
 	}	
+	
+	\item{SE.reg.pool}{
+		A single value or vector of standard errors associated with each traits in each regional pool. Use only if reg.pool is used. Need to have the same dimension as reg.pool.
+	}
 	
 	\item{nperm}{
 		Number of permutations. If NULL, only observed values are returned; 
