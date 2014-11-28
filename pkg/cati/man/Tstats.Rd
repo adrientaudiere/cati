@@ -44,7 +44,7 @@
 	}
 	
 	\item{SE}{
-		A single value or vector of standard errors associated with each traits. Especially allow to handle measurement errors.
+		A single value or vector of standard errors associated with each traits. Especially allow to handle measurement errors. Not used with populational null model.  
 	}
 	
 	\item{reg.pool}{
