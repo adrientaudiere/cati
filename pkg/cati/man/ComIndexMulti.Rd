@@ -14,9 +14,9 @@
 
 \usage{
 	ComIndexMulti(traits = NULL, index = NULL, by.factor = NULL, 
-	nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, 
-	namesindex = NULL, reg.pool = NULL, nperm = 99, 
-	printprogress = TRUE, type.sp.val = "count")
+	nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL,
+	SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL,
+	nperm = 99, printprogress = TRUE, type.sp.val = "count")
 	
 	\method{plot}{ComIndexMulti}(x, type = "normal", 
 	col.index = c("red", "purple", "olivedrab3"), add.conf = TRUE, 
@@ -61,6 +61,10 @@
 		"traits" matrix and "com" matrix must have the same number of rows.
 	}
 	
+	\item{SE}{
+		A single value or vector of standard errors associated with each traits. Especially allow to handle measurement errors. Not used with populational null model.  
+	}
+	
 	\item{namesindex}{
 		A vector of names for metrics.
 	}
@@ -68,6 +72,10 @@
 	\item{reg.pool}{
 		Regional pool data for traits. If not informed, traits is considere as the regional pool. This matrix need to be larger (more rows) than the matrix "traits". Use only for null model 2.
 	}	
+	
+	\item{SE.reg.pool}{
+		A single value or vector of standard errors associated with each traits in each regional pool. Use only if reg.pool is used. Need to have the same dimension as reg.pool.
+	}
 	
 	\item{nperm}{
 		Number of permutations. If NULL, only observed values are returned.
