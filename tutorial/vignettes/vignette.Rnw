@@ -59,17 +59,6 @@ Functional space, functional structure, community assembly, ecological niche, en
 \begin{center}
 \textbf{The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.}
 \end{center}
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
-=======
-
-\hfill
-The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.
-
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
->>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 
 \newpage
 \tableofcontents
@@ -94,15 +83,7 @@ R.version.string
 
 Then, install \texttt{cati} with dependencies using:
 <<results = 'hide'>>=
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-#install.packages("cati", repos = "http://cran.us.r-project.org", dependencies = TRUE)
-=======
-install.packages("cati", repos = "http://cran.us.r-project.org", 
-                 dependencies = TRUE)
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
->>>>>>> d0b211331074d6462608d116c3317bf39e66e950
+#install.packages("cati", repos = "http://cran.us.r-project.org",                  dependencies = TRUE)
 library("cati")
 @
 
@@ -564,7 +545,7 @@ par(mfrow = c(1,1))
 The function \texttt{ComIndex} allow choosing your own function (like mean, range, variance, ...) to calculate customize metrics. Here \texttt{CVNND} refers to the Coefficient of Variation of the Nearest Neighborhood Distance. \texttt{ComIndexMulti} do the same things for multivariate metrics. 
 
 <<>>=
-#Define the function s to calculate
+#Define the functions you want to calculate
 funct<-c("mean(x, na.rm = T)", "kurtosis(x, na.rm = T)",
      "max(x, na.rm = T) - min(x, na.rm = T)", "CVNND(x)" )
 
@@ -692,24 +673,15 @@ par(mfrow = c(1,1))
 The other plot types are the same as plot.Tstats.
 
 <<dev = 'pdf', fig.width = 7, fig.height = 7>>=
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
+
 par(mfrow = c(2,2))
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
->>>>>>> d0b211331074d6462608d116c3317bf39e66e950
+
 plot(i.l1)
 plot(i.l1,type = "simple_range")
 plot(i.l1,type = "normal")
 plot(i.l1,type = "barplot")
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
+
 par(mfrow = c(1,1))
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
->>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 @
 
 

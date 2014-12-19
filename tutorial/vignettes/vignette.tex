@@ -89,13 +89,13 @@
 \maketitle
 
 \begin{abstract}
-1) The description of species by functional traits and the subsequent quantification of the functional structure of ecological communities have recently stimulated the field of community ecology. Patterns of trait distribution within communities are increasingly reliable indicator of community assembly processes. Myriad functional diversity indices and analytical tools  including the implementation of null models of community assembly  have been developed to detect and quantify different assembly process. With increased methodological complexities, such as the incorporation of intraspecific trait variation, the construction of a unified R package to test community assembly using functional traits, and its scale-dependency, is imperative and timely particularly to take into account the role of intraspecific variation in community ecology.
+1) The description of species by functional traits and the subsequent quantification of the functional structure of ecological communities have recently stimulated the field of community ecology. Patterns of trait distribution within communities are increasingly reliable indicator of community assembly processes. Myriad functional diversity indices and analytical tools – including the implementation of null models of community assembly – have been developed to detect and quantify different assembly process. With increased methodological complexities, such as the incorporation of intraspecific trait variation, the construction of a unified R package to test community assembly using functional traits, and its scale-dependency, is imperative and timely particularly to take into account the role of intraspecific variation in community ecology.
 \\
 
 2) We introduce the R package cati, available on CRAN, specifically dedicated to community assembly analyses using functional traits. The package includes: (i) the use of single-trait and multi-trait indices to characterize the functional structure of communities; (ii) the partitioning of functional trait variation across spatial scales and organizational levels, noticeably to account for individual differences and their implications for community assembly and the maintenance of species coexistence; (iii) the implementation of flexible null models to detect and quantify environmental filters.
 \\
 
-3) cati offers a comprehensive tool to detect and quantify assembly processes and can be applied to any kind of community (plant, animal, fungi). Moreover, the possibility to import any type of ecological distances (notably phylogenetic and genetic distances) in cati allows a test of the response of different facets of biodiversity to assembly processes.
+3) cati offers a comprehensive tool to detect and quantify assembly processes and can be applied to any kind of community (plant, animal, fungi…). Moreover, the possibility to import any type of ecological distances (notably phylogenetic and genetic distances) in cati allows a test of the response of different facets of biodiversity to assembly processes.
 \end{abstract}
 
 \\
@@ -106,10 +106,6 @@ Functional space, functional structure, community assembly, ecological niche, en
 \begin{center}
 \textbf{The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.}
 \end{center}
-
-\hfill
-The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.
-
 
 \newpage
 \tableofcontents
@@ -143,15 +139,7 @@ Then, install \texttt{cati} with dependencies using:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-<<<<<<< HEAD
-\hlcom{#install.packages("cati", repos = "http://cran.us.r-project.org", dependencies = TRUE)}
-=======
-\hlkwd{install.packages}\hlstd{(}\hlstr{"cati"}\hlstd{,} \hlkwc{repos} \hlstd{=} \hlstr{"http://cran.us.r-project.org"}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Installing package into 'C:/Users/taudiere/Documents/R/win-library/3.1'\\\#\# (as 'lib' is unspecified)}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+\hlcom{#install.packages("cati", repos = "http://cran.us.r-project.org",                  dependencies = TRUE)}
 \hlkwd{library}\hlstd{(}\hlstr{"cati"}\hlstd{)}
 \end{alltt}
 
@@ -182,11 +170,11 @@ We can now load the package alongside other useful packages:
 \hlkwd{packageDescription}\hlstd{(}\hlstr{"cati"}\hlstd{,} \hlkwc{fields} \hlstd{=} \hlstr{"Version"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] "0.8"
+## [1] "0.93"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-\texttt{cati} version should read 0.8.
+\texttt{cati} version should read 0.93.
 
 \subsection{Getting help}
 
@@ -270,9 +258,13 @@ Plot the distribution of traits values for populations, species, sites and regio
 \hlkwd{plotDistri}\hlstd{(traits.finch, sp.finch, ind.plot.finch,}
      \hlkwc{ylim.cex} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{multipanel} \hlstd{= F,} \hlkwc{leg} \hlstd{= F)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-101} 
 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-102} 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotDistri"{}}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-103} 
+
 \end{knitrout}
 The argument \texttt{ylim.cex} define the magnification to be used for range of y axe. To understand the other argument, type \texttt{?plotDistri}.
 
@@ -287,9 +279,11 @@ Then we can inverse the second and the third arguments to plot the distribution 
 \hlkwd{plotDistri}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
       \hlkwc{ylim.cex} \hlstd{=} \hlnum{8}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{multipanel} \hlstd{= F,} \hlkwc{leg} \hlstd{= F)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-111} 
 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-112} 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotDistri"{}}}\end{kframe}
 \end{knitrout}
 
 Now, see the result for only one trait with the legend (\texttt{leg = TRUE}). \texttt{cex.leg} specify the magnification of legend. 
@@ -301,9 +295,9 @@ Now, see the result for only one trait with the legend (\texttt{leg = TRUE}). \t
 \hlkwd{plotDistri}\hlstd{(}\hlkwd{as.matrix}\hlstd{(traits.finch[,}\hlnum{1}\hlstd{]), ind.plot.finch, sp.finch,}
      \hlkwc{ylim.cex} \hlstd{=} \hlnum{8}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{multipanel} \hlstd{= F,} \hlkwc{leg} \hlstd{= T,} \hlkwc{cex.leg} \hlstd{=} \hlnum{0.5}\hlstd{)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-12} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotDistri"{}}}\end{kframe}
 \end{knitrout}
 
 If we want to plot all the sites (regional distribution) or all the species: we can use the following code:
@@ -314,9 +308,9 @@ If we want to plot all the sites (regional distribution) or all the species: we 
 \hlkwd{plotDistri}\hlstd{(traits.finch,} \hlkwd{rep}\hlstd{(}\hlstr{"region"}\hlstd{,} \hlkwc{times} \hlstd{=} \hlkwd{dim}\hlstd{(traits.finch)[}\hlnum{1}\hlstd{]),}
      \hlstd{sp.finch,} \hlkwc{ylim.cex} \hlstd{=} \hlnum{6}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{leg} \hlstd{= F)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-13} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotDistri"{}}}\end{kframe}
 \end{knitrout}
 
 \begin{knitrout}
@@ -325,9 +319,9 @@ If we want to plot all the sites (regional distribution) or all the species: we 
 \hlkwd{plotDistri}\hlstd{(traits.finch,} \hlkwd{rep}\hlstd{(}\hlstr{"toutes_sp"}\hlstd{,} \hlkwc{times} \hlstd{=} \hlkwd{dim}\hlstd{(traits.finch)[}\hlnum{1}\hlstd{]),}
      \hlstd{ind.plot.finch,} \hlkwc{ylim.cex} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{plot.ask} \hlstd{= F,} \hlkwc{cex.leg} \hlstd{=} \hlnum{0.5}\hlstd{)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-14} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotDistri"{}}}\end{kframe}
 \end{knitrout}
 
 Now we can reset the default graphical parameter:
@@ -348,19 +342,24 @@ Now we can reset the default graphical parameter:
 
 The Rao function computes $\alpha$, $\beta$ and $\gamma$ -components for taxonomic, functional and/or phylogenetic diversity with:
 
-<<<<<<< HEAD
 $$ \gamma = mean (\alpha) + \beta $$
+
+<<<<<<< HEAD
+Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
+
 =======
-\[ \gamma = mean \alpha + \beta \]
 
+<<<<<<< HEAD
+Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 
+=======
 
 Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
+
+
+Where: \gamma is the diversity of the regional pool, \alpha is the diversity of the local community and \beta is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 >>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
-
-
-Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
-
+>>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 \\
 
 \textbf{Reference}: de Bello, F., Lavorel, S., Albert, C.H., Thuiller, W., Grigulis, K., Dolezal, J., Janecek, S. and Leps, J. (2011) Quantifying the relevance of intraspecific trait variability for functional diversity. Methods in Ecology and Evolution, 2, 163-174.
@@ -523,15 +522,17 @@ Plot the results by traits.
 \begin{alltt}
 \hlstd{res.decomp}\hlkwb{<-}\hlkwd{decompCTRE}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{sp} \hlstd{= sp.finch,}
               \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-\end{alltt}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}decompCTRE"{}}}\begin{alltt}
 \hlkwd{barplot}\hlstd{(res.decomp)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-22} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.decomp' introuvable}}\end{kframe}
+
 \end{knitrout}
 
 \begin{knitrout}
@@ -540,9 +541,14 @@ Plot the results by traits.
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
 \hlkwd{barplot}\hlstd{(res.decomp,} \hlkwc{resume} \hlstd{= F)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-23} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.decomp' introuvable}}\begin{alltt}
+\begin{kframe}\begin{alltt}
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
 \end{alltt}
 \end{kframe}
@@ -585,9 +591,14 @@ Variance partitioning across nested scales using the decomposition of variance o
 
 \hlkwd{piePartvar}\hlstd{(res.partvar.finch,} \hlkwc{col} \hlstd{= colors)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-25} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}piePartvar"{}}}\begin{alltt}
+\begin{kframe}\begin{alltt}
 \hlkwd{par}\hlstd{(old.par)} \hlcom{#reset old graphical parameters}
 \end{alltt}
 \end{kframe}
@@ -598,18 +609,14 @@ Variance partitioning across nested scales using the decomposition of variance o
 \begin{alltt}
 \hlkwd{barPartvar}\hlstd{(res.partvar.finch,} \hlkwc{col} \hlstd{= colors,} \hlkwc{leg} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
 \end{kframe}
 
 {\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-26} 
 
 }
 
-=======
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}barPartvar"{}}}\end{kframe}
 \end{knitrout}
 
 
@@ -624,9 +631,9 @@ For an example of utilisation see: Cornwell, W.K. and Ackerly, D.D., 2009. Commu
 \begin{alltt}
 \hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,} \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-27} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotSpPop"{}}}\end{kframe}
 \end{knitrout}
 
 If we change the value of two arguments we can see some significant relationships. Here let's try a more permissive threshold: alpha = 10\% instead of 5\% (\texttt{p.val}) and define a lower minimum of values to represent significance  fixed to 3 instead of 10 by default (\texttt{min.ind.signif}). 
@@ -639,9 +646,9 @@ If we change the value of two arguments we can see some significant relationship
 \hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
       \hlkwc{p.val} \hlstd{=} \hlnum{0.1}\hlstd{,} \hlkwc{min.ind.signif} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-28} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotSpPop"{}}}\end{kframe}
 \end{knitrout}
 
 \newpage
@@ -653,9 +660,9 @@ For a more simple figure, add the option resume = TRUE.
 \hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
       \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{resume} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col.pop} \hlstd{=} \hlstr{"grey"}\hlstd{)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-29} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotSpPop"{}}}\end{kframe}
 \end{knitrout}
 
 If you are fed up with colors, try this:
@@ -665,9 +672,14 @@ If you are fed up with colors, try this:
 \hlkwd{plotSpPop}\hlstd{(traits.finch, ind.plot.finch, sp.finch,}
       \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{resume} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col.pop} \hlstd{=} \hlstr{"grey"}\hlstd{,} \hlkwc{col.sp} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-30} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotSpPop"{}}}\end{kframe}
+
 \end{knitrout}
 
 Again if we change the value of the threshold (\texttt{p.val} = 0.1 and \texttt{min.ind.signif} = 3) we can see some significant relationships.
@@ -679,9 +691,14 @@ Again if we change the value of the threshold (\texttt{p.val} = 0.1 and \texttt{
       \hlkwc{silent} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{resume} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col.pop} \hlstd{=} \hlstr{"grey"}\hlstd{,} \hlkwc{col.sp} \hlstd{=} \hlstr{"black"}\hlstd{,}
       \hlkwc{p.val} \hlstd{=} \hlnum{0.1}\hlstd{,} \hlkwc{min.ind.signif} \hlstd{=} \hlnum{3}\hlstd{)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-31} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotSpPop"{}}}\end{kframe}
+
 \end{knitrout}
 
 
@@ -703,13 +720,8 @@ The function \texttt{Tstat} computes observed T-statistics (T for Traits; Violle
 \begin{alltt}
 \hlstd{res.finch}\hlkwb{<-}\hlkwd{Tstats}\hlstd{(traits.finch,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{sp} \hlstd{= sp.finch,}
          \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: argument inutilisé (ind.plot = ind.plot.finch)}}\begin{alltt}
 \hlstd{res.finch}
 \end{alltt}
-<<<<<<< HEAD
 \begin{verbatim}
 ## 	##################
 ## 	# T-statistiques #
@@ -756,11 +768,6 @@ The function \texttt{Tstat} computes observed T-statistics (T for Traits; Violle
 ##       50      267      981      258      270      687
 \end{verbatim}
 \end{kframe}
-=======
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\end{kframe}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \end{knitrout}
 
 
@@ -773,24 +780,35 @@ We can represent observed values thanks to the \texttt{barplot} function.
 \begin{alltt}
 \hlkwd{barplot}\hlstd{(res.finch,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{3.5}\hlstd{))}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-33} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\end{kframe}
+
 \end{knitrout}
 
 One can be more interested in the significance  and the effect size available thanks to null model. In that case, the standardized effect size can be easily plot. Note that the function \texttt{ses} can be use directly to calculate standardized effect size without plotting. The Standardized Effect Size (ses) is define as : 
 
 \begin{center}
-$$ SES = (I_{obs}  I{_sim}) / \delta_{sim} $$
+$$ SES = (I_{obs} – I{_sim}) / \delta_{sim} $$
 \end{center}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
 
 <<<<<<< HEAD
 where $I_{obs}$ is the observed value, $I_{sim}$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
-=======
-where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
+=======
+>>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+>>>>>>> d0b211331074d6462608d116c3317bf39e66e950
 
 where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
 
@@ -800,9 +818,14 @@ where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from 
 \begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-34} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\end{kframe}
+
 \end{knitrout}
 
 There is multiple kind of representation avaible.
@@ -811,19 +834,34 @@ There is multiple kind of representation avaible.
 \begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"simple"}\hlstd{)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-351} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\begin{alltt}
+\begin{kframe}\begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"simple_range"}\hlstd{)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-352} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\begin{alltt}
+\begin{kframe}\begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-353} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\end{kframe}
+
 \end{knitrout}
 
 If you want to specifically look at traits or sites statistics, use the argument \texttt{type = "bytraits"} or \texttt{"bysites"}.
@@ -834,7 +872,6 @@ If you want to specifically look at traits or sites statistics, use the argument
 
 \hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"bytraits"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
 \end{kframe}
 
 {\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-361} 
@@ -857,16 +894,9 @@ If you want to specifically look at traits or sites statistics, use the argument
 {\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-363} 
 
 }
-=======
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\begin{alltt}
-\hlkwd{plot}\hlstd{(res.finch,} \hlkwc{type} \hlstd{=} \hlstr{"bysites"}\hlstd{)}
-\end{alltt}
-
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\begin{alltt}
+\begin{kframe}\begin{alltt}
 \hlkwd{par}\hlstd{(old.par)} \hlcom{# reset default graphical parameters}
 \end{alltt}
 \end{kframe}
@@ -879,9 +909,49 @@ If you want to specifically look at traits or sites statistics, use the argument
 \begin{alltt}
 \hlkwd{summary}\hlstd{(res.finch)} \hlcom{#S3 summary method for class Tstats}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch' introuvable}}\end{kframe}
+\begin{verbatim}
+## [1] "Observed values"
+## $T_IP.IC
+##      WingL            BeakH            UBeakL           N.UBkL      
+##  Min.   :0.0343   Min.   :0.0153   Min.   :0.0267   Min.   :0.0238  
+##  1st Qu.:0.0436   1st Qu.:0.0191   1st Qu.:0.0417   1st Qu.:0.0367  
+##  Median :0.0645   Median :0.0400   Median :0.0544   Median :0.0403  
+##  Mean   :0.1161   Mean   :0.1094   Mean   :0.0764   Mean   :0.0615  
+##  3rd Qu.:0.1012   3rd Qu.:0.0580   3rd Qu.:0.0629   3rd Qu.:0.0494  
+##  Max.   :0.3831   Max.   :0.4852   Max.   :0.2196   Max.   :0.1764  
+## 
+## $T_IC.IR
+##      WingL            BeakH            UBeakL          N.UBkL     
+##  Min.   :0.0925   Min.   :0.0632   Min.   :0.246   Min.   :0.257  
+##  1st Qu.:0.6739   1st Qu.:0.4913   1st Qu.:0.668   1st Qu.:0.724  
+##  Median :1.1707   Median :1.1831   Median :0.944   Median :0.980  
+##  Mean   :1.0852   Mean   :1.1236   Mean   :0.911   Mean   :0.968  
+##  3rd Qu.:1.6257   3rd Qu.:1.6242   3rd Qu.:1.080   3rd Qu.:1.314  
+##  Max.   :1.7916   Max.   :2.2802   Max.   :1.629   Max.   :1.525  
+## 
+## $T_PC.PR
+##      WingL           BeakH            UBeakL          N.UBkL     
+##  Min.   :0.226   Min.   :0.0868   Min.   :0.933   Min.   :0.936  
+##  1st Qu.:0.898   1st Qu.:0.8625   1st Qu.:0.983   1st Qu.:1.039  
+##  Median :1.223   Median :1.0589   Median :1.125   Median :1.099  
+##  Mean   :1.130   Mean   :1.2370   Mean   :1.149   Mean   :1.196  
+##  3rd Qu.:1.474   3rd Qu.:1.3286   3rd Qu.:1.215   3rd Qu.:1.351  
+##  Max.   :1.762   Max.   :3.0016   Max.   :1.530   Max.   :1.585  
+## 
+## [1] "null values"
+## $T_IP.IC_nm
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.422   0.961   0.992   1.000   1.020   3.230 
+## 
+## $T_IC.IR_nm
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.678   0.962   1.000   1.000   1.040   1.520 
+## 
+## $T_PC.PR_nm
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##   0.000   0.331   0.729   1.070   1.340   7.960      19
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 
 
@@ -890,14 +960,27 @@ If you want to specifically look at traits or sites statistics, use the argument
 \begin{alltt}
 \hlkwd{attributes}\hlstd{(}\hlkwd{sum_Tstats}\hlstd{(res.finch))} \hlcom{#Another mean to summarize Tstatistics}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}sum\_Tstats"{}}}\begin{alltt}
+\begin{verbatim}
+## $names
+## [1] "p.value" "percent" "sites"   "binary"
+\end{verbatim}
+\begin{alltt}
 \hlkwd{head}\hlstd{(}\hlkwd{sum_Tstats}\hlstd{(res.finch)}\hlopt{$}\hlstd{p.value,} \hlnum{10}\hlstd{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}sum\_Tstats"{}}}\end{kframe}
+\begin{verbatim}
+##             WingL BeakH UBeakL N.UBkL
+## T_IP.IC.inf   0.1   0.1    0.1    0.1
+## T_IP.IC.inf   0.1   0.1    0.1    0.1
+## T_IP.IC.inf   0.1   0.1    0.1    0.1
+## T_IP.IC.inf   0.1   0.1    0.1    0.1
+## T_IP.IC.inf   0.1   0.1    0.1    0.1
+## T_IP.IC.inf   0.1   0.1    0.1    0.1
+## T_IP.IC.sup   1.0   1.0    1.0    1.0
+## T_IP.IC.sup   1.0   1.0    1.0    1.0
+## T_IP.IC.sup   1.0   1.0    1.0    1.0
+## T_IP.IC.sup   1.0   1.0    1.0    1.0
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 
 \newpage
@@ -912,9 +995,13 @@ We can also see T-statistics correlations and theirs correlation with others var
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
 \hlkwd{plotCorTstats}\hlstd{(res.finch,} \hlkwc{plot.ask} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{multipanel} \hlstd{= F)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-391} 
 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-392} 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotCorTstats"{}}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-393} 
+
 \end{knitrout}
 
 Here we plot T-statistics (in the standardized effect size SES form) in function of species richness by sites.
@@ -927,9 +1014,9 @@ Here we plot T-statistics (in the standardized effect size SES form) in function
 \hlkwd{plotSESvar}\hlstd{(}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(res.finch)), species.richness,}
        \hlkwc{multipanel} \hlstd{= F)}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-40} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotSESvar"{}}}\end{kframe}
 \end{knitrout}
 
 Same plot with \texttt{resume = TRUE}.
@@ -941,9 +1028,9 @@ Same plot with \texttt{resume = TRUE}.
 \hlkwd{plotSESvar}\hlstd{(}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(res.finch)), species.richness,}
        \hlkwc{resume} \hlstd{= T,} \hlkwc{multipanel} \hlstd{= F)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}plotSESvar"{}}}\begin{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-41} 
+\begin{kframe}\begin{alltt}
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
 \end{alltt}
 \end{kframe}
@@ -969,16 +1056,14 @@ The function \texttt{ComIndex} allow choosing your own function (like mean, rang
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndex"{}}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 's' introuvable}}\begin{alltt}
 \hlcom{#Test against the null model regional.pop}
 \hlcom{#Individuals values are transformed in populational values}
 \hlstd{res.finch.sp_regional.pop}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct,} \hlkwc{sp} \hlstd{= sp.finch,}
                \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.pop"}\hlstd{,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,}
                \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndex"{}}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 These two functions allows to calculate  index by sites for example using \code{"tapply(x, sites, mean)"}.
@@ -994,7 +1079,6 @@ These two functions allows to calculate  index by sites for example using \code{
 \hlcom{#The function IndexByGroups permit to easily obtain the above lines }
 \hlkwd{IndexByGroups}\hlstd{(funct,} \hlstr{"ind.plot.finch"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
 \begin{verbatim}
 ## [1] "tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))"                   
 ## [2] "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))"               
@@ -1002,31 +1086,19 @@ These two functions allows to calculate  index by sites for example using \code{
 ## [4] "tapply(x, ind.plot.finch, function(x) CVNND(x))"
 \end{verbatim}
 \begin{alltt}
-=======
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}IndexByGroups"{}}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \hlcom{##Null model local is trivial for these functions}
 \hlcom{##because randomization is within community only}
 
 \hlstd{res.finch.ind_loc}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct.1,} \hlkwc{sp} \hlstd{= sp.finch,}
                \hlkwc{nullmodels} \hlstd{=} \hlstr{"local"}\hlstd{,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,}
                \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-<<<<<<< HEAD
-=======
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndex"{}}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \hlstd{res.finch.ind_reg}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct.1,} \hlkwc{sp} \hlstd{= sp.finch,}
                \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,} \hlkwc{ind.plot} \hlstd{= ind.plot.finch,}
                \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndex"{}}}\end{kframe}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 's' introuvable}}\end{kframe}
 \end{knitrout}
 
 
@@ -1065,23 +1137,15 @@ Now calculate index with or without intraspecific variance thanks to function \t
 \end{alltt}
 
 
-<<<<<<< HEAD
-=======
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndex"{}}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 's' introuvable}}\begin{alltt}
 \hlstd{res.finch.withoutIV}\hlkwb{<-}\hlkwd{ComIndex}\hlstd{(}\hlkwc{traits} \hlstd{= traits.finch,} \hlkwc{index} \hlstd{= funct.2,}
                \hlkwc{sp} \hlstd{= sp.finch,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.pop"}\hlstd{,}
                \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{print} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \end{alltt}
-
-
-<<<<<<< HEAD
-=======
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndex"{}}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \subsubsection{S3 methods for class ComIndex and ComIndexMulti}
 ComIndex and ComIndexMulti class are associated to S3 methods plot, print and summary.
 
@@ -1090,55 +1154,9 @@ ComIndex and ComIndexMulti class are associated to S3 methods plot, print and su
 \begin{alltt}
 \hlstd{res.finch.withIV}
 \end{alltt}
-<<<<<<< HEAD
-\begin{verbatim}
-## 	#################################
-## 	# Community metrics calculation #
-## 	#################################
-## class: ComIndex
-## $call: ComIndex(traits = traits.finch, index = funct.1, nullmodels = "regional.ind", 
-##     ind.plot = ind.plot.finch, sp = sp.finch, nperm = 9, printprogress = FALSE)
-## 
-## ###############
-## $obs: list of observed values
-## 	$tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))
-## 	$tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))
-## 	$tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))
-## 	$tapply(x, ind.plot.finch, function(x) CVNND(x))
-## 
-## ###############
-## $null: list of null values, number of permutation: 9 
-## 	$tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))_nm ... null model = regional.ind
-## 	$tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))_nm ... null model = regional.ind
-## 	$tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))_nm ... null model = regional.ind
-## 	$tapply(x, ind.plot.finch, function(x) CVNND(x))_nm ... null model = regional.ind
-## 
-## ###############
-## data used
-##   data      class      dim   
-## 1 $traits   data.frame 2513,4
-## 2 $ind.plot factor     2513  
-## 3 $sp       factor     2513  
-##   content                                             
-## 1 traits data                                         
-## 2 name of the plot in which the individual is         
-## 3 groups (e.g. species) which the individual belong to
-## 
-## ###############
-## others
-## 	$namestraits: 4 traits
-## [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
-## 
-## 	$sites_richness:
-## 	    DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
-##       50      267      981      258      270      687
-\end{verbatim}
-\begin{alltt}
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch.withIV' introuvable}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \hlkwd{summary}\hlstd{(res.finch.withIV)}
 \end{alltt}
 
@@ -1146,34 +1164,19 @@ ComIndex and ComIndexMulti class are associated to S3 methods plot, print and su
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch.withIV' introuvable}}\begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch.withIV)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-461} 
-
-}
-
-
-\begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(res.finch.withoutIV)}
-\end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-462} 
-
-}
-
-
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch.withIV' introuvable}}\begin{alltt}
 \hlkwd{plot}\hlstd{(res.finch.withoutIV)}
 \end{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-46} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch.withoutIV' introuvable}}\end{kframe}
+
 \end{knitrout}
 Now plot the two analysis together.
 
@@ -1182,13 +1185,7 @@ Now plot the two analysis together.
 \begin{alltt}
 \hlkwd{plot}\hlstd{(}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(res.finch.withIV, res.finch.withoutIV)))}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-47} 
-=======
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
-\end{knitrout}
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.finch.withIV' introuvable}}\end{kframe}
 \end{knitrout}
@@ -1197,7 +1194,7 @@ Now plot the two analysis together.
 The class listofindex permits to stock different metrics computed using \texttt{Tstats}, \texttt{ComIndex} and \texttt{ComIndexMulti} and compared to different null model. To do that we can use the Standardized Effect Size (ses) define as : 
 
 \begin{center}
-$SES = (I_obs  I_sim) / \delta_{sim}$
+$SES = (I_obs – I_sim) / \delta_{sim}$
 \end{center}
 
 where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
@@ -1245,17 +1242,6 @@ The plot type \texttt{bytraits} allows plotting all SES traits values for all si
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{))}
 \hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"bysites"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-501} 
-\begin{kframe}\begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"bytraits"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-502} 
-\begin{kframe}\begin{alltt}
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'i.l1' introuvable}}\begin{alltt}
@@ -1265,7 +1251,6 @@ The plot type \texttt{bytraits} allows plotting all SES traits values for all si
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'i.l1' introuvable}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
 \end{alltt}
 \end{kframe}
@@ -1276,28 +1261,10 @@ The other plot types are the same as plot.Tstats.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+
 \hlkwd{plot}\hlstd{(i.l1)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-511} 
-\begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"simple_range"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-512} 
-\begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"normal"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-513} 
-\begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(i.l1,}\hlkwc{type} \hlstd{=} \hlstr{"barplot"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-514} 
-
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'i.l1' introuvable}}\begin{alltt}
@@ -1319,7 +1286,6 @@ The other plot types are the same as plot.Tstats.
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
 \end{alltt}
 \end{kframe}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \end{knitrout}
 
 
@@ -1354,57 +1320,17 @@ A simple example to illustrate the concept of the function \texttt{ComIndexMulti
               \hlkwc{by.factor} \hlstd{= n_sp_plot,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,}
               \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch)}
 \end{alltt}
+\begin{verbatim}
+## [1] "creating null models"
+\end{verbatim}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndexMulti"{}}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 's' introuvable}}\begin{alltt}
 \hlstd{res.sum.1}
 \end{alltt}
-<<<<<<< HEAD
-\begin{verbatim}
-## 	#################################
-## 	# Community metrics calculation #
-## 	#################################
-## class: ComIndexMulti
-## $call: ComIndexMulti(traits = traits.finch, index = c("sum(scale(x), na.rm = T)", 
-##     "sum(x, na.rm = T)"), by.factor = n_sp_plot, nullmodels = "regional.ind", 
-##     ind.plot = ind.plot.finch, sp = sp.finch, nperm = 9)
-## 
-## ###############
-## $obs: list of observed values
-## 	$sum(scale(x), na.rm = T)
-## 	$sum(x, na.rm = T)
-## 
-## ###############
-## $null: list of null values, number of permutation: NA 
-## 	$sum(scale(x), na.rm = T)_nm ... null model = regional.ind
-## 	$sum(x, na.rm = T)_nm ... null model = regional.ind
-## 
-## ###############
-## data used
-##   data      class      dim   
-## 1 $traits   data.frame 2513,4
-## 2 $ind.plot factor     2513  
-## 3 $sp       factor     2513  
-##   content                                             
-## 1 traits data                                         
-## 2 name of the plot in which the individual is         
-## 3 groups (e.g. species) which the individual belong to
-## 
-## ###############
-## others
-## 	$namestraits: 4 traits
-## [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
-## 
-## 	$sites_richness:
-## 	    DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
-##       50      267      981      258      270      687
-\end{verbatim}
-\end{kframe}
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.sum.1' introuvable}}\end{kframe}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \end{knitrout}
 
 \newpage
@@ -1571,75 +1497,75 @@ The standard example of the \texttt{hypervolume} package also use finch data but
 ## Finished evaluating probability density.
 ## Beginning volume calculation... done. 
 ## Quantile requested: 0.00   obtained: 0.00
-## Retaining 30687 points in hv1 and 39679 points in hv2.
+## Retaining 30679 points in hv1 and 39646 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 2.52022e-005  0.252048  0.50407  0.756093  done.
+## Querying tree... 2.52232e-005  0.252257  0.50449  0.756722  done.
 ## Building tree... done.
-## Querying tree... 3.25871e-005  0.325903  0.651774  0.977645  done.
+## Querying tree... 3.25956e-005  0.325988  0.651944  0.9779  done.
 ## Finished ball queries. 
-## Retaining 57681 points in hv1 and 56195 points in hv2.
+## Retaining 57564 points in hv1 and 56061 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 1.77952e-005  0.17797  0.355921  0.533873  0.711825  0.889777  done.
+## Querying tree... 1.78377e-005  0.178395  0.356772  0.535149  0.713526  0.891903  done.
 ## Building tree... done.
-## Querying tree... 1.73367e-005  0.173385  0.346752  0.520119  0.693487  0.866854  done.
+## Querying tree... 1.7372e-005  0.173737  0.347457  0.521176  0.694896  0.868616  done.
 ## Finished ball queries. 
-## Retaining 1264 points in hv1 and 61558 points in hv2.
+## Retaining 1265 points in hv1 and 61641 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 1.62448e-005  0.162465  0.324913  0.487362  0.64981  0.812258  0.974707  done.
+## Querying tree... 1.6223e-005  0.162246  0.324476  0.486705  0.648935  0.811165  0.973394  done.
 ## Building tree... done.
-## Querying tree... 0.000791139  done.
+## Querying tree... 0.000790514  done.
 ## Finished ball queries. 
-## Retaining 428 points in hv1 and 31481 points in hv2.
+## Retaining 428 points in hv1 and 31427 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 3.17652e-005  0.317684  0.635336  0.952988  done.
+## Querying tree... 3.18198e-005  0.31823  0.636427  0.954625  done.
 ## Building tree... done.
 ## Querying tree... 0.00233645  done.
 ## Finished ball queries. 
-## Retaining 39679 points in hv1 and 29896 points in hv2.
+## Retaining 39646 points in hv1 and 29878 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 3.34493e-005  0.334526  0.669019  done.
+## Querying tree... 3.34694e-005  0.334728  0.669422  done.
 ## Building tree... done.
-## Querying tree... 2.52022e-005  0.252048  0.50407  0.756093  done.
+## Querying tree... 2.52232e-005  0.252257  0.50449  0.756722  done.
 ## Finished ball queries. 
-## Retaining 1635 points in hv1 and 61558 points in hv2.
+## Retaining 1635 points in hv1 and 61641 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 1.62448e-005  0.162465  0.324913  0.487362  0.64981  0.812258  0.974707  done.
+## Querying tree... 1.6223e-005  0.162246  0.324476  0.486705  0.648935  0.811165  0.973394  done.
 ## Building tree... done.
 ## Querying tree... 0.000611621  done.
 ## Finished ball queries. 
-## Retaining 553 points in hv1 and 31481 points in hv2.
+## Retaining 553 points in hv1 and 31427 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 3.17652e-005  0.317684  0.635336  0.952988  done.
+## Querying tree... 3.18198e-005  0.31823  0.636427  0.954625  done.
 ## Building tree... done.
 ## Querying tree... 0.00180832  done.
 ## Finished ball queries. 
-## Retaining 1232 points in hv1 and 61558 points in hv2.
+## Retaining 1232 points in hv1 and 61641 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 1.62448e-005  0.162465  0.324913  0.487362  0.64981  0.812258  0.974707  done.
+## Querying tree... 1.6223e-005  0.162246  0.324476  0.486705  0.648935  0.811165  0.973394  done.
 ## Building tree... done.
 ## Querying tree... 0.000811688  done.
 ## Finished ball queries. 
-## Retaining 416 points in hv1 and 31481 points in hv2.
+## Retaining 416 points in hv1 and 31427 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 3.17652e-005  0.317684  0.635336  0.952988  done.
+## Querying tree... 3.18198e-005  0.31823  0.636427  0.954625  done.
 ## Building tree... done.
 ## Querying tree... 0.00240385  done.
 ## Finished ball queries. 
-## Retaining 20829 points in hv1 and 31481 points in hv2.
+## Retaining 20849 points in hv1 and 31427 points in hv2.
 ## Beginning ball queries... 
 ## Building tree... done.
-## Querying tree... 3.17652e-005  0.317684  0.635336  0.952988  done.
+## Querying tree... 3.18198e-005  0.31823  0.636427  0.954625  done.
 ## Building tree... done.
-## Querying tree... 4.801e-005  0.480148  0.960248  done.
+## Querying tree... 4.79639e-005  0.479687  0.959327  done.
 ## Finished ball queries.
 \end{verbatim}
 \end{kframe}
@@ -1662,9 +1588,12 @@ End of Hypervolume finch demo
              \hlkwc{by.factor} \hlstd{=} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,}\hlkwd{length}\hlstd{(n_sp_plot)),} \hlkwc{nullmodels} \hlstd{=} \hlstr{"regional.ind"}\hlstd{,}
              \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch)}
 \end{alltt}
+\begin{verbatim}
+## [1] "creating null models"
+\end{verbatim}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndexMulti"{}}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 's' introuvable}}\begin{alltt}
 \hlstd{hv.2}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch.mice,}
              \hlkwc{index} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps = 100, 
                  bandwidth = 0.2, verbose = F, warnings = F)@Volume))"}\hlstd{),}
@@ -1673,10 +1602,7 @@ End of Hypervolume finch demo
 \end{alltt}
 
 
-<<<<<<< HEAD
-=======
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndexMulti"{}}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 's' introuvable}}\begin{alltt}
 \hlstd{hv.3}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch.mice,}
              \hlkwc{index} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps = 100,
                  bandwidth = 0.2, verbose = F, warnings = F)@Volume))"}\hlstd{),}
@@ -1685,10 +1611,7 @@ End of Hypervolume finch demo
 \end{alltt}
 
 
-<<<<<<< HEAD
-=======
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndexMulti"{}}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 's' introuvable}}\begin{alltt}
 \hlstd{hv.4}\hlkwb{<-}\hlkwd{ComIndexMulti}\hlstd{(traits.finch.mice,}
              \hlkwc{index} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"as.numeric(try(hypervolume(na.omit(x), reps = 100, 
                  bandwidth = 0.2, verbose = F, warnings = F)@Volume))"}\hlstd{),}
@@ -1697,10 +1620,7 @@ End of Hypervolume finch demo
 \end{alltt}
 
 
-<<<<<<< HEAD
-=======
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndexMulti"{}}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 's' introuvable}}\begin{alltt}
 \hlstd{list.ind.multi}\hlkwb{<-}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(hv.2, hv.3, hv.4))}
 \end{alltt}
 
@@ -1723,32 +1643,15 @@ End of Hypervolume finch demo
 \begin{alltt}
 \hlkwd{plot}\hlstd{(list.ind.multi)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-591} 
-=======
-
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'plot' : Erreur : objet 'list.ind.multi' introuvable}}\begin{alltt}
 \hlcom{#Try a zoom on the area near zero}
 \hlkwd{plot}\hlstd{(list.ind.multi,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{200}\hlstd{,}\hlnum{20}\hlstd{))}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-592} 
-
-}
-
-
-
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'plot' : Erreur : objet 'list.ind.multi' introuvable}}\end{kframe}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \end{knitrout}
 
 Compare hypervolume to Villéger's metrics convex hull.
@@ -1771,9 +1674,18 @@ Compare hypervolume to Villéger's metrics convex hull.
              \hlkwc{by.factor} \hlstd{= ind.plot.finch,} \hlkwc{nullmodels} \hlstd{=} \hlstr{"local"}\hlstd{,}
              \hlkwc{ind.plot} \hlstd{= ind.plot.finch,} \hlkwc{nperm} \hlstd{=} \hlnum{9}\hlstd{,} \hlkwc{sp} \hlstd{= sp.finch)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: impossible de trouver la fonction "{}ComIndexMulti"{}}}\begin{alltt}
+\begin{verbatim}
+## [1] "creating null models"
+## [1] "local 25 %"
+## [1] "local 50 %"
+## [1] "local 75 %"
+## [1] "local 100 %"
+## [1] "calculation of null values using null models"
+## [1] "round(convhulln(x,FA)$vol,6) 100 %"
+## [1] "calculation of observed values"
+## [1] "100 %"
+\end{verbatim}
+\begin{alltt}
 \hlstd{list.ind.multi2}\hlkwb{<-}\hlkwd{as.listofindex}\hlstd{(}\hlkwd{list}\hlstd{(hv.3, Fdis.finch))}
 \end{alltt}
 
@@ -1791,11 +1703,6 @@ Compare hypervolume to Villéger's metrics convex hull.
 \begin{alltt}
 \hlkwd{plot}\hlstd{(list.ind.multi2)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-61} 
-=======
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'plot' : Erreur : objet 'list.ind.multi2' introuvable}}\end{kframe}
@@ -1819,14 +1726,9 @@ Plot the p-value or the ses values using the function \texttt{levelplot}.
 \hlkwd{levelplot}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{sum_Tstats}\hlstd{(res.finch)}\hlopt{$}\hlstd{p.value),}
      \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-63} 
-=======
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'levelplot' : Erreur dans t(sum\_Tstats(res.finch)\$p.value) : \\\#\#\ \  erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 't' : Erreur : impossible de trouver la fonction "{}sum\_Tstats"{}}}\end{kframe}
 \end{knitrout}
 
 
@@ -1836,28 +1738,17 @@ Plot the p-value or the ses values using the function \texttt{levelplot}.
 \hlkwd{levelplot}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses),}
      \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-641} 
 \begin{kframe}\begin{alltt}
-=======
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'levelplot' : Erreur dans t(ses(res.finch\$Tstats\$T\_IP.IC, res.finch\$Tstats\$T\_IP.IC\_nm)\$ses) : \\\#\#\ \  erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 't' : Erreur dans is.vector(obs) : objet 'res.finch' introuvable\\\#\# Calls: ses -> is.vector}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \hlkwd{levelplot}\hlstd{(}\hlkwd{cbind}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses),}
         \hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IC.IR, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses),}
         \hlkwd{t}\hlstd{(}\hlkwd{ses}\hlstd{(res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_PC.PR, res.finch}\hlopt{$}\hlstd{Tstats}\hlopt{$}\hlstd{T_IP.IC_nm)}\hlopt{$}\hlstd{ses))}
      \hlstd{,} \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-642} 
-=======
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'levelplot' : Erreur dans t(ses(res.finch\$Tstats\$T\_IP.IC, res.finch\$Tstats\$T\_IP.IC\_nm)\$ses) : \\\#\#\ \  erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 't' : Erreur dans is.vector(obs) : objet 'res.finch' introuvable\\\#\# Calls: ses -> is.vector\\\#\# Calls: cbind -> t}}\end{kframe}
 \end{knitrout}
 
 Another example using \texttt{ses.listofindex}. The first plot represent "ses" values and the second one the result of a test with H0: observed index value are greater than what we can expect using the null model (alpha = 2.5\%).
@@ -1874,26 +1765,15 @@ Another example using \texttt{ses.listofindex}. The first plot represent "ses" v
          \hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses, ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses)),}
      \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-651} 
-\begin{kframe}\begin{alltt}
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'levelplot' : Erreur dans t(rbind(ses.list[[1]]\$ses, ses.list[[2]]\$ses, ses.list[[3]]\$ses,\ \ : \\\#\#\ \  erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 't' : Erreur dans rbind(ses.list[[1]]\$ses, ses.list[[2]]\$ses, ses.list[[3]]\$ses,\ \ : \\\#\#\ \  objet 'ses.list' introuvable}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \hlkwd{levelplot}\hlstd{(}\hlkwd{t}\hlstd{(}\hlkwd{rbind}\hlstd{(ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{ses.sup,}
          \hlstd{ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{2}\hlstd{]]}\hlopt{$}\hlstd{ses.sup,}
          \hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{ses.sup,}
          \hlstd{ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses}\hlopt{>}\hlstd{ses.list[[}\hlnum{4}\hlstd{]]}\hlopt{$}\hlstd{ses.sup)),}
      \hlkwc{colorkey} \hlstd{= my.ckey,} \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-652} 
-=======
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'levelplot' : Erreur dans t(rbind(ses.list[[1]]\$ses > ses.list[[1]]\$ses.sup, ses.list[[2]]\$ses >\ \ : \\\#\#\ \  erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 't' : Erreur dans rbind(ses.list[[1]]\$ses > ses.list[[1]]\$ses.sup, ses.list[[2]]\$ses >\ \ : \\\#\#\ \  objet 'ses.list' introuvable}}\end{kframe}
@@ -1922,23 +1802,12 @@ Compare metrics calculate on individual against metrics calculate after populati
 \hlkwd{levelplot}\hlstd{(ses.ind,} \hlkwc{colorkey} \hlstd{= my.ckey,}
      \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-661} 
-\begin{kframe}\begin{alltt}
-\hlkwd{levelplot}\hlstd{(ses.sp,} \hlkwc{colorkey} \hlstd{= my.ckey,}
-     \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-662} 
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'levelplot' : Erreur : objet 'ses.ind' introuvable}}\begin{alltt}
 \hlkwd{levelplot}\hlstd{(ses.sp,} \hlkwc{colorkey} \hlstd{= my.ckey,}
      \hlkwc{par.settings} \hlstd{= my.theme,}\hlkwc{border} \hlstd{=} \hlstr{"black"}\hlstd{)}
 \end{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: erreur d'évaluation de l'argument 'x' lors de la sélection d'une méthode pour la fonction 'levelplot' : Erreur : objet 'ses.sp' introuvable}}\end{kframe}
@@ -2030,15 +1899,9 @@ To finish, we can do a multivariate analysis of the metrics obtain during this t
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi' introuvable}}\begin{alltt}
 \hlkwd{s.label}\hlstd{(res.dudi}\hlopt{$}\hlstd{li}\hlopt{+}\hlnum{0.05}\hlstd{,} \hlkwc{add.plot} \hlstd{= T,} \hlkwc{boxes} \hlstd{= F)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-691} 
-\begin{kframe}\begin{alltt}
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi' introuvable}}\begin{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 \hlstd{res.dudi2}\hlkwb{<-}\hlkwd{dudi.pca}\hlstd{(matfordudi2,} \hlkwc{scan} \hlstd{= F,} \hlkwc{nf} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 
@@ -2046,25 +1909,6 @@ To finish, we can do a multivariate analysis of the metrics obtain during this t
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'matfordudi2' introuvable}}\begin{alltt}
 \hlkwd{scatter}\hlstd{(res.dudi2)}
 \end{alltt}
-<<<<<<< HEAD
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-692} 
-\begin{kframe}\begin{alltt}
-\hlkwd{s.corcircle}\hlstd{(res.dudi2}\hlopt{$}\hlstd{co)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-693} 
-\begin{kframe}\begin{alltt}
-\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"WingL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"BeakH"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"UBeakL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"N.UBkL"}\hlstd{,}\hlnum{6}\hlstd{))),} \hlkwc{col} \hlstd{=} \hlkwd{funky}\hlstd{(}\hlnum{4}\hlstd{))}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-694} 
-\begin{kframe}\begin{alltt}
-\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"DMaj"}\hlstd{,}\hlstr{"EspHd"}\hlstd{,}\hlstr{"FlorChrl"}\hlstd{,}\hlstr{"GnovTwr"}\hlstd{,}\hlstr{"MrchBndl"}\hlstd{,}\hlstr{"SCruInde"}\hlstd{),}\hlnum{4} \hlstd{)),} \hlkwc{col} \hlstd{=} \hlkwd{funky}\hlstd{(}\hlnum{6}\hlstd{))}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-695} 
-=======
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi2' introuvable}}\begin{alltt}
@@ -2073,14 +1917,17 @@ To finish, we can do a multivariate analysis of the metrics obtain during this t
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi2' introuvable}}\begin{alltt}
-\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"WingL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"BeakH"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"UBeakL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"N.UBkL"}\hlstd{,}\hlnum{6}\hlstd{))),} \hlkwc{col} \hlstd{=} \hlkwd{funky}\hlstd{(}\hlnum{4}\hlstd{))}
+\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"WingL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"BeakH"}\hlstd{,}\hlnum{6}\hlstd{),}
+                                  \hlkwd{rep}\hlstd{(}\hlstr{"UBeakL"}\hlstd{,}\hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"N.UBkL"}\hlstd{,}\hlnum{6}\hlstd{))),}
+        \hlkwc{col} \hlstd{=} \hlkwd{funky}\hlstd{(}\hlnum{4}\hlstd{))}
 \end{alltt}
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi2' introuvable}}\begin{alltt}
-\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"DMaj"}\hlstd{,}\hlstr{"EspHd"}\hlstd{,}\hlstr{"FlorChrl"}\hlstd{,}\hlstr{"GnovTwr"}\hlstd{,}\hlstr{"MrchBndl"}\hlstd{,}\hlstr{"SCruInde"}\hlstd{),}\hlnum{4} \hlstd{)),} \hlkwc{col} \hlstd{=} \hlkwd{funky}\hlstd{(}\hlnum{6}\hlstd{))}
+\hlkwd{s.class}\hlstd{(res.dudi2}\hlopt{$}\hlstd{li,} \hlkwd{as.factor}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"DMaj"}\hlstd{,}\hlstr{"EspHd"}\hlstd{,}\hlstr{"FlorChrl"}\hlstd{,}\hlstr{"GnovTwr"}\hlstd{,}
+                                      \hlstr{"MrchBndl"}\hlstd{,}\hlstr{"SCruInde"}\hlstd{),}\hlnum{4} \hlstd{)),}
+        \hlkwc{col} \hlstd{=} \hlkwd{funky}\hlstd{(}\hlnum{6}\hlstd{))}
 \end{alltt}
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: objet 'res.dudi2' introuvable}}\end{kframe}
