@@ -930,6 +930,10 @@ s.class(res.dudi2$li, as.factor(rep(c("DMaj","EspHd","FlorChrl","GnovTwr",
         col = funky(6))
 @
 
+
+\section{Speed of computation}
+
+
 \section*{Conclusion}
 \addcontentsline{toc}{subsection}{Conclusion}
 This is the end of the tutorial. The up to date version of this tutorial is available \href{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}{here}.
