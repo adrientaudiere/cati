@@ -20,11 +20,10 @@
 \contentsline {subsubsection}{\numberline {5.1.2}Plot T-statistics correlations}{36}{subsubsection.5.1.2}
 \contentsline {subsection}{\numberline {5.2}Others univariates or multivariates metrics: function \texttt {ComIndex} and \texttt {ComIndexMulti}}{41}{subsection.5.2}
 \contentsline {subsubsection}{\numberline {5.2.1}S3 methods for class ComIndex and ComIndexMulti}{42}{subsubsection.5.2.1}
-\contentsline {subsubsection}{\numberline {5.2.2}Plot Tstats and other uni/multivariates metrics together}{43}{subsubsection.5.2.2}
-\contentsline {subsection}{\numberline {5.3}More information on multivariates index}{45}{subsection.5.3}
-\contentsline {section}{\numberline {6}Others graphical functions}{57}{section.6}
-\contentsline {section}{\numberline {7}Multivariate analysis of metrics}{61}{section.7}
-\contentsline {subsection}{Conclusion}{62}{section*.2}
-\contentsline {subsection}{References}{63}{section*.3}
-\contentsline {section}{\numberline {8}Conclusion}{63}{section.8}
-\contentsline {section}{\numberline {9}Acknowledgment}{63}{section.9}
+\contentsline {subsubsection}{\numberline {5.2.2}Plot Tstats and other uni/multivariates metrics together}{46}{subsubsection.5.2.2}
+\contentsline {subsection}{\numberline {5.3}More information on multivariates index}{51}{subsection.5.3}
+\contentsline {section}{\numberline {6}Others graphical functions}{60}{section.6}
+\contentsline {section}{\numberline {7}Multivariate analysis of metrics}{65}{section.7}
+\contentsline {section}{\numberline {8}Speed of computation}{71}{section.8}
+\contentsline {subsection}{Conclusion}{73}{section*.2}
+\contentsline {subsection}{References}{73}{section*.3}

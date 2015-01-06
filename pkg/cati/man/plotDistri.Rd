@@ -12,7 +12,8 @@
 \usage{
 	plotDistri(traits = NULL, var.1 = NULL, var.2 = NULL, col.dens = NULL, 
 	plot.ask = TRUE, ylim.cex = 1, cex.leg = 0.8, polyg = TRUE, 
-	multipanel = TRUE, leg = TRUE, xlim = NULL, ylim = NULL)
+	multipanel = TRUE, leg = TRUE, xlim = NULL, ylim = NULL, 
+	main = "default", ...)
 }
 
 \arguments{
@@ -62,6 +63,14 @@
 	
 	\item{xlim}{
 		Numeric vectors of length 2, giving the y coordinates range 
+	}
+	
+	\item{main}{
+		Title for the plot. Default set automatic title using informations in the input dataset.
+	}
+
+	\item{\dots}{
+		Any additional arguments are passed to the plot function creating the core of the plot and can be used to adjust the look of resulting graph.
 	}
 }
 
