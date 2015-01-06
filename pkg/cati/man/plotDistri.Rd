@@ -12,7 +12,7 @@
 \usage{
 	plotDistri(traits = NULL, var.1 = NULL, var.2 = NULL, col.dens = NULL, 
 	plot.ask = TRUE, ylim.cex = 1, cex.leg = 0.8, polyg = TRUE, 
-	multipanel = TRUE, leg = TRUE)
+	multipanel = TRUE, leg = TRUE, xlim = NULL, ylim = NULL)
 }
 
 \arguments{
@@ -56,7 +56,13 @@
 		Logical value; if TRUE print the legend.
 	}
 	
+	\item{ylim}{
+		Numeric vectors of length 2, giving the y coordinates range 
+	}
 	
+	\item{xlim}{
+		Numeric vectors of length 2, giving the y coordinates range 
+	}
 }
 
 \value{
