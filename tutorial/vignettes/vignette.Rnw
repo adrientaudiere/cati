@@ -41,17 +41,9 @@ opts_chunk$set(fig.keep = 'high', dev = 'pdf', fig.width = 7, fig.height = 7, ti
 
 \maketitle
 
-\begin{abstract}
-1) The description of species by functional traits and the subsequent quantification of the functional structure of ecological communities have recently stimulated the field of community ecology. Patterns of trait distribution within communities are increasingly reliable indicator of community assembly processes. Myriad functional diversity indices and analytical tools – including the implementation of null models of community assembly – have been developed to detect and quantify different assembly process. With increased methodological complexities, such as the incorporation of intraspecific trait variation, the construction of a unified R package to test community assembly using functional traits, and its scale-dependency, is imperative and timely particularly to take into account the role of intraspecific variation in community ecology.
-\\
 
-2) We introduce the R package cati, available on CRAN, specifically dedicated to community assembly analyses using functional traits. The package includes: (i) the use of single-trait and multi-trait indices to characterize the functional structure of communities; (ii) the partitioning of functional trait variation across spatial scales and organizational levels, noticeably to account for individual differences and their implications for community assembly and the maintenance of species coexistence; (iii) the implementation of flexible null models to detect and quantify environmental filters.
-\\
+\textbf{Abstract:}
 
-3) cati offers a comprehensive tool to detect and quantify assembly processes and can be applied to any kind of community (plant, animal, fungi…). Moreover, the possibility to import any type of ecological distances (notably phylogenetic and genetic distances) in cati allows a test of the response of different facets of biodiversity to assembly processes.
-\end{abstract}
-
-\\
 \textbf{Key words:}
 Functional space, functional structure, community assembly, ecological niche, environmental filter, individual differences, intraspecific variation, null model, trait, variance decomposition
 
@@ -83,7 +75,7 @@ R.version.string
 
 Then, install \texttt{cati} with dependencies using:
 <<results = 'hide'>>=
-#install.packages("cati", repos = "http://cran.us.r-project.org",                  dependencies = TRUE)
+#install.packages("cati", repos = "http://cran.us.r-project.org", dependencies = TRUE)
 library("cati")
 @
 
@@ -93,7 +85,7 @@ library("mice")
 library("hypervolume")
 @
 
-\noindent You can make sure that the right version of the package is installed using:
+You can make sure that the right version of the package is installed using:
 <<>>=
 packageDescription("cati", fields = "Version")
 @
@@ -134,11 +126,9 @@ Now we can see 3 objects: a traits matrix \texttt{traits.finch}, a vector of spe
 dim(traits.finch) 
 #the trait matrix contains 2513 individuals values for 4 traits
 table(sp.finch) 
-#the species names vector contains 
-#2513 individuals belonging to 12 species
+#the species names vector contains 2513 individuals belonging to 12 species
 table(ind.plot.finch)
-#the sites names vector contains
-#2513 individuals belonging to 6 sites (Here 6 Island)
+#the sites names vector contains 2513 individuals belonging to 6 sites (Islands)
 @
 
 The four traits correspond to three beak traits and one wing trait.
@@ -161,7 +151,7 @@ Plot the distribution of traits values for populations, species, sites and regio
 <<dev = 'pdf'>>=
 par(mfrow = c(4,4), cex = 0.5)
 plotDistri(traits.finch, sp.finch, ind.plot.finch, 
-     ylim.cex = 3, plot.ask = F, multipanel = F, leg = F)
+           ylim.cex = 3, plot.ask = F, multipanel = F, leg = F)
 @
 The argument \texttt{ylim.cex} define the magnification to be used for range of y axe. To understand the other argument, type \texttt{?plotDistri}.
 
@@ -172,7 +162,7 @@ Then we can inverse the second and the third arguments to plot the distribution 
 <<dev = 'pdf'>>=
 par(mfrow = c(4,4), cex = 0.5)
 plotDistri(traits.finch, ind.plot.finch, sp.finch, 
-      ylim.cex = 8, plot.ask = F, multipanel = F, leg = F)
+           ylim.cex = 8, plot.ask = F, multipanel = F, leg = F)
 @
 
 Now, see the result for only one trait with the legend (\texttt{leg = TRUE}). \texttt{cex.leg} specify the magnification of legend. 
@@ -180,24 +170,24 @@ Now, see the result for only one trait with the legend (\texttt{leg = TRUE}). \t
  <<dev = 'pdf', fig.height = 5>>=
 par(mfrow = c(2,3))
 plotDistri(as.matrix(traits.finch[,1]), ind.plot.finch, sp.finch, 
-      ylim.cex = 8, plot.ask = F, multipanel = F, leg = T, cex.leg = 0.5)
+           ylim.cex = 8, plot.ask = F, multipanel = F, leg = T, cex.leg = 0.5)
  
 @
 
 If we want to plot all the sites (regional distribution) or all the species: we can use the following code:
 <<dev = 'pdf', fig.width = 7>>=
 par(mfrow = c(4,4), cex = 0.5)
-plotDistri(traits.finch, rep("region", times = dim(traits.finch)[1]), 
-     sp.finch, ylim.cex = 6, plot.ask = F, leg = F)
+plotDistri(traits.finch, rep("region", times = dim(traits.finch)[1]),
+           sp.finch, ylim.cex = 6, plot.ask = F, leg = F)
 @
 
 <<dev = 'pdf', fig.width = 7>>=
-plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]),
-     ind.plot.finch, ylim.cex = 3, plot.ask = F, cex.leg = 0.5)
+plotDistri(traits.finch, rep("all_sp", times = dim(traits.finch)[1]),
+           ind.plot.finch, ylim.cex = 3, plot.ask = F, cex.leg = 0.5)
 @
 
 Now we can reset the default graphical parameter:
-<<dev = 'pdf'>>=
+<<>>=
 par(old.par)
 @
 \newpage
@@ -212,23 +202,10 @@ The Rao function computes $\alpha$, $\beta$ and $\gamma$ -components for taxonom
 
 $$ \gamma = mean (\alpha) + \beta $$
 
-<<<<<<< HEAD
-Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
-
-=======
-
-<<<<<<< HEAD
-Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
-
-=======
-
 Where: $\gamma$ is the diversity of the regional pool, $\alpha$ is the diversity of the local community and $\beta$ is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
 
 
-Where: \gamma is the diversity of the regional pool, \alpha is the diversity of the local community and \beta is the turn over between local communities; diversity is estimated using the Rao quadratic entropy indices. Note that this method uses the additive framework of diversity. See the paper of Jost in 2010 (partitioning diversity into independent alpha and beta components) for more details on the differences between additive and multiplicative partitioning of diversity.
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
->>>>>>> d0b211331074d6462608d116c3317bf39e66e950
-\\
+~\\
 
 \textbf{Reference}: de Bello, F., Lavorel, S., Albert, C.H., Thuiller, W., Grigulis, K., Dolezal, J., Janecek, S. and Leps, J. (2011) Quantifying the relevance of intraspecific trait variability for functional diversity. Methods in Ecology and Evolution, 2, 163-174.
 
@@ -236,7 +213,7 @@ Where: \gamma is the diversity of the regional pool, \alpha is the diversity of 
 \subsubsection{Multitraits analysis}
 First, rao diversity can be calculated on the functional  space (i.e. considering all traits together).
 
-<<>>=
+<<echo = c(-6, -8)>>=
 #create individuals community matrix
 comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
 #create species community matrix
@@ -248,9 +225,12 @@ traits.finch.sp<-apply( apply(traits.finch, 2, scale ), 2,
 
 mat.dist<-as.matrix(dist(traits.finch.sp))^2
 
+ptm <- proc.time() 
+
 res.rao<-RaoRel(sample = as.matrix(comm.sp), 
         dfunc = mat.dist, dphyl = NULL, 
         weight = F, Jost = F, structure = NULL)
+proc.time_RaoRel <- proc.time() - ptm
 
 witRao<-res.rao$FD$Mean_Alpha #overall within species variance
 betRao<-res.rao$FD$Beta_add  #between species variance
@@ -332,10 +312,11 @@ barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)),
 
 \textbf{Reference}: Leps, J., de Bello, F., Smilauer, P. and Dolezal, J. (2011) Community trait response to environment: disentangling species turnover vs intraspecific trait variability effects. Ecography, 34, 856-863.
 
-<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align = 'center'>>=
+<<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align = 'center', echo = c(-1, -2) >>=
+ptm <- proc.time() 
 res.decomp<-decompCTRE(traits = traits.finch, sp = sp.finch, 
               ind.plot = ind.plot.finch, print = FALSE)
-
+proc.time_decompCTRE <- proc.time() - ptm
 barplot(res.decomp)
 @
 
@@ -350,7 +331,7 @@ par(mfrow = c(1,1))
 \subsection{Decomposition of traits variances using nested factors}
 
 Variance partitioning across nested scales using the decomposition of variance on restricted maximum likelihood (REML) method (lme function).
-\\
+~\\
 
 \textbf{Reference}: Messier, J., McGill, B. and Lechowicz, M. (2010) How do traits vary across ecological scales? A case for trait-based ecology. Ecology Letters, 13, 838-848.
 
@@ -361,7 +342,9 @@ fact<-cbind(genus = as.factor(genus),
       species = as.factor(as.vector(sp.finch)),
       sites = as.factor(as.vector(ind.plot.finch)))
 
+ptm <- proc.time() 
 res.partvar.finch<-partvar(traits = traits.finch, factors = fact)
+proc.time_partvar <- proc.time() - ptm
  
 res.partvar.finch
 @
@@ -434,15 +417,18 @@ plotSpPop(traits.finch, ind.plot.finch, sp.finch,
 \subsection{Ratio of variances: T-statistics}
 
 The function \texttt{Tstat} computes observed T-statistics (T for Traits; Violle et al (2012)) as three ratios of variance, namely $T_{IP/IC}$, $T_{IC/IR}$ and $T_{PC/PR}$. This function can also return the distribution of these three statistics under the three associated null models (respectively \textbf{local}, \textbf{regional.ind} and \textbf{regional.pop}).
-\\
+~\\
 
 \textbf{Reference}: Violle, C., Enquist, B.J., McGill, B.J., Jiang, L., Albert, C., Hulshof, C., Jung, V. and Messier, J. (2012) The return of the variance: intraspecific variability in community ecology. Trends in Ecology and Evolution, 27, 244-252.
 
-<<>>=
+<<echo = c(2, 4) >>=
+ptm <- proc.time()
 res.finch<-Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch,
-         nperm = 9, print = FALSE)
+         nperm = 99, print = FALSE)
+proc.time_Tstats <- proc.time() - ptm
 res.finch
 @
+
 
 
 \subsubsection{S3 methods for class Tstats}
@@ -458,22 +444,8 @@ One can be more interested in the significance  and the effect size available th
 \begin{center}
 $$ SES = (I_{obs} – I{_sim}) / \delta_{sim} $$
 \end{center}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
 
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
-
-
-<<<<<<< HEAD
 where $I_{obs}$ is the observed value, $I_{sim}$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
-
-=======
->>>>>>> 5f89dfbb4bbfa61805f8e116f94cee418c14cfee
->>>>>>> d0b211331074d6462608d116c3317bf39e66e950
-
-where $I_obs$ is the observed value, $I_sim$ the mean of values calculated from the null model and $\delta_{sim}$ the standard deviation of these simulated values.
 
 
 <<dev = 'pdf', fig.width = 6, fig.height = 6, fig.align = 'center'>>=
@@ -552,18 +524,18 @@ funct<-c("mean(x, na.rm = T)", "kurtosis(x, na.rm = T)",
 #Test against the null model regional.ind
 res.finch.sp_regional.ind<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
                            nullmodels = "regional.ind", ind.plot = ind.plot.finch,
-                            nperm = 9, print = FALSE)
+                            nperm = 99, print = FALSE)
  
 #Test against the null model regional.pop
 #Individuals values are transformed in populational values
 res.finch.sp_regional.pop<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
                nullmodels = "regional.pop", ind.plot = ind.plot.finch, 
-               nperm = 9, print = FALSE)
+               nperm = 99, print = FALSE)
 @
 
 These two functions allows to calculate  index by sites for example using \code{"tapply(x, sites, mean)"}.
 
-<<>>=
+<<echo = -c(3, 6)>>=
 funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))",
      "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))",
      "tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))", 
@@ -574,13 +546,17 @@ IndexByGroups(funct, "ind.plot.finch")
 
 ##Null model local is trivial for these functions
 ##because randomization is within community only
- 
-res.finch.ind_loc<-ComIndex(traits = traits.finch, index = funct.1, sp = sp.finch,
-               nullmodels = "local", ind.plot = ind.plot.finch,
-               nperm = 9, print = FALSE)
-res.finch.ind_reg<-ComIndex(traits = traits.finch, index = funct.1, sp = sp.finch, 
-               nullmodels = "regional.ind", ind.plot = ind.plot.finch,
-               nperm = 9, print = FALSE)
+
+ptm <- proc.time()
+res.finch.ind_loc<-ComIndex(traits = traits.finch, index = funct.1, 
+                            sp = sp.finch, nullmodels = "local", 
+                            ind.plot = ind.plot.finch, nperm = 99, 
+                            print = FALSE)
+res.finch.ind_reg<-ComIndex(traits = traits.finch, index = funct.1, 
+                            sp = sp.finch, nullmodels = "regional.ind", 
+                            ind.plot = ind.plot.finch, nperm = 99, 
+                            print = FALSE)
+proc.time_ComIndex1 <- proc.time() - ptm
 @
 
 
@@ -606,14 +582,16 @@ funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = T))",
 @
 
 Now calculate index with or without intraspecific variance thanks to function \texttt{ComIndex}.
-<<>>=
+<<echo = 2:3>>=
+ptm <- proc.time()
 res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.1,
                sp = sp.finch, nullmodels = "regional.ind",
-               ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+               ind.plot = ind.plot.finch, nperm = 99, print = FALSE)
 
 res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.2, 
                sp = sp.finch, nullmodels = "regional.pop", 
-               ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
+               ind.plot = ind.plot.finch, nperm = 99, print = FALSE)
+proc.time_ComIndex.with_without <- proc.time() - ptm
 @
 
 
@@ -708,7 +686,7 @@ n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_"))
 res.sum.1<-ComIndexMulti(traits.finch, 
               index = c("sum(scale(x), na.rm = T)", "sum(x, na.rm = T)"), 
               by.factor = n_sp_plot, nullmodels = "regional.ind", 
-              ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+              ind.plot = ind.plot.finch, nperm = 99, sp = sp.finch)
 
 res.sum.1
 @
@@ -718,22 +696,20 @@ A more interesting example using the function \texttt{hypervolume} from the pack
 
 First, let's try the \texttt{hypervolume} function one finch data.
 <<dev = 'pdf'>>=
-hv<-hypervolume(traits.finch.mice, 
-        reps = 100,bandwidth = 0.2, 
-        verbose = F, warnings = F)
+hv<-hypervolume(traits.finch.mice, reps = 100,
+                bandwidth = 0.2, verbose = F, warnings = F)
 plot(hv)
 @
 
 Now, we can do the same analysis for each species.
 
-<<dev = 'pdf'>>=
+<<dev = 'pdf', results ='hide'>>=
 hv.list<-new("HypervolumeList")
 hv.list2<-list()
 
 for(i in 1: length(table(sp.finch))) {
  hv.list2[[i]]<-hypervolume(traits.finch.mice[sp.finch == levels(sp.finch)[i], ], 
-        reps = 1000,bandwidth = 0.2, 
-        verbose = F, warnings = F)
+        reps = 1000,bandwidth = 0.2, verbose = F, warnings = F)
 }
 
 hv.list@HVList<-hv.list2
@@ -741,7 +717,8 @@ require(adegenet)
 colorhv<-transp(funky(nlevels(sp.finch)), alpha = 0.8)
 
 plot(hv.list, colors = colorhv, darkfactor = 0.8)
-plot(hv.list, colors = colorhv, darkfactor = 0.8, showdata = F, npmax = 200, cex.random = 1)
+plot(hv.list, colors = colorhv, darkfactor = 0.8, showdata = F,  
+     npmax_random = 200, cex.random = 1)
 @
 
 <<results='hide'>>=
@@ -750,44 +727,45 @@ summary(hv.list)
 
 The standard example of the \texttt{hypervolume} package also use finch data but at the species level.
 
-<<dev = 'pdf'>>=
+<<dev = 'pdf', eval = FALSE>>=
 doHypervolumeFinchDemo=TRUE
 demo('finch', package = 'hypervolume')
 @
-End of Hypervolume finch demo
+
 
 \texttt{ComIndexMulti} takes the same arguments as \texttt{ComIndex} and an argument by factor to apply the index on different factors.
-
+\label{hv.3}
 <<result = 'hide'>>=
 #all individual are put in the same group: calculate the hypervolume without by.factor
 hv.1<-ComIndexMulti(traits.finch.mice, 
-             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
-                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"),
+             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100,
+                       bandwidth = 0.2, verbose = F, warnings = F)@Volume))"),
              by.factor = rep(1,length(n_sp_plot)), nullmodels = "regional.ind",
-             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch) 
+             ind.plot = ind.plot.finch, nperm = 99, sp = sp.finch) 
 
 hv.2<-ComIndexMulti(traits.finch.mice, 
-             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
-                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
+             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100,
+                       bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
              by.factor = n_sp_plot, nullmodels = "regional.ind", 
-             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch, print = FALSE)
+             ind.plot = ind.plot.finch, nperm = 99, sp = sp.finch, print = FALSE)
 
+ptm <- proc.time() 
 hv.3<-ComIndexMulti(traits.finch.mice, 
              index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100,
-                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
+                       bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
              by.factor = ind.plot.finch, nullmodels ="regional.ind", 
-             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch, print = FALSE)
+             ind.plot = ind.plot.finch, nperm = 99, sp = sp.finch, print = FALSE)
+proc.time_ComIndexMulti <- proc.time() - ptm
 
 hv.4<-ComIndexMulti(traits.finch.mice, 
              index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
-                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
+                       bandwidth = 0.2, verbose = F, warnings = F)@Volume))"), 
              by.factor = sp.finch, nullmodels = "regional.ind", 
-             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch, print = FALSE)
+             ind.plot = ind.plot.finch, nperm = 99, sp = sp.finch, print = FALSE)
 
 list.ind.multi<-as.listofindex(list(hv.2, hv.3, hv.4))
 
 ses.list.multi<-ses.listofindex(list.ind.multi)
-ses.list.multi
 @
 
 <<dev = 'pdf', fig.width = 5, fig.height = 5, fig.align='center'>>=
@@ -796,7 +774,7 @@ plot(list.ind.multi)
 plot(list.ind.multi, xlim = c(-200,20))
 @
 
-Compare hypervolume to Villéger's metrics convex hull.
+Compare hypervolume to Villeger's metrics convex hull.
 
 <<>>=
 require("geometry")
@@ -809,7 +787,7 @@ funct<-c("round(convhulln(x,FA)$vol,6)")
 Fdis.finch<-ComIndexMulti(traits.finch.mice, 
              index = funct,
              by.factor = ind.plot.finch, nullmodels = "local",
-             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+             ind.plot = ind.plot.finch, nperm = 99, sp = sp.finch)
 
 list.ind.multi2<-as.listofindex(list(hv.3, Fdis.finch))
 
@@ -933,6 +911,34 @@ s.class(res.dudi2$li, as.factor(rep(c("DMaj","EspHd","FlorChrl","GnovTwr",
 
 \section{Speed of computation}
 
+Speed of computation are saved throughout the vignette. For the specific system and R session describe above, we can determine the time of computation on darwin finch data with 99 permutations.
+
+\begin{itemize}
+\item \texttt{RaoRel} $->$ \Sexpr{proc.time_RaoRel[3]} s.
+\item \texttt{decompCTRE} $->$ \Sexpr{proc.time_decompCTRE[3]} s.
+\item \texttt{partvar} $->$ \Sexpr{proc.time_partvar[3]} s.
+\item \texttt{Tstats} $->$ \Sexpr{proc.time_Tstats[3]} s.
+\item \texttt{ComIndex} \begin{itemize}
+    \item using four metrics $->$ \Sexpr{proc.time_ComIndex1[3]} s.
+    \item with/without intraspecific variation $->$ \Sexpr{proc.time_ComIndex.with_without[3]} s.
+    \end{itemize}                    
+\item \texttt{ComIndexMulti}: for the calcul of hv.3 see \pageref{hv.3} $->$ \Sexpr{proc.time_ComIndexMulti[3]} s.
+\end{itemize}
+
+<<sessionInfo>>=
+sessionInfo()
+@
+
+<<Speed_computation, results='hide'>>=
+proc.time_RaoRel
+proc.time_decompCTRE
+proc.time_partvar
+proc.time_Tstats
+proc.time_ComIndex1
+proc.time_ComIndex.with_without
+proc.time_ComIndexMulti
+@
+
 
 \section*{Conclusion}
 \addcontentsline{toc}{subsection}{Conclusion}
@@ -945,14 +951,10 @@ This is the end of the tutorial. The up to date version of this tutorial is avai
 Great thanks to Thibault Jombart for his help on building R packages and writing tutorial with \href{http://yihui.name/knitr/}{knitR}.
 
 
-
-\section{Conclusion}
-This is the end of the tutorial. The up to date version of this tutorial is available \href{here}{http://sourceforge.net/p/cati-r/code/ci/master/tree/tutorial/vignettes/vignette.pdf}.
-
-
-\section{Acknowledgment}
-Great thanks to Thibault Jombart for his help on building R packages and writing tutorial with \href{http://yihui.name/knitr/}{knitR}.
 \end{document}
 
 
 
+
+ptm <- proc.time() 
+proc.time_RaoRel <- proc.time() - ptm
