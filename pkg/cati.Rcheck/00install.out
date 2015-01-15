@@ -1,0 +1,15 @@
+* installing *source* package 'cati' ...
+** R
+** data
+** inst
+** preparing package for lazy loading
+Avis : replacing previous import by 'vegan::cca' when loading 'cati'
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+*** arch - i386
+Avis : replacing previous import by 'vegan::cca' when loading 'cati'
+*** arch - x64
+Avis : replacing previous import by 'vegan::cca' when loading 'cati'
+* DONE (cati)
