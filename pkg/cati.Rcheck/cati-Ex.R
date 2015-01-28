@@ -32,14 +32,11 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### ** Examples
 
 data(finch.ind)
-## Not run: 
-##D 	CVNND(traits.finch[,1])
-##D 	CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
-##D 	CVNND(traits.finch)
-##D 	CVNND(traits.finch, scale.tr = FALSE)
-##D 	SDND(traits.finch[,1])
-## End(Not run)
-
+CVNND(traits.finch[,1], na.rm = TRUE)
+CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
+CVNND(traits.finch, na.rm = TRUE)
+CVNND(traits.finch, scale.tr = FALSE, na.rm = TRUE)
+SDND(traits.finch[,1], na.rm = TRUE)
 
 
 
@@ -95,13 +92,13 @@ data(finch.ind)
 ##D funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
 ##D      "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
 ##D      "tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-##D      "tapply(x, ind.plot.finch, function(x) CVNND(x))" )
+##D      "tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))" )
 ##D 
 ##D fact<-unlist(sites_bypop)  
 ##D funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = TRUE))",
 ##D           "tapply(x, fact, function(x) kurtosis(x, na.rm = TRUE))",
 ##D           "tapply(x, fact, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-##D           "tapply(x, fact, function(x) CVNND(x))")
+##D           "tapply(x, fact, function(x) CVNND(x, na.rm = TRUE))")
 ##D 
 ##D 
 ##D res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.1,
