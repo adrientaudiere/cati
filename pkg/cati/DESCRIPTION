@@ -1,7 +1,7 @@
 Package: cati
 Type: Package
 Title: Community Assembly by Traits: Individuals and beyond
-Version: 0.95
+Version: 0.96
 Date: 2014-04-14
 Author: Adrien Taudiere, Cyrille Violle with contribution of Francois Munoz
 Maintainer: Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>
@@ -29,5 +29,5 @@ Description: A package to detect and quantify community assembly processes
     using trait values of individuals or populations, the T-statistics and
     other metrics, and dedicated null models.
 License: GPL (>= 2)
-URL: https://sourceforge.net/p/cati-r/code
+URL: https://github.com/adrientaudiere/cati
  
