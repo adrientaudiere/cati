@@ -4,10 +4,10 @@
 * using session charset: ISO8859-1
 * checking for file 'cati/DESCRIPTION' ... OK
 * checking extension type ... Package
-* this is package 'cati' version '0.94'
+* this is package 'cati' version '0.96'
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
-Version jumps in minor (submitted: 0.94, existing: 0.8)
+Version jumps in minor (submitted: 0.96, existing: 0.8)
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
   No repository set, so cyclic dependency check skipped
@@ -16,7 +16,7 @@ Version jumps in minor (submitted: 0.94, existing: 0.8)
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
-* checking whether package 'cati' can be installed ... [17s] OK
+* checking whether package 'cati' can be installed ... OK
 * checking installed package size ... OK
 * checking package directory ... OK
 * checking DESCRIPTION meta-information ... OK
@@ -49,7 +49,7 @@ Version jumps in minor (submitted: 0.94, existing: 0.8)
 * checking contents of 'data' directory ... OK
 * checking data for non-ASCII characters ... OK
 * checking data for ASCII and uncompressed saves ... OK
-* checking examples ... [19s] OK
+* checking examples ... OK
 * checking PDF version of manual ... OK
 * DONE
 NOTE: There were 2 notes.

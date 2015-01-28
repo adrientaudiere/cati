@@ -55,14 +55,16 @@ Warning: replacing previous import by 'vegan::cca' when loading 'cati'
 > ### ** Examples
 > 
 > data(finch.ind)
-> ## Not run: 
-> ##D 	CVNND(traits.finch[,1])
-> ##D 	CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
-> ##D 	CVNND(traits.finch)
-> ##D 	CVNND(traits.finch, scale.tr = FALSE)
-> ##D 	SDND(traits.finch[,1])
-> ## End(Not run)
-> 
+> CVNND(traits.finch[,1], na.rm = TRUE)
+[1] 49.62862
+> CVNND(traits.finch[,1], div_range =  TRUE, na.rm = TRUE)
+[1] 10.65975
+> CVNND(traits.finch, na.rm = TRUE)
+[1] 0.6326296
+> CVNND(traits.finch, scale.tr = FALSE, na.rm = TRUE)
+[1] 0.7362636
+> SDND(traits.finch[,1], na.rm = TRUE)
+[1] 0.1248847
 > 
 > 
 > 
@@ -118,13 +120,13 @@ Warning: replacing previous import by 'vegan::cca' when loading 'cati'
 > ##D funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
 > ##D      "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
 > ##D      "tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-> ##D      "tapply(x, ind.plot.finch, function(x) CVNND(x))" )
+> ##D      "tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))" )
 > ##D 
 > ##D fact<-unlist(sites_bypop)  
 > ##D funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = TRUE))",
 > ##D           "tapply(x, fact, function(x) kurtosis(x, na.rm = TRUE))",
 > ##D           "tapply(x, fact, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-> ##D           "tapply(x, fact, function(x) CVNND(x))")
+> ##D           "tapply(x, fact, function(x) CVNND(x, na.rm = TRUE))")
 > ##D 
 > ##D 
 > ##D res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.1,
@@ -1473,7 +1475,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  18.11 0.37 18.57 NA NA 
+Time elapsed:  21.41 0.67 22.4 NA NA 
 > grDevices::dev.off()
 null device 
           1 
