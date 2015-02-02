@@ -37,6 +37,7 @@ print.ComIndexMulti	ComIndexMulti
 print.traitflex	traitflex.anova
 print.Tstats	Tstats
 Pval	Pval
+RandCom	RandCom
 RaoRel	RaoRel
 SDND	CVNND
 SDNND	CVNND

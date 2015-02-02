@@ -39,7 +39,12 @@ Version jumps in minor (submitted: 0.96, existing: 0.8)
 * checking R code for possible problems ... OK
 * checking Rd files ... OK
 * checking Rd metadata ... OK
-* checking Rd line widths ... OK
+* checking Rd line widths ... NOTE
+Rd file 'RandCom.Rd':
+  \usage lines wider than 90 characters:
+             RandCom(Ncom = 10, Nsp = 20, Nind.com = 100, sdlog = 1.5, min_value_traits = 80, max_value_traits = 200, cv_intra_sp = 1.5, cv_ ... [TRUNCATED]
+
+These lines will be truncated in the PDF manual.
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
@@ -52,4 +57,4 @@ Version jumps in minor (submitted: 0.96, existing: 0.8)
 * checking examples ... OK
 * checking PDF version of manual ... OK
 * DONE
-NOTE: There were 2 notes.
+NOTE: There were 3 notes.
