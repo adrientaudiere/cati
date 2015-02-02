@@ -113,7 +113,7 @@ individual differences, intraspecific variation, null model, trait, variance dec
 
 
 \section{Introduction}
- This document show the lack of bias in the functions \texttt{Tstats}, \texttt{partvar}, \texttt{decompCTRE} and a test of robustness for the T-statistics.
+ This document shows the lack of bias in the functions \texttt{Tstats}, \texttt{partvar}, \texttt{decompCTRE} and a test of robustness for the T-statistics.
 This report was created on \Sexpr{a}. Start directly by the summary section if you want condensate results of this document.
 
 \subsection{R requirements}
@@ -174,31 +174,36 @@ Here we define the number of permutations for the entire analysis.
 
 <<Simul_parameter_1>>= 
 #Number of permutations for the analysis with no filter
-npermut <- 1000
+npermut <- 3
 
 #Number of permutations for each parameters values in the analysis with filter(s)
-N_repet_Param <- 200
+N_repet_Param <- 2
 
 #Number of values for each parameters
-nb_param_val <- 10
+nb_param_val <- 3
 @
 
 <<Simul_parameter_2>>= 
-#Parameter of the log normal distribution for species abundances 
-#distribution within communities
-sdlog = 1.5
+#Total number of individuals
+Nind <- 1000
 
 #Ten communities named A, B, C ... J
 com <- c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J") 
 Ncom <- length(com)
 
-#Twenty species sp1, sp2, sp3, ... sp20
-sp <- paste("sp", seq(1:20), sep = "")
+#Number of species (if Nsp > 676 you need to defined additional name)
+Nsp <- 200
+sp <- paste("sp", paste(sort(rep(LETTERS, 26)), rep(LETTERS, 26),  sep="")
+                  [seq(1:Nsp)], sep ="_")
 Nsp <- length(sp)
 
-#Total number of individuals
-Nind <- 1000
+#Parameter of the log normal distribution for species abundances 
+#distribution within communities
+sdlog = 1.5
 @
+
+We use toys models of \Sexpr{Nind} individuals belonging to \Sexpr{Nsp} species occuring in \Sexpr{Ncom} communities (sites). Each community contains \Sexpr{Nind / Ncom} individuals and species abundances in each community are defined following a lognormal distribution of mean 0 and standard deviation \texttt{sdlog} of \Sexpr{sdlog}.
+Figure \ref{fig:General_outline} depicts the general outline of the next fourth sections dealing with the statistical test of T-statistics from Violle \textit{et al.} (2012).
 
 \begin{figure}[h]
 \centering
@@ -212,11 +217,9 @@ Nind <- 1000
 \end{figure}
 
 \clearpage
-\textbf{Figure 1 (continue):} The \textbf{absence of filtering} is use to test the type I error (alpha-error) of the three Tstatistics. In the absence of filtering the expected pattern is a random distribution of individual traits values into species and communities. \textbf{Internal filter} includes all of the assembly processes internal to the community. The alternative hypothesis (thus the expected pattern) of habitat filtering is the non overlap between species traits distributions measured by the ratio $T_{IP/IC}$. We modulate the strength of filter in the simulation using the variance of species traits distributions and the distance between species traits means. \textbf{External filter} includes all of the assembly processes external to the community. In this document we specifically treat the case of an environnemental gradient influencing the individual traits values. Thus the expected pattern a non overlap between communities traits distributions measured by the ratio $T_{IC/IR}$ and its populationnal counterparts. We modulate the strength of external filter in the simulation using the variance of communities traits distributions and the range of communities traits means (the "extent" of the environnemental gradient). Finally, we add external filter to internal filter by adding to each individual values of the internal filter simulation a number depending of the community distribution.
+\textbf{Figure 1 (continue):} The \textbf{absence of filtering} is used to test the type I error (alpha-error) of the three Tstatistics. In the absence of filtering the expected pattern is a random distribution of individual traits values into species and communities. \textbf{Internal filter} includes all of the assembly processes internal to the community. The alternative hypothesis (thus the expected pattern) of habitat filtering is the non-overlap between species traits distributions measured by the ratio $T_{IP/IC}$. We modulate the strength of filter in the simulation using the variance of species traits distributions and the distance between species traits means. \textbf{External filter} includes all of the assembly processes external to the community. In this document we specifically treat the case of an environnemental gradient influencing the individual traits values. Thus the expected pattern a non-overlap between communities traits distributions measured by the ratio $T_{IC/IR}$ and its populationnal counterparts. We modulate the strength of external filter in the simulation using the variance of communities traits distributions and the range of communities traits means (the "extent" of the environnemental gradient). Finally, we add external filter to internal filter by adding to each individual values of the internal filter simulation a number depending on the community distribution.
 \vspace*{1cm}
 
-We use toys models of \Sexpr{Nind} individuals belonging to \Sexpr{Nsp} species occuring in \Sexpr{Ncom} communities (sites). Each community contains \Sexpr{Nind / Ncom} individuals and species abundances in each community are defined following a lognormal distribution of mean 0 and standard deviation \texttt{sdlog} of \Sexpr{sdlog}.
-Figure \ref{fig:General_outline} depict the general outline of the next fourth sections dealing with the statistical test of T-statistics from Violle \textit{et al.} (2012).
 
 
 
@@ -242,7 +245,7 @@ for(n in 1:npermut){#for each permutation
  #trait b: uniform distribution
  ex.traits1[, 2] <- runif(Nind)
 
- # Draw communities using lognormal distribution of abondances 
+ # Draw communities using lognormal distribution of abundances 
  ex.sp1 <- c()
  ex.com1 <- matrix(0, nrow = Ncom, ncol = Nsp)
  for(c in 1: Ncom){
@@ -253,14 +256,13 @@ for(n in 1:npermut){#for each permutation
  
   ex.sp1 <- c(ex.sp1, rep(sp, times = ex.com1[c,]))
  }
- ex.indplot1 <- as.factor(rep(com, 100))
-
+ ex.indplot1 <- sort(as.factor(rep(com, 100)))
 
  #Stock the results
  res.simu1[[n]] <- Tstats(ex.traits1, ex.indplot1, ex.sp1)
  res.simu1.pval[[n]] <- sum_Tstats(res.simu1[[n]], type = "p.value")
  print(paste("---", round(n/npermut, 2) * 100, "%", sep = " "))
-}#end of simulation
+}#End of simulations
 @
 
   \subsection {Results for simulations with no filtering}
@@ -517,7 +519,7 @@ Traits & Indices & Average between communities? & alpha-error \tabularnewline
 
 
 
-The results of table \ref{tab:Alpha-errors_for_T-stats} attest of a good behavior of the T-statistics regardless of the distributions of the traits. Alpha-error of the local indices are always near the wanted alpha-error of 2.5\%. Logically the global indices which averaged local indices are far more robust. Note that the higher alpha-error is obtain using $T_{PC/PR}$ on the trait normally distributed (\Sexpr{round(nbre_alpha_error_norm_loc_Tpcpr, 3)}).
+The results of table \ref{tab:Alpha-errors_for_T-stats} attest of a good behavior of the T-statistics regardless of the distributions of the traits. Alpha-error of the local indices are always near the wanted alpha-error of 2.5\%. Logically the global indices which averaged local indices are far more robust. Note that the higher alpha-error is obtained using $T_{PC/PR}$ on the trait normally distributed (\Sexpr{round(nbre_alpha_error_norm_loc_Tpcpr, 3)}).
 
 
 
@@ -571,7 +573,7 @@ The results of table \ref{tab:Alpha-errors_for_T-stats} attest of a good behavio
   \subsection {Randomization outline}
  
 We decide to modulate the strength of the internal filter thanks to two parameters:
-we define (i) a gradient of distance between species means traits distributions and (ii) a gradient of the mean variance in species traits distributions. It is strongly link to the definition of limiting similarity by May and Mac Arthur (1972) who defined a coefficient of competition as $$a = exp (-d^2/4w^2)$$ with \texttt{d} correspond to the distance between the species trait means and \texttt{w} correspond to the mean variance of species trait distribution. 
+we define (i) a gradient of distance between species means traits distributions and (ii) a gradient of the mean variance in species traits distributions. It is strongly linked to the definition of limiting similarity by May and Mac Arthur (1972) who defined a coefficient of competition as $$a = exp (-d^2/4w^2)$$ with \texttt{d} correspond to the distance between the species trait means and \texttt{w} correspond to the mean variance of species trait distribution. 
 
 <<Internal_filter>>= 
 # Number of values for each parameters: param_DIST_between_MEAN.init and param_SD
@@ -600,15 +602,15 @@ sd_sd.param <- rep(10, nperm)
  Practically, we defined \Sexpr{nb_param_val} values for two parameters:
 \\
 
- (i) \texttt{param\_{}DIST\_{}between\_{}MEAN.init} is a vector of length \Sexpr{nb_param_val} which defined the minimum values for the mean traits values (the maximum values are defined to \Sexpr{250}). In decreasing the range of traits values while keeping the same number of species, there is a decrease of mean distance between species means of traits values. Thus the mean for each species is drawing from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly distributed between \texttt{max.value\_{}traits - param\_{}DIST\_{}between\_{}MEAN} and \texttt{max.value\_{}traits}.
+ (i) \texttt{param\_{}DIST\_{}between\_{}MEAN.init} is a vector of length \Sexpr{nb_param_val} which defined the minimum values for the mean traits values (the maximum values are defined to \Sexpr{250}). In decreasing the range of traits values while keeping the same number of species, there is a decrease of mean distance between species means of traits values. Thus the mean for each species is drawn from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly distributed between \texttt{max.value\_{}traits - param\_{}DIST\_{}between\_{}MEAN} and \texttt{max.value\_{}traits}.
 \\
 
-(ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of traits distributions for each species. In order to decorrelating the mean and standard deviation of species traits distributions, \texttt{param\_{}SD} is sample before the analysis. 
+(ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of traits distributions for each species. In order to decorrelate the mean and standard deviation of species traits distributions, \texttt{param\_{}SD} is permuted before the analysis. 
 \\
 
-For the trait "a" the trait value for each individual is drawing from a normal distribution with the mean depending of it species attribute. For the trait "b" the trait value for each individual is drawing from a uniform distribution with the range depending of it species attribute. The range is defined as: \textit{species mean value} - \textit{species sd value} for the minimum and \textit{species mean value} + \textit{species sd value} for the maximum.
+For the trait "a" the trait value for each individual is drawn from a normal distribution with the mean depending on it species attribute. For the trait "b" the trait value for each individual is drawn from a uniform distribution with the range depending on it species attribute. The range is defined as: \textit{species mean value} - \textit{species sd value} for the minimum and \textit{species mean value} + \textit{species sd value} for the maximum.
 
-Now we can start the simulation of \Sexpr{nb_param_val} parameters values and \Sexpr{N_repet_Param*length(param_SD)} permutations. 
+Now we can start the simulation with \Sexpr{nb_param_val} parameters values and \Sexpr{N_repet_Param*length(param_SD)} permutations. 
 
 <<Internal_filter_simu, results = 'hide'>>= 
 mean.sp_stock2 <- list() ; sd.sp_stock2 <- list() ; res.simu2 <- list()
@@ -616,7 +618,7 @@ res.simu2.pval <- list() ; res.simu.traits2 <- list() ;  mean_dist_sp <- list()
 
 for(n in 1:nperm){#for each permutation
  
- # Draw communities using lognormal distribution of abondances 
+ # Draw communities using lognormal distribution of abundances 
  # 100 individuals by populations
  ex.sp2 <- c()
  ex.com2 <- matrix(0, nrow = Ncom, ncol = Nsp)
@@ -627,7 +629,7 @@ for(n in 1:nperm){#for each permutation
   ex.sp2 <- c(ex.sp2, rep(sp, times = ex.com2[i,]))
  }
 
- ex.indplot2 <- as.factor(rep(com, Nind/Ncom))
+ ex.indplot2 <- sort(as.factor(rep(com, Nind/Ncom)))
 
  # Defining traits mean and sd by species 
  mean_mean.param.interm <- seq(max.value_traits - param_DIST_between_MEAN[n], 
@@ -670,7 +672,7 @@ for(n in 1:nperm){#for each permutation
  res.simu2[[n]] <- Tstats(ex.traits2, ex.indplot2, ex.sp2, printprogress = FALSE)
  res.simu2.pval[[n]] <- sum_Tstats(res.simu2[[n]], type = "p.value")
  print(paste(round(n/nperm, 2) * Nind/Ncom, "%", sep = " "))
-}#end of simulation
+}#End of simulations
 @
 
 
@@ -774,7 +776,7 @@ rect(mean(SES.inf.MEAN.uni_Tipic, na.rm = T), 0, 0, max(init_param),
 @
  
   
-For each initial parameters values we can calculate the proportion of case where we do not reject the null hypothesis while this hypothesis is wrong (\textit{i.e.} the Beta-error). The next chunk only show the calculation for the $T_{IC/IR}$ metrics on the trait "a".
+For each initial parameters values we can calculate the proportion of case where we do not reject the null hypothesis while this hypothesis is wrong (\textit{i.e.} the Beta-error). The next chunk only shows the calculation for the $T_{IC/IR}$ metrics on the trait "a".
 
 <<In_calculate_local_betaerrors>>= 
 beta_sd_norm_Tipic <- 
@@ -811,7 +813,7 @@ print(xtable(res_beta_Tipic, caption = 'Local beta-error of $T_{IP/IC}$ in funct
 @
  
 
-Now we can see the beta-error for each strength in table \ref{tab:local_beta_error_xtable}. A high value of range and a low value of standard error defined a high strength of filtering. For example, in the case of a trait normally distributed, the proportion of false negative is \Sexpr{round(res_beta_Tipic[1, 1]*100, 2)}\% for the higher value of standard errors and thus for the lower strength of internal filtering. The good behavior of the function \texttt{Tstats} is ascertain by the decrease of beta-error along increasing strength of filter.
+Now we can see the beta-error for each strength in table \ref{tab:local_beta_error_xtable}. A high value of range and a low value of standard error defined a high strength of filtering. For example, in the case of a trait normally distributed, the proportion of false negative is \Sexpr{round(res_beta_Tipic[1, 1]*100, 2)}\% for the higher value of standard errors and thus for the lower strength of internal filtering. The good behavior of the function \texttt{Tstats} is ascertained by the decrease of beta-error along increasing strength of filter.
  
  
   \subsubsubsection {Local $T_{IP/IC}$ SES values against modeled parameter values}
@@ -925,7 +927,7 @@ rect(mean(meanSES.INF_glob.uni_Tipic, na.rm = T), 0, 0, max(modeled_param_uni),
 
   \subsection {Conclusion on the power of $T_{IP/IC}$ to detect internal filtering}
 
-To conclude on the power of $T_{IP/IC}$ to detect internal filtering, we compute exponential linear model and identify the strength from which the beta-error is inferior to 0.05. This strength is define by the two ratio of the initial parameters \texttt{param\_DIST\_between\_MEAN} and \texttt{sd\_mean.param}. 
+To conclude on the power of $T_{IP/IC}$ to detect internal filtering, we compute exponential linear model and identify the strength from which the beta-error is inferior to 0.05. This strength is defined by the two ratio of the initial parameters \texttt{param\_DIST\_between\_MEAN} and \texttt{sd\_mean.param}. 
 
 <<In_conc_plot, fig.cap = "Power of $T_{IP/IC}$ to detect internal filtering: Standardised Effect Size (SES) of $T_{IP/IC}$ in relation to the strength of internal filtering. Trait 'a' normally distributed is shown in black, traits 'b' uniformally distributed in purple. Open circle represent local SES values wheras close one represent global SES values. The exponential linear model is presented with 5 percents confidence interval on both side. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$)", fig.scap = "Power of $T_{IP/IC}$ to detect internal filtering", dev ='png', dpi = 100>>=
 plot(meanSES.2loc.norm_Tipic ~ init_param.loc, col = rgb(0, 0, 0, 0.2), 
@@ -974,7 +976,7 @@ param_beta0.05_Tipic.uni <- exp((yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf [2, 
 @
 
 
-For the trait "a" normally distributed, the power of $T_{IP/IC}$ is satisfying if the ratio of the initial parameter is superior to
+For the trait "a" normally distributed, the power of $T_{IP/IC}$ is satisfactory if the ratio of the initial parameter is superior to
  \Sexpr{round(param_beta0.05_Tipic.norm, 2)}. For the trait "b" uniformally distributed, this value is \Sexpr{round(param_beta0.05_Tipic.uni, 2)}. 
  Further investigation on real data with different strength of internal filtering are needed to complete these simulated values.
 
@@ -1017,15 +1019,15 @@ we define (i) a gradient of range between communities means traits distributions
 In analogy with the internal filtering model, we defined \Sexpr{nb_param_val} values for two parameters:
 \\
 
- (i) \texttt{param\_{}RANGE.init} is a vector of length \Sexpr{nb_param_val} which defined the above range for the mean traits values (the maximum value for the mean is assessed to \Sexpr{max.value_traits}). In decreasing the range of traits values while keeping the same number of communities, there is a decrease in the overlap of the communities traits distributions and consequently an decrease of the impact of external filtering in shaping traits distributions. Thus the mean for each communities is drawing from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly
+ (i) \texttt{param\_{}RANGE.init} is a vector of length \Sexpr{nb_param_val} which defined the above range for the mean traits values (the maximum value for the mean is assessed to \Sexpr{max.value_traits}). In decreasing the range of traits values while keeping the same number of communities, there is a decrease in the overlap of the communities traits distributions and consequently an decrease of the impact of external filtering in shaping traits distributions. Thus the mean for each communities is drawn from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly
 \footnote{In fact, we draw this values in a normal distribution with means evenly distributed and with a standard error equal to \texttt{mean\_{}sd.param}}
 of \Sexpr{mean_sd.param[1]} distributed between \texttt{max.value\_{}traits - param\_{}RANGE} and \texttt{max.value\_{}traits}.
 \\
 
-(ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of traits distributions for each species. In order to decorrelating the mean and standard deviation of species traits distributions, \texttt{param\_{}SD} is sample before the analysis. 
+(ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of traits distributions for each species. In order to decorrelate the mean and standard deviation of species traits distributions, \texttt{param\_{}SD} is permuted before the analysis. 
 \\
 
- Thus for the trait "a" the trait value for each individual is drawing from a normal distribution with the mean depending of it community attribute. For the trait "b" the trait value for each individual is drawing from a uniform distribution with the range depending of it community attribute.
+ Thus for the trait "a" the trait value for each individual is drawn from a normal distribution with the mean depending on it community attribute. For the trait "b" the trait value for each individual is drawn from a uniform distribution with the range depending on it community attribute.
  
 <<External_filter_param>>= 
 # Parameter for the range of communities traits distributions
@@ -1057,7 +1059,7 @@ for(n in 1:nperm){#for each permutation
   ex.sp3 <- c(ex.sp3, rep(sp, times = ex.com3[i,]))
  }
 
- ex.indplot3 <- as.factor(rep(com, 100))
+ ex.indplot3 <- sort(as.factor(rep(com, 100)))
 
  #Defining mean and sd by community
  mean_mean.param.interm <- seq(max.value_traits - param_range[n], max.value_traits, 
@@ -1095,7 +1097,7 @@ for(n in 1:nperm){#for each permutation
  res.simu3[[n]] <- Tstats(ex.traits3, ex.indplot3, ex.sp3)
  res.simu3.pval[[n]] <- sum_Tstats(res.simu3[[n]], type = "p.value")
  print(paste("---", round(n/nperm, 2) * 100, "%", sep = " "))
-}#end of simulation
+}#End of simulations
 @
 
  \subsection {Results for simulations of external filtering}
@@ -1204,7 +1206,7 @@ rect(mean(SES.inf.MEAN.uni_Tpcpr, na.rm = T), 0, 0, max(init_param),
      col = rgb(0.5, 0, 1, 0.3), border = NA)
 @
  
-For each initial parameters values we can calculate the proportion of case where we do not reject the null hypothesis while this hypothesis is wrong (\textit{i.e.} the Beta-error). The next chunk only show the calculation for the $T_{IC/IR}$ metrics on the trait "a".
+For each initial parameters values we can calculate the proportion of case where we do not reject the null hypothesis while this hypothesis is wrong (\textit{i.e.} the Beta-error). The next chunk only shows the calculation for the $T_{IC/IR}$ metrics on the trait "a".
 
 <<Ex_calculate_local_betaerrors, echo = 2>>= 
 beta_sd_norm_Ticir <- 
@@ -1526,7 +1528,7 @@ param_beta0.05_Ticir.uni <- exp( (yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf [2,
 @
 
 
-For the trait "a" normally distributed, the power of $T_{IC/IR}$ is satisfying if the ratio of the initial parameter is superior to
+For the trait "a" normally distributed, the power of $T_{IC/IR}$ is satisfactory if the ratio of the initial parameter is superior to
  \Sexpr{round(param_beta0.05_Ticir.norm, 2)}. For the trait "b" uniformally distributed, this value is \Sexpr{round(param_beta0.05_Ticir.uni, 2)}. 
  Further investigation on real data with different strength of external filtering are needed to complete these simulated values.
 
@@ -1581,7 +1583,7 @@ param_beta0.05_Tpcpr.uni <- exp( (yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf [2,
 @
 
 
-For the trait "a" normally distributed, the power of $T_{PC/PR}$ is satisfying if the ratio of the initial parameter is superior to
+For the trait "a" normally distributed, the power of $T_{PC/PR}$ is satisfactory if the ratio of the initial parameter is superior to
  \Sexpr{round(param_beta0.05_Tpcpr.norm, 2)}. For the trait "b" uniformally distributed, this value is \Sexpr{round(param_beta0.05_Tpcpr.uni, 2)}. 
  Further investigation on real data with different strength of external filtering are needed to complete these simulated values. As expected, $T_{PC/PR}$ is far less powerfull than $T_{IC/IR}$ to detect external filtering either with traits "a" (\Sexpr{round(param_beta0.05_Tpcpr.norm, 2)} \textit{vs} \Sexpr{round(param_beta0.05_Ticir.norm, 2)}) and "b" (\Sexpr{round(param_beta0.05_Tpcpr.uni, 2)} \textit{vs} \Sexpr{round(param_beta0.05_Ticir.uni, 2)}). This is due to the loss of information in $T_{PC/PR}$ when we compute the mean by population and exclude intra-populationnal variation from the test of external filter. 
 
@@ -1625,7 +1627,7 @@ For the trait "a" normally distributed, the power of $T_{PC/PR}$ is satisfying i
 \section{Internal and external filtering}
 
   \subsection{Randomization outline}
-We use the same two parameters as for internal and external filtering analysis. The internal filtering is compute as in the section dedicated to internal filter. To add the effect of external filtering, we add a value to each individual belonging to a community, this values differing among communities.
+We use the same two parameters as for internal and external filtering analysis. The internal filtering is computed as in the section dedicated to internal filter. To add the effect of external filtering, we add a value to each individual belonging to a community, this values differing among communities.
 
 <<Internal_and_external_filter_parameter>>= 
 # Parameter for the distance between species mean trait values
@@ -1662,7 +1664,7 @@ for(i in 1: 10){
  ex.sp4 <- c(ex.sp4, rep(sp, times = ex.com4[i,]))
 }
 
-ex.indplot4 <- as.factor(rep(com, 100))
+ex.indplot4 <- sort(as.factor(rep(com, 100)))
 
 
 #Defining traits mean and sd by species 
@@ -1721,7 +1723,7 @@ res.simu.traits4[[n]] <- ex.traits4
 res.simu4[[n]] <- Tstats(ex.traits4, ex.indplot4, ex.sp4)
 res.simu4.pval[[n]] <- sum_Tstats(res.simu4[[n]], type = "p.value")
 print(paste("---", round(n/nperm, 2) * 100, "%", sep = " "))
-}#end of simulation
+}#End of simulations
 @
 
 
@@ -1973,7 +1975,7 @@ In addition to the \texttt{cati} vignette that test this function on the Darwin 
  \subsection{Behavior of the function \texttt{partvar}}
 
 First to test the behavior of the \texttt{partvar} function we assemble the same data as in the test of the T-statistics. 
-1000 individuals belonging to 20 species occuring in 10 communities. But here we define the trait value for one individual as the addition of three values, each one draw in a normal distribution of mean 0 and standard error 1: (i) a value depending of the species the individual belong to, (ii) a value depending of the community the individual belong to and (iii) a independent value measuring the individual variance.
+1000 individuals belonging to 20 species occuring in 10 communities. But here we define the trait value for one individual as the addition of three values, each one draw in a normal distribution of mean 0 and standard error 1: (i) a value depending on the species the individual belong to, (ii) a value depending on the community the individual belong to and (iii) a independent value measuring the individual variance.
 
 <<Toy_model_2, results = 'hide'>>= 
 nperm <- npermut
@@ -1987,7 +1989,7 @@ sp <- paste("sp", seq(1:20), sep = "")
 res.partvar_toymodel <- list()
 for(n in 1:nperm){#for each permutation
  
- # Draw communities using lognormal distribution of abondances 
+ # Draw communities using lognormal distribution of abundances 
  # 100 individuals by populations
  ex.sp5 <- c()
  ex.com5 <- matrix(0, nrow = 10, ncol = 20)
@@ -2004,10 +2006,9 @@ for(n in 1:nperm){#for each permutation
  x1[ex.sp5 == levels(ex.sp5)[s]] <- rnorm(1)
  }
  
- ex.indplot5 <- as.factor(rep(com, 100))
+ ex.indplot5 <- sort(as.factor(rep(com, 100)))
  x2 <- c()
  x3 <- c()
- ex.indplot5 <- as.factor(ex.indplot5 )
  for(c in 1:10){
  x2[ex.indplot5 == levels(ex.indplot5 )[c]] <- rnorm(1)
  }
@@ -2051,7 +2052,7 @@ legend(0.6, 4, legend = c("sites", "species", "within"), fill = col.funk)
 text(0.33, 0.5, pos = 4, "0.33")
 @
 
-The mean contribution of each component is near 0.33. Consequently the function \texttt{partvar} don't show apparent dysfunction.
+The mean contribution of each component is close to 0.33. Consequently the function \texttt{partvar} doesn't show apparent dysfunction.
 
 \subsection{Behavior of the function \texttt{decompCTRE}}
 
@@ -2066,7 +2067,7 @@ nperm <- length(turnover_strength)
 res.decompCTRE_toymodel <- list()
 for(n in 1:nperm){#for each permutation
  
- # Draw communities using lognormal distribution of abondances 
+ # Draw communities using lognormal distribution of abundances 
  # 100 individuals by populations
  ex.sp5 <- c()
  ex.com5 <- matrix(0, nrow = 10, ncol = 20)
@@ -2083,9 +2084,8 @@ for(n in 1:nperm){#for each permutation
  x1[ex.sp5 == levels(ex.sp5)[s]] <- rnorm(1)
  }
  
- ex.indplot5 <- as.factor(rep(com, 100))
+ ex.indplot5 <- sort(as.factor(rep(com, 100)))
  x2 <- c()
- ex.indplot5 <- as.factor(ex.indplot5)
  for(c in 1:10){
  x2[ex.indplot5 == levels(ex.indplot5)[c]] <- rnorm(1)
  }
@@ -2100,7 +2100,7 @@ for(n in 1:nperm){#for each permutation
  
  res.decompCTRE_toymodel[[n]] <- decompCTRE(traits = cbind(X2, X2), sp = ex.sp5.bis, 
             ind.plot = ex.indplot5.bis)
-}#End of simulation
+}#End of simulations
 @
 Now we can plot the relation between the modeled strength of the turnover and the resulting contribution of turnover from the function \texttt{decompCTRE} (Fig. \ref{fig:decompCTRE_plot1}).
 
@@ -2119,7 +2119,7 @@ plot(res.simu.decompCTRE_toymodel, -turnover_strength, pch = 16, col = rgb(0, 0,
      xlab = "Turnover relative contribution to community mean traits")
 @
 
-The correlation between the modeled strength of the turnover and the turnover relative contribution result is very high. Consequently the function \texttt{decompCTRE} don't show apparent dysfunction (Fig. \ref{fig:decompCTRE_plot2}).
+The correlation between the modeled strength of the turnover and the turnover relative contribution result is very high. Consequently the function \texttt{decompCTRE} doesn't show apparent dysfunction (Fig. \ref{fig:decompCTRE_plot2}).
 
 \cleardoublepage
 

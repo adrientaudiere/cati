@@ -359,6 +359,25 @@ SCruInde   1.0
 > base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 > base::cat("Pval", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
+> nameEx("RandCom")
+> ### * RandCom
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: RandCom
+> ### Title: Toy model to simulate internal and/or external filtering)
+> ### Aliases: RandCom
+> 
+> ### ** Examples
+> 	
+> 	res <- RandCom()
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("RandCom", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
 > nameEx("RaoRel")
 > ### * RaoRel
 > 
@@ -1475,7 +1494,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  21.41 0.67 22.4 NA NA 
+Time elapsed:  21.37 0.73 22.61 NA NA 
 > grDevices::dev.off()
 null device 
           1 

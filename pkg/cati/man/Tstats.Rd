@@ -163,8 +163,7 @@
 }
 
 \author{
-	Adrien Taudiere
-	Cyrille Violle
+	Adrien Taudiere and Cyrille Violle
 }
 
 \seealso{
