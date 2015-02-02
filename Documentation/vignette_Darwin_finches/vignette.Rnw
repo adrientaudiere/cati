@@ -49,7 +49,7 @@ Functional space, functional structure, community assembly, ecological niche, en
 
 \vfill
 \begin{center}
-\textbf{The up to date version of this tutorial is available \href{https://github.com/adrientaudiere/cati/blob/Package-cati/tutorials/vignette_Darwin_finches/vignette.pdf}{here}.}
+\textbf{The up to date version of this tutorial is available \href{https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf}{here}.}
 \end{center}
 
 \newpage
@@ -942,7 +942,7 @@ proc.time_ComIndexMulti
 
 \section*{Conclusion}
 \addcontentsline{toc}{subsection}{Conclusion}
-This is the end of the tutorial. The up to date version of this tutorial is available \href{https://github.com/adrientaudiere/cati/blob/Package-cati/tutorials/vignette_Darwin_finches/vignette.pdf}{here}.
+This is the end of the tutorial. The up to date version of this tutorial is available \href{https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf}{here}.
 
 \section*{References}
 \addcontentsline{toc}{subsection}{References}
