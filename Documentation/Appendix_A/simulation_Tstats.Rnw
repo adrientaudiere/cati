@@ -104,7 +104,7 @@ individual differences, intraspecific variation, null model, trait, variance dec
 \vfill
 \begin{center}
 \textbf{To read a summary of this appendix, see directly section Summary \ref{sect:summary}.}
-\textbf{An up to date version of the cati tutorial is available \href{https://github.com/adrientaudiere/cati/blob/Package-cati/tutorials/vignette_Darwin_finches/vignette.pdf}{here}.}
+\textbf{An up to date version of the cati tutorial is available \href{https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf}{here}.}
 \end{center}
 
 \newpage
@@ -129,7 +129,7 @@ oldpar <- par(no.readonly = TRUE)
 @
 
   \subsection{System and session informations}
-  This document was created with \Sexpr{sessionInfo()[[1]]$version.string} on \Sexpr{Sys.info()[1]}. See below for more information. The speed computations of \texttt{cati} main functions are develop  in the \href{https://github.com/adrientaudiere/cati/blob/Package-cati/tutorials/vignette_Darwin_finches/vignette.pdf}{cati tutorial}.
+  This document was created with \Sexpr{sessionInfo()[[1]]$version.string} on \Sexpr{Sys.info()[1]}. See below for more information. The speed computations of \texttt{cati} main functions are develop  in the \href{https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf}{cati tutorial}.
   
 <<sessionInfo>>=
 sessionInfo()
@@ -1970,7 +1970,7 @@ Traits & Indices & Average between communities? & Initial parameter ratio$ \tabu
 
 \section{Test of variance decomposition functions}
  
-In addition to the \texttt{cati} vignette that test this function on the Darwin finch data, we test the behavior of the function \texttt{partvar} and \texttt{decompCTRE} by building two toy models associated to each functions.
+In addition to the \texttt{cati} vignette which test this function on the Darwin finch data, we test the behavior of the function \texttt{partvar} and \texttt{decompCTRE} by building two toy models associated to each functions.
  
  \subsection{Behavior of the function \texttt{partvar}}
 
