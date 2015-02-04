@@ -39,6 +39,7 @@ plotRandtest            Plot result of observed indices values against
 plotSESvar              Plot SES values against a variable
 plotSpPop               Plot populations values against species values
 plotSpVar               Plot populations values against species values
+samplingSubsetData      Sampling subset of data.
 ses                     Standardized effect size and confidence
                         interval for a matrix of statistics
 ses.listofindex         Standardized effect size for a list of index.

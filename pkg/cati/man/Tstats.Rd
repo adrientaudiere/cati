@@ -18,6 +18,8 @@
 	SE.reg.pool = NULL, nperm = 99, printprogress = TRUE)
 	
 	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
+	
+	ses.Tstats(x, val.quant = c(0.025, 0.975))
 		
 	\method{barplot}{Tstats}(height, val.quant = c(0.025, 0.975), 
 	col.index = c("red", "purple", "olivedrab3", "white"), ylim = NULL, \dots)
