@@ -1,6 +1,7 @@
 # cati: Communities Assembly by Traits: Individuals and beyond
 
-## R package
+---
+## A R package to detect communities assembly processes by functionnal traits
 
 ### Install the latest versions of all dependencies from CRAN:
 
@@ -23,4 +24,5 @@ install.packages("cati")
 library(cati)
 ```
 
+---
 There's a **[tutorial](https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf)** which illustrate the cati package using Darwin finches data.
