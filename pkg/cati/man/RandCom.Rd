@@ -3,7 +3,7 @@
 
 
 \title{
-	Toy model to simulate internal and/or external filtering) 
+	Toy model to simulate internal and/or external filtering
 }
 
 \description{

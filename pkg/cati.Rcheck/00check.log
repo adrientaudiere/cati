@@ -7,7 +7,6 @@
 * this is package 'cati' version '0.96'
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
-Version jumps in minor (submitted: 0.96, existing: 0.8)
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
   No repository set, so cyclic dependency check skipped
@@ -37,18 +36,64 @@ Version jumps in minor (submitted: 0.96, existing: 0.8)
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
 * checking R code for possible problems ... OK
-* checking Rd files ... OK
+* checking Rd files ... WARNING
+prepare_Rd: samplingSubsetData.Rd:17: unexpected section header '\arguments'
+prepare_Rd: samplingSubsetData.Rd:18: unknown macro '\item'
+prepare_Rd: samplingSubsetData.Rd:21: unknown macro '\item'
+prepare_Rd: samplingSubsetData.Rd:24: unknown macro '\item'
+prepare_Rd: samplingSubsetData.Rd:27: unknown macro '\item'
+prepare_Rd: samplingSubsetData.Rd:30: unknown macro '\item'
+prepare_Rd: samplingSubsetData.Rd:35: unexpected section header '\details'
+prepare_Rd: samplingSubsetData.Rd:39: unexpected section header '\value'
+prepare_Rd: samplingSubsetData.Rd:43: unexpected section header '\author'
+prepare_Rd: samplingSubsetData.Rd:47: unexpected END_OF_INPUT '
+'
+checkRd: (7) samplingSubsetData.Rd:28: Tag \strong is invalid in a \usage block
 * checking Rd metadata ... OK
 * checking Rd line widths ... NOTE
-Rd file 'RandCom.Rd':
-  \usage lines wider than 90 characters:
-             RandCom(Ncom = 10, Nsp = 20, Nind.com = 100, sdlog = 1.5, min_value_traits = 80, max_value_traits = 200, cv_intra_sp = 1.5, cv_ ... [TRUNCATED]
-
+Erreur : 28: Tag \strong not expected in code block
+Exécution arrêtée
 These lines will be truncated in the PDF manual.
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
-* checking Rd \usage sections ... OK
+* checking Rd \usage sections ... WARNING
+Bad \usage lines found in documentation object 'samplingSubsetData':
+  	sampling_subset_data(d = NULL, by.factor = NULL, nperm = 2, 
+  	type = "proportion_1", prop = seq(10,100, by = 10)) {
+  }
+  {	
+  	<unescaped bksl>item{d}{
+  		Dataframe of data to sample. Each line is an individual.
+  	}
+  	<unescaped bksl>item{by.factor}{
+  		This factor define the sampling unit to impoverish.
+  	}
+  	<unescaped bksl>item{nperm}{
+  		Number of permutation. 
+  	}
+  	<unescaped bksl>item{type}{
+  		Type of sampling. <unescaped bksl>strong{count_1} sample a number of individual with one individual by factor at least. <unescaped bksl>strong{count_0} sample a number of individual without any minimum by factor. <unescaped bksl>strong{proportion_1} sample a proportion of individual with one individual by factor at least. <unescaped bksl>strong{proportion_0} sample a proportion of individual without any minimum by factor.
+  	}
+  	<unescaped bksl>item{prop}{
+  		Categorical proportion to sample.
+  	}
+  }
+  {
+  	Sampling subset of data.
+  }
+  {
+  	Return a list list of sample dataframe. The first level of the list depicts the permutation and the second level depicts the different proportion/number of individual sampled by factor. 
+  }
+  {
+  	Adrien Taudiere
+  }
+
+Functions with \usage entries need to have the appropriate \alias
+entries, and all their arguments documented.
+The \usage entries must correspond to syntactically valid R code.
+See the chapter 'Writing R documentation files' in the 'Writing R
+Extensions' manual.
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
 * checking contents of 'data' directory ... OK
@@ -57,4 +102,5 @@ These lines will be truncated in the PDF manual.
 * checking examples ... OK
 * checking PDF version of manual ... OK
 * DONE
+WARNING: There were 2 warnings.
 NOTE: There were 3 notes.

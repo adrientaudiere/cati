@@ -39,6 +39,7 @@ print.Tstats	Tstats
 Pval	Pval
 RandCom	RandCom
 RaoRel	RaoRel
+samplingSubsetData	samplingSubsetData
 SDND	CVNND
 SDNND	CVNND
 ses	ses
