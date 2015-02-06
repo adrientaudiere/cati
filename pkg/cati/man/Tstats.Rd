@@ -163,7 +163,12 @@
 }
 
 \author{
+<<<<<<< HEAD
 	Adrien Taudiere and Cyrille Violle
+=======
+	Adrien Taudiere
+	Cyrille Violle
+>>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
 }
 
 \seealso{
