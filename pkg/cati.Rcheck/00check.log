@@ -1,13 +1,24 @@
+<<<<<<< HEAD
 * using log directory 'C:/Users/taudiere/Documents/GitHub/cati/pkg/cati.Rcheck'
+=======
+* using log directory 'C:/Users/taudiere/Desktop/cati/pkg/cati.Rcheck'
+>>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
 * using R version 3.1.2 (2014-10-31)
 * using platform: x86_64-w64-mingw32 (64-bit)
 * using session charset: ISO8859-1
 * checking for file 'cati/DESCRIPTION' ... OK
 * checking extension type ... Package
+<<<<<<< HEAD
 * this is package 'cati' version '0.96'
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
 Version jumps in minor (submitted: 0.96, existing: 0.8)
+=======
+* this is package 'cati' version '0.94'
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>'
+Version jumps in minor (submitted: 0.94, existing: 0.8)
+>>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
   No repository set, so cyclic dependency check skipped
@@ -36,6 +47,7 @@ Version jumps in minor (submitted: 0.96, existing: 0.8)
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
+<<<<<<< HEAD
 * checking R code for possible problems ... OK
 * checking Rd files ... OK
 * checking Rd metadata ... OK
@@ -45,6 +57,16 @@ Rd file 'RandCom.Rd':
              RandCom(Ncom = 10, Nsp = 20, Nind.com = 100, sdlog = 1.5, min_value_traits = 80, max_value_traits = 200, cv_intra_sp = 1.5, cv_ ... [TRUNCATED]
 
 These lines will be truncated in the PDF manual.
+=======
+* checking R code for possible problems ... NOTE
+Fred: no visible global function definition for 'convhulln'
+MinMaxMST: no visible global function definition for 'gowdis'
+SumBL: no visible global function definition for 'gowdis'
+SumBL: no visible global function definition for 'treeheight'
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+>>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
