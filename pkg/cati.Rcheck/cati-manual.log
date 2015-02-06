@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.3.11)  2 FEB 2015 15:50
 entering extended mode
 **C:/Users/taudiere/AppData/Local/Temp/RtmpoXbwTV/Rd2pdf18f02a4d5215/Rd2.tex
@@ -9,6 +10,12 @@ entering extended mode
 **C:/Users/taudiere/AppData/Local/Temp/RtmpATQiyI/Rd2pdf1528e232dc2/Rd2.tex
 (C:/Users/taudiere/AppData/Local/Temp/RtmpATQiyI/Rd2pdf1528e232dc2/Rd2.tex
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.3.11)  2 FEB 2015 18:06
+entering extended mode
+**C:/Users/taudiere/AppData/Local/Temp/RtmpyUPztQ/Rd2pdffc86ad33ce7/Rd2.tex
+(C:/Users/taudiere/AppData/Local/Temp/RtmpyUPztQ/Rd2pdffc86ad33ce7/Rd2.tex
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -769,10 +776,14 @@ File: latin1.def 2008/03/30 v1.1d Input encoding file
 
 Writing index file Rd2.idx
 <<<<<<< HEAD
+<<<<<<< HEAD
 (C:\Users\taudiere\AppData\Local\Temp\RtmpoXbwTV\Rd2pdf18f02a4d5215\Rd2.aux)
 =======
 (C:\Users\taudiere\AppData\Local\Temp\RtmpATQiyI\Rd2pdf1528e232dc2\Rd2.aux)
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+(C:\Users\taudiere\AppData\Local\Temp\RtmpyUPztQ\Rd2pdffc86ad33ce7\Rd2.aux)
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
@@ -846,12 +857,17 @@ LaTeX Info: Redefining \pageref on input line 8.
 LaTeX Info: Redefining \nameref on input line 8.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 (C:\Users\taudiere\AppData\Local\Temp\RtmpoXbwTV\Rd2pdf18f02a4d5215\Rd2.out)
 (C:\Users\taudiere\AppData\Local\Temp\RtmpoXbwTV\Rd2pdf18f02a4d5215\Rd2.out)
 =======
 (C:\Users\taudiere\AppData\Local\Temp\RtmpATQiyI\Rd2pdf1528e232dc2\Rd2.out)
 (C:\Users\taudiere\AppData\Local\Temp\RtmpATQiyI\Rd2pdf1528e232dc2\Rd2.out)
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+(C:\Users\taudiere\AppData\Local\Temp\RtmpyUPztQ\Rd2pdffc86ad33ce7\Rd2.out)
+(C:\Users\taudiere\AppData\Local\Temp\RtmpyUPztQ\Rd2pdffc86ad33ce7\Rd2.out)
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 \@outlinefile=\write4
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 9.
@@ -876,6 +892,7 @@ LaTeX Font Info:    Try loading font information for T1+phv on input line 31.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1phv.fd"
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
+<<<<<<< HEAD
 (C:\Users\taudiere\AppData\Local\Temp\RtmpoXbwTV\Rd2pdf18f02a4d5215\Rd2.toc
 =======
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\inconsolata\t1zi4.fd"
@@ -894,6 +911,9 @@ File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 (C:\Users\taudiere\AppData\Local\Temp\RtmpATQiyI\Rd2pdf1528e232dc2\Rd2.toc
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+(C:\Users\taudiere\AppData\Local\Temp\RtmpyUPztQ\Rd2pdffc86ad33ce7\Rd2.toc
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 [1
 
 
@@ -1072,16 +1092,11 @@ File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 ) [29]
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
-)
-Overfull \hbox (624.78088pt too wide) in paragraph at lines 1953--1953
- []\T1/zi4/m/n/10 RandCom(Ncom = 10, Nsp = 20, Nind.com = 100, sdlog = 1.5, min
-_value_traits = 80, max_value_traits = 200, cv_intra_sp = 1.5, cv_intra_com = 1
-.5, Int_Filter_Strength = 50, Ext_Filter_Strength = 50, Filter="None")[] 
- []
-
-[30] ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
+) [30]
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 ) [31] [32]
+<<<<<<< HEAD
 Overfull \hbox (0.58669pt too wide) in paragraph at lines 2112--2113
 =======
 [25] ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\utf8.def"
@@ -1098,6 +1113,9 @@ File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 ) [30]
 Overfull \hbox (0.58669pt too wide) in paragraph at lines 2021--2022
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+Overfull \hbox (0.58669pt too wide) in paragraph at lines 2115--2116
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 []\T1/ptm/m/n/10 De Bello, Francesco, San-dra La-vorel, Ce-cile H. Al-bert, Wil
 -fried Thuiller, Karl Grigulis, Jiri Dolezal,
  []
@@ -1109,15 +1127,34 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [34]
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
-) [35]
+)
+Overfull \hbox (1199.78088pt too wide) in paragraph at lines 2238--2238
+ []\T1/zi4/m/n/10 Type of sampling. count_1 sample a number of individual with 
+one individual by factor at least. count_0 sample a number of individual withou
+t any minimum by factor. proportion_1 sample a proportion of individual with on
+e individual by factor at least. proportion_0 sample a proportion of individual
+ without any minimum by factor.[] 
+ []
+
+
+Overfull \hbox (501.78088pt too wide) in paragraph at lines 2250--2250
+ []\T1/zi4/m/n/10 Return a list list of sample dataframe. The first level of th
+e list depicts the permutation and the second level depicts the different propo
+rtion/number of individual sampled by factor.[] 
+ []
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
+File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
+) [35] [36]
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
-) [36]
+) [37]
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
+<<<<<<< HEAD
 ) [37]
 Overfull \hbox (6.16797pt too wide) in paragraph at lines 2408--2409
 =======
@@ -1139,10 +1176,15 @@ File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 )
 Overfull \hbox (6.16797pt too wide) in paragraph at lines 2317--2318
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+) [38]
+Overfull \hbox (6.16797pt too wide) in paragraph at lines 2456--2457
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 \T1/ptm/m/n/10 char-ac-ter. The re-sponse vari-able is spec-i-fied by the next 
 two ar-gu-ments, specif.avg
  []
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 [38] ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
@@ -1155,10 +1197,17 @@ File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 [38]
 Overfull \hbox (4.10892pt too wide) in paragraph at lines 2490--2491
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+[39] ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
+File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
+) [40]
+Overfull \hbox (4.10892pt too wide) in paragraph at lines 2629--2630
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 \T1/ptm/m/n/10 plot and can be used to ad-just the look of re-sult-ing graph. S
 ee [][]\T1/zi4/m/n/10 plot.listofindex[][][]
  []
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 [40] [41] [42]
 (C:\Users\taudiere\AppData\Local\Temp\RtmpoXbwTV\Rd2pdf18f02a4d5215\Rd2.ind
@@ -1171,22 +1220,32 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 (C:\Users\taudiere\AppData\Local\Temp\RtmpATQiyI\Rd2pdf1528e232dc2\Rd2.ind
 [42]
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+[41] [42] [43]
+(C:\Users\taudiere\AppData\Local\Temp\RtmpyUPztQ\Rd2pdffc86ad33ce7\Rd2.ind
+[44]
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
 (Font)              using `T1/zi4/m/n' instead on input line 3.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 [44
+=======
+[45
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2739.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2739.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2787.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2787.
 
-(C:\Users\taudiere\AppData\Local\Temp\RtmpoXbwTV\Rd2pdf18f02a4d5215\Rd2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2739.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2739.
+(C:\Users\taudiere\AppData\Local\Temp\RtmpyUPztQ\Rd2pdffc86ad33ce7\Rd2.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2787.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2787.
 
 Package rerunfilecheck Info: File `Rd2.out' has not changed.
+<<<<<<< HEAD
 (rerunfilecheck)             Checksum: E88135036D68B0FBD14AE9D319467D19;1577.
 =======
 [43
@@ -1202,21 +1261,28 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2649.
 Package rerunfilecheck Info: File `Rd2.out' has not changed.
 (rerunfilecheck)             Checksum: 98F67D891DBEBF4FCB5611D7444BEC64;1529.
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+(rerunfilecheck)             Checksum: 81A4D87DA41A3D2C89DC7E22B37CB61F;1647.
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2739.
+=======
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2787.
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
  ) 
 Here is how much of TeX's memory you used:
- 6732 strings out of 493921
- 97844 string characters out of 3144867
+ 6740 strings out of 493921
+ 98034 string characters out of 3144867
  168178 words of memory out of 3000000
- 9542 multiletter control sequences out of 15000+200000
+ 9543 multiletter control sequences out of 15000+200000
  38160 words of font info for 48 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 38i,6n,34p,900b,590s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,6n,34p,899b,590s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/inconsolata/i4-ts1.enc}{C:/Progr
 am Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}{C:/Program Files/MiKTeX 2.
 9/fonts/enc/dvips/inconsolata/i4-t1-0.enc}<C:/Program Files/MiKTeX 2.9/fonts/ty
@@ -1225,8 +1291,9 @@ type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/time
 s/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/
 Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiK
 TeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (44 pages, 247604 bytes).
+Output written on Rd2.pdf (45 pages, 250187 bytes).
 PDF statistics:
+<<<<<<< HEAD
  840 PDF objects out of 1000 (max. 8388607)
  330 named destinations out of 1000 (max. 500000)
  233 words of extra memory for PDF output out of 10000 (max. 10000000)
@@ -1256,4 +1323,9 @@ PDF statistics:
  320 named destinations out of 1000 (max. 500000)
  225 words of extra memory for PDF output out of 10000 (max. 10000000)
 >>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+=======
+ 854 PDF objects out of 1000 (max. 8388607)
+ 335 named destinations out of 1000 (max. 500000)
+ 241 words of extra memory for PDF output out of 10000 (max. 10000000)
+>>>>>>> 8de29aed839bc62080216f129babdbef32df899b
 
