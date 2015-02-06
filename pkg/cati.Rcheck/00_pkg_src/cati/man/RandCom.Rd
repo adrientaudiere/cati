@@ -11,7 +11,10 @@
 }
 
 \usage{
-	RandCom(Ncom = 10, Nsp = 20, Nind.com = 100, sdlog = 1.5, min_value_traits = 80, max_value_traits = 200, cv_intra_sp = 1.5, cv_intra_com = 1.5, Int_Filter_Strength = 50, Ext_Filter_Strength = 50, Filter="None")
+	RandCom(Ncom = 10, Nsp = 20, Nind.com = 100, sdlog = 1.5, 
+	min_value_traits = 80, max_value_traits = 200, 
+	cv_intra_sp = 1.5, cv_intra_com = 1.5, 
+	Int_Filter_Strength = 50, Ext_Filter_Strength = 50, Filter="None")
 }
 
 \arguments{
@@ -75,7 +78,7 @@
 }
 
 \author{
-	Adrien Taudiere and Cecile Albert
+	Cecile Albert and Adrien Taudiere
 }
 
 \examples{	
