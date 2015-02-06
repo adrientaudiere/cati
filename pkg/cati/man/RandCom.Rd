@@ -44,11 +44,11 @@
 	}
 		
 	\item{cv_intra_sp}{
-		Coefficient of variation for intra-specific distributions. The more the value is high the less there is internal filtering.
+		Coefficient of variation for intra-specific distributions. The more the value is high the less there is internal filtering. Used only for the trait 1 (normally distributed).
 	}
 	
 	\item{cv_intra_com}{
-		Coefficient of variation for intra-community distributions. The more the value is high the less there is external filtering.
+		Coefficient of variation for intra-community distributions. The more the value is high the less there is external filtering. Used only for the trait 1 (normally distributed)
 	}
 		
 	\item{Int_Filter_Strength}{
