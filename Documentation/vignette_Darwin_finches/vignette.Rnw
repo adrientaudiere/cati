@@ -662,9 +662,9 @@ The other plot types are the same as plot.Tstats.
 par(mfrow = c(2,2))
 
 plot(i.l1)
-plot(i.l1,type = "simple_range")
 plot(i.l1,type = "normal")
 plot(i.l1,type = "barplot")
+plot(i.l1,type = "simple")
 
 par(mfrow = c(1,1))
 @
