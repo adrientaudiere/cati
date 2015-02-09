@@ -44,6 +44,12 @@ opts_chunk$set(fig.keep = 'high', dev = 'pdf', fig.width = 7, fig.height = 7, ti
 
 \textbf{Abstract:}
 
+Community ecologists are actively describing species by their functional traits, quantifying the functional structure of plant and animal assemblages, and inferring community assembly processes with null model analyses of trait distributions and functional diversity indices. Intraspecific variation in traits and effects of spatial scale are potentially important in these analyses.
+
+  We introduce the R package cati, available on CRAN, for the analysis of community assembly with functional traits. The cati package (i) calculates a variety of single-trait and multi-trait indices from interspecific and intraspecific trait measures; (ii) partitions functional trait variation among spatial and taxonomic levels; (iii) implements a palette of flexible null models for detecting non-random patterns of functional traits. These patterns can be used to draw inferences about hypotheses of community assembly such as environmental filtering and negative species interactions.
+
+The basic input for cati is a data frame in which columns are traits, rows are species or individuals, and entries are the measured trait values. The cati package can also incorporate into analyses a square distance matrix, which could include phylogenetic or genetic distances among individuals or species. Users select from a variety of functional trait metrics and analyze them relative to a null model that specifies trait distributions in a regional source pool.
+
 \textbf{Key words:}
 Functional space, functional structure, community assembly, ecological niche, environmental filter, individual differences, intraspecific variation, null model, trait, variance decomposition
 
@@ -83,6 +89,7 @@ We can now load the package alongside other useful packages:
 <<results = "hide">>=
 library("mice")
 library("hypervolume")
+library("e1071")
 @
 
 You can make sure that the right version of the package is installed using:
