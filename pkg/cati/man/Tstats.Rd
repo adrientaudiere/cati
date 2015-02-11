@@ -165,12 +165,7 @@
 }
 
 \author{
-<<<<<<< HEAD
 	Adrien Taudiere and Cyrille Violle
-=======
-	Adrien Taudiere
-	Cyrille Violle
->>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
 }
 
 \seealso{
@@ -256,5 +251,15 @@
 	    
 	    plot(as.listofindex(list(res.finch, res.finch2, res.finch3)))	
 	}
+
+	#### Use the standard errors of measure in the analysis (argument SE)
+	\dontrun{
+		res.finch.SE0 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+		sp = sp.finch, SE = 0, print = FALSE)
+		
+		res.finch.SE5 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+		sp = sp.finch, SE = 5, print = FALSE)
 	
+		plot(as.listofindex(list(res.finch.SE0, res.finch.SE5)))
+	}
 }
