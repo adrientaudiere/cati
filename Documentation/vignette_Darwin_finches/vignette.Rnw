@@ -490,6 +490,23 @@ head(sum_Tstats(res.finch)$p.value, 10)
 
 \newpage
 
+\subsubsection{Use the standard errors of measure in the analysis (argument SE)}
+<<dev = 'pdf', fig.align = 'center'>>=
+res.finch.SE0 <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
+                        SE = 0, print = FALSE)
+		
+res.finch.SE5 <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
+                        SE = 5, print = FALSE)
+	
+plot(as.listofindex(list(res.finch.SE0, res.finch.SE5), 
+                    namesindex = c("T_IP/IC with measurement error SE = 5",
+                                   "T_IC/IR with measurement error SE = 5",
+                                   "T_PC/PR with measurement error SE = 5",
+                                   "T_IP/IC without SE", "T_IC/IR without SE", 
+                                   "T_PC/PR without SE")))
+@
+  
+  
 \subsubsection{Plot T-statistics correlations}
 
 We can also see T-statistics correlations and theirs correlation with others variables (e.g. a gradient variable, or the species richness).
