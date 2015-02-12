@@ -490,13 +490,16 @@ head(sum_Tstats(res.finch)$p.value, 10)
 
 \newpage
 
-\subsubsection{Use the standard errors of measure in the analysis (argument SE)}
+\subsubsection{Use the standard errors of measure in the analysis (argument SE).}
+
+Here we can take into account the measurement error for each traits in the calculation of Standardized Effect Size of T-statistics.For this exemple, let's say that each trait is subject to a measurement error equal to half of it means. 
+
 <<dev = 'pdf', fig.align = 'center'>>=
 res.finch.SE0 <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
                         SE = 0, print = FALSE)
 		
 res.finch.SE5 <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
-                        SE = 5, print = FALSE)
+                        SE = colMeans(traits.finch, na.rm = T)/2, print = FALSE)
 	
 plot(as.listofindex(list(res.finch.SE0, res.finch.SE5), 
                     namesindex = c("T_IP/IC with measurement error SE = 5",
