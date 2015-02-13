@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.6)  13 FEB 2015 03:40
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.6)  13 FEB 2015 23:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -454,6 +454,10 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 80.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/tools/enumerate.sty
+Package: enumerate 1999/03/05 v3.00 enumerate extensions (DPC)
+\@enLab=\toks20
+)
 (/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty
 Package: bm 2004/02/26 v1.1c Bold Symbol Support (DPC/FMi)
 \symboldoperators=\mathgroup6
@@ -475,7 +479,7 @@ Package: geometry 2010/09/12 v5.6 Page Geometry
 \Gm@layoutheight=\dimen121
 \Gm@layouthoffset=\dimen122
 \Gm@layoutvoffset=\dimen123
-\Gm@dimlist=\toks20
+\Gm@dimlist=\toks21
 )
 (/usr/share/texlive/texmf-dist/tex/latex/preprint/authblk.sty
 Package: authblk 2001/02/27 1.3 (PWD)
@@ -513,20 +517,20 @@ tim
 ) (./Appendix4.aux)
 \openout1 = `Appendix4.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 127.
-LaTeX Font Info:    ... okay on input line 127.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 127.
-LaTeX Font Info:    ... okay on input line 127.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 127.
-LaTeX Font Info:    ... okay on input line 127.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 127.
-LaTeX Font Info:    ... okay on input line 127.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 127.
-LaTeX Font Info:    ... okay on input line 127.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 127.
-LaTeX Font Info:    ... okay on input line 127.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 127.
-LaTeX Font Info:    ... okay on input line 127.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count107
@@ -534,12 +538,12 @@ LaTeX Font Info:    ... okay on input line 127.
 \scratchbox=\box26
 \nofMPsegments=\count108
 \nofMParguments=\count109
-\everyMPshowfont=\toks21
+\everyMPshowfont=\toks22
 \MPscratchCnt=\count110
 \MPscratchDim=\dimen133
 \MPnumerator=\count111
 \makeMPintoPDFobject=\count112
-\everyMPtoPDFconversion=\toks22
+\everyMPtoPDFconversion=\toks23
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -556,7 +560,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box27
-Package hyperref Info: Link coloring ON on input line 127.
+Package hyperref Info: Link coloring ON on input line 128.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -566,9 +570,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count113
 )
-LaTeX Info: Redefining \ref on input line 127.
-LaTeX Info: Redefining \pageref on input line 127.
-LaTeX Info: Redefining \nameref on input line 127.
+LaTeX Info: Redefining \ref on input line 128.
+LaTeX Info: Redefining \pageref on input line 128.
+LaTeX Info: Redefining \nameref on input line 128.
 
 (./Appendix4.out) (./Appendix4.out)
 \@outlinefile=\write3
@@ -611,16 +615,16 @@ LaTeX Info: Redefining \nameref on input line 127.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 133.
+LaTeX Font Info:    Try loading font information for U+msa on input line 134.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 133.
+LaTeX Font Info:    Try loading font information for U+msb on input line 134.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 1931) in paragraph at lines 147--150
+Underfull \hbox (badness 1931) in paragraph at lines 148--151
 \OT1/cmr/m/n/12 en-vi-ron-men-tal fil-ter, in-di-vid-ual dif-fer-ences, in-tras
 pe-cific vari-a-tion, null model, trait, vari-ance
  []
@@ -635,612 +639,605 @@ pe-cific vari-a-tion, null model, trait, vari-ance
  [3]
 Package color Info: Redefining color shadecolor on input line 171.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 174.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 173.
 Package color Info: Redefining color shadecolor on input line 187.
  [4] [5]
-Underfull \hbox (badness 3460) in paragraph at lines 235--235
+Underfull \hbox (badness 3460) in paragraph at lines 238--238
 []|\OT1/cmr/m/n/10.95 Randomization of in-di-vid-ual trait
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 235--235
+Underfull \hbox (badness 10000) in paragraph at lines 238--238
 []|\OT1/cmr/m/n/10.95 Internal fil-ter-ing sig-nif-i-cantly
  []
 
 
-Underfull \hbox (badness 3219) in paragraph at lines 235--235
+Underfull \hbox (badness 3219) in paragraph at lines 238--238
 \OT1/cmr/m/n/10.95 im-pacts the dis-tri-bu-tion of trait
  []
 
 
-Underfull \hbox (badness 8075) in paragraph at lines 235--235
+Underfull \hbox (badness 8075) in paragraph at lines 238--238
 \OT1/cmr/m/n/10.95 two in-di-vid-u-als be-long-ing to a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 235--235
+Underfull \hbox (badness 10000) in paragraph at lines 238--238
 \OT1/cmr/m/n/10.95 pop-u-la-tion have more sim-i-lar
  []
 
 
-Underfull \hbox (badness 2213) in paragraph at lines 235--235
+Underfull \hbox (badness 2213) in paragraph at lines 238--238
 \OT1/cmr/m/n/10.95 trait val-ues than two in-di-vid-u-als
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--239
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 []|\OT1/cmr/m/n/10.95 Draw with-out re-place-ment of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--239
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 \OT1/cmr/m/n/10.95 in-di-vid-ual trait val-ues be-long-ing
  []
 
 
-Underfull \hbox (badness 1448) in paragraph at lines 239--239
+Underfull \hbox (badness 1448) in paragraph at lines 242--242
 \OT1/cmr/m/n/10.95 to the re-gional pool (keep-ing the
  []
 
 
-Underfull \hbox (badness 5403) in paragraph at lines 239--239
+Underfull \hbox (badness 5403) in paragraph at lines 242--242
 []|\OT1/cmr/m/n/10.95 Two in-di-vid-u-als be-long-ing to a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--239
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 \OT1/cmr/m/n/10.95 com-mu-nity have more sim-i-lar
  []
 
 
-Underfull \hbox (badness 2213) in paragraph at lines 239--239
+Underfull \hbox (badness 2213) in paragraph at lines 242--242
 \OT1/cmr/m/n/10.95 trait val-ues than two in-di-vid-u-als
  []
 
 
-Underfull \hbox (badness 3407) in paragraph at lines 243--243
+Underfull \hbox (badness 3407) in paragraph at lines 246--246
 []|\OT1/cmr/m/n/10.95 regional.pop &
  []
 
 
-Overfull \hbox (6.88445pt too wide) in paragraph at lines 243--243
+Overfull \hbox (6.88445pt too wide) in paragraph at lines 246--246
 \OT1/cmr/m/n/10.95 re-gional.pop.prab| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--243
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
 []|\OT1/cmr/m/n/10.95 There is no species-based
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--243
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
 \OT1/cmr/m/n/10.95 ex-ter-nal fil-ter-ing: the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--243
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
 \OT1/cmr/m/n/10.95 dis-tri-bu-tion of mean trait
  []
 
 
-Underfull \hbox (badness 2608) in paragraph at lines 243--243
+Underfull \hbox (badness 2608) in paragraph at lines 246--246
 \OT1/cmr/m/n/10.95 re-gional pool (keep-ing the ac-tual
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--243
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
 \OT1/cmr/m/n/10.95 num-ber of in-di-vid-u-als in each
  []
 
 
-Underfull \hbox (badness 6691) in paragraph at lines 243--243
+Underfull \hbox (badness 6691) in paragraph at lines 246--246
 \OT1/cmr/m/n/10.95 com-mu-nity (re-gional.pop) or not
  []
 
 
-Underfull \hbox (badness 5403) in paragraph at lines 243--243
+Underfull \hbox (badness 5403) in paragraph at lines 246--246
 []|\OT1/cmr/m/n/10.95 Two in-di-vid-u-als be-long-ing to a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--243
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
 \OT1/cmr/m/n/10.95 com-mu-nity have more sim-i-lar
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--243
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
 \OT1/cmr/m/n/10.95 or with-out (re-gional.pop .prab)
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--244
+Underfull \hbox (badness 10000) in paragraph at lines 246--247
 []|$\OML/cmm/m/it/10.95 T[]$
  []
 
 
-Overfull \hbox (4.8016pt too wide) in paragraph at lines 230--247
+Overfull \hbox (4.8016pt too wide) in paragraph at lines 233--250
 [][] 
  []
 
 [6
 
 ]
-Package color Info: Redefining color shadecolor on input line 262.
-Package color Info: Redefining color shadecolor on input line 277.
- <general_outline.pdf, id=278, 597.50786pt x 845.04686pt>
+Package color Info: Redefining color shadecolor on input line 265.
+Package color Info: Redefining color shadecolor on input line 283.
+ <general_outline.pdf, id=288, 529.20973pt x 775.89029pt>
 File: general_outline.pdf Graphic file (type pdf)
 
 <use general_outline.pdf>
-Package pdftex.def Info: general_outline.pdf used on input line 308.
-(pdftex.def)             Requested size: 476.03984pt x 673.25323pt.
+Package pdftex.def Info: general_outline.pdf used on input line 314.
+(pdftex.def)             Requested size: 465.46692pt x 682.45406pt.
  [7
 
 ] [8 <./general_outline.pdf>] [9
 
 ]
-Package color Info: Redefining color shadecolor on input line 328.
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 333
+Package color Info: Redefining color shadecolor on input line 335.
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 340
 .
 
 (/usr/share/R/share/texmf/tex/latex/omscmtt.fd
 File: omscmtt.fd 
 )
 LaTeX Font Info:    Font shape `OMS/cmtt/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 333.
-Package color Info: Redefining color shadecolor on input line 370.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 340.
+Package color Info: Redefining color shadecolor on input line 377.
  [10
 
 ]
-<figure/No_Filter_plots-1.pdf, id=1525, 479.7925pt x 473.77pt>
+<figure/No_Filter_plots-1.pdf, id=1126, 478.78876pt x 473.77pt>
 File: figure/No_Filter_plots-1.pdf Graphic file (type pdf)
 
 <use figure/No_Filter_plots-1.pdf>
-Package pdftex.def Info: figure/No_Filter_plots-1.pdf used on input line 381.
-(pdftex.def)             Requested size: 479.7913pt x 473.77606pt.
-Package color Info: Redefining color shadecolor on input line 392.
+Package pdftex.def Info: figure/No_Filter_plots-1.pdf used on input line 388.
+(pdftex.def)             Requested size: 478.78758pt x 473.76884pt.
+Package color Info: Redefining color shadecolor on input line 399.
 
-<figure/No_Filter_plots_Tstats-1.pdf, id=1526, 432.61626pt x 218.8175pt>
+<figure/No_Filter_plots_Tstats-1.pdf, id=1127, 432.61626pt x 218.8175pt>
 File: figure/No_Filter_plots_Tstats-1.pdf Graphic file (type pdf)
 
 <use figure/No_Filter_plots_Tstats-1.pdf>
 Package pdftex.def Info: figure/No_Filter_plots_Tstats-1.pdf used on input line
- 398.
+ 405.
 (pdftex.def)             Requested size: 432.6152pt x 218.82697pt.
-Package color Info: Redefining color shadecolor on input line 415.
+Package color Info: Redefining color shadecolor on input line 422.
  [11] [12 <./figure/No_Filter_plots-1.pdf>] <figure/No_Filter_results-1.pdf, id
-=1554, 505.89pt x 499.8675pt>
+=1157, 504.88625pt x 499.8675pt>
 File: figure/No_Filter_results-1.pdf Graphic file (type pdf)
 
 <use figure/No_Filter_results-1.pdf>
-Package pdftex.def Info: figure/No_Filter_results-1.pdf used on input line 471.
+Package pdftex.def Info: figure/No_Filter_results-1.pdf used on input line 478.
 
-(pdftex.def)             Requested size: 505.88875pt x 499.87389pt.
-Package color Info: Redefining color shadecolor on input line 490.
+(pdftex.def)             Requested size: 504.885pt x 499.87389pt.
  [13 <./figure/No_Filter_plots_Tstats-1.pdf>] [14 <./figure/No_Filter_results-1
 .pdf>]
-Package color Info: Redefining color shadecolor on input line 522.
+Package color Info: Redefining color shadecolor on input line 497.
+Package color Info: Redefining color shadecolor on input line 529.
  [15]
-Underfull \vbox (badness 10000) detected at line 620
+Underfull \vbox (badness 10000) detected at line 627
  []
 
 
-Underfull \vbox (badness 10000) detected at line 620
+Underfull \vbox (badness 10000) detected at line 627
  []
 
-[16] <figure/No_filter_summary_plot-1.pdf, id=1598, 504.88625pt x 499.8675pt>
+[16] <figure/No_filter_summary_plot-1.pdf, id=1201, 504.88625pt x 499.8675pt>
 File: figure/No_filter_summary_plot-1.pdf Graphic file (type pdf)
 
 <use figure/No_filter_summary_plot-1.pdf>
 Package pdftex.def Info: figure/No_filter_summary_plot-1.pdf used on input line
- 622.
+ 629.
 (pdftex.def)             Requested size: 504.885pt x 499.87389pt.
- [17] [18 <./figure/No_filter_summary_plot-1.pdf>]
+ [17] [18 <./figure/No_filter_summary_plot-1.pdf>] [19]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 726.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 726.
+(hyperref)                removing `math shift' on input line 733.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 726.
+(hyperref)                removing `subscript' on input line 733.
 
-Package color Info: Redefining color shadecolor on input line 733.
 
-Underfull \hbox (badness 10000) in paragraph at lines 764--766
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 733.
+
+Package color Info: Redefining color shadecolor on input line 740.
+
+Underfull \hbox (badness 10000) in paragraph at lines 771--773
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 767--769
+Underfull \hbox (badness 10000) in paragraph at lines 774--776
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 770--772
+Underfull \hbox (badness 10000) in paragraph at lines 777--779
 
  []
 
-[19
+[20
 
 ]
-Package color Info: Redefining color shadecolor on input line 778.
- [20]
-Package color Info: Redefining color shadecolor on input line 850.
+Package color Info: Redefining color shadecolor on input line 785.
+ [21]
+Package color Info: Redefining color shadecolor on input line 857.
 
-<figure/typical_result_internal_filtering1-1.pdf, id=1630, 478.78876pt x 473.77
+<figure/typical_result_internal_filtering1-1.pdf, id=1237, 478.78876pt x 473.77
 pt>
 File: figure/typical_result_internal_filtering1-1.pdf Graphic file (type pdf)
  <use figure/typical_result_internal_filtering1-1.pdf>
 Package pdftex.def Info: figure/typical_result_internal_filtering1-1.pdf used o
-n input line 861.
+n input line 868.
 (pdftex.def)             Requested size: 478.78758pt x 473.76884pt.
-Package color Info: Redefining color shadecolor on input line 874.
+Package color Info: Redefining color shadecolor on input line 881.
 
-<figure/typical_result_internal_filtering2-1.pdf, id=1632, 432.61626pt x 539.01
+<figure/typical_result_internal_filtering2-1.pdf, id=1239, 434.62375pt x 539.01
 375pt>
 File: figure/typical_result_internal_filtering2-1.pdf Graphic file (type pdf)
  <use figure/typical_result_internal_filtering2-1.pdf>
 Package pdftex.def Info: figure/typical_result_internal_filtering2-1.pdf used o
-n input line 883.
-(pdftex.def)             Requested size: 432.6152pt x 539.0371pt.
-Package color Info: Redefining color shadecolor on input line 904.
- [21] [22 <./figure/typical_result_internal_filtering1-1.pdf>] [23 <./figure/ty
+n input line 890.
+(pdftex.def)             Requested size: 434.62268pt x 539.04532pt.
+Package color Info: Redefining color shadecolor on input line 911.
+ [22] [23 <./figure/typical_result_internal_filtering1-1.pdf>] [24 <./figure/ty
 pical_result_internal_filtering2-1.pdf>]
-<figure/Internal_filter_results_pval_local-1.pdf, id=1672, 484.81125pt x 174.65
-25pt>
+<figure/Internal_filter_results_pval_local-1.pdf, id=1279, 475.7775pt x 174.652
+5pt>
 File: figure/Internal_filter_results_pval_local-1.pdf Graphic file (type pdf)
  <use figure/Internal_filter_results_pval_local-1.pdf>
 Package pdftex.def Info: figure/Internal_filter_results_pval_local-1.pdf used o
-n input line 926.
-(pdftex.def)             Requested size: 484.81006pt x 174.66005pt.
+n input line 933.
+(pdftex.def)             Requested size: 475.77632pt x 174.66005pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 940.
+(hyperref)                removing `math shift' on input line 947.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 940.
+(hyperref)                removing `subscript' on input line 947.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 940.
+(hyperref)                removing `math shift' on input line 947.
 
-Package color Info: Redefining color shadecolor on input line 943.
-[24 <./figure/Internal_filter_results_pval_local-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 968.
+Package color Info: Redefining color shadecolor on input line 950.
+[25 <./figure/Internal_filter_results_pval_local-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 975.
 
-<figure/In_filter_results_plot_initparam-1.png, id=1691, 505.89pt x 289.08pt>
+<figure/In_filter_results_plot_initparam-1.png, id=1298, 505.89pt x 289.08pt>
 File: figure/In_filter_results_plot_initparam-1.png Graphic file (type png)
 
 <use figure/In_filter_results_plot_initparam-1.png>
 Package pdftex.def Info: figure/In_filter_results_plot_initparam-1.png used on 
-input line 990.
+input line 997.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
-Package color Info: Redefining color shadecolor on input line 1004.
- [25] [26 <./figure/In_filter_results_plot_initparam-1.png (PNG copy)>]
+Package color Info: Redefining color shadecolor on input line 1011.
+ [26] [27 <./figure/In_filter_results_plot_initparam-1.png (PNG copy)>]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 1035.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 1042.
 
 LaTeX Font Info:    Font shape `OMS/cmtt/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1037.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1044.
 
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1068.
+(hyperref)                removing `math shift' on input line 1075.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1068.
+(hyperref)                removing `subscript' on input line 1075.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1068.
+(hyperref)                removing `math shift' on input line 1075.
 
-Package color Info: Redefining color shadecolor on input line 1073.
-Package color Info: Redefining color shadecolor on input line 1087.
-[27]
-<figure/In_filter_results_plot_modeledparam-1.png, id=1708, 505.89pt x 289.08pt
+Package color Info: Redefining color shadecolor on input line 1080.
+Package color Info: Redefining color shadecolor on input line 1094.
+[28]
+<figure/In_filter_results_plot_modeledparam-1.png, id=1315, 505.89pt x 289.08pt
 >
 File: figure/In_filter_results_plot_modeledparam-1.png Graphic file (type png)
  <use figure/In_filter_results_plot_modeledparam-1.png>
 Package pdftex.def Info: figure/In_filter_results_plot_modeledparam-1.png used 
-on input line 1108.
+on input line 1115.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1120.
+(hyperref)                removing `math shift' on input line 1127.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1120.
+(hyperref)                removing `subscript' on input line 1127.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1120.
+(hyperref)                removing `math shift' on input line 1127.
 
-[28 <./figure/In_filter_results_plot_modeledparam-1.png (PNG copy)>]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1123.
-
+[29 <./figure/In_filter_results_plot_modeledparam-1.png (PNG copy)>]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1123.
+(hyperref)                removing `math shift' on input line 1130.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1123.
+(hyperref)                removing `subscript' on input line 1130.
 
-Package color Info: Redefining color shadecolor on input line 1129.
-Package color Info: Redefining color shadecolor on input line 1152.
 
-<figure/Internal_filter_Results_plots_initial_param-1.png, id=1718, 505.89pt x 
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 1130.
+
+Package color Info: Redefining color shadecolor on input line 1136.
+Package color Info: Redefining color shadecolor on input line 1159.
+
+<figure/Internal_filter_Results_plots_initial_param-1.png, id=1325, 505.89pt x 
 289.08pt>
 File: figure/Internal_filter_Results_plots_initial_param-1.png Graphic file (ty
 pe png)
  <use figure/Internal_filter_Results_plots_initial_param-1.png>
 Package pdftex.def Info: figure/Internal_filter_Results_plots_initial_param-1.p
-ng used on input line 1170.
+ng used on input line 1177.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1182.
+(hyperref)                removing `math shift' on input line 1189.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1182.
+(hyperref)                removing `subscript' on input line 1189.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1182.
+(hyperref)                removing `math shift' on input line 1189.
 
-Package color Info: Redefining color shadecolor on input line 1187.
-[29] [30 <./figure/Internal_filter_Results_plots_initial_param-1.png (PNG copy)
+Package color Info: Redefining color shadecolor on input line 1194.
+[30] [31 <./figure/Internal_filter_Results_plots_initial_param-1.png (PNG copy)
 >]
-<figure/Internal_filter_Results_plots_modeled_param-1.png, id=1731, 505.89pt x 
+<figure/Internal_filter_Results_plots_modeled_param-1.png, id=1339, 505.89pt x 
 289.08pt>
 File: figure/Internal_filter_Results_plots_modeled_param-1.png Graphic file (ty
 pe png)
  <use figure/Internal_filter_Results_plots_modeled_param-1.png>
 Package pdftex.def Info: figure/Internal_filter_Results_plots_modeled_param-1.p
-ng used on input line 1213.
+ng used on input line 1220.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1223.
+(hyperref)                removing `math shift' on input line 1230.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1223.
+(hyperref)                removing `subscript' on input line 1230.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1223.
+(hyperref)                removing `math shift' on input line 1230.
 
-[31 <./figure/Internal_filter_Results_plots_modeled_param-1.png (PNG copy)>]
-Package color Info: Redefining color shadecolor on input line 1228.
+[32 <./figure/Internal_filter_Results_plots_modeled_param-1.png (PNG copy)>]
+Package color Info: Redefining color shadecolor on input line 1235.
 
-<figure/In_conc_plot-1.png, id=1737, 505.89pt x 505.89pt>
+<figure/In_conc_plot-1.png, id=1344, 505.89pt x 505.89pt>
 File: figure/In_conc_plot-1.png Graphic file (type png)
 
 <use figure/In_conc_plot-1.png>
-Package pdftex.def Info: figure/In_conc_plot-1.png used on input line 1267.
+Package pdftex.def Info: figure/In_conc_plot-1.png used on input line 1274.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
-Package color Info: Redefining color shadecolor on input line 1278.
- [32] [33 <./figure/In_conc_plot-1.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 1326--1329
+Package color Info: Redefining color shadecolor on input line 1285.
+ [33] [34 <./figure/In_conc_plot-1.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 1333--1336
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1330--1332
+Underfull \hbox (badness 10000) in paragraph at lines 1337--1339
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1333--1337
+Underfull \hbox (badness 10000) in paragraph at lines 1340--1344
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1338--1340
+Underfull \hbox (badness 10000) in paragraph at lines 1345--1347
 
  []
 
-Package color Info: Redefining color shadecolor on input line 1344.
-Package color Info: Redefining color shadecolor on input line 1362.
+Package color Info: Redefining color shadecolor on input line 1351.
+Package color Info: Redefining color shadecolor on input line 1369.
 
-Overfull \hbox (28.68596pt too wide) in paragraph at lines 1374--1374
+Overfull \hbox (28.68596pt too wide) in paragraph at lines 1381--1381
 []  []\OT1/cmtt/m/n/10.95 ex.com.interm[] []<-[] []table[][]([][]sample[][](sp,
 [] []size[] []= Nind[][]/[][]Ncom,[] []prob[] []=[] []rlnorm[][](Nsp,[] []0[][]
 , sdlog),[] []replace[] []= T))[][] 
  []
 
-[34
+[35
 
 ]
-Package color Info: Redefining color shadecolor on input line 1427.
- [35]
-<figure/typical_results_external_filtering1-1.pdf, id=1759, 484.81125pt x 473.7
+Package color Info: Redefining color shadecolor on input line 1434.
+ [36]
+<figure/typical_results_external_filtering1-1.pdf, id=1366, 478.78876pt x 473.7
 7pt>
 File: figure/typical_results_external_filtering1-1.pdf Graphic file (type pdf)
  <use figure/typical_results_external_filtering1-1.pdf>
 Package pdftex.def Info: figure/typical_results_external_filtering1-1.pdf used 
-on input line 1438.
-(pdftex.def)             Requested size: 484.81006pt x 473.79053pt.
-Package color Info: Redefining color shadecolor on input line 1451.
+on input line 1445.
+(pdftex.def)             Requested size: 478.78758pt x 473.76884pt.
+Package color Info: Redefining color shadecolor on input line 1458.
 
-<figure/typical_results_external_filtering2-1.pdf, id=1761, 432.61626pt x 539.0
+<figure/typical_results_external_filtering2-1.pdf, id=1368, 432.61626pt x 539.0
 1375pt>
 File: figure/typical_results_external_filtering2-1.pdf Graphic file (type pdf)
  <use figure/typical_results_external_filtering2-1.pdf>
 Package pdftex.def Info: figure/typical_results_external_filtering2-1.pdf used 
-on input line 1460.
+on input line 1467.
 (pdftex.def)             Requested size: 432.6152pt x 539.0371pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1470.
+(hyperref)                removing `math shift' on input line 1477.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1470.
+(hyperref)                removing `subscript' on input line 1477.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1470.
+(hyperref)                removing `math shift' on input line 1477.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1470.
+(hyperref)                removing `math shift' on input line 1477.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1470.
+(hyperref)                removing `subscript' on input line 1477.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1470.
+(hyperref)                removing `math shift' on input line 1477.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1474.
+(hyperref)                removing `math shift' on input line 1481.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1474.
+(hyperref)                removing `subscript' on input line 1481.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1474.
+(hyperref)                removing `math shift' on input line 1481.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1474.
+(hyperref)                removing `math shift' on input line 1481.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1474.
+(hyperref)                removing `subscript' on input line 1481.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1474.
+(hyperref)                removing `math shift' on input line 1481.
 
-Package color Info: Redefining color shadecolor on input line 1477.
-[36] [37 <./figure/typical_results_external_filtering1-1.pdf>] [38 <./figure/ty
+Package color Info: Redefining color shadecolor on input line 1484.
+[37] [38 <./figure/typical_results_external_filtering1-1.pdf>] [39 <./figure/ty
 pical_results_external_filtering2-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 1519.
+Package color Info: Redefining color shadecolor on input line 1526.
 
-<figure/Ex_filter_results_plot_initparam1-1.png, id=1801, 505.89pt x 289.08pt>
+<figure/Ex_filter_results_plot_initparam1-1.png, id=1408, 505.89pt x 289.08pt>
 File: figure/Ex_filter_results_plot_initparam1-1.png Graphic file (type png)
 
 <use figure/Ex_filter_results_plot_initparam1-1.png>
 Package pdftex.def Info: figure/Ex_filter_results_plot_initparam1-1.png used on
- input line 1542.
+ input line 1549.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
-Package color Info: Redefining color shadecolor on input line 1554.
+Package color Info: Redefining color shadecolor on input line 1561.
 
-<figure/Ex_filter_results_plot_initparam2-1.png, id=1802, 505.89pt x 289.08pt>
+<figure/Ex_filter_results_plot_initparam2-1.png, id=1409, 505.89pt x 289.08pt>
 File: figure/Ex_filter_results_plot_initparam2-1.png Graphic file (type png)
 
 <use figure/Ex_filter_results_plot_initparam2-1.png>
 Package pdftex.def Info: figure/Ex_filter_results_plot_initparam2-1.png used on
- input line 1573.
+ input line 1580.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
-Package color Info: Redefining color shadecolor on input line 1586.
- [39] [40 <./figure/Ex_filter_results_plot_initparam1-1.png (PNG copy)>] [41 <.
+Package color Info: Redefining color shadecolor on input line 1593.
+ [40] [41 <./figure/Ex_filter_results_plot_initparam1-1.png (PNG copy)>] [42 <.
 /figure/Ex_filter_results_plot_initparam2-1.png (PNG copy)>]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1661.
+(hyperref)                removing `math shift' on input line 1668.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1661.
+(hyperref)                removing `subscript' on input line 1668.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1661.
+(hyperref)                removing `math shift' on input line 1668.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1661.
+(hyperref)                removing `math shift' on input line 1668.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1661.
+(hyperref)                removing `subscript' on input line 1668.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1661.
+(hyperref)                removing `math shift' on input line 1668.
 
-Package color Info: Redefining color shadecolor on input line 1666.
-[42]
-Package color Info: Redefining color shadecolor on input line 1680.
+Package color Info: Redefining color shadecolor on input line 1673.
+[43]
+Package color Info: Redefining color shadecolor on input line 1687.
 
-<figure/Ex_filter_results_plot_modeledparam1-1.png, id=1826, 505.89pt x 289.08p
+<figure/Ex_filter_results_plot_modeledparam1-1.png, id=1434, 505.89pt x 289.08p
 t>
 File: figure/Ex_filter_results_plot_modeledparam1-1.png Graphic file (type png)
 
  <use figure/Ex_filter_results_plot_modeledparam1-1.png>
 Package pdftex.def Info: figure/Ex_filter_results_plot_modeledparam1-1.png used
- on input line 1701.
+ on input line 1708.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
-Package color Info: Redefining color shadecolor on input line 1712.
+Package color Info: Redefining color shadecolor on input line 1719.
 
-<figure/Ex_filter_results_plot_modeledparam2-1.png, id=1827, 505.89pt x 289.08p
+<figure/Ex_filter_results_plot_modeledparam2-1.png, id=1435, 505.89pt x 289.08p
 t>
 File: figure/Ex_filter_results_plot_modeledparam2-1.png Graphic file (type png)
 
  <use figure/Ex_filter_results_plot_modeledparam2-1.png>
 Package pdftex.def Info: figure/Ex_filter_results_plot_modeledparam2-1.png used
- on input line 1733.
+ on input line 1740.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1745.
+(hyperref)                removing `math shift' on input line 1752.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1745.
+(hyperref)                removing `subscript' on input line 1752.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1745.
+(hyperref)                removing `math shift' on input line 1752.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1745.
+(hyperref)                removing `math shift' on input line 1752.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1745.
+(hyperref)                removing `subscript' on input line 1752.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1745.
+(hyperref)                removing `math shift' on input line 1752.
 
-[43] [44 <./figure/Ex_filter_results_plot_modeledparam1-1.png (PNG copy)>]
-[45 <./figure/Ex_filter_results_plot_modeledparam2-1.png (PNG copy)>]
-Package color Info: Redefining color shadecolor on input line 1754.
+[44] [45 <./figure/Ex_filter_results_plot_modeledparam1-1.png (PNG copy)>]
+[46 <./figure/Ex_filter_results_plot_modeledparam2-1.png (PNG copy)>]
+Package color Info: Redefining color shadecolor on input line 1761.
 
-Overfull \hbox (5.69121pt too wide) in paragraph at lines 1761--1761
-[][]\OT1/cmtt/m/n/10.95 text[][]([][]0[][],[] []-[][]0.8[][],[] []labels[] []=[
-] []paste[][]([][]"beta error"[][], nbre_beta_error,[] []sep[] []=[] []" = "[][
-]),[] []cex[] []=[] []0.7[][],[] []pos[] []=[] []4[][])[][] 
- []
-
-
-Overfull \hbox (5.69121pt too wide) in paragraph at lines 1767--1767
+Overfull \hbox (5.69121pt too wide) in paragraph at lines 1768--1768
 [][]\OT1/cmtt/m/n/10.95 text[][]([][]0[][],[] []-[][]0.8[][],[] []labels[] []=[
 ] []paste[][]([][]"beta error"[][], nbre_beta_error,[] []sep[] []=[] []" = "[][
 ]),[] []cex[] []=[] []0.7[][],[] []pos[] []=[] []4[][])[][] 
@@ -1254,7 +1251,14 @@ Overfull \hbox (5.69121pt too wide) in paragraph at lines 1774--1774
  []
 
 
-Overfull \hbox (5.69121pt too wide) in paragraph at lines 1780--1780
+Overfull \hbox (5.69121pt too wide) in paragraph at lines 1781--1781
+[][]\OT1/cmtt/m/n/10.95 text[][]([][]0[][],[] []-[][]0.8[][],[] []labels[] []=[
+] []paste[][]([][]"beta error"[][], nbre_beta_error,[] []sep[] []=[] []" = "[][
+]),[] []cex[] []=[] []0.7[][],[] []pos[] []=[] []4[][])[][] 
+ []
+
+
+Overfull \hbox (5.69121pt too wide) in paragraph at lines 1787--1787
 [][]\OT1/cmtt/m/n/10.95 text[][]([][]0[][],[] []-[][]0.8[][],[] []labels[] []=[
 ] []paste[][]([][]"beta error"[][], nbre_beta_error,[] []sep[] []=[] []" = "[][
 ]),[] []cex[] []=[] []0.7[][],[] []pos[] []=[] []4[][])[][] 
@@ -1262,113 +1266,113 @@ Overfull \hbox (5.69121pt too wide) in paragraph at lines 1780--1780
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1788.
+(hyperref)                removing `math shift' on input line 1795.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1788.
+(hyperref)                removing `subscript' on input line 1795.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1788.
+(hyperref)                removing `math shift' on input line 1795.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1788.
+(hyperref)                removing `math shift' on input line 1795.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1788.
+(hyperref)                removing `subscript' on input line 1795.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1788.
+(hyperref)                removing `math shift' on input line 1795.
 
-Package color Info: Redefining color shadecolor on input line 1794.
-[46]
-Package color Info: Redefining color shadecolor on input line 1827.
+Package color Info: Redefining color shadecolor on input line 1801.
+[47]
+Package color Info: Redefining color shadecolor on input line 1834.
 
-<figure/External_filter_Results_plots_initial_param1-1.png, id=1855, 505.89pt x
+<figure/External_filter_Results_plots_initial_param1-1.png, id=1462, 505.89pt x
  289.08pt>
 File: figure/External_filter_Results_plots_initial_param1-1.png Graphic file (t
 ype png)
  <use figure/External_filter_Results_plots_initial_param1-1.png>
 Package pdftex.def Info: figure/External_filter_Results_plots_initial_param1-1.
-png used on input line 1847.
+png used on input line 1854.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
-Package color Info: Redefining color shadecolor on input line 1858.
+Package color Info: Redefining color shadecolor on input line 1865.
 
-<figure/External_filter_Results_plots_initial_param2-1.png, id=1856, 505.89pt x
+<figure/External_filter_Results_plots_initial_param2-1.png, id=1463, 505.89pt x
  289.08pt>
 File: figure/External_filter_Results_plots_initial_param2-1.png Graphic file (t
 ype png)
  <use figure/External_filter_Results_plots_initial_param2-1.png>
 Package pdftex.def Info: figure/External_filter_Results_plots_initial_param2-1.
-png used on input line 1876.
+png used on input line 1883.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1886.
+(hyperref)                removing `math shift' on input line 1893.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1886.
+(hyperref)                removing `subscript' on input line 1893.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1886.
+(hyperref)                removing `math shift' on input line 1893.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1886.
+(hyperref)                removing `math shift' on input line 1893.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1886.
+(hyperref)                removing `subscript' on input line 1893.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1886.
+(hyperref)                removing `math shift' on input line 1893.
 
-Package color Info: Redefining color shadecolor on input line 1891.
-[47] [48 <./figure/External_filter_Results_plots_initial_param1-1.png (PNG copy
-)>] [49 <./figure/External_filter_Results_plots_initial_param2-1.png (PNG copy)
+Package color Info: Redefining color shadecolor on input line 1898.
+[48] [49 <./figure/External_filter_Results_plots_initial_param1-1.png (PNG copy
+)>] [50 <./figure/External_filter_Results_plots_initial_param2-1.png (PNG copy)
 >]
-<figure/External_filter_Results_plots_modeled_param1-1.png, id=1874, 505.89pt x
+<figure/External_filter_Results_plots_modeled_param1-1.png, id=1481, 505.89pt x
  289.08pt>
 File: figure/External_filter_Results_plots_modeled_param1-1.png Graphic file (t
 ype png)
  <use figure/External_filter_Results_plots_modeled_param1-1.png>
 Package pdftex.def Info: figure/External_filter_Results_plots_modeled_param1-1.
-png used on input line 1915.
+png used on input line 1922.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
-Package color Info: Redefining color shadecolor on input line 1926.
+Package color Info: Redefining color shadecolor on input line 1933.
 
-<figure/External_filter_Results_plots_modeled_param2-1.png, id=1875, 505.89pt x
+<figure/External_filter_Results_plots_modeled_param2-1.png, id=1482, 505.89pt x
  289.08pt>
 File: figure/External_filter_Results_plots_modeled_param2-1.png Graphic file (t
 ype png)
  <use figure/External_filter_Results_plots_modeled_param2-1.png>
 Package pdftex.def Info: figure/External_filter_Results_plots_modeled_param2-1.
-png used on input line 1945.
+png used on input line 1952.
 (pdftex.def)             Requested size: 505.88875pt x 289.0837pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1956.
+(hyperref)                removing `math shift' on input line 1963.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 1956.
+(hyperref)                removing `subscript' on input line 1963.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 1956.
+(hyperref)                removing `math shift' on input line 1963.
 
-Package color Info: Redefining color shadecolor on input line 1961.
+Package color Info: Redefining color shadecolor on input line 1968.
 
-Overfull \hbox (34.43465pt too wide) in paragraph at lines 1976--1976
+Overfull \hbox (34.43465pt too wide) in paragraph at lines 1983--1983
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.norm_conf [[][]1[][],[] []1[][]][] []+[] [
 ]log[][](x)[] []*[] []lm.norm_conf [[][]2[][],[] []1[][]],[] []add[] []= T,[] [
 ]lty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0[][],[] []0[][],[] []0[][]
@@ -1376,7 +1380,7 @@ Overfull \hbox (34.43465pt too wide) in paragraph at lines 1976--1976
  []
 
 
-Overfull \hbox (34.43465pt too wide) in paragraph at lines 1977--1977
+Overfull \hbox (34.43465pt too wide) in paragraph at lines 1984--1984
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.norm_conf [[][]1[][],[] []2[][]][] []+[] [
 ]log[][](x)[] []*[] []lm.norm_conf [[][]2[][],[] []2[][]],[] []add[] []= T,[] [
 ]lty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0[][],[] []0[][],[] []0[][]
@@ -1384,7 +1388,7 @@ Overfull \hbox (34.43465pt too wide) in paragraph at lines 1977--1977
  []
 
 
-Overfull \hbox (5.69121pt too wide) in paragraph at lines 1982--1982
+Overfull \hbox (5.69121pt too wide) in paragraph at lines 1989--1989
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.uni[][]$[][]coef[[][]1[][]][] []+[] []log[
 ][](x)[] []*[] [](lm.uni[][]$[][]coef[[][]2[][]]),[] []add[] []= T,[] []lwd[] [
 ]=[] []3[][],[]  []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][],[] [
@@ -1392,7 +1396,7 @@ Overfull \hbox (5.69121pt too wide) in paragraph at lines 1982--1982
  []
 
 
-Overfull \hbox (34.43465pt too wide) in paragraph at lines 1983--1983
+Overfull \hbox (34.43465pt too wide) in paragraph at lines 1990--1990
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.uni_conf [[][]1[][],[] []1[][]][] []+[] []
 log[][](x)[] []*[] []lm.uni_conf [[][]2[][],[] []1[][]],[] []add[] []= T,[] []l
 ty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][]
@@ -1400,7 +1404,7 @@ ty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][]
  []
 
 
-Overfull \hbox (34.43465pt too wide) in paragraph at lines 1984--1984
+Overfull \hbox (34.43465pt too wide) in paragraph at lines 1991--1991
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.uni_conf [[][]1[][],[] []2[][]][] []+[] []
 log[][](x)[] []*[] []lm.uni_conf [[][]2[][],[] []2[][]],[] []add[] []= T,[] []l
 ty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][]
@@ -1408,44 +1412,44 @@ ty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][]
  []
 
 
-Overfull \hbox (51.68071pt too wide) in paragraph at lines 1987--1987
+Overfull \hbox (51.68071pt too wide) in paragraph at lines 1994--1994
 [][]\OT1/cmtt/m/n/10.95 rect[][]([][]-[][]1[][],[] []mean[][]([][]c[][](SES.inf
 .MEAN.uni_Ticir, meanSES.INF_glob.uni_Ticir),[] []na.rm[] []= T),[] []max[][](i
 nit_param),[] []10[][],[][] 
  []
 
 
-Overfull \hbox (91.92152pt too wide) in paragraph at lines 1990--1990
+Overfull \hbox (91.92152pt too wide) in paragraph at lines 1997--1997
 [][]\OT1/cmtt/m/n/10.95 rect[][]([][]-[][]1[][],[] []mean[][]([][]c[][](SES.inf
 .MEAN.norm_Ticir, meanSES.INF_glob.norm_Ticir),[] []na.rm[] []= T),[] []max[][]
 (init_param)[] []+[] []10[][],[] []10[][],[][] 
  []
 
-[50] [51 <./figure/External_filter_Results_plots_modeled_param1-1.png (PNG copy
-)>] [52 <./figure/External_filter_Results_plots_modeled_param2-1.png (PNG copy)
->] <figure/Ex_conc_plot1-1.png, id=1890, 505.89pt x 505.89pt>
+[51] [52 <./figure/External_filter_Results_plots_modeled_param1-1.png (PNG copy
+)>] [53 <./figure/External_filter_Results_plots_modeled_param2-1.png (PNG copy)
+>] <figure/Ex_conc_plot1-1.png, id=1497, 505.89pt x 505.89pt>
 File: figure/Ex_conc_plot1-1.png Graphic file (type png)
 
 <use figure/Ex_conc_plot1-1.png>
-Package pdftex.def Info: figure/Ex_conc_plot1-1.png used on input line 1995.
+Package pdftex.def Info: figure/Ex_conc_plot1-1.png used on input line 2002.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
-Package color Info: Redefining color shadecolor on input line 2006.
+Package color Info: Redefining color shadecolor on input line 2013.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2027.
+(hyperref)                removing `math shift' on input line 2034.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 2027.
+(hyperref)                removing `subscript' on input line 2034.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2027.
+(hyperref)                removing `math shift' on input line 2034.
 
-Package color Info: Redefining color shadecolor on input line 2032.
+Package color Info: Redefining color shadecolor on input line 2039.
 
-Overfull \hbox (34.43465pt too wide) in paragraph at lines 2047--2047
+Overfull \hbox (34.43465pt too wide) in paragraph at lines 2054--2054
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.norm_conf [[][]1[][],[] []1[][]][] []+[] [
 ]log[][](x)[] []*[] []lm.norm_conf [[][]2[][],[] []1[][]],[] []add[] []= T,[] [
 ]lty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0[][],[] []0[][],[] []0[][]
@@ -1453,7 +1457,7 @@ Overfull \hbox (34.43465pt too wide) in paragraph at lines 2047--2047
  []
 
 
-Overfull \hbox (34.43465pt too wide) in paragraph at lines 2048--2048
+Overfull \hbox (34.43465pt too wide) in paragraph at lines 2055--2055
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.norm_conf [[][]1[][],[] []2[][]][] []+[] [
 ]log[][](x)[] []*[] []lm.norm_conf [[][]2[][],[] []2[][]],[] []add[] []= T,[] [
 ]lty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0[][],[] []0[][],[] []0[][]
@@ -1461,7 +1465,7 @@ Overfull \hbox (34.43465pt too wide) in paragraph at lines 2048--2048
  []
 
 
-Overfull \hbox (5.69121pt too wide) in paragraph at lines 2053--2053
+Overfull \hbox (5.69121pt too wide) in paragraph at lines 2060--2060
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.uni[][]$[][]coef[[][]1[][]][] []+[] []log[
 ][](x)[] []*[] [](lm.uni[][]$[][]coef[[][]2[][]]),[] []add[] []= T,[] []lwd[] [
 ]=[] []3[][],[]  []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][],[] [
@@ -1469,7 +1473,7 @@ Overfull \hbox (5.69121pt too wide) in paragraph at lines 2053--2053
  []
 
 
-Overfull \hbox (34.43465pt too wide) in paragraph at lines 2054--2054
+Overfull \hbox (34.43465pt too wide) in paragraph at lines 2061--2061
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.uni_conf [[][]1[][],[] []1[][]][] []+[] []
 log[][](x)[] []*[] []lm.uni_conf [[][]2[][],[] []1[][]],[] []add[] []= T,[] []l
 ty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][]
@@ -1477,7 +1481,7 @@ ty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][]
  []
 
 
-Overfull \hbox (34.43465pt too wide) in paragraph at lines 2055--2055
+Overfull \hbox (34.43465pt too wide) in paragraph at lines 2062--2062
 [][]\OT1/cmtt/m/n/10.95 curve[][](lm.uni_conf [[][]1[][],[] []2[][]][] []+[] []
 log[][](x)[] []*[] []lm.uni_conf [[][]2[][],[] []2[][]],[] []add[] []= T,[] []l
 ty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][]
@@ -1485,132 +1489,146 @@ ty[] []=[] []2[][],[] []col[] []=[] []rgb[][]([][]0.5[][],[] []0[][],[] []1[][]
  []
 
 
-Overfull \hbox (51.68071pt too wide) in paragraph at lines 2058--2058
+Overfull \hbox (51.68071pt too wide) in paragraph at lines 2065--2065
 [][]\OT1/cmtt/m/n/10.95 rect[][]([][]-[][]1[][],[] []mean[][]([][]c[][](SES.inf
 .MEAN.uni_Tpcpr, meanSES.INF_glob.uni_Tpcpr),[] []na.rm[] []= T),[] []max[][](i
 nit_param),[] []10[][],[][] 
  []
 
 
-Overfull \hbox (91.92152pt too wide) in paragraph at lines 2061--2061
+Overfull \hbox (91.92152pt too wide) in paragraph at lines 2068--2068
 [][]\OT1/cmtt/m/n/10.95 rect[][]([][]-[][]1[][],[] []mean[][]([][]c[][](SES.inf
 .MEAN.norm_Tpcpr, meanSES.INF_glob.norm_Tpcpr),[] []na.rm[] []= T),[] []max[][]
 (init_param)[] []+[] []10[][],[] []10[][],[][] 
  []
 
-[53] [54 <./figure/Ex_conc_plot1-1.png (PNG copy)>]
-<figure/Ex_conc_plot2-1.png, id=1900, 505.89pt x 505.89pt>
+[54] [55 <./figure/Ex_conc_plot1-1.png (PNG copy)>]
+<figure/Ex_conc_plot2-1.png, id=1508, 505.89pt x 505.89pt>
 File: figure/Ex_conc_plot2-1.png Graphic file (type png)
 
 <use figure/Ex_conc_plot2-1.png>
-Package pdftex.def Info: figure/Ex_conc_plot2-1.png used on input line 2066.
+Package pdftex.def Info: figure/Ex_conc_plot2-1.png used on input line 2073.
 (pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
-Package color Info: Redefining color shadecolor on input line 2077.
- [55] [56 <./figure/Ex_conc_plot2-1.png (PNG copy)>]
-Package color Info: Redefining color shadecolor on input line 2136.
-Package color Info: Redefining color shadecolor on input line 2155.
+Package color Info: Redefining color shadecolor on input line 2084.
+ [56] [57 <./figure/Ex_conc_plot2-1.png (PNG copy)>]
+Package color Info: Redefining color shadecolor on input line 2144.
+Package color Info: Redefining color shadecolor on input line 2163.
 
-Overfull \hbox (22.93727pt too wide) in paragraph at lines 2171--2171
+Overfull \hbox (22.93727pt too wide) in paragraph at lines 2179--2179
 [] []\OT1/cmtt/m/n/10.95 ex.com.interm[] []<-[] []table[][]([][]sample[][](sp,[
 ] []size[] []= Nind[][]/[][]Ncom,[] []prob[] []=[] []rlnorm[][](Nsp,[] []0[][],
  sdlog),[] []replace[] []= T))[][] 
  []
 
-[57
+[58
 
 ]
-Package color Info: Redefining color shadecolor on input line 2244.
- [58] <figure/InEx_Filter_plots-1.pdf, id=1919, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 2252.
+ [59] <figure/InEx_Filter_plots-1.pdf, id=1526, 478.78876pt x 473.77pt>
 File: figure/InEx_Filter_plots-1.pdf Graphic file (type pdf)
 
 <use figure/InEx_Filter_plots-1.pdf>
-Package pdftex.def Info: figure/InEx_Filter_plots-1.pdf used on input line 2256
+Package pdftex.def Info: figure/InEx_Filter_plots-1.pdf used on input line 2264
 .
-(pdftex.def)             Requested size: 505.88875pt x 505.89645pt.
-Package color Info: Redefining color shadecolor on input line 2267.
+(pdftex.def)             Requested size: 478.78758pt x 473.76884pt.
+Package color Info: Redefining color shadecolor on input line 2275.
 
-<figure/InEx_Filter_plots_Tstats-1.pdf, id=1920, 505.89pt x 578.16pt>
+<figure/InEx_Filter_plots_Tstats-1.pdf, id=1527, 457.71pt x 552.0625pt>
 File: figure/InEx_Filter_plots_Tstats-1.pdf Graphic file (type pdf)
 
 <use figure/InEx_Filter_plots_Tstats-1.pdf>
 Package pdftex.def Info: figure/InEx_Filter_plots_Tstats-1.pdf used on input li
-ne 2277.
-(pdftex.def)             Requested size: 505.88875pt x 578.1674pt.
-Package color Info: Redefining color shadecolor on input line 2289.
- [59] [60 <./figure/InEx_Filter_plots-1.pdf>] [61 <./figure/InEx_Filter_plots_T
+ne 2285.
+(pdftex.def)             Requested size: 457.7089pt x 552.08641pt.
+Package color Info: Redefining color shadecolor on input line 2297.
+ [60] [61 <./figure/InEx_Filter_plots-1.pdf>] [62 <./figure/InEx_Filter_plots_T
 stats-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 2335.
-Package color Info: Redefining color shadecolor on input line 2382.
- [62]
-Underfull \vbox (badness 10000) detected at line 2450
+Package color Info: Redefining color shadecolor on input line 2343.
+Package color Info: Redefining color shadecolor on input line 2390.
+ [63]
+Underfull \vbox (badness 10000) detected at line 2458
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2450
+Underfull \vbox (badness 10000) detected at line 2458
  []
 
-[63] [64]
+[64] [65]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 2520.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 2528.
 
-Package color Info: Redefining color shadecolor on input line 2526.
+Package color Info: Redefining color shadecolor on input line 2534.
 
-Overfull \hbox (22.93727pt too wide) in paragraph at lines 2542--2542
+Overfull \hbox (22.93727pt too wide) in paragraph at lines 2550--2550
 [] []\OT1/cmtt/m/n/10.95 ex.com.interm[] []<-[] []table[][]([][]sample[][](sp,[
 ] []size[] []= Nind[][]/[][]Ncom,[] []prob[] []=[] []rlnorm[][](Nsp,[] []0[][],
  sdlog),[] []replace[] []= T))[][] 
  []
 
-[65
+
+Underfull \hbox (badness 10000) in paragraph at lines 2576--2576
+[]\OT1/cmtt/m/it/10.95 ## The partvar function decompose the variance accross n
+ested scales. Thus choose the order
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2576--2576
+\OT1/cmtt/m/it/10.95 ## The partvar function decompose the variance accross nes
+ted scales. Thus choose the order
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2576--2576
+\OT1/cmtt/m/it/10.95 ## The partvar function decompose the variance accross nes
+ted scales. Thus choose the order
+ []
+
+[66
 
 ]
-Package color Info: Redefining color shadecolor on input line 2573.
+Package color Info: Redefining color shadecolor on input line 2583.
 
-Overfull \hbox (5.69121pt too wide) in paragraph at lines 2590--2590
+Overfull \hbox (5.69121pt too wide) in paragraph at lines 2600--2600
 [][]\OT1/cmtt/m/n/10.95 segments[][]([][]apply[][](res.simu.partvar_toymodel,[]
  []2[][], mean)[] []-[] []apply[][](res.simu.partvar_toymodel,[] []2[][], sd),[
 ][] 
  []
 
-<figure/Partvar_plot-1.pdf, id=1973, 433.62pt x 433.62pt>
+<figure/Partvar_plot-1.pdf, id=1584, 433.62pt x 433.62pt>
 File: figure/Partvar_plot-1.pdf Graphic file (type pdf)
 
 <use figure/Partvar_plot-1.pdf>
-Package pdftex.def Info: figure/Partvar_plot-1.pdf used on input line 2604.
+Package pdftex.def Info: figure/Partvar_plot-1.pdf used on input line 2614.
 (pdftex.def)             Requested size: 433.61894pt x 433.63878pt.
-Package color Info: Redefining color shadecolor on input line 2622.
+Package color Info: Redefining color shadecolor on input line 2632.
 
-Overfull \hbox (22.93727pt too wide) in paragraph at lines 2636--2636
+Overfull \hbox (22.93727pt too wide) in paragraph at lines 2646--2646
 [] []\OT1/cmtt/m/n/10.95 ex.com.interm[] []<-[] []table[][]([][]sample[][](sp,[
 ] []size[] []= Nind[][]/[][]Ncom,[] []prob[] []=[] []rlnorm[][](Nsp,[] []0[][],
  sdlog),[] []replace[] []= T))[][] 
  []
 
-[66] [67 <./figure/Partvar_plot-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 2671.
+[67] [68 <./figure/Partvar_plot-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 2681.
 
-<figure/decompCTRE_plot1-1.pdf, id=1991, 505.89pt x 216.81pt>
+<figure/decompCTRE_plot1-1.pdf, id=1602, 505.89pt x 216.81pt>
 File: figure/decompCTRE_plot1-1.pdf Graphic file (type pdf)
 
 <use figure/decompCTRE_plot1-1.pdf>
-Package pdftex.def Info: figure/decompCTRE_plot1-1.pdf used on input line 2680.
+Package pdftex.def Info: figure/decompCTRE_plot1-1.pdf used on input line 2690.
 
 (pdftex.def)             Requested size: 505.88875pt x 216.81276pt.
-Package color Info: Redefining color shadecolor on input line 2691.
-
-<figure/decompCTRE_plot2-1.pdf, id=1992, 433.62pt x 361.35pt>
+Package color Info: Redefining color shadecolor on input line 2701.
+ [69]
+<figure/decompCTRE_plot2-1.pdf, id=1608, 433.62pt x 361.35pt>
 File: figure/decompCTRE_plot2-1.pdf Graphic file (type pdf)
 
 <use figure/decompCTRE_plot2-1.pdf>
-Package pdftex.def Info: figure/decompCTRE_plot2-1.pdf used on input line 2701.
+Package pdftex.def Info: figure/decompCTRE_plot2-1.pdf used on input line 2712.
 
 (pdftex.def)             Requested size: 433.61894pt x 361.36566pt.
- [68] [69 <./figure/decompCTRE_plot1-1.pdf> <./figure/decompCTRE_plot2-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 2772--2774
-
- []
-
-(./Appendix4.lof [70
+ [70 <./figure/decompCTRE_plot1-1.pdf>]
+[71 <./figure/decompCTRE_plot2-1.pdf>] (./Appendix4.lof [72
 
 ])
 \tf@lof=\write5
@@ -1620,25 +1638,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 2772--2774
 \tf@lot=\write6
 \openout6 = `Appendix4.lot'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2782.
- [71]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2782.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2797.
+[73]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2797.
  (./Appendix4.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2782.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2782.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2797.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2797.
 
 Package rerunfilecheck Info: File `Appendix4.out' has not changed.
-(rerunfilecheck)             Checksum: 3386D1190785C17A8E1555ECEBFF947F;4086.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2782.
+(rerunfilecheck)             Checksum: 7414EFBC7B08510ED5531D36ADEC3843;4227.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2797.
  ) 
 Here is how much of TeX's memory you used:
- 8086 strings out of 493304
- 125496 string characters out of 6139872
- 259534 words of memory out of 5000000
- 11205 multiletter control sequences out of 15000+600000
+ 8113 strings out of 493304
+ 125849 string characters out of 6139872
+ 260421 words of memory out of 5000000
+ 11225 multiletter control sequences out of 15000+600000
  25091 words of font info for 94 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 36i,14n,38p,1450b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,14n,38p,754b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/tex
@@ -1655,10 +1673,10 @@ b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Appendix4.pdf (71 pages, 2975053 bytes).
+Output written on Appendix4.pdf (73 pages, 2034241 bytes).
 PDF statistics:
- 2169 PDF objects out of 2487 (max. 8388607)
- 1479 compressed objects within 15 object streams
- 168 named destinations out of 1000 (max. 500000)
- 511 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1786 PDF objects out of 2073 (max. 8388607)
+ 1284 compressed objects within 13 object streams
+ 173 named destinations out of 1000 (max. 500000)
+ 527 words of extra memory for PDF output out of 10000 (max. 10000000)
 

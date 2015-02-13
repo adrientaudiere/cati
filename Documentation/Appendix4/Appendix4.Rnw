@@ -9,6 +9,7 @@
 \usepackage{amsfonts}
 \usepackage{url}
 \usepackage{pdflscape}
+\usepackage{enumerate}
 \usepackage{bm}
 \usepackage[margin = 1.5cm]{geometry}
 \usepackage[affil-it]{authblk}
@@ -23,7 +24,7 @@
 \let\oldtabular=\tabular
 \def\tabular{\small\oldtabular}
 
-\title{Appendix 4: Test the T-statistics using simulations: robustness and lack of bias in the function}
+\title{Appendix 4: Test of the robustness of the T-statistics using simulations}
 \author{Adrien Taudiere\thanks{\texttt{adrien.taudiere@cefe.cnrs.fr}} and Cyrille Violle}
 
 \affil{{\footnotesize CEFE - Centre d'Ecologie Fonctionnelle et Evolutive, Montpellier: France}}
@@ -95,11 +96,9 @@ knit_hooks$set(crop=hook_pdfcrop)
   Community ecologists are actively describing species by their functional traits, quantifying the functional structure of plant and animal assemblages, and inferring community assembly processes with null model analyses of trait distributions and functional diversity indices. Intraspecific variation in traits and effects of spatial scale are potentially important in these analyses.
   
 //
-
 	We introduce the R package cati, available on CRAN, for the analysis of community assembly with functional traits. The cati package (i) calculates a variety of single-trait and multi-trait indices from interspecific and intraspecific trait measures; (ii) partitions functional trait variation among spatial and taxonomic levels; (iii) implements a palette of flexible null models for detecting non-random patterns of functional traits. These patterns can be used to draw inferences about hypotheses of community assembly such as environmental filtering and negative species interactions.
   
 //
-
 The basic input for cati is a data frame in which columns are traits, rows are species or individuals, and entries are the measured trait values. The cati package can also incorporate into analyses a square distance matrix, which could include phylogenetic or genetic distances among individuals or species. Users select from a variety of functional trait metrics and analyze them relative to a null model that specifies trait distributions in a regional source pool.
 
 \end{abstract}
@@ -122,14 +121,13 @@ individual differences, intraspecific variation, null model, trait, variance dec
 
 
 \section{Introduction}
- This document shows the lack of bias in the functions \texttt{Tstats}, \texttt{partvar}, \texttt{decompCTRE} and a test of robustness for the T-statistics.
-This report was created on \Sexpr{a}. Start directly by the summary section if you want condensate results of this document.
+ This document presents the lack of bias in the functions \texttt{Tstats}, \texttt{partvar}, \texttt{decompCTRE} and a test of robustness for the T-statistics. A summary of the main results is available at the end of each section.
 
 \subsection{R requirements}
 
 First we need to install and load the package. 
 <<R_requirement, results = 'hide', message = FALSE>>= 
-# install.packages("cati", repos = "http://cran.us.r-project.org")
+install.packages("cati", repos = "http://cran.rstudio.com/")
 library("cati")
 library("xtable")
 
@@ -138,7 +136,7 @@ oldpar <- par(no.readonly = TRUE)
 @
 
   \subsection{System and session informations}
-  This document was created with \Sexpr{sessionInfo()[[1]]$version.string} on \Sexpr{Sys.info()[1]}. See below for more information. The speed computations of \texttt{cati} main functions are develop  in the \href{https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf}{cati tutorial}.
+  This document was created with \Sexpr{sessionInfo()[[1]]$version.string} on \Sexpr{Sys.info()[1]}. See below for more information. The speed of computations of \texttt{cati} main functions are given  in the \href{https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf}{cati tutorial}.
   
 <<sessionInfo>>=
 sessionInfo()
@@ -179,22 +177,25 @@ regional.pop \& regional.pop.prab & There is no species-based external filtering
   
   \subsection{Simulations parameters}
 
-Here we define the number of permutations for the entire analysis. 
+Here we set the number of permutations for the entire analysis. 
 
 <<Simul_parameter_1>>= 
-#Number of permutations for the analysis with no filter
-npermut <- 1000
+#Number of permutations for the analysis without filter
+npermut <- 3
 
 #Number of permutations for each parameters values in the analysis with filter(s)
-N_repet_Param <- 500
+N_repet_Param <- 2
 
 #Number of values for each parameters
-nb_param_val <- 10
+nb_param_val <- 3
 @
+
+Now we set the number of individuals, species and communities. 
+The argument sd log allows to modify the species abundance distribution within communities.
 
 <<Simul_parameter_2>>= 
 #Total number of individuals
-Nind <- 2000
+Nind <- 500
 
 #Ten communities named A, B, C ... J
 com <- c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J") 
@@ -202,8 +203,8 @@ Ncom <- length(com)
 
 #Number of species (if Nsp > 676 you need to defined additional name)
 Nsp <- 30
-sp <- paste("sp", paste(sort(rep(LETTERS, 26)), rep(LETTERS, 26),  sep="")
-                  [seq(1:Nsp)], sep ="_")
+sp <- as.factor(paste("sp", paste(sort(rep(LETTERS, 26)), rep(LETTERS, 26),  sep="")
+                     [seq(1:Nsp)], sep ="_"))
 Nsp <- length(sp)
 
 #Parameter of the log normal distribution for species abundances 
@@ -211,25 +212,26 @@ Nsp <- length(sp)
 sdlog = 1.5
 @
 
-We use toys models of \Sexpr{Nind} individuals belonging to \Sexpr{Nsp} species occuring in \Sexpr{Ncom} communities (sites). Each community contains \Sexpr{Nind / Ncom} individuals and species abundances in each community are defined following a lognormal distribution of mean 0 and standard deviation \texttt{sdlog} of \Sexpr{sdlog}.
+We use toys models of \Sexpr{Nind} individuals belonging to \Sexpr{Nsp} species occuring in \Sexpr{Ncom} communities (sites). Each community contains \Sexpr{Nind / Ncom} individuals and species abundances in each community follow a lognormal distribution of mean 0 and standard deviation \texttt{sdlog} of \Sexpr{sdlog}.
 Figure \ref{fig:General_outline} depicts the general outline of the next fourth sections dealing with the statistical test of T-statistics from Violle \textit{et al.} (2012).
 
 \begin{figure}[ht]
 \centering
 \hspace*{-0.8cm}
-\vspace*{-0.5cm}
+\vspace*{-0.8cm}
     \makebox[\linewidth]{
-        \includegraphics[width=0.9\linewidth]{general_outline.pdf}
+        \includegraphics[width=0.88\linewidth]{general_outline.pdf}
     }
-\caption[General outline of the simulation concerning the Tstatistics]{General outline of the simulation concerning the Tstatistics. (Continue on next page) }
+\caption[General outline of the simulation concerning the Tstatistics]{An approach by simulations to evaluate the power of the T-statistics to detect internal and external filtering. (Continue on next page) }
 \label{fig:General_outline}
 \end{figure}
 
 \clearpage
-\textbf{Figure 1 (continue):} The \textbf{absence of filtering} is used to test the type I error (alpha-error) of the three Tstatistics. In the absence of filtering the expected pattern is a random distribution of individual traits values into species and communities. \textbf{Internal filter} includes all of the assembly processes internal to the community. The alternative hypothesis (thus the expected pattern) of habitat filtering is the non-overlap between species traits distributions measured by the ratio $T_{IP/IC}$. We modulate the strength of filter in the simulation using the variance of species traits distributions and the distance between species traits means. \textbf{External filter} includes all of the assembly processes external to the community. In this document we specifically treat the case of an environnemental gradient influencing the individual traits values. Thus the expected pattern a non-overlap between communities traits distributions measured by the ratio $T_{IC/IR}$ and its populationnal counterparts. We modulate the strength of external filter in the simulation using the variance of communities traits distributions and the range of communities traits means (the "extent" of the environnemental gradient). Finally, we add external filter to internal filter by adding to each individual values of the internal filter simulation a number depending on the community distribution.
+\textbf{Figure 1 (continue):} The \textbf{lack of filtering} allows to test the type I error (alpha-error) of the three Tstatistics. In the absence of filtering the expected pattern is a random distribution of individual traits values among species and communities.
+\textbf{Internal filter} includes all of the assembly processes internal to the community. The alternative hypothesis is the non-overlap of trait distribution curves between species, as measured by the ratio $T_{IP/IC}$. We modulate the strength of the filter in the simulation using the variance of species' trait distributions (\texttt{param\_{}SD}) and the distance between species trait means (\texttt{param\_{}DIST\_{}between\_{}MEAN}). 
+\textbf{External filter} includes all of the assembly processes external to the community. In this document we specifically treat the case of an environnemental gradient influencing the individual traits values. Thus the expected pattern is a non-overlap between communities' trait distribution curves, as measured by the ratio $T_{IC/IR}$. We modulate the strength of external filter in the simulation using the variance of communities's trait distributions (\texttt{param\_{}SD}) and the range of communities' trait means (the "extent" of the environnemental gradient; (\texttt{param\_{}range})). 
+Finally, we mix external and internal filter. First, we simulate the effect of internal filter alone. Second, we add to each individual trait value a number depending on its community. Again two parameters are used to modulate the strength of the filters (\textit{cf} section \ref{sect:IntExtFilt} for more details). 
 \vspace*{1cm}
-
-
 
 
 \cleardoublepage
@@ -237,7 +239,7 @@ Figure \ref{fig:General_outline} depicts the general outline of the next fourth 
 \section{No filter: calculation of error}
  \subsection {Randomization outline}
 
-To calculate the \textbf{alpha error} (\textit{i.e.} the probability of rejected the null hypothesis H0 while H0 is true), we draw \Sexpr{npermut} random traits matrix irrespective of the species and community attributes of each individuals.
+To calculate the \textbf{alpha error} (\textit{i.e.} the probability to reject the null hypothesis H0 while H0 is true), we draw \Sexpr{npermut} random trait matrices irrespective of the species and community attributes of each individual.
 
 <<No_filter, results = 'hide'>>= 
 #Start simulation 
@@ -274,10 +276,10 @@ for(n in 1:npermut){#for each permutation
 }#End of simulations
 @
 
-  \subsection {Results for simulations with no filtering}
-Let's see the result for one typical randomization. We can plot the distribution of traits within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:No_Filter_plots}). We can also plot the result of the T-statistics for one of the \Sexpr{npermut} permutations (Fig. \ref{fig:No_Filter_plots_Tstats}).
+  \subsection {Results of the simulations without filtering}
+Let's see the result for one randomization. We can plot the distribution of traits values within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:No_Filter_plots}). We can also plot the result of the T-statistics for one of the \Sexpr{npermut} permutations (Fig. \ref{fig:No_Filter_plots_Tstats}).
 
-<<No_Filter_plots, fig.cap = "Distribution of traits for one randomization without filter: (a) Communities trait distributions for the trait a (normal distribution); (b) Communities trait distributions for the trait b (uniform distribution); (c) Species trait distributions for the trait a; (d) Species trait distributions for the trait b", crop = TRUE>>= 
+<<No_Filter_plots, fig.cap = "Distribution of trait values for one randomization without filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution); (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b", crop = TRUE>>= 
 par(mfrow=c(2, 2))
 plotDistri(ex.traits1, rep("all_sp", times = dim(ex.traits1)[1]), ex.indplot1, 
            plot.ask = F, multipanel = F, leg =c(T, F), main = c("a", "b"))
@@ -286,15 +288,15 @@ plotDistri(ex.traits1, rep("region", times = dim(ex.traits1)[1]), ex.sp1,
 par(mfrow=c(1, 1))
 @
 
-<<No_Filter_plots_Tstats, fig.height = 4, fig.cap = "Results of T-statistics for one randomization without filter: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green.", crop = TRUE>>= 
+<<No_Filter_plots_Tstats, fig.height = 4, fig.cap = "Results of T-statistics for one randomization without filter: $T IP/IC$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. All but three community-level metrics (colored dots) departe significantly from the null model. As expected under no filtering, the mean Standardized Effect Size (SES) values are closed to zero for all three T-statistics and are included in the area of the null model (colored boxes). Thus this plot is typically what we expected under the lack of both external and internal filtering.", crop = TRUE>>= 
 plot(res.simu1[[1]])
 @
 
- \subsection {Assess the statistical type I error of local T-statistics}
+ \subsection {Assessing the statistical type I error of local T-statistics}
  
-Here we call local p-values the p-values corresponding to one indice for one trait in one community \footnote{In contrast with global statistics which aggregate the communities values metrics.}. Now lets plot the results as the ordered p.value for each T-statistics and each traits (Fig. \ref{fig:No_Filter_results})). In that case we have \Sexpr{Ncom*2} p-values \footnote{\Sexpr{Ncom} p-value, corresponding to \Sexpr{Ncom} communities, multiply by 2 because we are doing a bilateral test} by T-statistics by traits for each permutation. Using the defined parameters, we plot \Sexpr{Ncom*2*npermut} points by T-statistic by trait (\Sexpr{Ncom*2} p.value multiply by \Sexpr{npermut} permutation). 
+Here we call local p-values the p-values \footnote{Computed using the \texttt{Tstats} function} corresponding to one index for one trait in one community \footnote{In contrast with global statistics which aggregate the values of the metrics of all communities}. Now let's plot the ordered p.value for each T-statistics and each trait (Fig. \ref{fig:No_Filter_results})). In that case we have \Sexpr{Ncom*2} p-values \footnote{\Sexpr{Ncom} p-value, corresponding to \Sexpr{Ncom} communities, multiplied by 2 because we performed a bilateral test} per T-statistics and per trait for each permutation. Using the defined parameters, we plot \Sexpr{Ncom*2*npermut} points per T-statistics by trait (\Sexpr{Ncom*2} p.values * \Sexpr{npermut} permutations). 
 
-The alpha error on the figure are the proportion of p.value which are inferior to 0.025 (because we are doing a bilateral test).
+The alpha error on the figure are the proportion of p.values which are inferior to 0.025 (because performed a bilateral test).
 
 <<No_Filter_results, fig.cap = "Local alpha errors: local p.values are log-transformed and ordered before plotting. The black line represent the value of 0.025. Consequently, p-values under this line are false-positive cases. Alpha-error is the proportion of this false-positive cases. Norm: normal distribution, Uni: uniforme distribution.", crop = TRUE>>= 
 par(mfrow = c(3, 2))
@@ -350,11 +352,11 @@ mtext("rank", 1, line = 2)
 par(oldpar)
 @
 
- \subsection {Assess the statistical type I error of global T-statistics}
+ \subsection {Assessing the statistical type I error of global T-statistics}
 
-In contrast with local p-values, we call global p-values the p-values corresponding to one indice for one trait across all the communities. 
+In contrast with local p-values, we call global p-values the p-values corresponding to one index for a given trait across all the communities. 
 
-We test for the \textbf{alpha error} of global p-values in the same way as local p-values. We plot the ordered mean \footnote{mean of the ten communities values} standardized effect size (SES)\footnote{compute as $$(the observed value - the mean value among simulation) / the standard error among simulations$$} and the 95\% confidence interval in grey. 
+We test for the \textbf{alpha error} of global p-values in the same way as local p-values. We plot the ordered mean \footnote{mean of the \Sexpr{Ncom} communities values} standardized effect size (SES)\footnote{compute as (the observed value - the mean value among simulation) / the standard error among simulations} and the 95\% confidence interval in grey. 
 
 In that case we have one p-value by T-statistics by traits for each of the \Sexpr{npermut} permutations.
 
@@ -578,7 +580,7 @@ The results of table \ref{tab:Alpha-errors_for_T-stats} attest of a good behavio
 
 \cleardoublepage
 
-\section{Internal filter: assess the statistical power of $T_{IP/IC}$}
+\section{Internal filter: assessing the statistical power of $T_{IP/IC}$}
   \subsection {Randomization outline}
  
 We decide to modulate the strength of the internal filter thanks to two parameters:
@@ -611,7 +613,7 @@ sd_sd.param <- rep(10, nperm)
  Practically, we defined \Sexpr{nb_param_val} values for two parameters:
 \\
 
- (i) \texttt{param\_{}DIST\_{}between\_{}MEAN.init} is a vector of length \Sexpr{nb_param_val} which defined the minimum values for the mean traits values (the maximum values are defined to \Sexpr{250}). In decreasing the range of traits values while keeping the same number of species, there is a decrease of mean distance between species means of traits values. Thus the mean for each species is drawn from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly distributed between \texttt{max.value\_{}traits - param\_{}DIST\_{}between\_{}MEAN} and \texttt{max.value\_{}traits}.
+ (i) \texttt{param\_{}DIST\_{}between\_{}MEAN.init} is a vector of length \Sexpr{nb_param_val} which defined the minimum value for the mean traits values (the maximum value is \Sexpr{max.value_traits}). In decreasing the range of traits values while keeping the same number of species, there is a decrease of mean distance between species means of traits values. Thus the mean for each species is drawn from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly distributed between \texttt{max.value\_{}traits - param\_{}DIST\_{}between\_{}MEAN} and \texttt{max.value\_{}traits}.
 \\
 
 (ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of traits distributions for each species. In order to decorrelate the mean and standard deviation of species traits distributions, \texttt{param\_{}SD} is permuted before the analysis. 
@@ -685,11 +687,11 @@ for(n in 1:nperm){#for each permutation
 @
 
 
- \subsection {Results for simulations of internal filtering}
+ \subsection {Results of the simulations of internal filtering}
 
-Let's see the result for one typical randomization. We can plot the distribution of traits within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:typical_result_internal_filtering1}). 
+Let's see the result for one randomization. We can plot the distribution of traits values within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:typical_result_internal_filtering1}). 
 
-<<typical_result_internal_filtering1, fig.cap = "Distribution of traits for one randomization with internal filtering: (a) Communities trait distributions for the trait a (normal distribution); (b) Communities trait distributions for the trait b (uniform distribution); (c) Species trait distributions for the trait a; (d) Species trait distributions for the trait b", crop = TRUE>>= 
+<<typical_result_internal_filtering1, fig.cap = "Distribution of trait values for one randomization with internal filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution); (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b", crop = TRUE>>= 
 par(mfrow=c(2, 2))
 plotDistri(ex.traits2, rep("all_sp", times = dim(ex.traits2)[1]), ex.indplot2, 
            plot.ask = F, multipanel = F, cex.leg = 0.6, main= c("a", "b"))
@@ -711,9 +713,9 @@ For the power analysis of internal filtering we present the result in two parts:
 
  \subsubsection {Local p-values results}
 
-Here we call local p-values the p-values corresponding to one indice for one trait in one community. First, we can represent the ordered p.value in decimal logarithms and calculate the power of the $T_{IP/IC}$ indice using the beta-error\footnote{The proportion of case where we do not reject the null hypothesis while this hypothesis is wrong.}. The less the beta-error, the more the indice is powerful. Contrary to the test with no filter, we choose a unilateral test because we only want to test if $T_{IP/IC}$ is smaller than it should be under the associated null hypothesis.
+Here we call local p-values the p-values corresponding to one index for one trait in one community. First, we can represent the ordered p.value in decimal logarithms and calculate the power of the $T_{IP/IC}$ index using the beta-error\footnote{The proportion of case where we do not reject the null hypothesis while this hypothesis is wrong.}. The less the beta-error, the more the index is powerful. Contrary to the test without filter, we choose a unilateral test because we only want to test if $T_{IP/IC}$ is smaller than it should be under the associated null hypothesis.
 
-We can plot the local p-values in different ways. First, we can represent the ordered p.value in decimal logarithms and calculate the power of the $T_{IP/IC}$ indice using the beta-error. The less the beta-error, the more the indice is powerful. Contrary to the test with no filter, we choose a unilateral test because we only want to test if $T_{IP/IC}$ is smaller than it should be under the associated null hypothesis.
+We can plot the local p-values in different ways. First, we can represent the ordered p.value in decimal logarithms and calculate the power of the $T_{IP/IC}$ index using the beta-error. The less the beta-error, the more the index is powerful. Contrary to the test without filter, we choose a unilateral test because we only want to test if $T_{IP/IC}$ is smaller than it should be under the associated null hypothesis.
 
   \subsubsubsection {Calculation of beta-error mixing all strength of filtering}
  
@@ -822,7 +824,7 @@ print(xtable(res_beta_Tipic, caption = 'Local beta-error of $T_{IP/IC}$ in funct
 @
  
 
-Now we can see the beta-error for each strength in table \ref{tab:local_beta_error_xtable}. A high value of range and a low value of standard error defined a high strength of filtering. For example, in the case of a trait normally distributed, the proportion of false negative is \Sexpr{round(res_beta_Tipic[1, 1]*100, 2)}\% for the higher value of standard errors and thus for the lower strength of internal filtering. The good behavior of the function \texttt{Tstats} is ascertained by the decrease of beta-error along increasing strength of filter.
+Now we can see the beta-error for each strength in table \ref{tab:local_beta_error_xtable}. A high value of range and a low value of standard error defined a high strength of filtering. For example, in the case of a trait normally distributed, the proportion of false negative is \Sexpr{round(res_beta_Tipic[1, 1]*100, 2)}\% for the higher value of standard errors and thus for the lower strength of internal filtering. The good behavior of the function \texttt{Tstats} is ascertained by the decrease of beta-error along increasing strength of the filter.
  
  
   \subsubsubsection {Local $T_{IP/IC}$ SES values against modeled parameter values}
@@ -862,11 +864,11 @@ rect(mean(SES.inf.MEAN.uni_Tipic, na.rm = T), 0, 0, max(modeled_param_uni.loc),
 There is a very hich correlation coefficient between initial and modeled parameter either for the range (trait a: Pearson correlation = \Sexpr{round(cor.test(param_DIST_between_MEAN, modeled_param_norm)[[4]], 3)}; trait b: Pearson correlation = \Sexpr{round(cor.test(param_DIST_between_MEAN, modeled_param_uni)[[4]], 3)}) and for the standard error(trait a and b: Pearson correlation = \Sexpr{round(cor.test(sd_mean.param, mean_sd_of_com)[[4]], 3)}). Consequently the consistency between the figures \ref{fig:In_filter_results_plot_initparam} and  \ref{fig:In_filter_results_plot_modeledparam} is not suprising. 
  
  \subsubsection {Global p-values results for $T_{IP/IC}$}
-In contrast with local p-values, we call global p-values the p-values corresponding to one indice for one trait across all the communities. 
+In contrast with local p-values, we call global p-values the p-values corresponding to one index for one trait across all the communities. 
 
   \subsubsubsection {Global $T_{IP/IC}$ SES values against initial parameter values}
   
-Again, this first results mix different initial parameter values. Now, we can plot the SES values in relation to the strength of the internal filter assessed by the two parameters (either the initial values: \texttt{mean\_range\_between\_com} and \texttt{mean\_sd\_of\_com} or the modeled values \texttt{mean\_{}range\_{}com} and \texttt{sd.com\_{}stock2} \footnote{This modeled values are stochastic versions of the initial values.}). 
+Again, this first results mix different initial parameter values. Now, we can plot the SES values in relation to the strength of the internal filter assessed by the two parameters (either the initial values: \texttt{mean\_{}range\_{}between\_{}com} and \texttt{mean\_{}sd\_{}of\_{}com} or the modeled values \texttt{mean\_{}range\_{}com} and \texttt{sd.com\_{}stock2} \footnote{This modeled values are stochastic versions of the initial values.}). 
 
 First, we need to compute the SES values from simulations.
 <<Internal_filter_Results_SES>>= 
@@ -1109,11 +1111,11 @@ for(n in 1:nperm){#for each permutation
 }#End of simulations
 @
 
- \subsection {Results for simulations of external filtering}
+ \subsection {Results of the simulations of external filtering}
 
-Let's see the result for one typical randomization. We can plot the distribution of traits within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:typical_results_external_filtering1}). 
+Let's see the result for one randomization. We can plot the distribution of traits values within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:typical_results_external_filtering1}). 
 
-<<typical_results_external_filtering1, fig.cap = "Distribution of traits for one randomization with external filter: (a) Communities trait distributions for the trait a (normal distribution); (b) Communities trait distributions for the trait b (uniform distribution); (c) Species trait distributions for the trait a; (d) Species trait distributions for the trait b", crop = TRUE>>= 
+<<typical_results_external_filtering1, fig.cap = "Distribution of trait values for one randomization with external filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution); (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b", crop = TRUE>>= 
 par(mfrow=c(2, 2))
 plotDistri(ex.traits3, rep("all_sp", times = dim(ex.traits3)[1]), ex.indplot3, 
            plot.ask = F, multipanel = F, main = c("a", "b"), leg = c(T, F))
@@ -1342,7 +1344,7 @@ There is a very hich correlation coefficient between initial and modeled paramet
  
  \subsubsection {Global $T_{IC/IR}$ and $T_{PC/PR}$ results}
  
-In contrast with local p-values, we call global p-values the p-values corresponding to one indice for one trait across all the communities. 
+In contrast with local p-values, we call global p-values the p-values corresponding to one index for one trait across all the communities. 
  
   \subsubsubsection {Calculation of beta-error mixing all strength of filtering}
  
@@ -1634,6 +1636,7 @@ For the trait "a" normally distributed, the power of $T_{PC/PR}$ is satisfactory
 \cleardoublepage
 
 \section{Internal and external filtering}
+\label{sect:IntExtFilt}
 
   \subsection{Randomization outline}
 We use the same two parameters as for internal and external filtering analysis. The internal filtering is computed as in the section dedicated to internal filter. To add the effect of external filtering, we add a value to each individual belonging to a community, this values differing among communities.
@@ -1738,7 +1741,7 @@ print(paste("---", round(n/nperm, 2) * 100, "%", sep = " "))
 
 
   \subsection{Results}
-<<InEx_Filter_plots, fig.cap = "Distribution of traits for one randomization with both internal and external filter: (a) Communities trait distributions for the trait a (normal distribution); (b) Communities trait distributions for the trait b (uniform distribution); (c) Species trait distributions for the trait a; (d) Species trait distributions for the trait b", crop = TRUE>>= 
+<<InEx_Filter_plots, fig.cap = "Distribution of trait values for one randomization with both internal and external filter: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution); (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b", crop = TRUE>>= 
 par(mfrow=c(2, 2))
 plotDistri(ex.traits4, rep("all_sp", times = dim(ex.traits1)[1]), ex.indplot4, 
            plot.ask = F, multipanel = F, leg =c(T, F), main = c("a", "b"))
@@ -2137,8 +2140,8 @@ The correlation between the modeled strength of the turnover and the turnover re
 
 \subsection{Type I error}
 
-Table \ref{tab:Alpha-errors_for_T-stats} summarize the alpha error for T-statistics. The three global \footnote{one indice for all the dataset} T-statistics are very robust 
-regardless of the distribution of the trait (alpha error ranging from \Sexpr{min(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)} to \Sexpr{max(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)}). Local \footnote{one indice for each community of the dataset} T-statistics present lower but nevertheless satifactory alpha-error with a maximum of \Sexpr{nbre_alpha_error_norm_loc_Tpcpr} for $T_{PC/PR}$ on a trait normally distributed. We therefore recommand to use $T_{IC/IR}$ to detect external filtering and more generally to prefer global T-statistics which are more robust and more powerfull (see the next section).
+Table \ref{tab:Alpha-errors_for_T-stats} summarize the alpha error for T-statistics. The three global \footnote{one index for all the dataset} T-statistics are very robust 
+regardless of the distribution of the trait (alpha error ranging from \Sexpr{min(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)} to \Sexpr{max(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)}). Local \footnote{one index for each community of the dataset} T-statistics present lower but nevertheless satifactory alpha-error with a maximum of \Sexpr{nbre_alpha_error_norm_loc_Tpcpr} for $T_{PC/PR}$ on a trait normally distributed. We therefore recommand to use $T_{IC/IR}$ to detect external filtering and more generally to prefer global T-statistics which are more robust and more powerfull (see the next section).
 
 
 \subsection{Type II error}
@@ -2179,22 +2182,16 @@ Traits & Indices & Initial parameter ratio with internal filtering & Initial par
 
 
 
-
-
-
-
-\section*{Conclusion}
-\addcontentsline{toc}{subsection}{Conclusion}
-
 \section*{References}
 \addcontentsline{toc}{subsection}{References}
 
-\\
-May RM, Mac Arthur RH (1972) Niche overlap as a function of environmental variability. Proceedings of the National Academy of Sciences 69: 1109-1113.
+\begin{enumerate}
+\item May RM, Mac Arthur RH (1972) Niche overlap as a function of environmental variability. Proceedings of the National Academy of Sciences 69: 1109-1113.
 
-\\
-Violle C, Enquist BJ, McGill BJ, Jiang L, Albert CH, et al. (2012) The return of the variance: intraspecific variability in community ecology. Trends in Ecology and Evolution 27: 244-252.
+\item Violle C, Enquist BJ, McGill BJ, Jiang L, Albert CH, et al. (2012) The return of the variance: intraspecific variability in community ecology. Trends in Ecology and Evolution 27: 244-252.
+\end{enumerate}
 
+\clearpage
 
 \listoffigures % table des figures
 \addcontentsline{toc}{subsection}{List of Figures}
