@@ -207,21 +207,13 @@ sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), split = 
 funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
      "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
      "tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-<<<<<<< HEAD
      "tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))" )
-=======
-     "tapply(x, ind.plot.finch, function(x) CVNND(x))" )
->>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
 
 fact<-unlist(sites_bypop)  
 funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = TRUE))",
           "tapply(x, fact, function(x) kurtosis(x, na.rm = TRUE))",
           "tapply(x, fact, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-<<<<<<< HEAD
           "tapply(x, fact, function(x) CVNND(x, na.rm = TRUE))")
-=======
-          "tapply(x, fact, function(x) CVNND(x))")
->>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
 
 
 res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.1,

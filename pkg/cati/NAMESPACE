@@ -10,9 +10,6 @@ import(e1071)
 import(mice)
 import(rasterVis)
 import(hypervolume)
-<<<<<<< HEAD
-import(FD)
 import(geometry)
 import(vegan)
-=======
->>>>>>> da4a64abb7861c211f4b13b00d2566b05cc7c20b
+import(FD)
