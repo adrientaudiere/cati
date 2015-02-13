@@ -1,0 +1,42 @@
+#############################################################################################
+# function to compute Functional Regularity index (FRO),                                    #
+#   proposed by Mouillot et al. 2005 (Oecologia 142: 353–359)                               #
+#   and modified in Villéger et al., 2008, Marine Ecology Progress Series (364: 135–146)    #
+#                                                                                           #
+# input:                                                                                    #
+#       - trab: a two-columns matrix with traits values (col 1) and abundances (col 2)      #
+#              NA are not allowed for traits values and are ignored for abundances          #
+#                                                                                           #
+# output: the value of FROm                                                                 #
+#############################################################################################
+
+FROm<-function(trab)   {
+
+	# data extraction
+	if (dim(trab)[2]!=2)  stop("error : trab must have 2 columns")
+	ab<-trab[,2]
+	tr<-trab[,1]
+	if (length(which(is.na(tr)))!=0)  stop("error : NA are not allowed in traits values")
+	
+	# filter to keep only species present
+	pres<-which(ab>0) ; abF<-ab[pres] ; trF<-tr[pres]  
+	
+	# number of species present
+	s<-length(abF) ; os<-1/(s-1)
+	
+	# sorted traits values and relative abundances of species present 
+	o<-order(trF,decreasing=F) ; to<-trF[o] ; abo<-abF[o]/sum(abF)
+	
+	# computation of index
+	EW<- abs(to[-1]-to[-s]) / (abo[-1]+abo[-s])
+	PEW<-EW/sum(EW)
+	minPEW<-sapply(PEW, function(x) { min(x,os) } )
+	vFROm<-round( ( sum(minPEW)-os ) / ( 1- os ) ,3) # in original formula FRo=sum(minPEW)
+	
+	return(vFROm)
+	
+} 
+ 
+
+
+
