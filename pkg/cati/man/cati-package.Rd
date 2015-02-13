@@ -3,7 +3,7 @@
 \alias{cati}
 \docType{package}
 \title{
-	Community Assembly by Traits: Individuals and beyond
+	Community Assembly by Traits: Individuals and Beyond
 }
 
 \description{
@@ -27,6 +27,7 @@
 }
 
 \author{
-	Adrien Taudiere; adrien.taudiere@cefe.cnrs.fr
+	Adrien Taudiere; adrien.taudiere@cefe.cnrs.fr 
+	
 	Cyrille Violle
 }
