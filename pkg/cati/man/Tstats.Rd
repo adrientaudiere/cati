@@ -5,6 +5,7 @@
 \alias{summary.Tstats}
 \alias{print.Tstats}
 \alias{sum_Tstats}
+\alias{ses.Tstats}
 
 \title{
 	Computing observed T-statistics (T for Traits) and null expectations.
