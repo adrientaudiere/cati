@@ -430,7 +430,7 @@ The function \texttt{Tstat} computes observed T-statistics (T for Traits; Violle
 
 <<echo = c(2, 4) >>=
 ptm <- proc.time()
-res.finch<-Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch,
+res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch,
          nperm = 99, print = FALSE)
 proc.time_Tstats <- proc.time() - ptm
 res.finch
@@ -446,7 +446,7 @@ We can represent observed values thanks to the \texttt{barplot} function.
 barplot(res.finch, ylim = c(0,3.5))
 @
 
-One can be more interested in the significance  and the effect size available thanks to null model. In that case, the standardized effect size can be easily plot. Note that the function \texttt{ses} can be use directly to calculate standardized effect size without plotting. The Standardized Effect Size (ses) is define as : 
+One can be more interested in the significance and the effect size available thanks to null model. In that case, the standardized effect size can be easily plot. Note that the function \texttt{ses} can be use directly to calculate standardized effect size without plotting. The Standardized Effect Size (ses) is define as : 
 
 \begin{center}
 $$ SES = (I_{obs} – I{_sim}) / \delta_{sim} $$
@@ -546,7 +546,7 @@ The function \texttt{ComIndex} allow choosing your own function (like mean, rang
 <<>>=
 #Define the functions you want to calculate
 funct<-c("mean(x, na.rm = T)", "kurtosis(x, na.rm = T)",
-     "max(x, na.rm = T) - min(x, na.rm = T)", "CVNND(x)" )
+     "max(x, na.rm = T) - min(x, na.rm = T)", "CVNND(x, na.rm = T)" )
 
 #Test against the null model regional.ind
 res.finch.sp_regional.ind<-ComIndex(traits = traits.finch, index = funct, sp = sp.finch,
@@ -566,7 +566,7 @@ These two functions allows to calculate  index by sites for example using \code{
 funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = T))",
      "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = T))",
      "tapply(x, ind.plot.finch, function(x) max(x, na.rm = T)-min(x, na.rm = T))", 
-     "tapply(x, ind.plot.finch, function(x) CVNND(x))" )
+     "tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = T))" )
 
 #The function IndexByGroups permit to easily obtain the above lines 
 IndexByGroups(funct, "ind.plot.finch")
@@ -605,7 +605,7 @@ fact<-unlist(sites_bypop)
 funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = T))",
           "tapply(x, fact, function(x) kurtosis(x, na.rm = T))",
           "tapply(x, fact, function(x) max(x, na.rm = T)-min(x, na.rm = T))", 
-          "tapply(x, fact, function(x) CVNND(x))")
+          "tapply(x, fact, function(x) CVNND(x, na.rm = T))")
 @
 
 Now calculate index with or without intraspecific variance thanks to function \texttt{ComIndex}.
@@ -910,13 +910,6 @@ library(ade4)
  }
  colnames(matfordudi2)<-names(ses.list)
 @
-
-<<results = 'hide'>>=
-#Use mice for the purpose of this example
-matfordudi<-complete(mice(matfordudi))
-matfordudi2<-complete(mice(matfordudi2))
-@
-
 
 <<dev = 'pdf'>>= 
 res.dudi<-dudi.pca(t(matfordudi), scan = F, nf = 2) 
