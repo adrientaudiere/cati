@@ -183,7 +183,7 @@ Here we set the number of permutations for the entire analysis.
 #Number of permutations for the analysis without filter
 npermut <- 3
 
-#Number of permutations for each parameters values in the analysis with filter(s)
+#Number of permutations for each parameter values in the analysis with filter(s)
 N_repet_Param <- 2
 
 #Number of values for each parameters
@@ -279,7 +279,7 @@ for(n in 1:npermut){#for each permutation
   \subsection {Results of the simulations without filtering}
 Let's see the result for one randomization. We can plot the distribution of traits values within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:No_Filter_plots}). We can also plot the result of the T-statistics for one of the \Sexpr{npermut} permutations (Fig. \ref{fig:No_Filter_plots_Tstats}).
 
-<<No_Filter_plots, fig.cap = "Distribution of trait values for one randomization without filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution); (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b", crop = TRUE>>= 
+<<No_Filter_plots, fig.cap = "Distribution of trait values for one randomization without filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution). In panels a and b, each color represents one community (site). (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b. In panels c and d, each color represents one species.", crop = TRUE>>= 
 par(mfrow=c(2, 2))
 plotDistri(ex.traits1, rep("all_sp", times = dim(ex.traits1)[1]), ex.indplot1, 
            plot.ask = F, multipanel = F, leg =c(T, F), main = c("a", "b"))
@@ -288,7 +288,7 @@ plotDistri(ex.traits1, rep("region", times = dim(ex.traits1)[1]), ex.sp1,
 par(mfrow=c(1, 1))
 @
 
-<<No_Filter_plots_Tstats, fig.height = 4, fig.cap = "Results of T-statistics for one randomization without filter: $T IP/IC$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. All but three community-level metrics (colored dots) departe significantly from the null model. As expected under no filtering, the mean Standardized Effect Size (SES) values are closed to zero for all three T-statistics and are included in the area of the null model (colored boxes). Thus this plot is typically what we expected under the lack of both external and internal filtering.", crop = TRUE>>= 
+<<No_Filter_plots_Tstats, fig.height = 4, fig.cap = "T-statistics for the first randomization without filtering: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. All but three community-level metrics (colored dots) depart significantly from the null model. As expected under no filtering, the mean Standardized Effect Size (SES) values are closed to zero for all three T-statistics and are included in the area of the null model (colored boxes). Thus this plot is typically what we expected under the lack of both external and internal filtering.", crop = TRUE>>= 
 plot(res.simu1[[1]])
 @
 
@@ -298,7 +298,7 @@ Here we call local p-values the p-values \footnote{Computed using the \texttt{Ts
 
 The alpha error on the figure are the proportion of p.values which are inferior to 0.025 (because performed a bilateral test).
 
-<<No_Filter_results, fig.cap = "Local alpha errors: local p.values are log-transformed and ordered before plotting. The black line represent the value of 0.025. Consequently, p-values under this line are false-positive cases. Alpha-error is the proportion of this false-positive cases. Norm: normal distribution, Uni: uniforme distribution.", crop = TRUE>>= 
+<<No_Filter_results, fig.cap = "Local alpha errors: local p.values are log-transformed and ordered before plotting. The black line represent the value of 0.025. Consequently, p-values under this line are false-positive cases. Alpha-error is the proportion of these false-positive cases. Norm: normal distribution, Uni: uniform distribution.", crop = TRUE>>= 
 par(mfrow = c(3, 2))
 par(mar = c(3, 3.5, 2, 0.2))
 
@@ -356,7 +356,7 @@ par(oldpar)
 
 In contrast with local p-values, we call global p-values the p-values corresponding to one index for a given trait across all the communities. 
 
-We test for the \textbf{alpha error} of global p-values in the same way as local p-values. We plot the ordered mean \footnote{mean of the \Sexpr{Ncom} communities values} standardized effect size (SES)\footnote{compute as (the observed value - the mean value among simulation) / the standard error among simulations} and the 95\% confidence interval in grey. 
+We test for the \textbf{alpha error} of global p-values is similar to the test for local p-values. We plot the ordered mean \footnote{mean of the \Sexpr{Ncom} communities values} standardized effect size (SES)\footnote{compute as (the observed value - the mean value among simulation) / the standard error among simulations} and the 95\% confidence interval in grey. 
 
 In that case we have one p-value by T-statistics by traits for each of the \Sexpr{npermut} permutations.
 
@@ -388,7 +388,7 @@ meanSES.1.T_PC.PR.distriUni <- lapply(res.simu1, function(x)
 
 Now, plot the result as ordered SES values (Fig. \ref{fig:No_filter_summary_plot}). Horizontal lines represent the confidence area at 95\%.
  
-<<No_filter_summary_plot, fig.cap = "Global alpha errors: global Standardized Effect Size are ordered before plotting. The grey area represent the confidence interval at 2.5 percent on each side. Consequently, p-values outside this area are false-positive cases. Alpha-error is the proportion of this false-positive cases. Norm: normal distribution, Uni: uniforme distribution.", crop = TRUE>>= 
+<<No_filter_summary_plot, fig.cap = "Global alpha errors: global Standardized Effect Sizes are ordered before plotting. The grey area represents the confidence interval at 0.025 on each side. Consequently, p-values outside this area are false-positive cases. Alpha-error is the proportion of these false-positive cases. Norm: normal distribution, Uni: uniform distribution.", crop = TRUE>>= 
 par(mfrow = c(3, 2))
 par(mar = c(3, 3.5, 2, 0.2))
 
@@ -486,9 +486,11 @@ mtext("rank", 1, line = 2)
 par(oldpar)
 @
 
+
+\clearpage
   \subsection {Conclusion on the type I error of T-statistics}
 
-The \Sexpr{npermut} permutations allow the calculation of alpha error for two traits (the first normally distributed and the second uniformally distributed), three indices (the three T-statistics) and using local indices (one by community) or global indices (averaged between communities).
+The \Sexpr{npermut} permutations allow the calculation of alpha error for two traits (the first normally distributed and the second uniformally distributed), three indices (the three T-statistics) and using local indices (one by community) or global indices (averaged across communities).
 
 \begin{table}[h!]
 \begin{center}
@@ -496,7 +498,7 @@ The \Sexpr{npermut} permutations allow the calculation of alpha error for two tr
 \label{tab:Alpha-errors_for_T-stats}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-Traits & Indices & Average between communities? & alpha-error \tabularnewline
+Traits & Indices & Averaged across communities? & alpha-error \tabularnewline
 \hline \hline \hline
 \multirow{6}{*}{Trait normally distributed} & \multirow{2}{*}{$T_{IP/IC}$} & no (local) & \Sexpr{round(nbre_alpha_error_norm_loc_Tipic, 3)} \tabularnewline
 \cline{3-4} 
@@ -530,7 +532,7 @@ Traits & Indices & Average between communities? & alpha-error \tabularnewline
 
 
 
-The results of table \ref{tab:Alpha-errors_for_T-stats} attest of a good behavior of the T-statistics regardless of the distributions of the traits. Alpha-error of the local indices are always near the wanted alpha-error of 2.5\%. Logically the global indices which averaged local indices are far more robust. Note that the higher alpha-error is obtained using $T_{PC/PR}$ on the trait normally distributed (\Sexpr{round(nbre_alpha_error_norm_loc_Tpcpr, 3)}).
+The results of table \ref{tab:Alpha-errors_for_T-stats} show of a good behavior of the T-statistics regardless of the distributions of the traits. Alpha-error of the local indices are always near the desired alpha-error = 2.5\%. Logically the global indices which averaged local indices are far more robust. Note that the higher alpha-error is obtained using $T_{PC/PR}$ on the trait normally distributed (\Sexpr{round(nbre_alpha_error_norm_loc_Tpcpr, 3)}).
 
 
 
@@ -583,11 +585,11 @@ The results of table \ref{tab:Alpha-errors_for_T-stats} attest of a good behavio
 \section{Internal filter: assessing the statistical power of $T_{IP/IC}$}
   \subsection {Randomization outline}
  
-We decide to modulate the strength of the internal filter thanks to two parameters:
-we define (i) a gradient of distance between species means traits distributions and (ii) a gradient of the mean variance in species traits distributions. It is strongly linked to the definition of limiting similarity by May and Mac Arthur (1972) who defined a coefficient of competition as $$a = exp (-d^2/4w^2)$$ with \texttt{d} correspond to the distance between the species trait means and \texttt{w} correspond to the mean variance of species trait distribution. 
+We decide to modulate the strength of the internal filter thanks to two parameters (\textit{cf} figure \ref{fig:General_outline}):
+we define (i) a gradient of distance between species' mean trait distributions and (ii) a gradient of the mean variance in species' mean trait distribution. It is strongly linked to the definition of limiting similarity by May and Mac Arthur (1972) who defined a coefficient of competition as $$a = exp (-d^2/4w^2)$$ with \texttt{d} corresponds to the distance between the species' mean traitvalues and \texttt{w} corresponds to the averaged variance of species' trait distributions. 
 
 <<Internal_filter>>= 
-# Number of values for each parameters: param_DIST_between_MEAN.init and param_SD
+# Number of values for each parameter: param_DIST_between_MEAN.init and param_SD
 nb_param_val
 
 # Number of permutations is the product of the number of values for each parameter
@@ -597,12 +599,12 @@ nperm <- nb_param_val * N_repet_Param
 # Maximum mean value for traits
 max.value_traits <- 250
 
-# Parameter for the distance between species mean trait values
+# Parameter for the distance between species' mean trait values
 param_DIST_between_MEAN.init <- round(sort(seq(10, 200, length.out = nb_param_val)), 2)
 param_DIST_between_MEAN <- rep(param_DIST_between_MEAN.init, N_repet_Param)
 mean_sd.param <- rep(10, nperm)
 
-# Parameter for the variance in species mean trait values
+# Parameter for the variance in species' mean trait values
 param_SD <- seq(10, 100,length.out = nb_param_val)
 sd_mean.param <- sample (rep(param_SD, N_repet_Param), 
        size = length(rep(param_SD, N_repet_Param)), replace = F)
@@ -613,15 +615,15 @@ sd_sd.param <- rep(10, nperm)
  Practically, we defined \Sexpr{nb_param_val} values for two parameters:
 \\
 
- (i) \texttt{param\_{}DIST\_{}between\_{}MEAN.init} is a vector of length \Sexpr{nb_param_val} which defined the minimum value for the mean traits values (the maximum value is \Sexpr{max.value_traits}). In decreasing the range of traits values while keeping the same number of species, there is a decrease of mean distance between species means of traits values. Thus the mean for each species is drawn from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly distributed between \texttt{max.value\_{}traits - param\_{}DIST\_{}between\_{}MEAN} and \texttt{max.value\_{}traits}.
+ (i) \texttt{param\_{}DIST\_{}between\_{}MEAN.init} is a vector of length \Sexpr{nb_param_val} which defines the minimum value for the mean trait values (the maximum value is \Sexpr{max.value_traits}). In decreasing the range of traits values while keeping the same number of species, there is a decrease in the mean distance between species' means of trait values. Thus the mean for each species is drawn from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly distributed between \texttt{max.value\_{}traits - param\_{}DIST\_{}between\_{}MEAN} and \texttt{max.value\_{}traits}.
 \\
 
-(ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of traits distributions for each species. In order to decorrelate the mean and standard deviation of species traits distributions, \texttt{param\_{}SD} is permuted before the analysis. 
+(ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of trait distributions for each species. In order to decorrelate the mean and standard deviation of species' trait distributions, \texttt{param\_{}SD} is permuted before the analysis. 
 \\
 
-For the trait "a" the trait value for each individual is drawn from a normal distribution with the mean depending on it species attribute. For the trait "b" the trait value for each individual is drawn from a uniform distribution with the range depending on it species attribute. The range is defined as: \textit{species mean value} - \textit{species sd value} for the minimum and \textit{species mean value} + \textit{species sd value} for the maximum.
+For the trait "a" the trait value for each individual is drawn from a normal distribution with the mean depending on it species' attribute. For the trait "b" the trait value for each individual is drawn from a uniform distribution with the range depending on it species' attribute. The range is defined as: \textit{species' mean value} - \textit{species' sd value} for the minimum and \textit{species' mean value} + \textit{species' sd value} for the maximum.
 
-Now we can start the simulation with \Sexpr{nb_param_val} parameters values and \Sexpr{N_repet_Param*length(param_SD)} permutations. 
+Now we can start the simulations with \Sexpr{nb_param_val} parameter values and \Sexpr{N_repet_Param*length(param_SD)} permutations. 
 
 <<Internal_filter_simu, results = 'hide'>>= 
 mean.sp_stock2 <- list() ; sd.sp_stock2 <- list() ; res.simu2 <- list()
@@ -630,7 +632,6 @@ res.simu2.pval <- list() ; res.simu.traits2 <- list() ;  mean_dist_sp <- list()
 for(n in 1:nperm){#for each permutation
  
  # Draw communities using lognormal distribution of abundances 
- # 100 individuals by populations
  ex.sp2 <- c()
  ex.com2 <- matrix(0, nrow = Ncom, ncol = Nsp)
  for(i in 1: Ncom){
@@ -642,7 +643,7 @@ for(n in 1:nperm){#for each permutation
 
  ex.indplot2 <- sort(as.factor(rep(com, Nind/Ncom)))
 
- # Defining traits mean and sd by species 
+ # Defining trait mean and sd per species 
  mean_mean.param.interm <- seq(max.value_traits - param_DIST_between_MEAN[n], 
                                max.value_traits, length.out = 
                                length(unique(param_DIST_between_MEAN)))
@@ -655,7 +656,7 @@ for(n in 1:nperm){#for each permutation
  ex.traits2 <- array(NA, dim = c(Nind, 2))
  colnames(ex.traits2) <- paste("trait", c("a", "b"), sep = " ")
 
- # Draw the individual traits depending on species attributes
+ # Draw the individual traits depending on species' attributes
   for(s in unique(ex.sp2)){
    #trait a : normal distribution
    ex.traits2[ex.sp2 == s, 1] <- 
@@ -689,9 +690,9 @@ for(n in 1:nperm){#for each permutation
 
  \subsection {Results of the simulations of internal filtering}
 
-Let's see the result for one randomization. We can plot the distribution of traits values within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:typical_result_internal_filtering1}). 
+Let's see the result for one randomization. We can plot the distribution of trait values within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:typical_result_internal_filtering1}). 
 
-<<typical_result_internal_filtering1, fig.cap = "Distribution of trait values for one randomization with internal filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution); (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b", crop = TRUE>>= 
+<<typical_result_internal_filtering1, fig.cap = "Distribution of trait values for one randomization with internal filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution). In panels a and b, each color represents one community (site). (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b. In panels c and d, each color represents one species.", crop = TRUE>>= 
 par(mfrow=c(2, 2))
 plotDistri(ex.traits2, rep("all_sp", times = dim(ex.traits2)[1]), ex.indplot2, 
            plot.ask = F, multipanel = F, cex.leg = 0.6, main= c("a", "b"))
@@ -702,24 +703,23 @@ par(mfrow=c(1, 1))
 
 We can also plot the result of the T-statistics for two contrasting cases (Fig. \ref{fig:typical_result_internal_filtering2}).
 
-<<typical_result_internal_filtering2, fig.height = 8, fig.cap = "Results of T-statistics for two randomization with contrasted strength of internal filtering: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. (a) Lower strength of internal filtering and (b) higher strength of internal filtering.", crop = TRUE>>= 
+<<typical_result_internal_filtering2, fig.height = 8, fig.cap = "T-statistics for two randomizations with contrasted strengths of internal filtering: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. (a) Lower strength of internal filtering and (b) higher strength of internal filtering.", crop = TRUE>>= 
 par(mfrow=c(2, 1))
 plot(res.simu2[[1]], main="a")
 plot(res.simu2[[n]], main="b")
 par(mfrow=c(1, 1))
 @
 
-For the power analysis of internal filtering we present the result in two parts: (i) the test of robustness of each T-statistics values using local p-values and (ii) the test of community-aggregated T-statistics using global p-values.
+For the power analysis of internal filtering we present the results in two steps: (i) the test of robustness of each T-statistics values using local p-values and (ii) the test of community-aggregated T-statistics using global p-values.
 
- \subsubsection {Local p-values results}
+ \subsubsection {Results with local p-values}
 
-Here we call local p-values the p-values corresponding to one index for one trait in one community. First, we can represent the ordered p.value in decimal logarithms and calculate the power of the $T_{IP/IC}$ index using the beta-error\footnote{The proportion of case where we do not reject the null hypothesis while this hypothesis is wrong.}. The less the beta-error, the more the index is powerful. Contrary to the test without filter, we choose a unilateral test because we only want to test if $T_{IP/IC}$ is smaller than it should be under the associated null hypothesis.
+Here we call local p-values the p-values corresponding to one index for one trait in one community. We can plot the local p-values using different ways. First, we can represent the ordered p.value in decimal logarithm and calculate the power of the $T_{IP/IC}$ index using the beta-error\footnote{The proportion of cases for which we do not reject the null hypothesis while this hypothesis is wrong.}. The less the beta-error, the more the index is powerful. Contrary to the test without filter, we choose a unilateral test because we only want to test if $T_{IP/IC}$ is smaller than it should be under the associated null hypothesis.
 
-We can plot the local p-values in different ways. First, we can represent the ordered p.value in decimal logarithms and calculate the power of the $T_{IP/IC}$ index using the beta-error. The less the beta-error, the more the index is powerful. Contrary to the test without filter, we choose a unilateral test because we only want to test if $T_{IP/IC}$ is smaller than it should be under the associated null hypothesis.
 
-  \subsubsubsection {Calculation of beta-error mixing all strength of filtering}
+  \subsubsubsection {Calculation of beta-error mixing all strengths of filtering}
  
-<<Internal_filter_results_pval_local, fig.height = 3, crop = TRUE, fig.cap = "Beta-error mixing all strength of internal filtering: Standardized effect size of $T_{IP/IC}$ are ordered and plot. The black line represent the value of 0.05. Consequently, p-values above this line are false-negative cases. Norm: normal distribution, Uni: uniforme distribution. " >>= 
+<<Internal_filter_results_pval_local, fig.height = 3, crop = TRUE, fig.cap = "Beta-error mixing all strengths of internal filtering: Standardized effect sizes of $T_{IP/IC}$ are ordered and plotted. The black line represents the value of 0.05. Consequently, p-values above this line are false-negative cases. Norm: normal distribution, Uni: uniform distribution. " >>= 
 par(mfrow = c(1, 2))
 xx <- log10(sort(unlist(lapply(res.simu2.pval, function(x) x[1:10, 1]))))
 plot(xx, type = "l", main = "T_IP.IC Norm", 
@@ -739,9 +739,9 @@ text(0, -0.8, labels = paste("beta error", nbre_beta_error, sep = " = "),
 par(oldpar)
 @
 
-The beta-error is very high and thus the power of $T_{IP/IC}$ can \textit{prima facie} seen as problematic (Fig. \ref{fig:Internal_filter_results_pval_local}). But here we mingle the p-value for several parameters values. Thus it is far more informative to see the power of the test in relation to the initial parameters values. We represent standardized effect sizes values (hereafter called SES) in relation to the strength of internal filter to determine the parameters values which allow a satisfactory power of $T_{IP/IC}$.
+The beta-error is very high and thus the power of $T_{IP/IC}$ can be \textit{prima facie} seen as problematic (Fig. \ref{fig:Internal_filter_results_pval_local}). But here we mingle the p-value for several parameter values. Thus it is far more informative to see the power of the test in relation to the initial parameter values. We represent standardized effect sizes values (hereafter called SES) in relation to the strength of internal filter to determine the parameter values which allow a satisfactory power of $T_{IP/IC}$.
 
-As we add stochasticity around the initial parameters values, we can measure the strength of internal filtering by (i) the initial parameter values or (ii) by calculating the modeled parameter values\footnote{\textit{i.e.} the parameter values after adding stochasticity}.
+As we add stochasticity around the initial parameter values, we can measure the strength of internal filtering by (i) the initial parameter values or (ii) by calculating the modeled parameter values\footnote{\textit{i.e.} the parameter values after adding stochasticity}.
  
   \subsubsubsection {Local $T_{IP/IC}$ SES values against initial parameter values}
 
@@ -763,10 +763,10 @@ SES.inf.MEAN.uni_Tipic <- unlist(lapply(res.simu2, function(x)
              $index_1_1$ses.inf[, 2]))
 @
 
-Now, we can plot SES of $T_{IP/IC}$ (Fig. \ref{fig:In_filter_results_plot_initparam}). The trait "a" normally distributed is in black and the uniform traits "b" is in purple. The colored rectangles represent the null model area with alpha = 5\%. Thus, when a point is outside these area, the modeled parameters are strong enough to detect the internal filter with a high power (beta-error $ < 0.05$).
+Now, we can plot SES of $T_{IP/IC}$ (Fig. \ref{fig:In_filter_results_plot_initparam}). The trait "a" normally distributed is in black and the uniform traits "b" is in purple. The colored rectangles represent the null model area with alpha = 5\%. Thus, when a dot is outside these area, the modeled parameters are strong enough to detect the internal filter with a high power (beta-error $ < 0.05$).
 
   
-<<In_filter_results_plot_initparam, fig.height = 4, fig.cap = "Local $T_{IP/IC}$ SES and initial parameters values: Standardized effect size of $T_{IP/IC}$ in function of the strength of internal filter defined by the ratio of the initial range parameter by the initial standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{IP/IC}$ SES and initial parameters values">>= 
+<<In_filter_results_plot_initparam, fig.height = 4, fig.cap = "Local $T_{IP/IC}$ SES and initial parameter values: Standardized effect size of $T_{IP/IC}$ as a function of the strength of internal filtering defined as the ratio of the initial range parameter by the initial standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{IP/IC}$ SES and initial parameter values">>= 
 init_param <- param_DIST_between_MEAN / sd_mean.param
 init_param.loc <- rep(init_param, each = Ncom)
 
@@ -787,7 +787,7 @@ rect(mean(SES.inf.MEAN.uni_Tipic, na.rm = T), 0, 0, max(init_param),
 @
  
   
-For each initial parameters values we can calculate the proportion of case where we do not reject the null hypothesis while this hypothesis is wrong (\textit{i.e.} the Beta-error). The next chunk only shows the calculation for the $T_{IC/IR}$ metrics on the trait "a".
+For each initial parameter values we can calculate the proportion of cases for which we do not reject the null hypothesis while this hypothesis is wrong (\textit{i.e.} the Beta-error). The next chunk only shows the calculation for the $T_{IC/IR}$ metrics for the trait "a".
 
 <<In_calculate_local_betaerrors>>= 
 beta_sd_norm_Tipic <- 
@@ -816,7 +816,7 @@ rownames(res_beta_Tipic) <- c("effect of sd (a)", "effect of sd (b)",
 @
 
 <<In_resultsof_local_betaerrors, results='asis'>>= 
-print(xtable(res_beta_Tipic, caption = 'Local beta-error of $T_{IP/IC}$ in function 
+print(xtable(res_beta_Tipic, caption = 'Local beta-error of $T_{IP/IC}$ as a function 
              of the strength of internal filtering. str: strength. Trait a is 
              normally distributed and trait b is uniformally distributed.', 
              label = "tab:local_beta_error_xtable"), 
@@ -824,12 +824,12 @@ print(xtable(res_beta_Tipic, caption = 'Local beta-error of $T_{IP/IC}$ in funct
 @
  
 
-Now we can see the beta-error for each strength in table \ref{tab:local_beta_error_xtable}. A high value of range and a low value of standard error defined a high strength of filtering. For example, in the case of a trait normally distributed, the proportion of false negative is \Sexpr{round(res_beta_Tipic[1, 1]*100, 2)}\% for the higher value of standard errors and thus for the lower strength of internal filtering. The good behavior of the function \texttt{Tstats} is ascertained by the decrease of beta-error along increasing strength of the filter.
+Now we can see the beta-error for each strength in table \ref{tab:local_beta_error_xtable}. A high value of range and a low value of standard error defined a high strength of filtering. For example, in the case of a trait normally distributed, the proportion of false negative is \Sexpr{round(res_beta_Tipic[1, 1]*100, 2)}\% for the higher value of standard errors and thus for the lower strength of internal filtering. The good behavior of the function \texttt{Tstats} is ascertained by the decrease in the beta-error when increasing the strength of the filter.
  
  
   \subsubsubsection {Local $T_{IP/IC}$ SES values against modeled parameter values}
   
-  First we need to calculate the modeled parameter values. Here again we calculate the strength of internal filtering by dividing the range of values in communities by their standard error.
+  First we need to calculate the modeled parameter values. Here again we calculate the strength of internal filtering by dividing the range of trait values in a community by its standard error.
   
 <<In_filter_modeledparam>>= 
 mean_dist_sp.interm <- t(matrix(unlist(lapply(mean_dist_sp, function(x) x)), nrow = 2))
@@ -841,7 +841,7 @@ modeled_param_norm.loc <- rep(modeled_param_norm, each = Ncom)
 modeled_param_uni.loc <- rep(modeled_param_uni, each = Ncom)
 @
 
-<<In_filter_results_plot_modeledparam, fig.height = 4, fig.cap = "Local $T_{IP/IC}$ SES and modeled parameters values: Standardized effect size of $T_{IP/IC}$ in function of the strength of internal filter defined by the ratio of the modeled range parameter by the modeled standard error parameter. The colored rectangles represent the mean confidence interval for SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{IP/IC}$ SES and modeled parameters values">>= 
+<<In_filter_results_plot_modeledparam, fig.height = 4, fig.cap = "Local $T_{IP/IC}$ SES and modeled parameter values: Standardized effect size of $T_{IP/IC}$ as a  function of the strength of internal filtering defined as the ratio of the modeled range parameter by the modeled standard error parameter. The colored rectangles represent the mean confidence interval for SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{IP/IC}$ SES and modeled parameter values">>= 
 
 plot(meanSES.2loc.norm_Tipic, modeled_param_norm.loc, pch = 16, col = rgb(0, 0, 0, 0.6),
      xlim = c(min(c(unlist(meanSES.2loc.norm_Tipic), unlist(meanSES.2loc.uni_Tipic)), 
@@ -868,7 +868,7 @@ In contrast with local p-values, we call global p-values the p-values correspond
 
   \subsubsubsection {Global $T_{IP/IC}$ SES values against initial parameter values}
   
-Again, this first results mix different initial parameter values. Now, we can plot the SES values in relation to the strength of the internal filter assessed by the two parameters (either the initial values: \texttt{mean\_{}range\_{}between\_{}com} and \texttt{mean\_{}sd\_{}of\_{}com} or the modeled values \texttt{mean\_{}range\_{}com} and \texttt{sd.com\_{}stock2} \footnote{This modeled values are stochastic versions of the initial values.}). 
+Again, these first results mix different initial parameter values. Now, we can plot the SES values as a function of the strength of the internal filtering assessed by the two parameters (either the initial values: \texttt{mean\_{}range\_{}between\_{}com} and \texttt{mean\_{}sd\_{}of\_{}com} or the modeled values \texttt{mean\_{}range\_{}com} and \texttt{sd.com\_{}stock2} \footnote{These modeled values are stochastic versions of the initial values.}). 
 
 First, we need to compute the SES values from simulations.
 <<Internal_filter_Results_SES>>= 
@@ -890,7 +890,7 @@ meanSES.INF_glob.uni_Tipic <- unlist(lapply(res.simu2, function(x)
 Plot the result against initial parameters (Fig. \ref{fig:Internal_filter_Results_plots_initial_param}).
 
 
-<<Internal_filter_Results_plots_initial_param, fig.height = 4, fig.cap = "Global $T_{IP/IC}$ SES and initial parameters values: Standardized effect size of $T_{IP/IC}$ in function of the strength of internal filter defined by the ratio of the inital range parameter by the initial standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{IP/IC}$ SES and initial parameters values">>= 
+<<Internal_filter_Results_plots_initial_param, fig.height = 4, fig.cap = "Global $T_{IP/IC}$ SES and initial parameter values: Standardized effect size of $T_{IP/IC}$ as a function of the strength of internal filtering defined as the ratio of the inital range parameter by the initial standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{IP/IC}$ SES and initial parameter values">>= 
 plot(meanSES.2glob.norm_Tipic, init_param, pch = 16, col = rgb(0, 0, 0, 0.6),
      main = "Global T_IP.IC",
      xlim = c(min(c(meanSES.2glob.norm_Tipic, meanSES.2glob.uni_Tipic), 
@@ -910,9 +910,9 @@ rect(mean(meanSES.INF_glob.uni_Tipic, na.rm = T), 0, 0, max(modeled_param_uni.lo
 
   \subsubsubsection {Global $T_{IP/IC}$ SES values against modeled parameter values}
   
-We can verify the consistency of our results by plotting SES values against the modeled parameters values (Fig. \ref{fig:Internal_filter_Results_plots_modeled_param}). 
+We can verify the consistency of our results by plotting SES values against the modeled parameter values (Fig. \ref{fig:Internal_filter_Results_plots_modeled_param}). 
 
-<<Internal_filter_Results_plots_modeled_param, fig.height = 4, fig.cap = "Global $T_{IP/IC}$ SES and modeled parameters values: Standardized effect size of $T_{IP/IC}$ in function of the strength of internal filter defined by the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{IP/IC}$ SES and modeled parameters values">>= 
+<<Internal_filter_Results_plots_modeled_param, fig.height = 4, fig.cap = "Global $T_{IP/IC}$ SES and modeled parameter values: Standardized effect size of $T_{IP/IC}$ as a function of the strength of internal filtering defined as the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{IP/IC}$ SES and modeled parameter values">>= 
 mean_dist_sp.interm <- t(matrix(unlist(lapply(mean_dist_sp, function(x) x)), nrow = 2))
 mean_sd_of_com <- unlist(lapply(sd.sp_stock2, function(x) mean(x)))
 
@@ -938,9 +938,9 @@ rect(mean(meanSES.INF_glob.uni_Tipic, na.rm = T), 0, 0, max(modeled_param_uni),
 
   \subsection {Conclusion on the power of $T_{IP/IC}$ to detect internal filtering}
 
-To conclude on the power of $T_{IP/IC}$ to detect internal filtering, we compute exponential linear model and identify the strength from which the beta-error is inferior to 0.05. This strength is defined by the two ratio of the initial parameters \texttt{param\_DIST\_between\_MEAN} and \texttt{sd\_mean.param}. 
+To conclude on the power of $T_{IP/IC}$ to detect internal filtering, we apply an exponential linear model and identify the strength from which the beta-error is inferior to 0.05. This strength is defined as the ratio of the initial parameters \texttt{param\_DIST\_between\_MEAN} and \texttt{sd\_mean.param}. 
 
-<<In_conc_plot, fig.cap = "Power of $T_{IP/IC}$ to detect internal filtering: Standardised Effect Size (SES) of $T_{IP/IC}$ in relation to the strength of internal filtering. Trait 'a' normally distributed is shown in black, traits 'b' uniformally distributed in purple. Open circle represent local SES values wheras close one represent global SES values. The exponential linear model is presented with 5 percents confidence interval on both side. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$)", fig.scap = "Power of $T_{IP/IC}$ to detect internal filtering", dev ='png', dpi = 100>>=
+<<In_conc_plot, fig.cap = "Power of $T_{IP/IC}$ to detect internal filtering: Standardised Effect Size (SES) of $T_{IP/IC}$ as a function of the strength of internal filtering. Trait 'a' normally distributed is shown in black, trait 'b' uniformally distributed in purple. Dots represent global SES values. The exponential linear model is presented with a 0.05 confidence interval on both sides. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$)", fig.scap = "Power of $T_{IP/IC}$ to detect internal filtering", dev ='png', dpi = 100>>=
 plot(meanSES.2loc.norm_Tipic ~ init_param.loc, col = rgb(0, 0, 0, 0.2), 
      ylim = c(min(c(meanSES.2loc.norm_Tipic , meanSES.2loc.uni_Tipic,
                   meanSES.2glob.norm_Tipic, meanSES.2glob.uni_Tipic), na.rm = T), 0),
@@ -989,7 +989,7 @@ param_beta0.05_Tipic.uni <- exp((yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf [2, 
 
 For the trait "a" normally distributed, the power of $T_{IP/IC}$ is satisfactory if the ratio of the initial parameter is superior to
  \Sexpr{round(param_beta0.05_Tipic.norm, 2)}. For the trait "b" uniformally distributed, this value is \Sexpr{round(param_beta0.05_Tipic.uni, 2)}. 
- Further investigation on real data with different strength of internal filtering are needed to complete these simulated values.
+ Further investigation on real data with different strengths of internal filtering are needed to complete these simulated values.
 
  
 
@@ -1023,30 +1023,29 @@ For the trait "a" normally distributed, the power of $T_{IP/IC}$ is satisfactory
 
  \subsection {Randomization outline}
  
-As for internal filter we modulate the strength of the external filter thanks to two parameters:
-we define (i) a gradient of range between communities means traits distributions and (ii) a gradient of the mean variance in communities traits distributions. We expect the external filtering to increase (i) when the range in communities means increase (\textit{i.e.} the environmental gradient is larger) and (ii) when the variance in the communities traits distributions decrease (\textit{i.e.} the environmental gradient is stronger).
+We modulate the strength of the external filter (here considered as a functional turnover between communities) thanks to two parameters:
+we define (i) a gradient of distances between communities' mean trait distributions and (ii) a gradient of variance in communities' trait distributions. We expect the external filtering to increase (i) when the distance between communities' means increase (\textit{i.e.} the environmental gradient is larger) and (ii) when the variance in communities' trait distributions decreases (\textit{i.e.} the environmental gradient is stronger).
 \\
 
-In analogy with the internal filtering model, we defined \Sexpr{nb_param_val} values for two parameters:
+In analogy with the internal filtering modelling framework, we defined \Sexpr{nb_param_val} values for two parameters:
 \\
 
- (i) \texttt{param\_{}RANGE.init} is a vector of length \Sexpr{nb_param_val} which defined the above range for the mean traits values (the maximum value for the mean is assessed to \Sexpr{max.value_traits}). In decreasing the range of traits values while keeping the same number of communities, there is a decrease in the overlap of the communities traits distributions and consequently an decrease of the impact of external filtering in shaping traits distributions. Thus the mean for each communities is drawn from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly
-\footnote{In fact, we draw this values in a normal distribution with means evenly distributed and with a standard error equal to \texttt{mean\_{}sd.param}}
-of \Sexpr{mean_sd.param[1]} distributed between \texttt{max.value\_{}traits - param\_{}RANGE} and \texttt{max.value\_{}traits}.
+ (i) \texttt{param\_{}RANGE.init} is a vector of length \Sexpr{nb_param_val} which defined the distance between communities' mean trait values (the maximum value for the mean is set to \Sexpr{max.value_traits}). In decreasing the range of traits values \footnote{thus decreasing the distance between communities' mean trait values} while keeping the same number of communities, there is a increase in the overlap of the communities' trait distributions and consequently an increase in the impact of external filtering. The mean for each communitiy is drawn from a normal distribution with standard deviation of \Sexpr{mean_sd.param[1]} (parameter \texttt{mean\_{}sd.param}) and means evenly
+\footnote{In fact, we draw these values in a normal distribution with means evenly distributed and with a standard error equal to \texttt{mean\_{}sd.param}} distributed between \texttt{max.value\_{}traits - param\_{}RANGE} and \texttt{max.value\_{}traits}.
 \\
 
-(ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of traits distributions for each species. In order to decorrelate the mean and standard deviation of species traits distributions, \texttt{param\_{}SD} is permuted before the analysis. 
+(ii) \texttt{param\_{}SD} is a vector of length \Sexpr{nb_param_val} which defined the standard deviation of trait distributions for each community. In order to decorrelate the mean and standard deviation of community's trait distributions, \texttt{param\_{}SD} is permuted before the analysis. 
 \\
 
- Thus for the trait "a" the trait value for each individual is drawn from a normal distribution with the mean depending on it community attribute. For the trait "b" the trait value for each individual is drawn from a uniform distribution with the range depending on it community attribute.
+ Thus for the trait "a" the trait value for each individual is drawn from a normal distribution with the mean depending on its community attribute. For the trait "b" the trait value for each individual is drawn from a uniform distribution with the range depending on its community attribute.
  
 <<External_filter_param>>= 
-# Parameter for the range of communities traits distributions
+# Parameter for the range of communities trait distributions
 param_range.init <- round(sort(seq(10, 200, length.out = nb_param_val)), 2)
 param_range <- rep(param_range.init, N_repet_Param)
 mean_sd.param <- rep(10, nperm)
 
-# Parameter for the variance in species mean trait values
+# Parameter for the variance in species' mean trait values
 param_SD <- seq(10, 100,length.out = nb_param_val)
 sd_mean.param <- sample (rep(param_SD, N_repet_Param), 
        size = length(rep(param_SD, N_repet_Param)), replace = F)
@@ -1072,7 +1071,7 @@ for(n in 1:nperm){#for each permutation
 
  ex.indplot3 <- sort(as.factor(rep(com, Nind/Ncom)))
 
- #Defining mean and sd by community
+ #Defining mean and sd for each community
  mean_mean.param.interm <- seq(max.value_traits - param_range[n], max.value_traits, 
                                length.out = length(unique(param_range)))
 
@@ -1113,9 +1112,9 @@ for(n in 1:nperm){#for each permutation
 
  \subsection {Results of the simulations of external filtering}
 
-Let's see the result for one randomization. We can plot the distribution of traits values within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:typical_results_external_filtering1}). 
+Let's see the results for one randomization. We can plot the distribution of trait values within species and/or communities thanks to the function \texttt{plotDistri} (Fig. \ref{fig:typical_results_external_filtering1}). 
 
-<<typical_results_external_filtering1, fig.cap = "Distribution of trait values for one randomization with external filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution); (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b", crop = TRUE>>= 
+<<typical_results_external_filtering1, fig.cap = "Distribution of trait values for one randomization with external filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution). In panels a and b, each color represents one community (site). (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b. In panels c and d, each color represents one species.", crop = TRUE>>= 
 par(mfrow=c(2, 2))
 plotDistri(ex.traits3, rep("all_sp", times = dim(ex.traits3)[1]), ex.indplot3, 
            plot.ask = F, multipanel = F, main = c("a", "b"), leg = c(T, F))
@@ -1124,9 +1123,9 @@ plotDistri(ex.traits3, rep("region", times = dim(ex.traits3)[1]), ex.sp3, plot.a
 par(mfrow=c(1, 1))
 @
 
-We can also plot the result of the T-statistics for two contrasting case (Fig. \ref{fig:typical_results_external_filtering2}).
+We can also plot the result of the T-statistics for two contrasting cases (Fig. \ref{fig:typical_results_external_filtering2}).
 
-<<typical_results_external_filtering2, fig.height = 8, fig.cap = "Results of T-statistics for two randomization with contrasted strength of external filtering: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. (a) Lower strength of external filtering and (b) higher strength of external filtering.", crop = TRUE>>= 
+<<typical_results_external_filtering2, fig.height = 8, fig.cap = "T-statistics for two randomizations with contrasted strengths of external filtering: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. (a) Lower strength of external filtering and (b) higher strength of external filtering.", crop = TRUE>>= 
 par(mfrow=c(2, 1))
 plot(res.simu3[[1]], main = "a")
 plot(res.simu3[[n]], main = "b")
@@ -1135,7 +1134,7 @@ par(mfrow=c(1, 1))
 
  \subsubsection {Local $T_{IC/IR}$ and $T_{PC/PR}$ results}
 
-As for internal filtering, we mingle the p-value for different parameters values. Consequently we plot the standard effect size (SES) of $T_{IC/IR}$ and $T_{PC/PR}$ in relation to the initial parameters values. 
+As for internal filtering, we mingle the p-values for different parameter values. Consequently we plot the standard effect size (SES) of $T_{IC/IR}$ and $T_{PC/PR}$ as a function of the initial parameter values. 
 
   \subsubsubsection {Local $T_{IC/IR}$ and $T_{PC/PR}$ SES values against initial parameter values}
 
@@ -1176,11 +1175,11 @@ SES.inf.MEAN.uni_Tpcpr <- unlist(lapply(res.simu3, function(x)
              $index_1_3$ses.inf[, 2]))
 @
 
-Now, we can plot SES of $T_{IC/IR}$ (Fig. \ref{fig:Ex_filter_results_plot_initparam1}) and $T_{PC/PR}$ (Fig. \ref{fig:Ex_filter_results_plot_initparam2}). The trait "a" normally distributed is in black and the uniform traits "b" is in purple. The colored rectangles represent the null model area with alpha = 5\%. Thus, when a point is outside these area, the modeled parameters are strong enough to detect the external filter with a high power (beta-error $ < 0.05$).
+Now, we can plot SES of $T_{IC/IR}$ (Fig. \ref{fig:Ex_filter_results_plot_initparam1}) and $T_{PC/PR}$ (Fig. \ref{fig:Ex_filter_results_plot_initparam2}). The trait "a" normally distributed is in black and the uniform trait "b" is in purple. The colored rectangles represent the null model area with alpha = 5\%. Thus, when a point is outside this area, the modeled parameters are strong enough to detect the external filter with a high power (beta-error $ < 0.05$).
 
-<<Ex_filter_results_plot_initparam1, fig.height = 4, fig.cap = "Local $T_{IC/IR}$ SES and initial parameters values: Standardized effect size of $T_{IC/IR}$ in function of the strength of external filter defined by the ratio of the initial range parameter by the initial standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{IC/IR}$ SES and initial parameters values">>= 
+<<Ex_filter_results_plot_initparam1, fig.height = 4, fig.cap = "Local $T_{IC/IR}$ SES and initial parameter values: Standardized effect size of $T_{IC/IR}$ as a function of the strength of external filtering defined as the ratio of the initial range parameter by the initial standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{IC/IR}$ SES and initial parameter values">>= 
 init_param <- param_range / sd_mean.param
-#each value is replicate Ncom times (there is Ncom communities for each parameter values)
+#each value is replicated Ncom times (there are Ncom communities for each parameter values)
 init_param.loc <- rep(init_param, each = Ncom)
 
 plot(meanSES.3loc.norm_Ticir, init_param.loc, pch = 16, col = rgb(0, 0, 0, 0.6),
@@ -1200,7 +1199,7 @@ rect(mean(SES.inf.MEAN.uni_Ticir, na.rm = T),0, 0, max(init_param),
 @
  
   
-<<Ex_filter_results_plot_initparam2, fig.height = 4, fig.cap = "Local $T_{PC/PR}$ SES and initial parameters values: Standardized effect size of $T_{PC/PR}$ in function of the strength of external filter defined by the ratio of the initial range parameter by the initial standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{PC/PR}$ SES and initial parameters values">>= 
+<<Ex_filter_results_plot_initparam2, fig.height = 4, fig.cap = "Local $T_{PC/PR}$ SES and initial parameter values: Standardized effect size of $T_{PC/PR}$ as a function of the strength of external filtering defined as the ratio of the initial range parameter by the initial standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{PC/PR}$ SES and initial parameter values">>= 
 plot(meanSES.3loc.norm_Tpcpr, init_param.loc, pch = 16, col = rgb(0, 0, 0, 0.6),
      xlim = c(min(c(unlist(meanSES.3loc.norm_Tpcpr), unlist(meanSES.3loc.uni_Tpcpr)), 
      na.rm = T), 0),
@@ -1217,7 +1216,7 @@ rect(mean(SES.inf.MEAN.uni_Tpcpr, na.rm = T), 0, 0, max(init_param),
      col = rgb(0.5, 0, 1, 0.3), border = NA)
 @
  
-For each initial parameters values we can calculate the proportion of case where we do not reject the null hypothesis while this hypothesis is wrong (\textit{i.e.} the Beta-error). The next chunk only shows the calculation for the $T_{IC/IR}$ metrics on the trait "a".
+For each initial parameter values we can calculate the proportion of cases for which we do not reject the null hypothesis while this hypothesis is wrong (\textit{i.e.} the Beta-error). The next chunk only shows the calculation for the $T_{IC/IR}$ metrics for the trait "a".
 
 <<Ex_calculate_local_betaerrors, echo = 2>>= 
 beta_sd_norm_Ticir <- 
@@ -1270,7 +1269,7 @@ rownames(res_beta_Tpcpr) <- c("effect of sd (a)", "effect of sd (b)",
 @
 
 <<Ex_resultsof_local_betaerrors1, results='asis'>>= 
-print(xtable(res_beta_Ticir, caption = 'Local beta-error of $T_{IC/IR}$ in function 
+print(xtable(res_beta_Ticir, caption = 'Local beta-error of $T_{IC/IR}$ as a function 
              of the strength of external filtering. str: strength. Trait a is 
              normally distributed and trait b is uniformally distributed.', 
              label = "tab:local_beta_error_xtable_ticir"), 
@@ -1278,19 +1277,19 @@ print(xtable(res_beta_Ticir, caption = 'Local beta-error of $T_{IC/IR}$ in funct
 @
 
 <<Ex_resultsof_local_betaerrors2, results='asis'>>= 
-print(xtable(res_beta_Ticir, caption = 'Local beta-error of $T_{PC/PR}$ in function 
+print(xtable(res_beta_Ticir, caption = 'Local beta-error of $T_{PC/PR}$ as a function 
              of the strength of external filtering. str: strength. Trait a is 
              normally distributed and trait b is uniformally distributed.', 
              label = "tab:local_beta_error_xtable_tpcpr"), 
       caption.placement = "top", size = "small")
 @
  
-Now we can see the beta-error for each strength (table \ref{tab:local_beta_error_xtable_ticir} and \ref{tab:local_beta_error_xtable_tpcpr}). A high value of range and a low value of standard error defined a high strength of filtering. For example, in the case of a trait normally distributed, the proportion of false negative is \Sexpr{round(res_beta_Ticir[1, 1]*100, 2)}\% for the higher value of standard errors and thus for the lower strength of external filtering.
+Now we can see the beta-error for each strength (Tables \ref{tab:local_beta_error_xtable_ticir} and \ref{tab:local_beta_error_xtable_tpcpr}). A high value of range and a low value of standard error defined a high strength of filtering. For example, in the case of a trait normally distributed, the proportion of false negative is \Sexpr{round(res_beta_Ticir[1, 1]*100, 2)}\% for the higher value of standard errors and thus for the lower strength of external filtering.
  
  
   \subsubsubsection {Local $T_{IC/IR}$ and $T_{PC/PR}$ SES values against modeled parameter values}
   
-  First we need to calculate the modeled parameter values. Here again we calculate the strength of external filtering by dividing the range of values in communities by their standard error.
+  First we need to calculate the modeled parameter values. Here again we calculate the strength of external filtering by dividing the range of values between communities by their standard error.
   
 <<Ex_filter_modeledparam>>= 
 mean_range_com.interm <- t(matrix(unlist(lapply(mean_range_com, function(x) x)), nrow = 2))
@@ -1302,7 +1301,7 @@ modeled_param_norm.loc <- rep(modeled_param_norm, each = Ncom)
 modeled_param_uni.loc <- rep(modeled_param_uni, each = Ncom)
 @
 
-<<Ex_filter_results_plot_modeledparam1, fig.height = 4, fig.cap = "Local $T_{IC/IR}$ SES and modeled parameters values: Standardized effect size of $T_{IC/IR}$ in function of the strength of external filter defined by the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{IC/IR}$ SES and modeled parameters values">>= 
+<<Ex_filter_results_plot_modeledparam1, fig.height = 4, fig.cap = "Local $T_{IC/IR}$ SES and modeled parameter values: Standardized effect size of $T_{IC/IR}$ as a function of the strength of external filtering defined as the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{IC/IR}$ SES and modeled parameter values">>= 
 plot(meanSES.3loc.norm_Ticir, modeled_param_norm.loc, pch = 16, col = rgb(0, 0, 0, 0.6),
   xlim = c(min(c(unlist(meanSES.3loc.norm_Ticir), unlist(meanSES.3loc.uni_Ticir)), 
     na.rm = T), 0),
@@ -1321,7 +1320,7 @@ rect(mean(SES.inf.MEAN.uni_Ticir, na.rm = T),0, 0, max(modeled_param_uni.loc),
      col = rgb(0.5, 0, 1, 0.3), border = NA)
 @
 
-<<Ex_filter_results_plot_modeledparam2, fig.height = 4, fig.cap = "Local $T_{PC/PR}$ SES and modeled parameters values: Standardized effect size of $T_{PC/PR}$ in function of the strength of external filter defined by the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{PC/PR}$ SES and modeled parameters values">>= 
+<<Ex_filter_results_plot_modeledparam2, fig.height = 4, fig.cap = "Local $T_{PC/PR}$ SES and modeled parameter values: Standardized effect size of $T_{PC/PR}$ as a function of the strength of external filtering defined as the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Local $T_{PC/PR}$ SES and modeled parameter values">>= 
 plot(meanSES.3loc.norm_Tpcpr, modeled_param_norm.loc, pch = 16, col = rgb(0, 0, 0, 0.6),
      xlim = c(min(c(unlist(meanSES.3loc.norm_Tpcpr), unlist(meanSES.3loc.uni_Tpcpr)), 
               na.rm = T), 0),
@@ -1340,15 +1339,15 @@ rect(mean(SES.inf.MEAN.uni_Tpcpr, na.rm = T), 0, 0, max(modeled_param_uni.loc),
      col = rgb(0.5, 0, 1, 0.3), border = NA)
 @
 
-There is a very hich correlation coefficient between initial and modeled parameter either for the range (trait a: Pearson correlation = \Sexpr{round(cor.test(param_range, modeled_param_norm)[[4]], 3)}; trait b: Pearson correlation = \Sexpr{round(cor.test(param_range, modeled_param_uni)[[4]], 3)}) and for the standard error(trait a and b: Pearson correlation = \Sexpr{round(cor.test(sd_mean.param, mean_sd_of_com)[[4]], 3)}). Consequently the consistency between the figures \ref{fig:Ex_filter_results_plot_initparam1} - \ref{fig:Ex_filter_results_plot_initparam2} and \ref{fig:Ex_filter_results_plot_modeledparam1} - \ref{fig:Ex_filter_results_plot_modeledparam2} is not suprising. 
+There is a very hich correlation coefficient between initial and modeled parameters either for the range (trait a: Pearson correlation = \Sexpr{round(cor.test(param_range, modeled_param_norm)[[4]], 3)}; trait b: Pearson correlation = \Sexpr{round(cor.test(param_range, modeled_param_uni)[[4]], 3)}) and for the standard error(trait a and b: Pearson correlation = \Sexpr{round(cor.test(sd_mean.param, mean_sd_of_com)[[4]], 3)}). Consequently the consistency between the figures \ref{fig:Ex_filter_results_plot_initparam1} - \ref{fig:Ex_filter_results_plot_initparam2} and \ref{fig:Ex_filter_results_plot_modeledparam1} - \ref{fig:Ex_filter_results_plot_modeledparam2} is not suprising. 
  
  \subsubsection {Global $T_{IC/IR}$ and $T_{PC/PR}$ results}
  
 In contrast with local p-values, we call global p-values the p-values corresponding to one index for one trait across all the communities. 
  
-  \subsubsubsection {Calculation of beta-error mixing all strength of filtering}
+  \subsubsubsection {Calculation of beta-error mixing all strengths of external filtering}
  
-To illustrate the global power of $T_{IC/IR}$ and $T_{PC/PR}$ you can plot the ordered p-values and calculate a beta-error thanks to the code below. It's just an illustration because we mingle very different strength of external filter with different initial parameter values. Plot results are not shown in this document. 
+To illustrate the global power of $T_{IC/IR}$ and $T_{PC/PR}$ you can plot the ordered p-values and calculate a beta-error thanks to the code below. It is just an illustration because we mingle very different strengths of external filter with different initial parameter values. Plotted results are not shown in this document. 
  
 <<External_filter_Results_pval_global, eval = FALSE>>= 
 par(mfrow = c(2, 2))
@@ -1383,7 +1382,7 @@ par(mfrow = c(1, 1))
 
   \subsubsubsection {Global $T_{IC/IR}$ and $T_{PC/PR}$ SES values against initial parameter values}
   
-Again, this first results mix different initial parameter values. Now, we can plot the SES values in relation to the strength of the external filter assessed by the two parameters (either the initial values: \texttt{mean\_range\_between\_com} and \texttt{mean\_sd\_of\_com} or the modeled values \texttt{mean\_{}range\_{}com} and \texttt{sd.com\_{}stock3} \footnote{This modeled values are stochastic versions of the initial values.}). 
+Again, these first results mix different initial parameter values. Now, we can plot the SES values in relation to the strength of the external filter assessed by the two parameters (either the initial values: \texttt{mean\_range\_between\_com} and \texttt{mean\_sd\_of\_com} or the modeled values \texttt{mean\_{}range\_{}com} and \texttt{sd.com\_{}stock3} \footnote{These modeled values are stochastic versions of the initial values.}). 
 
 First, we need to compute the SES values from simulations.
 <<External_filter_Results_SES>>= 
@@ -1415,7 +1414,7 @@ meanSES.INF_glob.uni_Tpcpr <- unlist(lapply(res.simu3, function(x)
 @
 
 Plot the result against initial parameters (Fig. \ref{fig:External_filter_Results_plots_initial_param1} and \ref{fig:External_filter_Results_plots_initial_param2}).
-<<External_filter_Results_plots_initial_param1, fig.height = 4, fig.cap = "Global $T_{IC/IR}$ SES and initial parameters values: Standardized effect size of $T_{IC/IR}$ in function of the strength of external filter defined by the ratio of the inital range parameter by the initial standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{IC/IR}$ SES and initial parameters values">>= 
+<<External_filter_Results_plots_initial_param1, fig.height = 4, fig.cap = "Global $T_{IC/IR}$ SES and initial parameter values: Standardized effect size of $T_{IC/IR}$ as a function of the strength of external filtering defined as the ratio of the inital range parameter by the initial standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{IC/IR}$ SES and initial parameter values">>= 
 init_param <- param_range / sd_mean.param
 
 plot(meanSES.3glob.norm_Ticir, init_param, pch = 16, col = rgb(0, 0, 0, 0.6),
@@ -1433,7 +1432,7 @@ rect(mean(meanSES.INF_glob.uni_Ticir, na.rm = T), 0, 0, max(modeled_param_uni.lo
      col = rgb(0.5, 0, 1, 0.3), border = NA)
 @
 
-<<External_filter_Results_plots_initial_param2, fig.height = 4, fig.cap = "Global $T_{PC/PR}$ SES and initial parameters values: Standardized effect size of $T_{PC/PR}$ in function of the strength of external filter defined by the ratio of the inital range parameter by the initial standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{PC/PR}$ SES and initial parameters values">>= 
+<<External_filter_Results_plots_initial_param2, fig.height = 4, fig.cap = "Global $T_{PC/PR}$ SES and initial parameter values: Standardized effect size of $T_{PC/PR}$ as a function of the strength of external filtering defined as the ratio of the inital range parameter by the initial standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{PC/PR}$ SES and initial parameter values">>= 
 plot(meanSES.3glob.norm_Tpcpr, init_param, pch = 16, col = rgb(0, 0, 0, 0.6),
      main = "Global T_PC.PR",
      xlim = c(min(c(meanSES.3glob.norm_Tpcpr, meanSES.3glob.uni_Tpcpr), 
@@ -1451,9 +1450,9 @@ rect(mean(meanSES.INF_glob.uni_Tpcpr, na.rm = T), 0, 0, max(modeled_param_uni.lo
   
   \subsubsubsection {Global $T_{IC/IR}$ and $T_{PC/PR}$ SES values against modeled parameter values}
   
-We can verify the consistency of our results by plotting SES values against the modeled parameters values (Fig. \ref{fig:External_filter_Results_plots_modeled_param1} and \ref{fig:External_filter_Results_plots_modeled_param2}). 
+We can verify the consistency of our results by plotting SES values against the modeled parameter values (Fig. \ref{fig:External_filter_Results_plots_modeled_param1} and \ref{fig:External_filter_Results_plots_modeled_param2}). 
 
-<<External_filter_Results_plots_modeled_param1, fig.height = 4, fig.cap = "Global $T_{IC/IR}$ SES and modeled parameters values: Standardized effect size of $T_{IC/IR}$ in function of the strength of external filter defined by the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{IC/IR}$ SES and modeled parameters values">>= 
+<<External_filter_Results_plots_modeled_param1, fig.height = 4, fig.cap = "Global $T_{IC/IR}$ SES and modeled parameter values: Standardized effect size of $T_{IC/IR}$ as a function of the strength of external filtering defined as the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{IC/IR}$ SES and modeled parameter values">>= 
 mean_range_com.interm <- t(matrix(unlist(lapply(mean_range_com, function(x) x)), nrow = 2))
 mean_sd_of_com <- unlist(lapply(sd.com_stock3, function(x) mean(x)))
 
@@ -1475,7 +1474,7 @@ rect(mean(meanSES.INF_glob.uni_Ticir, na.rm = T), 0, 0, max(modeled_param_uni),
   col = rgb(0.5, 0, 1, 0.3), border = NA)
 @
 
-<<External_filter_Results_plots_modeled_param2, fig.height = 4, fig.cap = "Global $T_{PC/PR}$ SES and modeled parameters values: Standardized effect size of $T_{PC/PR}$ in function of the strength of external filter defined by the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{PC/PR}$ SES and modeled parameters values">>= 
+<<External_filter_Results_plots_modeled_param2, fig.height = 4, fig.cap = "Global $T_{PC/PR}$ SES and modeled parameter values: Standardized effect size of $T_{PC/PR}$ as a function of the strength of external filtering defined as the ratio of the modeled range parameter by the modeled standard error parameter. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$). Trait a (normal) in black and trait b (uniform) in purple.", dev ='png', dpi = 100, fig.scap = "Global $T_{PC/PR}$ SES and modeled parameter values">>= 
 plot(meanSES.3glob.norm_Tpcpr, modeled_param_norm, pch = 16,
   main = "Global T_PC.PR",
   xlim = c(min(c(meanSES.3glob.norm_Tpcpr, meanSES.3glob.uni_Tpcpr), 
@@ -1495,9 +1494,9 @@ rect(mean(meanSES.INF_glob.uni_Tpcpr, na.rm = T), 0, 0, max(modeled_param_uni),
 
   \subsection {Conclusion on the power of $T_{IC/IR}$ to detect external filtering}
 
-To conclude on the power of $T_{IC/IR}$ to detect external filtering, we compute exponential linear model and identify the strength from which the beta-error is inferior to 0.05. This strength is define by the two ratio of the initial parameters \texttt{param\_range} and \texttt{sd\_mean.param}. 
+To conclude on the power of $T_{IC/IR}$ to detect external filtering, we apply an exponential linear model and identify the strength from which the beta-error is inferior to 0.05. This strength is defined as the ratio of the initial parameters \texttt{param\_range} and \texttt{sd\_mean.param}. 
 
-<<Ex_conc_plot1, fig.cap = "Power of $T_{IC/IR}$ to detect external filtering: Standardised Effect Size (SES) of $T_{IC/IR}$ in relation to the strength of external filtering. Trait 'a' normally distributed is shown in black, traits 'b' uniformally distributed in purple. Close circles represent global SES values. The exponential linear model is presented with 5 percents confidence interval on both side. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$)", fig.scap = "Power of $T_{IC/IR}$ to detect external filtering", dev ='png', dpi = 100>>=
+<<Ex_conc_plot1, fig.cap = "Power of $T_{IC/IR}$ to detect external filtering: Standardised Effect Size (SES) of $T_{IC/IR}$ as a function of the strength of external filtering. Trait 'a' normally distributed is shown in black, trait 'b' uniformally distributed in purple. Dots represent global SES values. The exponential linear model is presented with 0.05 confidence interval on both sides. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$)", fig.scap = "Power of $T_{IC/IR}$ to detect external filtering", dev ='png', dpi = 100>>=
 plot(meanSES.3loc.norm_Ticir ~ init_param.loc, col = rgb(0, 0, 0, 0.2), 
      ylim = c(min(c(meanSES.3loc.norm_Ticir , meanSES.3loc.uni_Ticir,
                   meanSES.3glob.norm_Ticir, meanSES.3glob.uni_Ticir), na.rm = T), 0),
@@ -1511,22 +1510,22 @@ points(meanSES.3glob.norm_Ticir ~ init_param, pch = 16, col = rgb(0, 0, 0, 0.5),
 lm.norm <- lm(meanSES.3glob.norm_Ticir ~ log(init_param))
 lm.norm_conf <- confint(lm.norm, level = 0.90)
 curve(lm.norm$coef[1] + log(x) * (lm.norm$coef[2]), add = T, lwd = 3, col = rgb(0, 0, 0, 1))
-curve(lm.norm_conf [1, 1] + log(x) * lm.norm_conf [2, 1], add = T, lty = 2, col = rgb(0, 0, 0, 1))
-curve(lm.norm_conf [1, 2] + log(x) * lm.norm_conf [2, 2], add = T, lty = 2, col = rgb(0, 0, 0, 1))
+curve(lm.norm_conf[1, 1] + log(x) * lm.norm_conf[2, 1], add = T, lty = 2, col = rgb(0, 0, 0, 1))
+curve(lm.norm_conf[1, 2] + log(x) * lm.norm_conf[2, 2], add = T, lty = 2, col = rgb(0, 0, 0, 1))
 
 points(meanSES.3glob.uni_Ticir ~ init_param, pch = 16, col = rgb(0.5, 0, 1, 0.5), cex = 1.2)
 lm.uni <- lm(meanSES.3glob.uni_Ticir ~ log(init_param))
 lm.uni_conf <- confint(lm.uni, level = 0.90)
 curve(lm.uni$coef[1] + log(x) * (lm.uni$coef[2]), add = T, lwd = 3,  col = rgb(0.5, 0, 1, 1))
-curve(lm.uni_conf [1, 1] + log(x) * lm.uni_conf [2, 1], add = T, lty = 2, col = rgb(0.5, 0, 1, 1))
-curve(lm.uni_conf [1, 2] + log(x) * lm.uni_conf [2, 2], add = T, lty = 2, col = rgb(0.5, 0, 1, 1))
+curve(lm.uni_conf[1, 1] + log(x) * lm.uni_conf[2, 1], add = T, lty = 2, col = rgb(0.5, 0, 1, 1))
+curve(lm.uni_conf[1, 2] + log(x) * lm.uni_conf[2, 2], add = T, lty = 2, col = rgb(0.5, 0, 1, 1))
 
 
-rect(-1, mean(c(SES.inf.MEAN.uni_Ticir, meanSES.INF_glob.uni_Ticir), na.rm = T), max(init_param), 10, 
-  col = rgb(0.5, 0, 1, 0.3), border = NA)
+rect(-1, mean(c(SES.inf.MEAN.uni_Ticir, meanSES.INF_glob.uni_Ticir), na.rm = T), 
+     max(init_param), 10, col = rgb(0.5, 0, 1, 0.3), border = NA)
 
-rect(-1, mean(c(SES.inf.MEAN.norm_Ticir, meanSES.INF_glob.norm_Ticir), na.rm = T), max(init_param) + 10, 10, 
-  col = rgb(0, 0, 0, 0.3), border = NA)
+rect(-1, mean(c(SES.inf.MEAN.norm_Ticir, meanSES.INF_glob.norm_Ticir), na.rm = T), 
+     max(init_param) + 10, 10, col = rgb(0, 0, 0, 0.3), border = NA)
 
 @
 
@@ -1541,7 +1540,7 @@ param_beta0.05_Ticir.uni <- exp( (yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf [2,
 
 For the trait "a" normally distributed, the power of $T_{IC/IR}$ is satisfactory if the ratio of the initial parameter is superior to
  \Sexpr{round(param_beta0.05_Ticir.norm, 2)}. For the trait "b" uniformally distributed, this value is \Sexpr{round(param_beta0.05_Ticir.uni, 2)}. 
- Further investigation on real data with different strength of external filtering are needed to complete these simulated values.
+ Further investigation on real data with different strengths of external filtering are needed to extend these simulated values.
 
  
 
@@ -1550,9 +1549,9 @@ For the trait "a" normally distributed, the power of $T_{IC/IR}$ is satisfactory
 
   \subsection {Conclusion on the power of $T_{PC/PR}$ to detect external filtering}
 
-To conclude on the power of $T_{PC/PR}$ to detect external filtering, we compute exponential linear model and identify the strength from which the beta-error is inferior to 0.05. This strength is define by the two ratio of the initial parameters \texttt{param\_range} and \texttt{sd\_mean.param}. 
+To conclude on the power of $T_{PC/PR}$ to detect external filtering, we apply an exponential linear model and identify the strength from which the beta-error is inferior to 0.05. This strength is defined as the ratio of the initial parameters \texttt{param\_range} and \texttt{sd\_mean.param}. 
 
-<<Ex_conc_plot2, fig.cap = "Power of $T_{PC/PR}$ to detect external filtering: Standardised Effect Size (SES) of $T_{PC/PR}$ in relation to the strength of external filtering. Trait 'a' normally distributed is shown in black, traits 'b' uniformally distributed in purple. Close circles represent global SES values. The exponential linear model is represented with 5 percents confidence interval on both side. Colored area represent the mean confidence interval of SES values ($alpha = 0.95$)", fig.scap = "Power of $T_{PC/PR}$ to detect external filtering", dev ='png', dpi = 100>>=
+<<Ex_conc_plot2, fig.cap = "Power of $T_{PC/PR}$ to detect external filtering: Standardised Effect Size (SES) of $T_{PC/PR}$ as a function of the strength of external filtering. Trait 'a' normally distributed is shown in black, trait 'b' uniformally distributed in purple. Dots represent global SES values. The exponential linear model is represented with 0.05 confidence interval on both sides. Colored area represents the mean confidence interval of SES values ($alpha = 0.95$)", fig.scap = "Power of $T_{PC/PR}$ to detect external filtering", dev ='png', dpi = 100>>=
 plot(meanSES.3loc.norm_Tpcpr ~ init_param.loc, col = rgb(0, 0, 0, 0.2), 
      ylim = c(min(c(meanSES.3loc.norm_Tpcpr , meanSES.3loc.uni_Tpcpr,
                   meanSES.3glob.norm_Tpcpr, meanSES.3glob.uni_Tpcpr), na.rm = T), 0),
@@ -1596,7 +1595,7 @@ param_beta0.05_Tpcpr.uni <- exp( (yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf [2,
 
 For the trait "a" normally distributed, the power of $T_{PC/PR}$ is satisfactory if the ratio of the initial parameter is superior to
  \Sexpr{round(param_beta0.05_Tpcpr.norm, 2)}. For the trait "b" uniformally distributed, this value is \Sexpr{round(param_beta0.05_Tpcpr.uni, 2)}. 
- Further investigation on real data with different strength of external filtering are needed to complete these simulated values. As expected, $T_{PC/PR}$ is far less powerfull than $T_{IC/IR}$ to detect external filtering either with traits "a" (\Sexpr{round(param_beta0.05_Tpcpr.norm, 2)} \textit{vs} \Sexpr{round(param_beta0.05_Ticir.norm, 2)}) and "b" (\Sexpr{round(param_beta0.05_Tpcpr.uni, 2)} \textit{vs} \Sexpr{round(param_beta0.05_Ticir.uni, 2)}). This is due to the loss of information in $T_{PC/PR}$ when we compute the mean by population and exclude intra-populationnal variation from the test of external filter. 
+ Further investigation on real data with different strengths of external filtering are needed to extend these simulated values. As expected, $T_{PC/PR}$ is far less powerful than $T_{IC/IR}$ to detect external filtering for both traits "a" (\Sexpr{round(param_beta0.05_Tpcpr.norm, 2)} \textit{vs} \Sexpr{round(param_beta0.05_Ticir.norm, 2)}) and "b" (\Sexpr{round(param_beta0.05_Tpcpr.uni, 2)} \textit{vs} \Sexpr{round(param_beta0.05_Ticir.uni, 2)}). This is due to the loss of information in $T_{PC/PR}$ when we compute the mean by population and exclude intra-populationnal variation from the test of external filtering. 
 
 
 
@@ -1635,19 +1634,19 @@ For the trait "a" normally distributed, the power of $T_{PC/PR}$ is satisfactory
 
 \cleardoublepage
 
-\section{Internal and external filtering}
+\section{Combining internal and external filtering}
 \label{sect:IntExtFilt}
 
   \subsection{Randomization outline}
-We use the same two parameters as for internal and external filtering analysis. The internal filtering is computed as in the section dedicated to internal filter. To add the effect of external filtering, we add a value to each individual belonging to a community, this values differing among communities.
+We use the same two parameters for both internal and external filtering analyses. The internal filtering is computed in the section dedicated to internal filter. To add the effect of external filtering, we add a value for each individual belonging to a given community, these value differing between communities.
 
 <<Internal_and_external_filter_parameter>>= 
-# Parameter for the distance between species mean trait values
+# Parameter for the distance between species' mean trait values
 param_DIST_between_MEAN.init <- round(sort(seq(10, 200, length.out = nb_param_val)), 2)
 param_DIST_between_MEAN <- rep(param_DIST_between_MEAN.init, N_repet_Param)
 mean_sd.param <- rep(10, nperm)
 
-# Parameter for the variance in species mean trait values
+# Parameter for the variance in species' mean trait values
 param_SD <- seq(10, 100,length.out = nb_param_val)
 sd_mean.param <- sample (rep(param_SD, N_repet_Param), 
        size = length(rep(param_SD, N_repet_Param)), replace = F)
@@ -1679,7 +1678,7 @@ for(i in 1: 10){
 ex.indplot4 <- sort(as.factor(rep(com, Nind/Ncom)))
 
 
-#Defining traits mean and sd by species 
+#Defining trait mean and sd for each species 
 mean_mean.param.interm <- seq(max.value_traits - param_DIST_between_MEAN[n],
         max.value_traits, length.out = 
         length(unique(param_DIST_between_MEAN)))
@@ -1741,7 +1740,7 @@ print(paste("---", round(n/nperm, 2) * 100, "%", sep = " "))
 
 
   \subsection{Results}
-<<InEx_Filter_plots, fig.cap = "Distribution of trait values for one randomization with both internal and external filter: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution); (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b", crop = TRUE>>= 
+<<InEx_Filter_plots, fig.cap = "Distribution of trait values for one randomization with both internal and external filtering: (a) Community-level trait distributions for the trait a (normal distribution); (b) Community-level trait distributions for the trait b (uniform distribution). In panels a and b, each color represents one community (site). (c) Species' trait distributions for the trait a; (d) Species' trait distributions for the trait b. In panels a and b, each color represents one species.", crop = TRUE>>= 
 par(mfrow=c(2, 2))
 plotDistri(ex.traits4, rep("all_sp", times = dim(ex.traits1)[1]), ex.indplot4, 
            plot.ask = F, multipanel = F, leg =c(T, F), main = c("a", "b"))
@@ -1751,7 +1750,7 @@ plotDistri(ex.traits4, rep("region", times = dim(ex.traits1)[1]), ex.sp4,
 par(mfrow=c(1, 1))
 @
 
-<<InEx_Filter_plots_Tstats, fig.height = 8, fig.cap = "Results of T-statistics with both internal and external filter: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. (a) Lower strength of internal filtering 5 (b) higher strength of internal filtering.", crop = TRUE>>= 
+<<InEx_Filter_plots_Tstats, fig.height = 8, fig.cap = "Results of T-statistics with both internal and external filtering: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. (a) Lower strength of internal filtering (b) higher strength of internal filtering.", crop = TRUE>>= 
 par(mfrow=c(3, 1))
 plot(res.simu4[[1]], main = "a")
 plot(res.simu4[[nperm/2]], main = "b")
@@ -1917,11 +1916,11 @@ param_B_loc_uni_Tpcpr <- exp( (yy.loc_uni_Tpcpr - lm_loc_uni_Tpcpr.conf [1, 2]) 
 
 @
 
-For the analysis with both internal and external filter we only present the type II error using the initial parameter ratio allowing a beta-error $<0.05$.  
+For the analysis with both internal and external filtering we only present the type II error using the initial parameter ratio allowing a beta-error $<0.05$.  
 
 \begin{table}[h!]
 \begin{center}
-\caption{Initial parameter ratio allowing beta-error $<0.05$ for T-statistics under both external and internal filtering}
+\caption{Initial parameter ratios allowing beta-error $<0.05$ for T-statistics under both external and internal filtering}
 \begin{tabular}{|c|c|c|c|m{6cm}|}
 \hline
 Traits & Indices & Average between communities? & Initial parameter ratio \tabularnewline
@@ -1982,12 +1981,12 @@ Traits & Indices & Average between communities? & Initial parameter ratio \tabul
 
 \section{Test of variance decomposition functions}
  
-In addition to the \texttt{cati} vignette which test this function on the Darwin finch data, we test the behavior of the function \texttt{partvar} and \texttt{decompCTRE} by building two toy models associated to each functions.
+In addition to the \texttt{cati} \href{https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf}{vignette} which tests this function on the Darwin's finches data, we test the behavior of the function \texttt{partvar} and \texttt{decompCTRE} by building two toy models associated to each function.
  
  \subsection{Behavior of the function \texttt{partvar}}
 
 First to test the behavior of the \texttt{partvar} function we assemble the same data as in the test of the T-statistics. 
-1000 individuals belonging to 20 species occuring in 10 communities. But here we define the trait value for one individual as the addition of three values, each one draw in a normal distribution of mean 0 and standard error 1: (i) a value depending on the species the individual belong to, (ii) a value depending on the community the individual belong to and (iii) a independent value measuring the individual variance.
+1000 individuals belonging to 20 species occuring in 10 communities. But here we define the trait value for one individual as the addition of three values, each one drawn in a normal distribution of mean 0 and standard error 1: (i) a value depending on the species the individual belong to, (ii) a value depending on the community the individual belong to and (iii) an independent value measuring the individual variance.
 
 <<Toy_model_2, results = 'hide'>>= 
 nperm <- npermut
@@ -2000,7 +1999,6 @@ res.partvar_toymodel <- list()
 for(n in 1:nperm){#for each permutation
  
  # Draw communities using lognormal distribution of abundances 
- # 100 individuals by populations
  ex.sp5 <- c()
  ex.com5 <- matrix(0, nrow = Ncom, ncol = Nsp)
  for(i in 1: Ncom){
@@ -2030,10 +2028,10 @@ for(n in 1:nperm){#for each permutation
 
 @
 
-Now we can plot the result as the density of the three component of variation in individual traits distributions. 
-We are waiting for a mean of approximately 0.33 for each component in view of our model.
+Now we can plot the result as the density of the three components of variation in individual trait distributions. 
+We expect a mean of approximately 0.33 for each component in view of our model.
 
-<<Partvar_plot, fig.width = 6, fig.height = 6, fig.cap = "Variance partitioning accross nested scales: each colored lines represent the density of permutations results (sites in blue, species in orange and the remaining variance in brown). Points represent the mean and segments the standard deviation. Vertical line figure the value of 0.33.">>= 
+<<Partvar_plot, fig.width = 6, fig.height = 6, fig.cap = "Variance partitioning accross nested scales: each colored line represents the density of permutation results (sites in blue, species in orange and the remaining variance in brown). Dots represent the mean and segments the standard deviation. Vertical line figures the value of 0.33.">>= 
 res.simu.partvar_toymodel <- lapply(res.partvar_toymodel, function (x) x[, 1])
 res.simu.partvar_toymodel <- t(matrix(unlist(res.simu.partvar_toymodel), nrow = 3))
 colnames(res.simu.partvar_toymodel) <- c("sites", "species", "within")
@@ -2062,12 +2060,12 @@ legend(0.6, 4, legend = c("sites", "species", "within"), fill = col.funk)
 text(0.33, 0.5, pos = 4, "0.33")
 @
 
-The mean contribution of each component is close to 0.33. Consequently the function \texttt{partvar} doesn't show apparent dysfunction.
+The mean contribution of each component is close to 0.33. Consequently the function \texttt{partvar} does not show apparent dysfunction.
 
 \subsection{Behavior of the function \texttt{decompCTRE}}
 
 To test the function \texttt{decompCTRE}, we adopt the same model but we add a new step to control the strength of the turnover in defining the community weighted mean.
-We define several value of turnover strength by deleting individuals from the data set if there their species-components trait and their community-component trait are to different. To be more precise, when \texttt{turnover\_strength} = 1, we delete all individual whose the square of the species value minus the community value is superior o one. 
+We define several values of turnover strength by deleting individuals from the data set if their species-components trait and community-component trait are too different. To be more precise, when \texttt{turnover\_strength} = 1, we delete all individuals whose the square of the species value minus the community value is superior o one. 
 
 <<decompCTRE_simu, results = 'hide'>>= 
 sdlog
@@ -2078,7 +2076,6 @@ res.decompCTRE_toymodel <- list()
 for(n in 1:nperm){#for each permutation
  
  # Draw communities using lognormal distribution of abundances 
- # 100 individuals by populations
  ex.sp5 <- c()
  ex.com5 <- matrix(0, nrow = Ncom, ncol = Nsp)
  for(i in 1: Ncom){
@@ -2102,7 +2099,7 @@ for(n in 1:nperm){#for each permutation
  
  X <- rnorm(Nind) + x1 + x2
  
- #We delete the individual whose species values and communities values are to different
+ #We delete the individuals whose species values and communities values are too different
  #For this we use the argument turnover_strength
  X2 <- X[(x1-x2)^2 < turnover_strength[n]] 
  ex.sp5.bis <- ex.sp5[(x1-x2)^2 < turnover_strength[n]] 
@@ -2112,9 +2109,9 @@ for(n in 1:nperm){#for each permutation
             ind.plot = ex.indplot5.bis)
 }#End of simulations
 @
-Now we can plot the relation between the modeled strength of the turnover and the resulting contribution of turnover from the function \texttt{decompCTRE} (Fig. \ref{fig:decompCTRE_plot1}).
+Now we can plot the relationship between the modeled strength of the turnover and the resulting contribution of turnover from the function \texttt{decompCTRE} (Fig. \ref{fig:decompCTRE_plot1}).
 
-<<decompCTRE_plot1, fig.height = 3, fig.cap = "Decomposition of the variation in community trait composition for two contrasted cases: on the left almost all the variation is due to turnover wheras on the rigth case intraspecific variation explain most of the variation.">>= 
+<<decompCTRE_plot1, fig.height = 3, fig.cap = "Decomposition of the variation in community trait composition for two contrasted cases: on the left almost all the variation is due to turnover whereas on the rigth case intraspecific variation explain most of the variation.">>= 
 par(mfrow=c(1, 2))
 plot(res.decompCTRE_toymodel[[1]]$X2)
 plot(res.decompCTRE_toymodel[[n]]$X2)
@@ -2130,7 +2127,7 @@ plot(res.simu.decompCTRE_toymodel, -turnover_strength, pch = 16,
      xlab = "Turnover relative contribution to community mean traits")
 @
 
-The correlation between the modeled strength of the turnover and the turnover relative contribution result is very high. Consequently the function \texttt{decompCTRE} doesn't show apparent dysfunction (Fig. \ref{fig:decompCTRE_plot2}).
+The correlation between the modeled strength of the turnover and the turnover relative contribution result is very high. Consequently the function \texttt{decompCTRE} does not show apparent dysfunction (Fig. \ref{fig:decompCTRE_plot2}).
 
 \cleardoublepage
 
@@ -2140,8 +2137,8 @@ The correlation between the modeled strength of the turnover and the turnover re
 
 \subsection{Type I error}
 
-Table \ref{tab:Alpha-errors_for_T-stats} summarize the alpha error for T-statistics. The three global \footnote{one index for all the dataset} T-statistics are very robust 
-regardless of the distribution of the trait (alpha error ranging from \Sexpr{min(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)} to \Sexpr{max(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)}). Local \footnote{one index for each community of the dataset} T-statistics present lower but nevertheless satifactory alpha-error with a maximum of \Sexpr{nbre_alpha_error_norm_loc_Tpcpr} for $T_{PC/PR}$ on a trait normally distributed. We therefore recommand to use $T_{IC/IR}$ to detect external filtering and more generally to prefer global T-statistics which are more robust and more powerfull (see the next section).
+Table \ref{tab:Alpha-errors_for_T-stats} summarizes the alpha error for the T-statistics. The three global \footnote{one index for all the dataset} T-statistics are very robust 
+regardless of the distribution of the trait (alpha error ranging from \Sexpr{min(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)} to \Sexpr{max(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)}). Local \footnote{one index for each community of the dataset} T-statistics present lower but nevertheless satifactory alpha-error with a maximum of \Sexpr{nbre_alpha_error_norm_loc_Tpcpr} for $T_{PC/PR}$ on a trait normally distributed. We therefore recommand to use $T_{IC/IR}$ to detect external filtering and more generally to prefer global T-statistics which are more robust and more powerful.
 
 
 \subsection{Type II error}
@@ -2149,7 +2146,7 @@ regardless of the distribution of the trait (alpha error ranging from \Sexpr{min
 
 \begin{table}[h!]
 \begin{center}
-\caption{Summary of initial parameter ratio allowing beta-error $<0.05$ for global T-statistics}
+\caption{Summary of initial parameter ratios allowing beta-error $<0.05$ for global T-statistics}
 \begin{tabular}{|c|c|>{\centering}m{3cm}|>{\centering}m{3cm}|>{\centering}m{3cm}|}
 \hline
 Traits & Indices & Initial parameter ratio with internal filtering & Initial parameter ratio with external filtering & Initial parameter ratio with internal and external filtering \tabularnewline
@@ -2181,7 +2178,7 @@ Traits & Indices & Initial parameter ratio with internal filtering & Initial par
 
 
 
-
+\Cleardoublepage
 \section*{References}
 \addcontentsline{toc}{subsection}{References}
 
