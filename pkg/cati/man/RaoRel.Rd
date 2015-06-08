@@ -94,7 +94,7 @@
 
 		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
 		
-		mat.dist <- as.matrix(dist(traits.finch.sp))^2
+		mat.dist <- (as.matrix(dist(traits.finch.sp))^2)/2
 		
 		res.rao <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
 		weight = FALSE, Jost = FALSE, structure = NULL)
@@ -160,7 +160,7 @@
 
 		for (t in 1 : 4){
 		  trait.rao.w[[t]] <- RaoRel(sample = as.matrix(comm.sp), 
-		  dfunc = dist(traits.finch.mice.sp[,t]), dphyl = NULL, weight = TRUE, 
+		  dfunc = (dist(traits.finch.mice.sp[,t])^2)/2, dphyl = NULL, weight = TRUE, 
 		  Jost = FALSE, structure = NULL)
 				  
 		  witRao.w.bytrait <- c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
