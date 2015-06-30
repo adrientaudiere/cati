@@ -109,38 +109,38 @@
 }
 
 \details{
-	\textbf{S3 method plot:}
+	\strong{S3 method plot:}
 	
-	-\textit{Normal} type plot means, standard deviations, ranges and confidence intervals of T-statistics.
+	-Normal: type plot means, standard deviations, ranges and confidence intervals of T-statistics.
 	
-	-\textit{Simple_range} type plot means, standard deviations and range of T-statistics
+	-Simple_range: type plot means, standard deviations and range of T-statistics
 	
-	-\textit{Simple} type plot T-statistics for each site and traits and the mean confidence intervals by traits
+	-Simple: type plot T-statistics for each site and traits and the mean confidence intervals by traits
 	
-	-\textit{Barplot} type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
+	-Barplot: type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
 	
-	-\textit{Bysites} type plot each metrics for each sites
+	-Bysites: type plot each metrics for each sites
 	
-	-\textit{Bytraits} type plot each metrics for each traits
-	
-	
-	\textbf{S3 method print}: print the structure if the object of class Tstats
+	-Bytraits: type plot each metrics for each traits
 	
 	
-	\textbf{S3 method summary:} print the summary statistics of the three T-statistics
+	\strong{S3 method print}: print the structure if the object of class Tstats
 	
 	
-	\textbf{Method summary sum_Tstats:}
+	\strong{S3 method summary:} print the summary statistics of the three T-statistics
 	
-	-\textit{Binary} type only test if a T-statistics is significatively different from the null expectation for each trait.
 	
-	-\textit{Percent} type determine the percentage of sites were the T-statistics is significatively different from the null expectation for each trait. Asterix shows global significance of the test.
+	\strong{Method summary sum_Tstats:}
 	
-	-\textit{P-value} type determine the p-value (two unilateral tests) of the T-statistics for each trait and sites.
+	-Binary: type only test if a T-statistics is significatively different from the null expectation for each trait.
 	
-	-\textit{Site} type allows to know in which sites T-statistics deviate from the null expectation.
+	-Percent: type determine the percentage of sites were the T-statistics is significatively different from the null expectation for each trait. Asterix shows global significance of the test.
 	
-	-\textit{All} type do all the precedent type of summary.
+	-P-value: type determine the p-value (two unilateral tests) of the T-statistics for each trait and sites.
+	
+	-Site: type allows to know in which sites T-statistics deviate from the null expectation.
+	
+	-All: type do all the precedent type of summary.
 }
 
 \value{

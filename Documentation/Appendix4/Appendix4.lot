@@ -1,9 +1,9 @@
 \select@language {english}
 \select@language {english}
 \contentsline {table}{\numberline {1}{\ignorespaces T-statistics and associated null models}}{6}{table.caption.2}
-\contentsline {table}{\numberline {2}{\ignorespaces Alpha-errors for T-statistics\relax }}{17}{table.caption.8}
-\contentsline {table}{\numberline {3}{\ignorespaces Local beta-error of $T_{IP/IC}$ in function of the strength of internal filtering. str: strength. Trait a is normally distributed and trait b is uniformally distributed.\relax }}{28}{table.caption.13}
-\contentsline {table}{\numberline {4}{\ignorespaces Local beta-error of $T_{IC/IR}$ in function of the strength of external filtering. str: strength. Trait a is normally distributed and trait b is uniformally distributed.\relax }}{43}{table.caption.22}
-\contentsline {table}{\numberline {5}{\ignorespaces Local beta-error of $T_{PC/PR}$ in function of the strength of external filtering. str: strength. Trait a is normally distributed and trait b is uniformally distributed.\relax }}{43}{table.caption.23}
-\contentsline {table}{\numberline {6}{\ignorespaces Initial parameter ratio allowing beta-error $<0.05$ for T-statistics under both external and internal filtering\relax }}{65}{table.caption.34}
-\contentsline {table}{\numberline {7}{\ignorespaces Summary of initial parameter ratio allowing beta-error $<0.05$ for global T-statistics\relax }}{72}{table.caption.38}
+\contentsline {table}{\numberline {2}{\ignorespaces Alpha-errors for T-statistics\relax }}{19}{table.caption.8}
+\contentsline {table}{\numberline {3}{\ignorespaces Local beta-error of $T_{IP/IC}$ as a function of the strength of internal filtering. str: strength. Trait a is normally distributed and trait b is uniformally distributed.\relax }}{28}{table.caption.13}
+\contentsline {table}{\numberline {4}{\ignorespaces Local beta-error of $T_{IC/IR}$ as a function of the strength of external filtering. str: strength. Trait a is normally distributed and trait b is uniformally distributed.\relax }}{43}{table.caption.22}
+\contentsline {table}{\numberline {5}{\ignorespaces Local beta-error of $T_{PC/PR}$ as a function of the strength of external filtering. str: strength. Trait a is normally distributed and trait b is uniformally distributed.\relax }}{43}{table.caption.23}
+\contentsline {table}{\numberline {6}{\ignorespaces Initial parameter ratios allowing beta-error $<0.05$ for T-statistics under both external and internal filtering\relax }}{65}{table.caption.34}
+\contentsline {table}{\numberline {7}{\ignorespaces Summary of initial parameter ratios allowing beta-error $<0.05$ for global T-statistics\relax }}{71}{table.caption.38}
