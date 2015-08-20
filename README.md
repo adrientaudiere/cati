@@ -3,6 +3,10 @@
 ---
 ## A R package to detect communities assembly processes by functionnal traits
 
+The package is described in *Ecography*: **[cati: an R package using functional traits to detect and quantify
+multi-level community assembly processes](http://onlinelibrary.wiley.com/doi/10.1111/ecog.01433/pdf)**. 
+
+
 ### Install the latest versions of all dependencies from CRAN:
 
 ```r
@@ -26,3 +30,8 @@ library(cati)
 
 ---
 There's a **[tutorial](https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/vignette_Darwin_finches/vignette.pdf)** which illustrate the cati package using Darwin finches data.
+
+---
+How to cite?
+
+"Taudiere, A. and Violle, C. (2015), cati: an R package using functional traits to detect and quantify multi-level community assembly processes. Ecography. doi: 10.1111/ecog.01433"
