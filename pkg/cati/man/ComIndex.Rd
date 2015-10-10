@@ -197,7 +197,7 @@ res.finch.sp_regional.pop<-ComIndex(traits = traits.finch, index = funct, sp = s
  
 name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
 traits.by.pop<-apply(traits.finch, 2 , 
-           function (x) tapply(x, name_sp_sites, mean , na.rm = TRUE))
+           function (x) tapply(x, name_sp_sites, mean, na.rm = TRUE))
 
 sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), split = "_"), 
           function(x) x[3])
