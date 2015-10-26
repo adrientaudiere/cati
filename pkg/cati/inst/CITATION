@@ -9,6 +9,6 @@ year = "2015",
 author = "A. Taudiere and C. Violle",
 volume = "-",
 pages = "-",
-doi = "--",
+doi = "10.1111/ecog.01433",
 textVersion = "Taudiere A. & Violle C. 2015. cati: an R package using functional traits to detect and quantify multi-level community assembly processes. Ecography.",
 )
