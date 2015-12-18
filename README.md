@@ -1,10 +1,12 @@
+[![Build Status](https://img.shields.io/travis/codecov/example-r/master.svg)](https://travis-ci.org/codecov/cati) [![codecov](https://img.shields.io/codecov/c/github/codecov/example-r.svg)](https://codecov.io/github/codecov/cati) 
+
 # cati: Communities Assembly by Traits: Individuals and beyond
 
 ---
 ## A R package to detect communities assembly processes by functionnal traits
 
 The package is described in *Ecography*: **[cati: an R package using functional traits to detect and quantify
-multi-level community assembly processes](http://onlinelibrary.wiley.com/doi/10.1111/ecog.01433/pdf)**. 
+multi-level community assembly processes](http://onlinelibrary.wiley.com/doi/10.1111/ecog.01433/pdf)**.
 
 
 ### Install the latest versions of all dependencies from CRAN:
