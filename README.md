@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/codecov/example-r/master.svg)](https://travis-ci.org/codecov/cati) [![codecov](https://img.shields.io/codecov/c/github/codecov/example-r.svg)](https://codecov.io/github/codecov/cati) 
+%[![Build Status]](https://travis-ci.org/codecov/cati) [![codecov]](https://codecov.io/github/codecov/cati) 
 
 # cati: Communities Assembly by Traits: Individuals and beyond
 
