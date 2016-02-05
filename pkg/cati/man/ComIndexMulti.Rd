@@ -31,7 +31,7 @@
 \arguments{
  
 	\item{traits}{
-		Individual Matrix of traits with traits in column.
+		Individual Matrix of traits with traits in column (or species matrix when using "com" instead of "ind.plot").
 	}
 	
 	\item{index}{
