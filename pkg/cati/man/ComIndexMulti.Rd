@@ -13,6 +13,7 @@
 }
 
 \usage{
+	
 	ComIndexMulti(traits = NULL, index = NULL, by.factor = NULL, 
 	nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL,
 	SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL,
@@ -130,11 +131,17 @@
 	Model \strong{regional.pop.prab} (2sp.prab) corresponds to randomization of population values within region but whitout taking into account for abundance.
 	
 	S3 method plot for class listofindex:
+	
 	-Normal type plot means, standard deviations, ranges and confidence intervals of T-statistics.
+	
 	-Simple_range type plot means, standard deviations and range of T-statistics
+	
 	-Simple type plot T-statistics for each site and traits and the mean confidence intervals by traits
+	
 	-Barplot type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
+	
 	-Bysites type plot each metrics for each sites
+	
 	-Bytraits type plot each metrics for each traits
 }
 

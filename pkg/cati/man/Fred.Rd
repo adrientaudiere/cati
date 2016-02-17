@@ -6,7 +6,7 @@
 }
 
 \description{
-	Compute the 3 functional diversity indices presented in Villeger et al. 2008 (Ecology 89 2290-2301): Functional richness (FRic), Functional evenness (FEve), Functional divergence (FDiv) 
+	Compute the 3 functional diversity indices (multi-traits) presented in Villeger et al. 2008 (Ecology 89 2290-2301): Functional richness (FRic), Functional evenness (FEve), Functional divergence (FDiv) 
 }
 
 \usage{
@@ -46,10 +46,19 @@
 }
 
 \examples{
-	data(finch.ind)
-	\dontrun{
-		fred<-Fred(traits.finch.mice, ind.plot.finch)
-	}
+data(finch.ind)
+\dontrun{
+#For most multivariate functions we need to replace (or exclude) NA values. 
+#For this example, we use the package mice to complete the data.
+
+comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
+
+library(mice)
+traits = traits.finch
+mice<-mice(traits.finch)
+traits.finch.mice<-complete(mice)
+fred<-Fred(traits.finch.mice, ind.plot.finch)
+}
 }
 
 

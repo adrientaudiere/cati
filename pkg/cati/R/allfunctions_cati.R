@@ -396,7 +396,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
  	if (is.numeric(nperm)){ 		ComIndex$nullmodels <- nullmodels_names		names(ComIndex$nullmodels) <- namesindex 	}
  	ComIndex$call <- match.call()
  	class(ComIndex) <- "ComIndex"
-  invisible(ComIndex)}ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, type.sp.val = "count"){		if (is.null(index)) { stop("There is no default index to compute. Please add metrics using the 'index' argument.") }	
+  invisible(ComIndex)}ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, type.sp.val = "count"){		if (is.null(index)) { stop("There is no default index to compute. Please add metrics using the 'index' argument.") }
 	#___________________________	#Create/verify/sort variables to put into the function	type.sp.val <- match.arg(type.sp.val, c("count", "abundance"))	if (is.null(namesindex)) { namesindex <- index }	if (!is.matrix(traits)) { traits <- as.matrix(traits) }	ntr <- dim(traits)[2]	namestraits <- colnames(traits)	nindex <- length(index)	#___________________________
 	#___________________________	#Null models argument preparation	if (is.null(nullmodels)) {		nperm <- NULL		warning("nullmodels is NULL so no null model will be computed")	}	if (is.null(nperm)) {		nullmodels <- NULL		warning("nperm is NULL so no null model will be computed")	}
 	if(!is.null(nperm)){		if (nperm == 0) {			nperm <- NULL
@@ -417,7 +417,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 	name_sp_sites <- paste(sp, ind.plot, sep = "_")	comm <- NULL	comm <- t(table(ind.plot,1:length(ind.plot)))
 	S <- colSums(comm>0)	ncom <- length(S)	names_sp_ind.plot <- as.factor(paste(sp, ind.plot, sep = "@"))
 	#___________________________	#___________________________	if (sum(is.na(traits))>0) {		warning(paste("This function exclude", sum(is.na(traits)),"Na value", sep=" "))	}
-	if(length(SE) == 1){			SE <- rep(SE, times = ncol(traits))	}	#___________________________
+	if(length(SE) == 1){			SE <- rep(SE, times = ncol(traits))	}	#___________________________	if (is.null(by.factor)) {by.factor = rep("Region", length(ind.plot)}
 
 
 	###############################################################
@@ -513,8 +513,8 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 			if (nullmodels[i] == "2sp") {				traits_by_sp <- apply(traits, 2, function(x) tapply(x, name_sp_sites, mean, na.rm = T))
 				traits_by_pop <- traits_by_sp[match(name_sp_sites, rownames(traits_by_sp)), ]
 
-				obs[[eval(namesindex[i])]] <- as.vector(by(t(traits_by_pop), by.factor, function (x) eval(parse(text = functionindex))))			}
-			if (nullmodels[i] == "2sp.prab") {				traits_by_sp <- apply(traits, 2, function(x) tapply(x, name_sp_sites, mean, na.rm = T))				obs[[eval(namesindex[i])]] <- as.vector(by(t(traits_by_sp), by.factor, function (x) eval(parse(text = functionindex))))			}
+				obs[[eval(namesindex[i])]] <- as.vector(by(traits_by_pop, by.factor, function (x) eval(parse(text = functionindex))))			}
+			if (nullmodels[i] == "2sp.prab") {				traits_by_sp <- apply(traits, 2, function(x) tapply(x, name_sp_sites, mean, na.rm = T))				obs[[eval(namesindex[i])]] <- as.vector(by(traits_by_sp, by.factor, function (x) eval(parse(text = functionindex))))			}
 			else if (nullmodels[i] == "1" | nullmodels[i] == "2") {				obs[[eval(namesindex[i])]] <- as.vector(by(traits, by.factor, function (x) eval(parse(text = functionindex))))			}		}
 		obs[[eval(namesindex[i])]] <- as.vector(obs[[eval(namesindex[i])]])
 		if (printprogress == T){			print(paste(round(i/nindex*100,2),"%"))
@@ -1054,7 +1054,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 	if(gower.dist){		#require(FD)		tree.dist <- gowdis(traits)	}	else{		if(scale.tr){			traits <- apply(traits, 2, scale)		}		tree.dist <- dist(traits, method = method.dist)	}
 	traits.mst <- mst(as.matrix(tree.dist))	res.mst <- as.matrix(tree.dist)*as.matrix(traits.mst)
 	res.mst <- apply(res.mst, 1, function(x) as.numeric(sub("^0$",NA,x)))	res <- min(res.mst, na.rm = T) / max(res.mst, na.rm = T)	return(res)}IndexByGroups <- function(metrics, groups){	res <- c()	for (i in 1:length(metrics)){		res <- c(res, paste("tapply(x, ", groups, ", function(x) ", metrics[i], ")", sep = ""))	}
-	return(res)}########################################################################################################################### function to compute the 3 functional diversity indices presented in Villeger et al. 2008 (Ecology 89 2290-2301):    ##    Functional richness (FRic), Functional evenness (FEve), Functional divergence (FDiv)              ##                                                            ## This function requires R libraries 'geometry' and 'ape'                                ##                                                            ##                                                            ## inputs:                                                        ##    - "traits" = functional matrix (S x T) with values of the T functional traits for the S species of interest   ## 	    NA are not allowed                                              ## 	    for each trait, values are standardized (mean = 0 and standard deviation = 1)                ##      for FRic computation, number of species must be higher than number of traits (S>T)              ##                                                            ##    - "abundances" = abundance matrix (C x S) with the abundances of the S species in the C commnuities       ## 	    NA are automatically replaced by 0                                      ##                                                            ##                                                            ## outputs:                                                        ##     list of 4 vectors with values of indices in the C communities (names are those given in 'abundances')     ##        - nbsp: number of species                                        ##        - FRic: functional richness index                                    ##        - FEve: functional evenness index                                    ##        - FDiv: functional divergence index                                   ##                                                            ###########################################################################################################################Fred <- function(traits, ind.plot) {
+	return(res)}########################################################################################################################### function to compute the 3 functional diversity indices presented in Villeger et al. 2008 (Ecology 89 2290-2301):    ##    Functional richness (FRic), Functional evenness (FEve), Functional divergence (FDiv)              ##                                                            ## This function requires R libraries 'geometry' and 'ape'                                ##                                                            ##                                                            ## inputs:                                                        ##    - "traits" = functional matrix (S x T) with values of the T functional traits for the S species of interest   ## 	    NA are not allowed                                              ## 	    for each trait, values are standardized (mean = 0 and standard deviation = 1)                ##      for FRic computation, number of species must be higher than number of traits (S>T)              ##                                                            ##    - "abundances" = abundance matrix (C x S) with the abundances of the S species in the C commnuities       ## 	    NA are automatically replaced by 0                                      ##                                                            ##                                                            ## outputs:                                                        ##     list of 4 vectors with values of indices in the C communities (names are those given in 'abundances')     ##        - nbsp: number of species                                        ##        - FRic: functional richness index                                    ##        - FEve: functional evenness index                                    ##        - FDiv: functional divergence index                                   ##                                                            ###########################################################################################################################Fred <- function(traits, ind.plot = NULL) {		if(is.null(ind.plot)) {		ind.plot <- rep("all plots", dim(traits)[1])		warnings("The argument `ind.plot` is null. Only one value will be compute for each metrics.") 	}	
 	abundances <- table(ind.plot, 1:length(ind.plot))
 	#loading required libraries	#require(geometry)
 	# T = number of traits	T <- dim(traits)[2]
@@ -1066,7 +1066,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 	# scaling and centering of each trait according to all species values	traitsCS <- scale(traits, center = TRUE, scale = TRUE)
 
 	############################################################################################################	# loop to compute on each community the three Functional Diversity Indices, plus the number of species
-	pb <- txtProgressBar(1, C, style = 3)
+	if(C>1) {pb <- txtProgressBar(1, C, style = 3)}
 	for (i in 1:C)	{	 # selection of individuals present in the community	 esppres <- which(abundances[i,]>0)
 	 # number of individuals in the community	 S <- length(esppres)
 	 nbsp[i] <- S
@@ -1087,9 +1087,9 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 	    # relative abundances-weighted mean deviation	       abdev <- abondrel*devdB
 	    # relative abundances-weighted mean of absolute deviations	       ababsdev <- abondrel*abs(devdB)
 	    # computation of FDiv	       FDiv[i] <- round( (sum(abdev)+meandB) / (sum(ababsdev)+meandB) ,6)
-		#Show the progress		Sys.sleep(0.02)		setTxtProgressBar(pb, i)
+		#Show the progress		Sys.sleep(0.02)		if(C>1) {setTxtProgressBar(pb, i)}
 	} # end of i
-	close(pb)	unlink("vert.txt")	res <- list(nbind = nbsp, FRic = FRic, FEve = FEve, FDiv = FDiv )	invisible(res)
+	if(C>1) {close(pb)}	unlink("vert.txt")	res <- list(nbind = nbsp, FRic = FRic, FEve = FEve, FDiv = FDiv )	invisible(res)
 }# end of function#Calcul pvalue for a list of index. This test equates to finding the quantile in exp in which obs would be found (under a one-tailed test)Pval <- function (x, na.rm = TRUE) {
 	if (!inherits(x, "listofindex")){		x <- as.listofindex(x)	}
 	res <- list()
