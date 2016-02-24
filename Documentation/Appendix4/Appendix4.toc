@@ -3,19 +3,32 @@
 \contentsline {section}{\numberline {1}Introduction}{4}{section.1}
 \contentsline {subsection}{\numberline {1.1}R requirements}{4}{subsection.1.1}
 \contentsline {subsection}{\numberline {1.2}System and session informations}{4}{subsection.1.2}
+<<<<<<< HEAD
 \contentsline {subsection}{\numberline {1.3}T-statistics and associated null models}{6}{subsection.1.3}
+=======
+\contentsline {subsection}{\numberline {1.3}T-statistics and associated null models}{5}{subsection.1.3}
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 \contentsline {subsection}{\numberline {1.4}Simulations parameters}{7}{subsection.1.4}
 \contentsline {section}{\numberline {2}No filter: calculation of error}{10}{section.2}
 \contentsline {subsection}{\numberline {2.1}Randomization outline}{10}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Results of the simulations without filtering}{10}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}Assessing the statistical type I error of local T-statistics}{11}{subsection.2.3}
 \contentsline {subsection}{\numberline {2.4}Assessing the statistical type I error of global T-statistics}{13}{subsection.2.4}
+<<<<<<< HEAD
 \contentsline {subsection}{\numberline {2.5}Conclusion on the type I error of T-statistics}{19}{subsection.2.5}
 \contentsline {section}{\numberline {3}Internal filter: assessing the statistical power of $T_{IP/IC}$}{20}{section.3}
 \contentsline {subsection}{\numberline {3.1}Randomization outline}{20}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Results of the simulations of internal filtering}{22}{subsection.3.2}
 \contentsline {subsubsection}{\numberline {3.2.1}Results with local p-values}{22}{subsubsection.3.2.1}
 \contentsline {subsubsubsection}{\numberline {3.2.1.1}Calculation of beta-error mixing all strengths of filtering}{22}{subsubsubsection.3.2.1.1}
+=======
+\contentsline {subsection}{\numberline {2.5}Conclusion on the type I error of T-statistics}{17}{subsection.2.5}
+\contentsline {section}{\numberline {3}Internal filter: assessing the statistical power of $T_{IP/IC}$}{20}{section.3}
+\contentsline {subsection}{\numberline {3.1}Randomization outline}{20}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Results of the simulations of internal filtering}{22}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Local p-values results}{22}{subsubsection.3.2.1}
+\contentsline {subsubsubsection}{\numberline {3.2.1.1}Calculation of beta-error mixing all strength of filtering}{25}{subsubsubsection.3.2.1.1}
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 \contentsline {subsubsubsection}{\numberline {3.2.1.2}Local $T_{IP/IC}$ SES values against initial parameter values}{25}{subsubsubsection.3.2.1.2}
 \contentsline {subsubsubsection}{\numberline {3.2.1.3}Local $T_{IP/IC}$ SES values against modeled parameter values}{28}{subsubsubsection.3.2.1.3}
 \contentsline {subsubsection}{\numberline {3.2.2}Global p-values results for $T_{IP/IC}$}{30}{subsubsection.3.2.2}
@@ -24,26 +37,45 @@
 \contentsline {subsection}{\numberline {3.3}Conclusion on the power of $T_{IP/IC}$ to detect internal filtering}{33}{subsection.3.3}
 \contentsline {section}{\numberline {4}External Filter}{35}{section.4}
 \contentsline {subsection}{\numberline {4.1}Randomization outline}{35}{subsection.4.1}
+<<<<<<< HEAD
 \contentsline {subsection}{\numberline {4.2}Results of the simulations of external filtering}{37}{subsection.4.2}
+=======
+\contentsline {subsection}{\numberline {4.2}Results of the simulations of external filtering}{36}{subsection.4.2}
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 \contentsline {subsubsection}{\numberline {4.2.1}Local $T_{IC/IR}$ and $T_{PC/PR}$ results}{37}{subsubsection.4.2.1}
 \contentsline {subsubsubsection}{\numberline {4.2.1.1}Local $T_{IC/IR}$ and $T_{PC/PR}$ SES values against initial parameter values}{37}{subsubsubsection.4.2.1.1}
 \contentsline {subsubsubsection}{\numberline {4.2.1.2}Local $T_{IC/IR}$ and $T_{PC/PR}$ SES values against modeled parameter values}{43}{subsubsubsection.4.2.1.2}
 \contentsline {subsubsection}{\numberline {4.2.2}Global $T_{IC/IR}$ and $T_{PC/PR}$ results}{44}{subsubsection.4.2.2}
+<<<<<<< HEAD
 \contentsline {subsubsubsection}{\numberline {4.2.2.1}Calculation of beta-error mixing all strengths of external filtering}{47}{subsubsubsection.4.2.2.1}
+=======
+\contentsline {subsubsubsection}{\numberline {4.2.2.1}Calculation of beta-error mixing all strength of filtering}{47}{subsubsubsection.4.2.2.1}
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 \contentsline {subsubsubsection}{\numberline {4.2.2.2}Global $T_{IC/IR}$ and $T_{PC/PR}$ SES values against initial parameter values}{47}{subsubsubsection.4.2.2.2}
 \contentsline {subsubsubsection}{\numberline {4.2.2.3}Global $T_{IC/IR}$ and $T_{PC/PR}$ SES values against modeled parameter values}{51}{subsubsubsection.4.2.2.3}
 \contentsline {subsection}{\numberline {4.3}Conclusion on the power of $T_{IC/IR}$ to detect external filtering}{51}{subsection.4.3}
 \contentsline {subsection}{\numberline {4.4}Conclusion on the power of $T_{PC/PR}$ to detect external filtering}{54}{subsection.4.4}
+<<<<<<< HEAD
 \contentsline {section}{\numberline {5}Combining internal and external filtering}{58}{section.5}
+=======
+\contentsline {section}{\numberline {5}Internal and external filtering}{58}{section.5}
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 \contentsline {subsection}{\numberline {5.1}Randomization outline}{58}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}Results}{60}{subsection.5.2}
 \contentsline {section}{\numberline {6}Test of variance decomposition functions}{66}{section.6}
 \contentsline {subsection}{\numberline {6.1}Behavior of the function \texttt {partvar}}{66}{subsection.6.1}
 \contentsline {subsection}{\numberline {6.2}Behavior of the function \texttt {decompCTRE}}{67}{subsection.6.2}
+<<<<<<< HEAD
 \contentsline {section}{\numberline {7}Summary}{71}{section.7}
 \contentsline {subsection}{\numberline {7.1}Type I error}{71}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Type II error}{71}{subsection.7.2}
 \contentsline {subsection}{References}{71}{section*.39}
+=======
+\contentsline {section}{\numberline {7}Summary}{72}{section.7}
+\contentsline {subsection}{\numberline {7.1}Type I error}{72}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Type II error}{72}{subsection.7.2}
+\contentsline {subsection}{Conclusion}{72}{section*.39}
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 \contentsline {subsection}{References}{72}{section*.40}
 \contentsline {subsection}{List of Figures}{73}{section*.41}
 \contentsline {subsection}{List of Tables}{73}{section*.42}

@@ -56,12 +56,21 @@
 	
 	\item{SE.reg.pool}{
 		A single value or vector of standard errors associated with each traits in each regional pool. Use only if reg.pool is used. Need to have the same dimension as reg.pool.
+<<<<<<< HEAD
 	}
 	
 	\item{nperm}{
 		Number of permutations. If NULL, only observed values are returned; 
 	}
 	
+=======
+	}
+	
+	\item{nperm}{
+		Number of permutations. If NULL, only observed values are returned; 
+	}
+	
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 	\item{printprogress}{
 		Logical value; print progress during the calculation or not.
 	}
@@ -110,6 +119,7 @@
 
 \details{
 <<<<<<< HEAD
+<<<<<<< HEAD
 	\strong{S3 method plot:}
 	
 	-Normal: type plot means, standard deviations, ranges and confidence intervals of T-statistics.
@@ -143,6 +153,8 @@
 	
 	-All: type do all the precedent type of summary.
 =======
+=======
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 	\bold{S3 method plot:}
 	
 	-\emph{Normal} type plot means, standard deviations, ranges and confidence intervals of T-statistics.
@@ -175,7 +187,10 @@
 	-\emph{Site} type allows to know in which sites T-statistics deviate from the null expectation.
 	
 	-\emph{All} type do all the precedent type of summary.
+<<<<<<< HEAD
 >>>>>>> eea47e6322cce806e6c3a5b71a06d432e2b9d88d
+=======
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 }
 
 \value{
