@@ -81,7 +81,11 @@
 library(knitr)
 opts_chunk$set(fig.keep = 'high', dev = 'pdf', fig.width = 7, fig.height = 7, 
                fig.align = 'center', tidy = FALSE, warning = FALSE, size = "small", 
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+               fig.show = "hold", cache =  TRUE)
+=======
                fig.show = "hold")#, cache =  TRUE)
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 options(digit = 2)
 a <- Sys.time()
 @
@@ -95,18 +99,24 @@ knit_hooks$set(crop=hook_pdfcrop)
 \begin{abstract}
   Community ecologists are actively describing species by their functional traits, quantifying the functional structure of plant and animal assemblages, and inferring community assembly processes with null model analyses of trait distributions and functional diversity indices. Intraspecific variation in traits and effects of spatial scale are potentially important in these analyses.
   
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+
+	We introduce the R package cati, available on CRAN, for the analysis of community assembly with functional traits. The cati package (i) calculates a variety of single-trait and multi-trait indices from interspecific and intraspecific trait measures; (ii) partitions functional trait variation among spatial and taxonomic levels; (iii) implements a palette of flexible null models for detecting non-random patterns of functional traits. These patterns can be used to draw inferences about hypotheses of community assembly such as environmental filtering and negative species interactions.
+  
+=======
 //
 	We introduce the R package cati, available on CRAN, for the analysis of community assembly with functional traits. The cati package (i) calculates a variety of single-trait and multi-trait indices from interspecific and intraspecific trait measures; (ii) partitions functional trait variation among spatial and taxonomic levels; (iii) implements a palette of flexible null models for detecting non-random patterns of functional traits. These patterns can be used to draw inferences about hypotheses of community assembly such as environmental filtering and negative species interactions.
   
 //
 The basic input for cati is a data frame in which columns are traits, rows are species or individuals, and entries are the measured trait values. The cati package can also incorporate into analyses a square distance matrix, which could include phylogenetic or genetic distances among individuals or species. Users select from a variety of functional trait metrics and analyze them relative to a null model that specifies trait distributions in a regional source pool.
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 
+The basic input for cati is a data frame in which columns are traits, rows are species or individuals, and entries are the measured trait values. The cati package can also incorporate into analyses a square distance matrix, which could include phylogenetic or genetic distances among individuals or species. Users select from a variety of functional trait metrics and analyze them relative to a null model that specifies trait distributions in a regional source pool.
 \end{abstract}
 
 
 \textbf{Key words:}
-Functional space, functional structure, community assembly, ecological niche, environmental filter,
-individual differences, intraspecific variation, null model, trait, variance decomposition
+Functional space, functional structure, community assembly, ecological niche, environmental filter, individual differences, intraspecific variation, null model, trait, variance decomposition
 
 
 \vfill
@@ -142,10 +152,10 @@ oldpar <- par(no.readonly = TRUE)
 sessionInfo()
 @
 
-  \subsection {T-statistics and associated null models}
-  
-  
+
 \begin{landscape}
+\subsection {T-statistics and associated null models}
+  
 \begin{table}[h]
 \caption[T-statistics and associated null models]{The four types of null models implemented in cati, their related null and alternative hypotheses, randomization design and associated T-statistics}
 \begin{tabular}{m{2.7cm} m{5.3cm} m{6.3cm} m{6.2cm} m{2.5cm}}
@@ -181,10 +191,17 @@ Here we set the number of permutations for the entire analysis.
 
 <<Simul_parameter_1>>= 
 #Number of permutations for the analysis without filter
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+npermut <- 1000
+
+#Number of permutations for each parameter values in the analysis with filter(s)
+N_repet_Param <- 500
+=======
 npermut <- 3
 
 #Number of permutations for each parameter values in the analysis with filter(s)
 N_repet_Param <- 2
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 
 #Number of values for each parameters
 nb_param_val <- 3
@@ -195,14 +212,22 @@ The argument sd log allows to modify the species abundance distribution within c
 
 <<Simul_parameter_2>>= 
 #Total number of individuals
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+Nind <- 1000
+=======
 Nind <- 500
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 
 #Ten communities named A, B, C ... J
 com <- c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J") 
 Ncom <- length(com)
 
 #Number of species (if Nsp > 676 you need to defined additional name)
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+Nsp <- 20
+=======
 Nsp <- 30
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 sp <- as.factor(paste("sp", paste(sort(rep(LETTERS, 26)), rep(LETTERS, 26),  sep="")
                      [seq(1:Nsp)], sep ="_"))
 Nsp <- length(sp)
@@ -218,9 +243,15 @@ Figure \ref{fig:General_outline} depicts the general outline of the next fourth 
 \begin{figure}[ht]
 \centering
 \hspace*{-0.8cm}
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+\vspace*{0.8cm}
+    \makebox[\linewidth]{
+        \includegraphics[width=0.86\linewidth]{general_outline.pdf}
+=======
 \vspace*{-0.8cm}
     \makebox[\linewidth]{
         \includegraphics[width=0.88\linewidth]{general_outline.pdf}
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
     }
 \caption[General outline of the simulation concerning the Tstatistics]{An approach by simulations to evaluate the power of the T-statistics to detect internal and external filtering. (Continue on next page) }
 \label{fig:General_outline}
@@ -529,6 +560,30 @@ Traits & Indices & Averaged across communities? & alpha-error \tabularnewline
 \end{tabular}
 \end{center}
 \end{table}
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+
+
+
+The results of table \ref{tab:Alpha-errors_for_T-stats} show of a good behavior of the T-statistics regardless of the distributions of the traits. Alpha-error of the local indices are always near the desired alpha-error = 2.5\%. Logically the global indices which averaged local indices are far more robust. Note that the higher alpha-error is obtained using $T_{PC/PR}$ on the trait normally distributed (\Sexpr{round(nbre_alpha_error_norm_loc_Tpcpr, 3)}).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 
 
 
@@ -560,6 +615,8 @@ The results of table \ref{tab:Alpha-errors_for_T-stats} show of a good behavior 
 
 
 
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+=======
 
 
 
@@ -580,6 +637,7 @@ The results of table \ref{tab:Alpha-errors_for_T-stats} show of a good behavior 
 
 
 
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 \cleardoublepage
 
 \section{Internal filter: assessing the statistical power of $T_{IP/IC}$}
@@ -1506,9 +1564,29 @@ plot(meanSES.3loc.norm_Ticir ~ init_param.loc, col = rgb(0, 0, 0, 0.2),
      type = "n")
 #points(meanSES.3loc.uni_Ticir ~ init_param.loc, col = rgb(0.5, 0, 1, 0.2))
 
-points(meanSES.3glob.norm_Ticir ~ init_param, pch = 16, col = rgb(0, 0, 0, 0.5), cex = 1.2)
+points(meanSES.3glob.norm_Ticir ~ init_param, pch = 16, col = rgb(0, 0, 0, 0.5), 
+       cex = 1.2)
 lm.norm <- lm(meanSES.3glob.norm_Ticir ~ log(init_param))
 lm.norm_conf <- confint(lm.norm, level = 0.90)
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+curve(lm.norm$coef[1] + log(x) * (lm.norm$coef[2]), add = T, lwd = 3, 
+      col = rgb(0, 0, 0, 1))
+curve(lm.norm_conf[1, 1] + log(x) * lm.norm_conf[2, 1], add = T, lty = 2, 
+      col = rgb(0, 0, 0, 1))
+curve(lm.norm_conf[1, 2] + log(x) * lm.norm_conf[2, 2], add = T, lty = 2, 
+      col = rgb(0, 0, 0, 1))
+
+points(meanSES.3glob.uni_Ticir ~ init_param, pch = 16, col = rgb(0.5, 0, 1, 0.5), 
+       cex = 1.2)
+lm.uni <- lm(meanSES.3glob.uni_Ticir ~ log(init_param))
+lm.uni_conf <- confint(lm.uni, level = 0.90)
+curve(lm.uni$coef[1] + log(x) * (lm.uni$coef[2]), add = T, lwd = 3, 
+      col = rgb(0.5, 0, 1, 1))
+curve(lm.uni_conf[1, 1] + log(x) * lm.uni_conf[2, 1], add = T, lty = 2, 
+      col = rgb(0.5, 0, 1, 1))
+curve(lm.uni_conf[1, 2] + log(x) * lm.uni_conf[2, 2], add = T, lty = 2,
+      col = rgb(0.5, 0, 1, 1))
+=======
 curve(lm.norm$coef[1] + log(x) * (lm.norm$coef[2]), add = T, lwd = 3, col = rgb(0, 0, 0, 1))
 curve(lm.norm_conf[1, 1] + log(x) * lm.norm_conf[2, 1], add = T, lty = 2, col = rgb(0, 0, 0, 1))
 curve(lm.norm_conf[1, 2] + log(x) * lm.norm_conf[2, 2], add = T, lty = 2, col = rgb(0, 0, 0, 1))
@@ -1519,6 +1597,7 @@ lm.uni_conf <- confint(lm.uni, level = 0.90)
 curve(lm.uni$coef[1] + log(x) * (lm.uni$coef[2]), add = T, lwd = 3,  col = rgb(0.5, 0, 1, 1))
 curve(lm.uni_conf[1, 1] + log(x) * lm.uni_conf[2, 1], add = T, lty = 2, col = rgb(0.5, 0, 1, 1))
 curve(lm.uni_conf[1, 2] + log(x) * lm.uni_conf[2, 2], add = T, lty = 2, col = rgb(0.5, 0, 1, 1))
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 
 
 rect(-1, mean(c(SES.inf.MEAN.uni_Ticir, meanSES.INF_glob.uni_Ticir), na.rm = T), 
@@ -1533,8 +1612,8 @@ rect(-1, mean(c(SES.inf.MEAN.norm_Ticir, meanSES.INF_glob.norm_Ticir), na.rm = T
 yy.norm <- mean(c(SES.inf.MEAN.norm_Ticir, meanSES.INF_glob.norm_Ticir), na.rm = T)
 yy.uni <- mean(c(SES.inf.MEAN.uni_Ticir, meanSES.INF_glob.uni_Ticir), na.rm = T)
 
-param_beta0.05_Ticir.norm <- exp( (yy.norm - lm.norm_conf [1, 2]) / lm.norm_conf [2, 2] )
-param_beta0.05_Ticir.uni <- exp( (yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf [2, 2] )
+param_beta0.05_Ticir.norm <- exp((yy.norm - lm.norm_conf[1, 2]) / lm.norm_conf[2, 2])
+param_beta0.05_Ticir.uni <- exp((yy.uni - lm.uni_conf[1, 2]) / lm.uni_conf[2, 2])
 @
 
 
@@ -1561,26 +1640,34 @@ plot(meanSES.3loc.norm_Tpcpr ~ init_param.loc, col = rgb(0, 0, 0, 0.2),
      type = "n")
 #points(meanSES.3loc.uni_Tpcpr ~ init_param.loc, col = rgb(0.5, 0, 1, 0.2))
 
-points(meanSES.3glob.norm_Tpcpr ~ init_param, pch = 16, col = rgb(0, 0, 0, 0.5), cex = 1.2)
+points(meanSES.3glob.norm_Tpcpr ~ init_param, pch = 16, col = rgb(0, 0, 0, 0.5), 
+       cex = 1.2)
 lm.norm <- lm(meanSES.3glob.norm_Tpcpr ~ log(init_param))
 lm.norm_conf <- confint(lm.norm, level = 0.90)
-curve(lm.norm$coef[1] + log(x) * (lm.norm$coef[2]), add = T, lwd = 3, col = rgb(0, 0, 0, 1))
-curve(lm.norm_conf [1, 1] + log(x) * lm.norm_conf [2, 1], add = T, lty = 2, col = rgb(0, 0, 0, 1))
-curve(lm.norm_conf [1, 2] + log(x) * lm.norm_conf [2, 2], add = T, lty = 2, col = rgb(0, 0, 0, 1))
+curve(lm.norm$coef[1] + log(x) * (lm.norm$coef[2]), add = T, lwd = 3, 
+      col = rgb(0, 0, 0, 1))
+curve(lm.norm_conf [1, 1] + log(x) * lm.norm_conf [2, 1], add = T, lty = 2, 
+      col = rgb(0, 0, 0, 1))
+curve(lm.norm_conf [1, 2] + log(x) * lm.norm_conf [2, 2], add = T, lty = 2, 
+      col = rgb(0, 0, 0, 1))
 
-points(meanSES.3glob.uni_Tpcpr ~ init_param, pch = 16, col = rgb(0.5, 0, 1, 0.5), cex = 1.2)
+points(meanSES.3glob.uni_Tpcpr ~ init_param, pch = 16, col = rgb(0.5, 0, 1, 0.5), 
+       cex = 1.2)
 lm.uni <- lm(meanSES.3glob.uni_Tpcpr ~ log(init_param))
 lm.uni_conf <- confint(lm.uni, level = 0.90)
-curve(lm.uni$coef[1] + log(x) * (lm.uni$coef[2]), add = T, lwd = 3,  col = rgb(0.5, 0, 1, 1))
-curve(lm.uni_conf [1, 1] + log(x) * lm.uni_conf [2, 1], add = T, lty = 2, col = rgb(0.5, 0, 1, 1))
-curve(lm.uni_conf [1, 2] + log(x) * lm.uni_conf [2, 2], add = T, lty = 2, col = rgb(0.5, 0, 1, 1))
+curve(lm.uni$coef[1] + log(x) * (lm.uni$coef[2]), add = T, lwd = 3,  
+      col = rgb(0.5, 0, 1, 1))
+curve(lm.uni_conf [1, 1] + log(x) * lm.uni_conf [2, 1], add = T, lty = 2, 
+      col = rgb(0.5, 0, 1, 1))
+curve(lm.uni_conf [1, 2] + log(x) * lm.uni_conf [2, 2], add = T, lty = 2, 
+      col = rgb(0.5, 0, 1, 1))
 
 
-rect(-1, mean(c(SES.inf.MEAN.uni_Tpcpr, meanSES.INF_glob.uni_Tpcpr), na.rm = T), max(init_param), 10, 
-  col = rgb(0.5, 0, 1, 0.3), border = NA)
+rect(-1, mean(c(SES.inf.MEAN.uni_Tpcpr, meanSES.INF_glob.uni_Tpcpr), na.rm = T), 
+     max(init_param), 10, col = rgb(0.5, 0, 1, 0.3), border = NA)
 
-rect(-1, mean(c(SES.inf.MEAN.norm_Tpcpr, meanSES.INF_glob.norm_Tpcpr), na.rm = T), max(init_param) + 10, 10, 
-  col = rgb(0, 0, 0, 0.3), border = NA)
+rect(-1, mean(c(SES.inf.MEAN.norm_Tpcpr, meanSES.INF_glob.norm_Tpcpr), na.rm = T), 
+     max(init_param) + 10, 10, col = rgb(0, 0, 0, 0.3), border = NA)
 
 @
 
@@ -1588,15 +1675,18 @@ rect(-1, mean(c(SES.inf.MEAN.norm_Tpcpr, meanSES.INF_glob.norm_Tpcpr), na.rm = T
 yy.norm <- mean(c(SES.inf.MEAN.norm_Tpcpr, meanSES.INF_glob.norm_Tpcpr), na.rm = T)
 yy.uni <- mean(c(SES.inf.MEAN.uni_Tpcpr, meanSES.INF_glob.uni_Tpcpr), na.rm = T)
 
-param_beta0.05_Tpcpr.norm <- exp( (yy.norm - lm.norm_conf [1, 2]) / lm.norm_conf [2, 2] )
-param_beta0.05_Tpcpr.uni <- exp( (yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf [2, 2] )
+param_beta0.05_Tpcpr.norm <- exp((yy.norm - lm.norm_conf [1, 2]) / lm.norm_conf[2, 2])
+param_beta0.05_Tpcpr.uni <- exp((yy.uni - lm.uni_conf [1, 2]) / lm.uni_conf[2, 2])
 @
 
 
 For the trait "a" normally distributed, the power of $T_{PC/PR}$ is satisfactory if the ratio of the initial parameter is superior to
  \Sexpr{round(param_beta0.05_Tpcpr.norm, 2)}. For the trait "b" uniformally distributed, this value is \Sexpr{round(param_beta0.05_Tpcpr.uni, 2)}. 
  Further investigation on real data with different strengths of external filtering are needed to extend these simulated values. As expected, $T_{PC/PR}$ is far less powerful than $T_{IC/IR}$ to detect external filtering for both traits "a" (\Sexpr{round(param_beta0.05_Tpcpr.norm, 2)} \textit{vs} \Sexpr{round(param_beta0.05_Ticir.norm, 2)}) and "b" (\Sexpr{round(param_beta0.05_Tpcpr.uni, 2)} \textit{vs} \Sexpr{round(param_beta0.05_Ticir.uni, 2)}). This is due to the loss of information in $T_{PC/PR}$ when we compute the mean by population and exclude intra-populationnal variation from the test of external filtering. 
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+=======
 
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 
 
 
@@ -1634,9 +1724,17 @@ For the trait "a" normally distributed, the power of $T_{PC/PR}$ is satisfactory
 
 \cleardoublepage
 
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+\cleardoublepage
+
 \section{Combining internal and external filtering}
 \label{sect:IntExtFilt}
 
+=======
+\section{Combining internal and external filtering}
+\label{sect:IntExtFilt}
+
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
   \subsection{Randomization outline}
 We use the same two parameters for both internal and external filtering analyses. The internal filtering is computed in the section dedicated to internal filter. To add the effect of external filtering, we add a value for each individual belonging to a given community, these value differing between communities.
 
@@ -1670,7 +1768,12 @@ for(n in 1:nperm){#for each permutation
 ex.sp4 <- c()
 ex.com4 <- matrix(0, nrow = Ncom, ncol = Nsp)
 for(i in 1: 10){
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+ ex.com.interm <- table(sample(sp, size = Nind/Ncom, prob = rlnorm(Nsp, 0, sdlog), 
+                               replace = T))
+=======
  ex.com.interm <- table(sample(sp, size = Nind/Ncom, prob = rlnorm(Nsp, 0, sdlog), replace = T))
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
  ex.com4[i, sp%in% names(ex.com.interm)] <- ex.com.interm
  ex.sp4 <- c(ex.sp4, rep(sp, times = ex.com4[i,]))
 }
@@ -1749,6 +1852,8 @@ plotDistri(ex.traits4, rep("region", times = dim(ex.traits1)[1]), ex.sp4,
            ylim = c(0, 0.01))
 par(mfrow=c(1, 1))
 @
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+=======
 
 <<InEx_Filter_plots_Tstats, fig.height = 8, fig.cap = "Results of T-statistics with both internal and external filtering: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. (a) Lower strength of internal filtering (b) higher strength of internal filtering.", crop = TRUE>>= 
 par(mfrow=c(3, 1))
@@ -1758,7 +1863,15 @@ plot(res.simu4[[nperm]], main = "c")
 par(mfrow=c(1, 1))
 @
   
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 
+<<InEx_Filter_plots_Tstats, fig.height = 8, fig.cap = "Results of T-statistics with both internal and external filtering: $T_{IP/IC}$ in red, $T_{IC/IR}$ in purple and $T_{PC/PR}$ in green. (a) Lower strength of filtering (b) higher strength of filtering.", crop = TRUE>>= 
+par(mfrow=c(2, 1))
+plot(res.simu4[[1]], main = "a")
+plot(res.simu4[[nperm]], main = "b")
+par(mfrow=c(1, 1))
+@
+  
 <<ExIn_filter_locresults_SES>>= 
 meanSES.4loc.norm_Tipic <- unlist(lapply(res.simu4, function(x) 
              ses.listofindex(as.listofindex(x))
@@ -1988,7 +2101,7 @@ In addition to the \texttt{cati} \href{https://github.com/adrientaudiere/cati/bl
 First to test the behavior of the \texttt{partvar} function we assemble the same data as in the test of the T-statistics. 
 1000 individuals belonging to 20 species occuring in 10 communities. But here we define the trait value for one individual as the addition of three values, each one drawn in a normal distribution of mean 0 and standard error 1: (i) a value depending on the species the individual belong to, (ii) a value depending on the community the individual belong to and (iii) an independent value measuring the individual variance.
 
-<<Toy_model_2, results = 'hide'>>= 
+<<Toy_model_2, results='hide', message = FALSE >>= 
 nperm <- npermut
 
 sdlog 
@@ -2002,7 +2115,12 @@ for(n in 1:nperm){#for each permutation
  ex.sp5 <- c()
  ex.com5 <- matrix(0, nrow = Ncom, ncol = Nsp)
  for(i in 1: Ncom){
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+ ex.com.interm <- table(sample(sp, size = Nind/Ncom, prob = rlnorm(Nsp, 0, sdlog), 
+                               replace = T))
+=======
  ex.com.interm <- table(sample(sp, size = Nind/Ncom, prob = rlnorm(Nsp, 0, sdlog), replace = T))
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
  ex.com5[i, sp%in% names(ex.com.interm)] <- ex.com.interm
  ex.sp5 <- c(ex.sp5, rep(sp, times = ex.com5[i,]))
  }
@@ -2065,11 +2183,19 @@ The mean contribution of each component is close to 0.33. Consequently the funct
 \subsection{Behavior of the function \texttt{decompCTRE}}
 
 To test the function \texttt{decompCTRE}, we adopt the same model but we add a new step to control the strength of the turnover in defining the community weighted mean.
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+We define several values of turnover strength by deleting individuals from the data set if their species-components trait and community-component trait are too different. To be more precise, when \texttt{turnover\_strength} = 1, we delete all individuals whose the square of the species value minus the community value is superior to one. 
+
+<<decompCTRE_simu, results = 'hide'>>= 
+sdlog
+turnover_strength <- rep(c(0.1, 0.25, 0.5, 1, 2, 5, 7.5, 10, 12.5, 15), 
+=======
 We define several values of turnover strength by deleting individuals from the data set if their species-components trait and community-component trait are too different. To be more precise, when \texttt{turnover\_strength} = 1, we delete all individuals whose the square of the species value minus the community value is superior o one. 
 
 <<decompCTRE_simu, results = 'hide'>>= 
 sdlog
 turnover_strength <- rep(c(0.01, 0.1, 0.2, 0.5, 1, 2, 3.5, 5, 7.5, 10, 12.5, 15), 
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
                          N_repet_Param)
 nperm <- length(turnover_strength)
 res.decompCTRE_toymodel <- list()
@@ -2079,7 +2205,12 @@ for(n in 1:nperm){#for each permutation
  ex.sp5 <- c()
  ex.com5 <- matrix(0, nrow = Ncom, ncol = Nsp)
  for(i in 1: Ncom){
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+ ex.com.interm <- table(sample(sp, size = Nind/Ncom, prob = rlnorm(Nsp, 0, sdlog), 
+                               replace = T))
+=======
  ex.com.interm <- table(sample(sp, size = Nind/Ncom, prob = rlnorm(Nsp, 0, sdlog), replace = T))
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
  ex.com5[i, sp%in% names(ex.com.interm)] <- ex.com.interm
  ex.sp5 <- c(ex.sp5, rep(sp, times = ex.com5[i,]))
  }
@@ -2114,15 +2245,20 @@ Now we can plot the relationship between the modeled strength of the turnover an
 <<decompCTRE_plot1, fig.height = 3, fig.cap = "Decomposition of the variation in community trait composition for two contrasted cases: on the left almost all the variation is due to turnover whereas on the rigth case intraspecific variation explain most of the variation.">>= 
 par(mfrow=c(1, 2))
 plot(res.decompCTRE_toymodel[[1]]$X2)
-plot(res.decompCTRE_toymodel[[n]]$X2)
+plot(res.decompCTRE_toymodel[[length(res.decompCTRE_toymodel)]]$X2)
 par(mfrow=c(1, 1))
 @
 
 <<decompCTRE_plot2, fig.width = 6, fig.height = 5, fig.cap = "Modeled against obtained turnover contribution in community trait variance">>= 
-res.simu.decompCTRE_toymodel <- unlist(lapply(res.decompCTRE_toymodel, function(x) 
+res.sim.decompCTRE_toymodel <- unlist(lapply(res.decompCTRE_toymodel, function(x) 
                                               x$X2$RelSumSq[1]))
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+plot(res.sim.decompCTRE_toymodel, -turnover_strength, pch = 16, 
+     col = rgb(0, 0, 0, 0.5),
+=======
 plot(res.simu.decompCTRE_toymodel, -turnover_strength, pch = 16, 
      col = rgb(0, 0, 0, 0.5), xlim=c(0, 10),
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
      ylab = "Strength of the turnover (maximum strength = 0)",
      xlab = "Turnover relative contribution to community mean traits")
 @
@@ -2136,6 +2272,7 @@ The correlation between the modeled strength of the turnover and the turnover re
 \label{sect:summary}
 
 \subsection{Type I error}
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
 
 Table \ref{tab:Alpha-errors_for_T-stats} summarizes the alpha error for the T-statistics. The three global \footnote{one index for all the dataset} T-statistics are very robust 
 regardless of the distribution of the trait (alpha error ranging from \Sexpr{min(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)} to \Sexpr{max(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)}). Local \footnote{one index for each community of the dataset} T-statistics present lower but nevertheless satifactory alpha-error with a maximum of \Sexpr{nbre_alpha_error_norm_loc_Tpcpr} for $T_{PC/PR}$ on a trait normally distributed. We therefore recommand to use $T_{IC/IR}$ to detect external filtering and more generally to prefer global T-statistics which are more robust and more powerful.
@@ -2144,6 +2281,16 @@ regardless of the distribution of the trait (alpha error ranging from \Sexpr{min
 \subsection{Type II error}
 
 
+=======
+
+Table \ref{tab:Alpha-errors_for_T-stats} summarizes the alpha error for the T-statistics. The three global \footnote{one index for all the dataset} T-statistics are very robust 
+regardless of the distribution of the trait (alpha error ranging from \Sexpr{min(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)} to \Sexpr{max(c(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6), na.rm=T)}). Local \footnote{one index for each community of the dataset} T-statistics present lower but nevertheless satifactory alpha-error with a maximum of \Sexpr{nbre_alpha_error_norm_loc_Tpcpr} for $T_{PC/PR}$ on a trait normally distributed. We therefore recommand to use $T_{IC/IR}$ to detect external filtering and more generally to prefer global T-statistics which are more robust and more powerful.
+
+
+\subsection{Type II error}
+
+
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 \begin{table}[h!]
 \begin{center}
 \caption{Summary of initial parameter ratios allowing beta-error $<0.05$ for global T-statistics}
@@ -2151,6 +2298,40 @@ regardless of the distribution of the trait (alpha error ranging from \Sexpr{min
 \hline
 Traits & Indices & Initial parameter ratio with internal filtering & Initial parameter ratio with external filtering & Initial parameter ratio with internal and external filtering \tabularnewline
 \hline \hline \hline
+<<<<<<< HEAD:Documentation/Appendix4/Appendix4.Rnw
+
+\multirow{3}{*}{Trait a (normal)} & $T_{IP.IC}$ & \Sexpr{round(param_beta0.05_Tipic.norm, 2)} & \cellcolor{ligthgray}  & \Sexpr{round(param_B_glob_norm_Tipic, 2)}\tabularnewline
+\cline{2-5} 
+ & $T_{IC.IR}$ & \cellcolor{ligthgray} & \Sexpr{round(param_beta0.05_Ticir.norm, 2)} &  \Sexpr{round(param_B_glob_norm_Ticir, 2)} \tabularnewline
+\cline{2-5}
+ & $T_{PC.PR}$ & \cellcolor{ligthgray} & \Sexpr{round(param_beta0.05_Tpcpr.norm, 2)} &  \Sexpr{round(param_B_glob_norm_Tpcpr, 2)} \tabularnewline
+
+\hline \hline \hline
+
+
+Traits & Indices & Initial parameter ratio with internal filtering & Initial parameter ratio with external filtering & Initial parameter ratio with internal and external filtering \tabularnewline
+\hline \hline \hline
+
+\multirow{3}{*}{Trait b (uniform)} & $T_{IP.IC}$ & \Sexpr{round(param_beta0.05_Tipic.uni, 2)} & \cellcolor{ligthgray} & \Sexpr{round(param_B_glob_uni_Tipic, 2)}\tabularnewline
+\cline{2-5} 
+ & $T_{IC.IR}$ & \cellcolor{ligthgray} & \Sexpr{round(param_beta0.05_Ticir.uni, 2)} &  \Sexpr{round(param_B_glob_uni_Ticir, 2)} \tabularnewline
+\cline{2-5}
+ & $T_{PC.PR}$ & \cellcolor{ligthgray} & \Sexpr{round(param_beta0.05_Tpcpr.uni, 2)} &  \Sexpr{round(param_B_glob_uni_Tpcpr, 2)} \tabularnewline
+
+
+\hline 
+\end{tabular}
+\end{center}
+\end{table}
+
+\section*{Conclusion}
+\addcontentsline{toc}{subsection}{References}
+
+In this document, we bring out a low type I error (alpha-error is inferior to 0.05 for all T-statistics; Table \ref{tab:Alpha-errors_for_T-stats}). We also studied the type II error in relation to the type of hypotheses specified in the models. The power to detect the external filter at the individual level ($T_{IC/IR}$) predominates over the power to detect it at the populational level ($T_{PC/PR}$) in all simulation cases. We therefore encourage cati’s users to be very careful when they compare $T_{IC/IR}$ and $T_{PC/PR}$. Finally, we detected no bias in the functions partvar and decomCTRE. This appendix can be rerun with different parameters using the text document at https://github.com/adrientaudiere/cati/blob/Package-cati/Documentation/Appendix4/Appendix4.Rnw.
+ 
+ 
+\cleardoublepage
+=======
 
 \multirow{3}{*}{Trait a (normal)} & $T_{IP.IC}$ & \Sexpr{round(param_beta0.05_Tipic.norm, 2)} & \cellcolor{ligthgray}  & \Sexpr{round(param_B_glob_norm_Tipic, 2)}\tabularnewline
 \cline{2-5} 
@@ -2179,6 +2360,7 @@ Traits & Indices & Initial parameter ratio with internal filtering & Initial par
 
 
 \Cleardoublepage
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d:Documentation/Appendix4/Appendix4.Rnw
 \section*{References}
 \addcontentsline{toc}{subsection}{References}
 

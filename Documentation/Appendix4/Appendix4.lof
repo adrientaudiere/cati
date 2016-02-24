@@ -2,6 +2,36 @@
 \select@language {english}
 \contentsline {figure}{\numberline {1}{\ignorespaces General outline of the simulation concerning the Tstatistics}}{8}{figure.caption.3}
 \contentsline {figure}{\numberline {2}{\ignorespaces Distribution of trait values for one randomization without filtering}}{12}{figure.caption.4}
+<<<<<<< HEAD
+\contentsline {figure}{\numberline {3}{\ignorespaces T-statistics for the first randomization without filtering}}{13}{figure.caption.5}
+\contentsline {figure}{\numberline {4}{\ignorespaces Local alpha errors}}{14}{figure.caption.6}
+\contentsline {figure}{\numberline {5}{\ignorespaces Global alpha errors}}{18}{figure.caption.7}
+\contentsline {figure}{\numberline {6}{\ignorespaces Distribution of trait values for one randomization with internal filtering}}{23}{figure.caption.9}
+\contentsline {figure}{\numberline {7}{\ignorespaces T-statistics for two randomizations with contrasted strengths of internal filtering}}{24}{figure.caption.10}
+\contentsline {figure}{\numberline {8}{\ignorespaces Beta-error mixing all strengths of internal filtering}}{25}{figure.caption.11}
+\contentsline {figure}{\numberline {9}{\ignorespaces Local $T_{IP/IC}$ SES and initial parameter values}}{27}{figure.caption.12}
+\contentsline {figure}{\numberline {10}{\ignorespaces Local $T_{IP/IC}$ SES and modeled parameter values}}{29}{figure.caption.14}
+\contentsline {figure}{\numberline {11}{\ignorespaces Global $T_{IP/IC}$ SES and initial parameter values}}{31}{figure.caption.15}
+\contentsline {figure}{\numberline {12}{\ignorespaces Global $T_{IP/IC}$ SES and modeled parameter values}}{32}{figure.caption.16}
+\contentsline {figure}{\numberline {13}{\ignorespaces Power of $T_{IP/IC}$ to detect internal filtering}}{34}{figure.caption.17}
+\contentsline {figure}{\numberline {14}{\ignorespaces Distribution of trait values for one randomization with external filtering}}{38}{figure.caption.18}
+\contentsline {figure}{\numberline {15}{\ignorespaces T-statistics for two randomizations with contrasted strengths of external filtering}}{39}{figure.caption.19}
+\contentsline {figure}{\numberline {16}{\ignorespaces Local $T_{IC/IR}$ SES and initial parameter values}}{41}{figure.caption.20}
+\contentsline {figure}{\numberline {17}{\ignorespaces Local $T_{PC/PR}$ SES and initial parameter values}}{42}{figure.caption.21}
+\contentsline {figure}{\numberline {18}{\ignorespaces Local $T_{IC/IR}$ SES and modeled parameter values}}{45}{figure.caption.24}
+\contentsline {figure}{\numberline {19}{\ignorespaces Local $T_{PC/PR}$ SES and modeled parameter values}}{46}{figure.caption.25}
+\contentsline {figure}{\numberline {20}{\ignorespaces Global $T_{IC/IR}$ SES and initial parameter values}}{49}{figure.caption.26}
+\contentsline {figure}{\numberline {21}{\ignorespaces Global $T_{PC/PR}$ SES and initial parameter values}}{50}{figure.caption.27}
+\contentsline {figure}{\numberline {22}{\ignorespaces Global $T_{IC/IR}$ SES and modeled parameter values}}{52}{figure.caption.28}
+\contentsline {figure}{\numberline {23}{\ignorespaces Global $T_{PC/PR}$ SES and modeled parameter values}}{53}{figure.caption.29}
+\contentsline {figure}{\numberline {24}{\ignorespaces Power of $T_{IC/IR}$ to detect external filtering}}{55}{figure.caption.30}
+\contentsline {figure}{\numberline {25}{\ignorespaces Power of $T_{PC/PR}$ to detect external filtering}}{57}{figure.caption.31}
+\contentsline {figure}{\numberline {26}{\ignorespaces Distribution of trait values for one randomization with both internal and external filtering}}{61}{figure.caption.32}
+\contentsline {figure}{\numberline {27}{\ignorespaces Results of T-statistics with both internal and external filtering}}{62}{figure.caption.33}
+\contentsline {figure}{\numberline {28}{\ignorespaces Variance partitioning accross nested scales}}{68}{figure.caption.35}
+\contentsline {figure}{\numberline {29}{\ignorespaces Decomposition of the variation in community trait composition for two contrasted cases}}{70}{figure.caption.36}
+\contentsline {figure}{\numberline {30}{\ignorespaces Modeled against obtained turnover contribution in community trait variance}}{70}{figure.caption.37}
+=======
 \contentsline {figure}{\numberline {3}{\ignorespaces Results of T-statistics for one randomization without filter}}{13}{figure.caption.5}
 \contentsline {figure}{\numberline {4}{\ignorespaces Local alpha errors}}{14}{figure.caption.6}
 \contentsline {figure}{\numberline {5}{\ignorespaces Global alpha errors}}{18}{figure.caption.7}
@@ -30,3 +60,4 @@
 \contentsline {figure}{\numberline {28}{\ignorespaces Variance partitioning accross nested scales}}{68}{figure.caption.35}
 \contentsline {figure}{\numberline {29}{\ignorespaces Decomposition of the variation in community trait composition for two contrasted cases}}{70}{figure.caption.36}
 \contentsline {figure}{\numberline {30}{\ignorespaces Modeled against obtained turnover contribution in community trait variance}}{71}{figure.caption.37}
+>>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
