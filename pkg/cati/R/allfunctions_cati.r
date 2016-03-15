@@ -417,7 +417,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 	name_sp_sites <- paste(sp, ind.plot, sep = "_")	comm <- NULL	comm <- t(table(ind.plot,1:length(ind.plot)))
 	S <- colSums(comm>0)	ncom <- length(S)	names_sp_ind.plot <- as.factor(paste(sp, ind.plot, sep = "@"))
 	#___________________________	#___________________________	if (sum(is.na(traits))>0) {		warning(paste("This function exclude", sum(is.na(traits)),"Na value", sep=" "))	}
-	if(length(SE) == 1){			SE <- rep(SE, times = ncol(traits))	}	#___________________________	if (is.null(by.factor)) {by.factor = rep("Region", length(ind.plot))}
+	if(length(SE) == 1){			SE <- rep(SE, times = ncol(traits))	}	#___________________________	if (is.null(by.factor)) {by.factor = rep("Region", length(ind.plot)}
 
 
 	###############################################################
