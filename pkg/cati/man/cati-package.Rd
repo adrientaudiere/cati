@@ -14,7 +14,7 @@
 	\tabular{ll}{
 		Package: \tab cati \cr
 		Type: \tab Package \cr
-		Version: \tab 0.99 \cr
+		Version: \tab 0.99.1 \cr
 		Date: \tab 2015-05-28 \cr
 		License: \tab GPL (> = 2) \cr
 		Depends: \tab R (> = 3.0.2), nlme, ade4, ape \cr

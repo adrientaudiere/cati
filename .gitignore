@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 /.project
+
+pkg/cati/R/allfunctions_cati.R

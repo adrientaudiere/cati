@@ -1,7 +1,7 @@
 Package: cati
 Type: Package
 Title: Community Assembly by Traits: Individuals and Beyond
-Version: 0.99
+Version: 0.99.1
 Date: 2015-05-28 
 Author: Adrien Taudiere, Cyrille Violle with contribution by Francois Munoz
 Maintainer: Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>

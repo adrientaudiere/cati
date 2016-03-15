@@ -56,21 +56,13 @@
 	
 	\item{SE.reg.pool}{
 		A single value or vector of standard errors associated with each traits in each regional pool. Use only if reg.pool is used. Need to have the same dimension as reg.pool.
-<<<<<<< HEAD
+
 	}
 	
 	\item{nperm}{
 		Number of permutations. If NULL, only observed values are returned; 
 	}
 	
-=======
-	}
-	
-	\item{nperm}{
-		Number of permutations. If NULL, only observed values are returned; 
-	}
-	
->>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 	\item{printprogress}{
 		Logical value; print progress during the calculation or not.
 	}
@@ -118,43 +110,6 @@
 }
 
 \details{
-<<<<<<< HEAD
-<<<<<<< HEAD
-	\strong{S3 method plot:}
-	
-	-Normal: type plot means, standard deviations, ranges and confidence intervals of T-statistics.
-	
-	-Simple_range: type plot means, standard deviations and range of T-statistics
-	
-	-Simple: type plot T-statistics for each site and traits and the mean confidence intervals by traits
-	
-	-Barplot: type plot means, standard deviations and confidence intervals of T-statistics in a barplot fashion
-	
-	-Bysites: type plot each metrics for each sites
-	
-	-Bytraits: type plot each metrics for each traits
-	
-	
-	\strong{S3 method print}: print the structure if the object of class Tstats
-	
-	
-	\strong{S3 method summary:} print the summary statistics of the three T-statistics
-	
-	
-	\strong{Method summary sum_Tstats:}
-	
-	-Binary: type only test if a T-statistics is significatively different from the null expectation for each trait.
-	
-	-Percent: type determine the percentage of sites were the T-statistics is significatively different from the null expectation for each trait. Asterix shows global significance of the test.
-	
-	-P-value: type determine the p-value (two unilateral tests) of the T-statistics for each trait and sites.
-	
-	-Site: type allows to know in which sites T-statistics deviate from the null expectation.
-	
-	-All: type do all the precedent type of summary.
-=======
-=======
->>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 	\bold{S3 method plot:}
 	
 	-\emph{Normal} type plot means, standard deviations, ranges and confidence intervals of T-statistics.
@@ -187,10 +142,6 @@
 	-\emph{Site} type allows to know in which sites T-statistics deviate from the null expectation.
 	
 	-\emph{All} type do all the precedent type of summary.
-<<<<<<< HEAD
->>>>>>> eea47e6322cce806e6c3a5b71a06d432e2b9d88d
-=======
->>>>>>> 87c743725b1abcf328762b9a9213851f787c640d
 }
 
 \value{
