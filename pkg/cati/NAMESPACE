@@ -15,6 +15,9 @@ import(geometry)
 import(FD)
 
 importFrom(vegan, treeheight)
+importFrom("grDevices", "col2rgb", "gray.colors", "palette", "rgb", "terrain.colors")
+importFrom("stats", "aov", "as.dist", "as.formula", "density", "dist", "hclust", "lm", "model.matrix", "na.exclude", "na.omit", "quantile", "rlnorm", "rnorm", "runif", "sd", "var")
+importFrom("utils", "combn", "head", "setTxtProgressBar", "txtProgressBar")
 
 # Registered S3 methods
 S3method(barplot, Tstats)
