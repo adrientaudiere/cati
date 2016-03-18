@@ -2,6 +2,3 @@ before_install: cd pkg/cati/
 language: r
 
 sudo: required
-
-r_packages:
- - root
