@@ -2,3 +2,4 @@ before_install: cd pkg/cati/
 language: r
 
 sudo: required
+warnings_are_errors: false
