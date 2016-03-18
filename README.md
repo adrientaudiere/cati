@@ -1,5 +1,7 @@
 # cati: Communities Assembly by Traits: Individuals and beyond
 
+[![Travis-CI Build Status](https://travis-ci.org/adrientaudiere/cati.svg?branch=master)](https://travis-ci.org/adrientaudiere/cati)
+
 ---
 ## A R package to detect communities assembly processes by functionnal traits
 
