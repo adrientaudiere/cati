@@ -1,3 +1,4 @@
+before_script: cd pkg/cati
 language: r
 
 sudo: required
