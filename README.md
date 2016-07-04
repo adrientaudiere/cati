@@ -1,8 +1,8 @@
 # cati: Communities Assembly by Traits: Individuals and beyond
 
 [![Travis-CI Build Status](https://travis-ci.org/adrientaudiere/cati.svg?branch=master)](https://travis-ci.org/adrientaudiere/cati)
-[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/cati)](http://cran.rstudio.com/package=cati)
-[![Coverage Status](https://coveralls.io/repos/github/adrientaudiere/cati/badge.svg?branch=master)](https://coveralls.io/github/adrientaudiere/cati?branch=master)
+[![CRAN by month](http://cranlogs.r-pkg.org/badges/cati?color=red)](http://cran.rstudio.com/web/packages/cati/index.html)
+[![CRAN Total](http://cranlogs.r-pkg.org/badges/grand-total/cati?color=yellowgreen)](http://cran.rstudio.com/web/packages/cati/index.html)
 [![DOI](https://zenodo.org/badge/19670/adrientaudiere/cati.svg)](https://zenodo.org/badge/latestdoi/19670/adrientaudiere/cati)
 
 ---
