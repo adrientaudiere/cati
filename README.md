@@ -39,4 +39,4 @@ There's a **[tutorial](https://github.com/adrientaudiere/cati/blob/Package-cati/
 ---
 How to cite?
 
-"Taudiere, A. and Violle, C. (2015), cati: an R package using functional traits to detect and quantify multi-level community assembly processes. Ecography. doi: 10.1111/ecog.01433"
+"Taudiere, A. and Violle, C. (2016), cati: an R package using functional traits to detect and quantify multi-level community assembly processes. Ecography. doi: 10.1111/ecog.01433"
