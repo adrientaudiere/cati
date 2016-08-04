@@ -1,5 +1,6 @@
 # cati: Communities Assembly by Traits: Individuals and beyond
 
+[![GPLv3](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl.html)
 [![Travis-CI Build Status](https://travis-ci.org/adrientaudiere/cati.svg?branch=master)](https://travis-ci.org/adrientaudiere/cati)
 [![CRAN by month](http://cranlogs.r-pkg.org/badges/cati?color=red)](http://cran.rstudio.com/web/packages/cati/index.html)
 [![CRAN Total](http://cranlogs.r-pkg.org/badges/grand-total/cati?color=yellowgreen)](http://cran.rstudio.com/web/packages/cati/index.html)
