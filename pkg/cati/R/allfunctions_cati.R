@@ -412,7 +412,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
  	res$traits <- traits
  	res$ind.plot <- ind.plot
  	res$sp <- sp
- 	res$sites_richness <- table(ind.plot)
+ 	res$nb.ind_plot <- table(ind.plot)
  	res$namestraits <- colnames(traits)
  	res$call <- match.call()
 
@@ -476,9 +476,9 @@ print.Tstats <- function(x, ...){
 	}
 	else { cat("\n\t$namestraits:", dim(x$traits)[1], "traits\n") }
 
-	rich <- x$sites_richness
+	rich <- x$nb.ind_plot
 	class(rich) <- "table"
-	cat("\n\t$sites_richness:\n\t")
+	cat("\n\t$nb.ind_plot:\n\t")
 	print(rich)
 	cat("\n")
 }
