@@ -80,7 +80,8 @@ barPartvar <- function(partvar, col.bar = NA, ...){
 
 
 #______________#______________#______________#______________#______________#______________#______________#______________
-#______________#______________#______________#______________#______________#______________#______________#______________
+#______________#______________#______________#___
+___________#______________#______________#______________#______________
 #__Tstats
 
 ### Function to calculation Tstats
@@ -412,7 +413,6 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
  	res$traits <- traits
  	res$ind.plot <- ind.plot
  	res$sp <- sp
- 	res$nb.ind_plot <- table(ind.plot)
  	res$nb.ind_plot <- table(ind.plot)
  	res$namestraits <- colnames(traits)
  	res$call <- match.call()
