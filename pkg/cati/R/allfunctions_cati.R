@@ -99,7 +99,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 	}
 
 	names_sp_ind.plot <- as.factor(paste(sp, ind.plot, sep = "@"))
-	Tplosp <- unlist(strsplit(levels(names_sp_ind.plot), split = "@"))[2*(1:nlevels(names_sp_ind.plot))]
+	Tplosp <- unlist(strsplit(levels(names_sp_ind.plot), split = "@"), use.names=FALSE)[2*(1:nlevels(names_sp_ind.plot))]
 	names(Tplosp) <- levels(names_sp_ind.plot)
 	#Tplosp is the plot in wich the population is
 
@@ -329,7 +329,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 		yy <- length(names_sp_ind.plot)
 		for (t in 1: ncol(traits)){
 			for(i in 1:nperm){
-				mean_IP_nm2sp[i,t, ] <- tapply(unlist(traits.nm2sp[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind.plot ,function(x) mean(x, na.rm = T))
+				mean_IP_nm2sp[i,t, ] <- tapply(unlist(traits.nm2sp[[t]], use.names=FALSE)[(1+(i-1)*yy) : (i*yy)], names_sp_ind.plot ,function(x) mean(x, na.rm = T))
 				mean_PC_nm2sp[i,t, ] <- tapply(mean_IP_nm2sp[i,t, ], Tplosp, mean, na.rm = T)
 			}
 			if (printprogress == T){print(paste(round(t/ncol(traits)/3*100, 2),"%"))} else {}
@@ -338,12 +338,12 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 
 		for (t in 1: ncol(traits)){
 			for(i in 1:nperm){
-				var_IP_nm1[i,t, ] <- tapply(unlist(traits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], names_sp_ind.plot ,function(x) var(x, na.rm = T))
+				var_IP_nm1[i,t, ] <- tapply(unlist(traits.nm1[[t]], use.names=FALSE)[(1+(i-1)*yy) : (i*yy)], names_sp_ind.plot ,function(x) var(x, na.rm = T))
 				var_PC_nm2sp[i,t, ] <- tapply(mean_IP_nm2sp[i,t, ], Tplosp ,var, na.rm = T)
-				var_IC_nm1[i,t, ] <- tapply(unlist(traits.nm1[[t]])[(1+(i-1)*yy) : (i*yy)], ind.plot ,function(x) var(x, na.rm = T))
-				var_IC_nm2[i,t, ] <- tapply(unlist(traits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], ind.plot ,function(x) var(x, na.rm = T))
+				var_IC_nm1[i,t, ] <- tapply(unlist(traits.nm1[[t]], use.names=FALSE)[(1+(i-1)*yy) : (i*yy)], ind.plot ,function(x) var(x, na.rm = T))
+				var_IC_nm2[i,t, ] <- tapply(unlist(traits.nm2[[t]], use.names=FALSE)[(1+(i-1)*yy) : (i*yy)], ind.plot ,function(x) var(x, na.rm = T))
 				var_PR_nm2sp[i,t] <- var(as.vector(mean_IP_nm2sp[i,t, ]), na.rm = T)
-				var_IR_nm2[i,t] <- var(unlist(traits.nm2[[t]])[(1+(i-1)*yy) : (i*yy)], na.rm = T)
+				var_IR_nm2[i,t] <- var(unlist(traits.nm2[[t]], use.names=FALSE)[(1+(i-1)*yy) : (i*yy)], na.rm = T)
 			}
 			if (printprogress == T){print(paste(round(33.3+t/ncol(traits)/3*100, 2),"%"))} else {}
 		}
@@ -391,20 +391,20 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
   res$variances$var_IP <- var_IP
   res$variances$var_PC <- var_PC
   res$variances$var_CR <- var_CR
-	res$variances$var_IC <- var_IC
+  res$variances$var_IC <- var_IC
   res$variances$var_PR <- var_PR
   res$variances$var_IR <- var_IR
 
-	if (is.numeric(nperm)){
-		res$variances$var_IP_nm1 <- var_IP_nm1
-		res$variances$var_PC_nm2sp <- var_PC_nm2sp
-		res$variances$var_IC_nm1 <- var_IC_nm1
-		res$variances$var_IC_nm2 <- var_IC_nm2
-		res$variances$var_PR_nm2sp <- var_PR_nm2sp
-		res$variances$var_IR_nm2 <- var_IR_nm2
+  if (is.numeric(nperm)){
+	res$variances$var_IP_nm1 <- var_IP_nm1
+	res$variances$var_PC_nm2sp <- var_PC_nm2sp
+	res$variances$var_IC_nm1 <- var_IC_nm1
+	res$variances$var_IC_nm2 <- var_IC_nm2
+	res$variances$var_PR_nm2sp <- var_PR_nm2sp
+	res$variances$var_IR_nm2 <- var_IR_nm2
 
-		res$Tstats$T_IP.IC_nm <- T_IP.IC_nm1
-    	res$Tstats$T_IC.IR_nm <- T_IC.IR_nm2
+	res$Tstats$T_IP.IC_nm <- T_IP.IC_nm1
+    res$Tstats$T_IC.IR_nm <- T_IC.IR_nm2
     res$Tstats$T_PC.PR_nm <- T_PC.PR_nm2sp
   }
   else{}
@@ -412,7 +412,8 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
  	res$traits <- traits
  	res$ind.plot <- ind.plot
  	res$sp <- sp
- 	res$sites_richness <- table(ind.plot)
+ 	res$nb.ind_plot <- table(ind.plot)
+ 	res$nb.ind_plot <- table(ind.plot)
  	res$namestraits <- colnames(traits)
  	res$call <- match.call()
 
@@ -476,9 +477,9 @@ print.Tstats <- function(x, ...){
 	}
 	else { cat("\n\t$namestraits:", dim(x$traits)[1], "traits\n") }
 
-	rich <- x$sites_richness
+	rich <- x$nb.ind_plot
 	class(rich) <- "table"
-	cat("\n\t$sites_richness:\n\t")
+	cat("\n\t$nb.ind_plot:\n\t")
 	print(rich)
 	cat("\n")
 }
@@ -1152,7 +1153,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 						perm_ind.plot[[s]] <- sample(traits[ind.plot == levels(ind.plot)[s], t], table(ind.plot)[s])
 					}
 
-					traits.nm1[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot)
+					traits.nm1[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
 				}
 				if (printprogress == T){
 					print(paste("local",round(t/ntr*100,2),"%"))
@@ -1184,7 +1185,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 						perm_ind.plot[[s]] <- sample(trait.intern, table(ind.plot)[s])
 					}
 
-					traits.nm2[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot)
+					traits.nm2[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
 				}
 				if (printprogress == T){
 					print(paste("regional.ind",round(t/ntr*100,2),"%"))
@@ -1211,7 +1212,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 						perm_ind.plot[[s]] <- sample(traits_by_pop, table(ind.plot)[s])
 					}
 
-					traits.nm2sp[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot)
+					traits.nm2sp[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
 				}
 				if (printprogress == T){
 					print(paste("regional.pop",round(t/ntr*100,2),"%"))
@@ -1232,7 +1233,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 				for(n in 1:nperm){
 					perm_ind.plot <- sample(traits_by_sp[,t], dim(traits_by_sp)[1])
 
-					traits.nm2sp.prab[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot)
+					traits.nm2sp.prab[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
 				}
 
 				if (printprogress == T){
@@ -1587,7 +1588,7 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 						perm_ind.plot[[s]] <- sample(traits[ind.plot == levels(ind.plot)[s], t], table(ind.plot)[s])
 					}
 
-					traits.nm1[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot)
+					traits.nm1[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
 				}
 				if (printprogress == T){
 					print(paste("local",round(t/ntr*100,2),"%"))
@@ -1619,7 +1620,7 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 						perm_ind.plot[[s]] <- sample(trait.intern, table(ind.plot)[s])
 					}
 
-					traits.nm2[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot)
+					traits.nm2[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
 				}
 				if (printprogress == T){
 					print(paste("regional.ind",round(t/ntr*100,2),"%"))
@@ -1645,7 +1646,7 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 						perm_ind.plot[[s]] <- sample(traits_by_pop, table(ind.plot)[s])
 					}
 
-					traits.nm2sp[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot)
+					traits.nm2sp[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
 				}
 				if (printprogress == T){
 					print(paste("regional.pop",round(t/ntr*100,2),"%"))
@@ -1667,7 +1668,7 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 				for(n in 1:nperm){
 					perm_ind.plot <- sample(traits_by_sp[,t], dim(traits_by_sp)[1])
 
-					traits.nm2sp.prab[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot)
+					traits.nm2sp.prab[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
 				}
 
 				if (printprogress == T){
@@ -1686,10 +1687,10 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 
 		for(i in 1:nindex){
 
-			if (nullmodels[i] == "1"){nm <- array(unlist(traits.nm1),dim = c(ncol(traits), dim(traits)[1], nperm) )}
-			else if (nullmodels[i] == "2"){nm <- array(unlist(traits.nm2),dim = c(ncol(traits), dim(traits)[1], nperm) )}
-			else if (nullmodels[i] == "2sp"){nm <- array(unlist(traits.nm2sp),dim = c(ncol(traits), dim(traits)[1], nperm) )}
-			else if (nullmodels[i] == "2sp.prab"){nm <- array(unlist(traits.nm2sp.prab),dim = c(ncol(traits), dim(traits_by_sp)[1], nperm) )}
+			if (nullmodels[i] == "1"){nm <- array(unlist(traits.nm1, use.names=FALSE),dim = c(ncol(traits), dim(traits)[1], nperm) )}
+			else if (nullmodels[i] == "2"){nm <- array(unlist(traits.nm2, use.names=FALSE),dim = c(ncol(traits), dim(traits)[1], nperm) )}
+			else if (nullmodels[i] == "2sp"){nm <- array(unlist(traits.nm2sp, use.names=FALSE),dim = c(ncol(traits), dim(traits)[1], nperm) )}
+			else if (nullmodels[i] == "2sp.prab"){nm <- array(unlist(traits.nm2sp.prab, use.names=FALSE),dim = c(ncol(traits), dim(traits_by_sp)[1], nperm) )}
 			else{print("nullmodels need 1, 2, 2sp or 2sp.prab")}
 
 			nm_n <- nm[,,n]
@@ -1949,7 +1950,7 @@ plot.listofindex <- function(x, type = "normal", col.index = c("red","purple","o
 		par(mar = c(5, 4, 4, 2) + 0.1)
 
 		if (is.null(ylim)) { ylim = c(0,nindex+1) }
-		res.total <- unlist(res)
+		res.total <- unlist(res, use.names=FALSE)
 		res.total <- res.total[is.finite(res.total)]
 		if (is.null(xlim)) {xlim = c(min(c(res.total,-2), na.rm = T), max(c(res.total,2), na.rm = T))}
 
@@ -2037,7 +2038,7 @@ plot.listofindex <- function(x, type = "normal", col.index = c("red","purple","o
 	else if (type == "simple" | type == "simple_range" | type == "normal" | type == "barplot"){
 
 		if (is.null(ylim)) { ylim = c(0,5.5+(nindex+1)*max(ntr)) }
-		res.total <- unlist(res)
+		res.total <- unlist(res, use.names=FALSE)
 		res.total <- res.total[is.finite(res.total)]
 		if (is.null(xlim)) {xlim = c(min(c(res.total,-2), na.rm = T), max(c(res.total,2), na.rm = T))}
 
@@ -3316,10 +3317,10 @@ ses <- function(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975) ){
 
 		if (class(nullmodel) == "list"){
 			if (class(nullmodel[[1]]) == "list"){
-				nullmodel <- array(unlist(nullmodel), dim = c(nrow(nullmodel[[1]][[1]]),ncol(nullmodel[[1]][[1]]), length(unlist(nullmodel))/nrow(nullmodel[[1]][[1]])/ncol(nullmodel[[1]][[1]])))
+				nullmodel <- array(unlist(nullmodel, use.names=FALSE), dim = c(nrow(nullmodel[[1]][[1]]),ncol(nullmodel[[1]][[1]]), length(unlist(nullmodel, use.names=FALSE))/nrow(nullmodel[[1]][[1]])/ncol(nullmodel[[1]][[1]])))
 			}
 
-			else {nullmodel <- array(unlist(nullmodel), dim = c(nrow(nullmodel[[1]]),ncol(nullmodel[[1]]), length(unlist(nullmodel))/nrow(nullmodel[[1]])/ncol(nullmodel[[1]])))}
+			else {nullmodel <- array(unlist(nullmodel, use.names=FALSE), dim = c(nrow(nullmodel[[1]]),ncol(nullmodel[[1]]), length(unlist(nullmodel, use.names=FALSE))/nrow(nullmodel[[1]])/ncol(nullmodel[[1]])))}
 		}
 	}
 
@@ -3327,10 +3328,10 @@ ses <- function(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975) ){
 
 		if (class(nullmodel) == "list"){
 			if (class(nullmodel[[1]]) == "list"){
-				nullmodel <- array(unlist(nullmodel), dim = c(nrow(nullmodel[[1]][[1]]),ncol(nullmodel[[1]][[1]]), length(unlist(nullmodel))/nrow(nullmodel[[1]][[1]])/ncol(nullmodel[[1]][[1]])))
+				nullmodel <- array(unlist(nullmodel, use.names=FALSE), dim = c(nrow(nullmodel[[1]][[1]]),ncol(nullmodel[[1]][[1]]), length(unlist(nullmodel, use.names=FALSE))/nrow(nullmodel[[1]][[1]])/ncol(nullmodel[[1]][[1]])))
 			}
 
-			else {nullmodel <- array(unlist(nullmodel), dim = c(nrow(nullmodel[[1]]),ncol(nullmodel[[1]]), length(unlist(nullmodel))/nrow(nullmodel[[1]])/ncol(nullmodel[[1]])))}
+			else {nullmodel <- array(unlist(nullmodel, use.names=FALSE), dim = c(nrow(nullmodel[[1]]),ncol(nullmodel[[1]]), length(unlist(nullmodel, use.names=FALSE))/nrow(nullmodel[[1]])/ncol(nullmodel[[1]])))}
 		}
 
 		if (class(obs) == "list"){
@@ -4203,10 +4204,10 @@ Pval <- function (x, na.rm = TRUE) {
 
 			if (class(nullmodel) == "list"){
 				if (class(nullmodel[[1]]) == "list"){
-					nullmodel <- array(unlist(nullmodel), dim = c(nrow(nullmodel[[1]][[1]]),ncol(nullmodel[[1]][[1]]), length(unlist(nullmodel))/nrow(nullmodel[[1]][[1]])/ncol(nullmodel[[1]][[1]])))
+					nullmodel <- array(unlist(nullmodel, use.names=FALSE), dim = c(nrow(nullmodel[[1]][[1]]),ncol(nullmodel[[1]][[1]]), length(unlist(nullmodel, use.names=FALSE))/nrow(nullmodel[[1]][[1]])/ncol(nullmodel[[1]][[1]])))
 				}
 
-				else {nullmodel <- array(unlist(nullmodel), dim = c(nrow(nullmodel[[1]]),ncol(nullmodel[[1]]), length(unlist(nullmodel))/nrow(nullmodel[[1]])/ncol(nullmodel[[1]])))}
+				else {nullmodel <- array(unlist(nullmodel, use.names=FALSE), dim = c(nrow(nullmodel[[1]]),ncol(nullmodel[[1]]), length(unlist(nullmodel, use.names=FALSE))/nrow(nullmodel[[1]])/ncol(nullmodel[[1]])))}
 			}
 
 			if (class(obs) == "list"){
@@ -4493,7 +4494,7 @@ samplingSubsetData <- function(d = NULL, sampUnit = NULL, nperm = 9, type = "pro
 					}
 				}
 
-				stock[[j]] <- na.omit(unlist(stock[[j]]))
+				stock[[j]] <- na.omit(unlist(stock[[j]]), use.names=FALSE)
 				subsets_interm[[j]] <- d[stock[[j]], ]
 
 				if(type == "proportion" | type=="factorBySize"){
