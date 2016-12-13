@@ -5,6 +5,7 @@
 [![CRAN by month](http://cranlogs.r-pkg.org/badges/cati?color=red)](http://cran.rstudio.com/web/packages/cati/index.html)
 [![CRAN Total](http://cranlogs.r-pkg.org/badges/grand-total/cati?color=yellowgreen)](http://cran.rstudio.com/web/packages/cati/index.html)
 [![DOI](https://zenodo.org/badge/19670/adrientaudiere/cati.svg)](https://zenodo.org/badge/latestdoi/19670/adrientaudiere/cati)
+[![Research software impact](http://depsy.org/api/package/cran/cati/badge.svg)](http://depsy.org/package/r/cati)
 
 ---
 ## A R package to detect communities assembly processes by functionnal traits
