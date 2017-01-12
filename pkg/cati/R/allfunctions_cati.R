@@ -84,7 +84,7 @@ barPartvar <- function(partvar, col.bar = NA, ...){
 #__Tstats
 
 ### Function to calculation Tstats
-Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE){
+Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, independantTraits = TRUE){
 	#6 variances: I: individual, P: population, C: community, R: region
 	#IP; IC; IR; PC; PR; CR
 
@@ -236,9 +236,13 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 		# Creation of three null models
 		if (printprogress == T){print("creating null models")}
 
-
+		if(!independantTraits){
+			seed <- sample(.Machine$integer.max, size=nperm)
+		}
+		
 		#________________________________________
 		# Null model 1: Sample individual traits values within communities
+			
 		for (t in 1: ncol(traits)){
 			traits.nm1[[t]] <- list()
 			for(s in 1: nlevels(ind.plot)) {
@@ -253,6 +257,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 
 					# Sample individual traits values within communities
 					if (length(traits[ind.plot == levels(ind.plot)[s], t]) != 1) {
+						if(!independantTraits){set.seed(seed[i])}
 						perm_ind.plot1 <- sample(trait.intern[ind.plot == levels(ind.plot)[s]], table(ind.plot)[s])
 						traits.nm1[[t]][[s]][[i]] <- perm_ind.plot1
 					}
@@ -278,6 +283,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 					}
 
 					# Sample individual traits values in the region
+					if(!independantTraits){set.seed(seed[i])}
 					perm_ind.plot2 <- sample(trait.intern, table(ind.plot)[s])
 					traits.nm2[[t]][[s]][[i]] <- perm_ind.plot2
 				}
@@ -311,6 +317,7 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 					#}
 
 					# Sample populationnal traits values in the region
+					if(!independantTraits){set.seed(seed[i])}
 					perm_ind.plot2sp <- sample(traits_by_pop[,t], table(ind.plot)[s])
 					traits.nm2sp[[t]][[s]][[i]] <- perm_ind.plot2sp
 				}
@@ -985,7 +992,7 @@ barplot.Tstats <- function(height, val.quant = c(0.025,0.975), col.index = c("re
 
 #In most case, model local and regional.ind correspond to index at the individual level and models regional.pop and regional.pop.prab to index at the species (or any other aggregate variable like genus or family) level
 
-ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, type.sp.val = "count"){
+ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, independantTraits = TRUE, type.sp.val = "count"){
 
 	type.sp.val <- match.arg(type.sp.val , c("count", "abundance"))
 
@@ -1136,7 +1143,11 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 		#########################################
 		#Creation of three null models
 		if (printprogress == T){ print("creating null models")}
-
+		
+		if(!independantTraits){
+			seed <- sample(.Machine$integer.max, size=nperm)
+		}
+		
 		if (sum(nullmodels == "1")>0){
 			#________________________________________
 			#null model local: sample individuals traits values within community
@@ -1149,6 +1160,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 
 				for(n in 1:nperm){
 					for(s in 1: ncom) {
+						if(!independantTraits){set.seed(seed[n])}
 						perm_ind.plot[[s]] <- sample(traits[ind.plot == levels(ind.plot)[s], t], table(ind.plot)[s])
 					}
 
@@ -1181,6 +1193,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 
 				for(n in 1:nperm){
 					for(s in 1: ncom) {
+						if(!independantTraits){set.seed(seed[n])}
 						perm_ind.plot[[s]] <- sample(trait.intern, table(ind.plot)[s])
 					}
 
@@ -1208,6 +1221,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 
 				for(n in 1:nperm){
 					for(s in 1: ncom) {
+						if(!independantTraits){set.seed(seed[n])}
 						perm_ind.plot[[s]] <- sample(traits_by_pop, table(ind.plot)[s])
 					}
 
@@ -1230,6 +1244,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 				perm_ind.plot <- list()
 
 				for(n in 1:nperm){
+					if(!independantTraits){set.seed(seed[n])}
 					perm_ind.plot <- sample(traits_by_sp[,t], dim(traits_by_sp)[1])
 
 					traits.nm2sp.prab[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)
@@ -1410,7 +1425,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
   invisible(ComIndex)
 }
 
-ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, type.sp.val = "count"){
+ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, independantTraits = TRUE, type.sp.val = "count"){
 	
 	if (is.null(index)) { stop("There is no default index to compute. Please add metrics using the 'index' argument.") }
 
@@ -1571,7 +1586,11 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 		#########################################
 		#Creation of three null models
 		if (printprogress == T){ print("creating null models")}
-
+		
+		if(!independantTraits){
+			seed <- sample(.Machine$integer.max, size=nperm)
+		}
+		
 		if (sum(nullmodels == "1")>0){
 			#________________________________________
 			#null model local: sample individuals traits values within community
@@ -1584,6 +1603,7 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 
 				for(n in 1:nperm){
 					for(s in 1: ncom) {
+						if(!independantTraits){set.seed(seed[n])}
 						perm_ind.plot[[s]] <- sample(traits[ind.plot == levels(ind.plot)[s], t], table(ind.plot)[s])
 					}
 
@@ -1616,6 +1636,7 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 
 				for(n in 1:nperm){
 					for(s in 1: ncom) {
+						if(!independantTraits){set.seed(seed[n])}
 						perm_ind.plot[[s]] <- sample(trait.intern, table(ind.plot)[s])
 					}
 
@@ -1642,6 +1663,7 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 
 				for(n in 1:nperm){
 					for(s in 1: ncom) {
+						if(!independantTraits){set.seed(seed[n])}
 						perm_ind.plot[[s]] <- sample(traits_by_pop, table(ind.plot)[s])
 					}
 
@@ -1665,6 +1687,7 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 				perm_ind.plot <- list()
 
 				for(n in 1:nperm){
+					if(!independantTraits){set.seed(seed[n])}
 					perm_ind.plot <- sample(traits_by_sp[,t], dim(traits_by_sp)[1])
 
 					traits.nm2sp.prab[[eval(namestraits[t])]][,n] <- unlist(perm_ind.plot, use.names=FALSE)

@@ -16,7 +16,8 @@
 
 \usage{
 	Tstats(traits, ind.plot, sp, SE = 0, reg.pool = NULL, 
-	SE.reg.pool = NULL, nperm = 99, printprogress = TRUE)
+	SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, 
+	independantTraits = TRUE)
 	
 	sum_Tstats(x, val.quant = c(0.025, 0.975), type = "all")
 	
@@ -65,6 +66,10 @@
 	
 	\item{printprogress}{
 		Logical value; print progress during the calculation or not.
+	}
+	
+	\item{independantTraits}{ 
+		Logical value (default: TRUE). If independantTraits is true (default), each traits is sample independently in null models, if not, each lines of the matrix are randomized, keeping the relation (and trade-off) among traits.
 	}
 	
 	\item{x}{

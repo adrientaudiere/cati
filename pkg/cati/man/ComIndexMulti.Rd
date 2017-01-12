@@ -17,7 +17,8 @@
 	ComIndexMulti(traits = NULL, index = NULL, by.factor = NULL, 
 	nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL,
 	SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL,
-	nperm = 99, printprogress = TRUE, type.sp.val = "count")
+	nperm = 99, printprogress = TRUE, independantTraits = TRUE, 
+	type.sp.val = "count")
 	
 	\method{plot}{ComIndexMulti}(x, type = "normal", 
 	col.index = c("red", "purple", "olivedrab3"), add.conf = TRUE, 
@@ -84,6 +85,10 @@
 	
 	\item{printprogress}{
 		Logical value; print progress during the calculation or not.
+	}
+	
+	\item{independantTraits}{ 
+		Logical value (default: TRUE). If independantTraits is true (default), each traits is sample independently in null models, if not, each lines of the matrix are randomized, keeping the relation (and trade-off) among traits.
 	}
 	
 	\item{type.sp.val}{
