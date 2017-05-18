@@ -239,10 +239,10 @@ Tstats <- function(traits, ind.plot, sp, SE = 0, reg.pool = NULL, SE.reg.pool = 
 		if(!independantTraits){
 			seed <- sample(.Machine$integer.max, size=nperm)
 		}
-		
+
 		#________________________________________
 		# Null model 1: Sample individual traits values within communities
-			
+
 		for (t in 1: ncol(traits)){
 			traits.nm1[[t]] <- list()
 			for(s in 1: nlevels(ind.plot)) {
@@ -1049,7 +1049,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 		nperm <- NULL
 		warning("nullmodels is NULL so no null model will be computed")
 	}
-	
+
 	if (is.null(nperm)) {
 		nullmodels <- NULL
 		warning("nperm is NULL so no null model will be computed")
@@ -1143,11 +1143,11 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 		#########################################
 		#Creation of three null models
 		if (printprogress == T){ print("creating null models")}
-		
+
 		if(!independantTraits){
 			seed <- sample(.Machine$integer.max, size=nperm)
 		}
-		
+
 		if (sum(nullmodels == "1")>0){
 			#________________________________________
 			#null model local: sample individuals traits values within community
@@ -1426,7 +1426,7 @@ ComIndex <- function(traits = NULL, index = NULL, nullmodels = NULL, ind.plot = 
 }
 
 ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL, SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL, nperm = 99, printprogress = TRUE, independantTraits = TRUE, type.sp.val = "count"){
-	
+
 	if (is.null(index)) { stop("There is no default index to compute. Please add metrics using the 'index' argument.") }
 
 	#___________________________
@@ -1586,11 +1586,11 @@ ComIndexMulti <- function(traits = NULL, index = NULL, by.factor = NULL, nullmod
 		#########################################
 		#Creation of three null models
 		if (printprogress == T){ print("creating null models")}
-		
+
 		if(!independantTraits){
 			seed <- sample(.Machine$integer.max, size=nperm)
 		}
-		
+
 		if (sum(nullmodels == "1")>0){
 			#________________________________________
 			#null model local: sample individuals traits values within community
@@ -3801,13 +3801,14 @@ AbToInd <- function(traits, com, type.sp.val = "count"){
 
 		for(co in 1:ncol(com)){
 			x5 <- rep(colnames(com)[co], com[i,co])
-			x6 <- c(x5,x6)
+      x6 <- c(x6, x5)
 		}
 	}
 
 	res <- list()
 
 	res$traits <- data.frame(t(x2))
+	names(res$traits) <- colnames(traits)
 	res$sp <- as.factor(x4)
 	res$ind.plot <- as.factor(x6)
 
@@ -4059,12 +4060,12 @@ IndexByGroups <- function(metrics, groups){
 ##########################################################################################################################
 
 Fred <- function(traits, ind.plot = NULL) {
-	
+
 	if(is.null(ind.plot)) {
 		ind.plot <- rep("all plots", dim(traits)[1])
-		warnings("The argument `ind.plot` is null. Only one value will be compute for each metrics.") 
+		warnings("The argument `ind.plot` is null. Only one value will be compute for each metrics.")
 	}
-	
+
 	abundances <- table(ind.plot, 1:length(ind.plot))
 
 	#loading required libraries
