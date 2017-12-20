@@ -5,7 +5,7 @@
 }
 
 \description{
-	Transform various results from functions Tstast, ComIndex or ComIndexMulti in a list of index. Useful to use the functions plot.listofindex (S3 method) and ses.listofindex.
+	Transform various results from functions Tstats, ComIndex or ComIndexMulti in a list of index. Useful to use the functions plot.listofindex (S3 method) and ses.listofindex.
 }
 
 \usage{
@@ -14,7 +14,7 @@
 
 \arguments{
 	\item{x}{
-		A list of objects of class Tstast, ComIndex or ComIndexMulti
+		A list of objects of class Tstats, ComIndex or ComIndexMulti
 	}
 	
 	\item{namesindex}{
