@@ -8,7 +8,6 @@ import(nlme)
 import(graphics)
 
 import(e1071)
-import(mice)
 import(rasterVis)
 import(hypervolume)
 import(geometry)

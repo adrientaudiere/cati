@@ -3013,7 +3013,7 @@ plotSpPop <- function(traits = NULL, ind.plot = NULL, sp = NULL, col.ind = rgb(0
 
 				options(warn = -1)
 				if (class(try( interm <- lm(y.pop[spplot == levels(sp)[s]] ~ x.pop[spplot == levels(sp)[s]]), silent = silent)) == "lm"){
-					if (!is.na(summary(interm)$coefficient[,4])){
+					if (sum(!is.na(summary(interm)$coefficient[,4]))>0){
 						if (summary(interm)$coefficients[2,4]<p.val & length(interm$fitted.values)>min.ind.signif){
 							lty.lm = 1
 							lwd.lm = 3
@@ -3025,7 +3025,6 @@ plotSpPop <- function(traits = NULL, ind.plot = NULL, sp = NULL, col.ind = rgb(0
 						}
 						options(warn = 0)
 					}
-
 
 					else{
 						lty.lm = 3
@@ -3046,7 +3045,7 @@ plotSpPop <- function(traits = NULL, ind.plot = NULL, sp = NULL, col.ind = rgb(0
 			color.lm2 <- col.nonsignif.lm
 
 			if (class(try(lm(traits_by_sites[match(plotsp,rownames(traits_by_sites)),t] ~ traits_by_pop[,t]), silent = silent)) == "lm"){
-				if (!is.na(summary(interm2)$coefficient[,4])){
+				if (sum(!is.na(summary(interm2)$coefficient[,4])>0)){
 					if (summary(interm2)$coefficients[2,4]<p.val & length(interm2$fitted.values)>min.ind.signif){
 						color.lm2 <- col.signif.lm
 					}
@@ -3077,7 +3076,7 @@ plotSpPop <- function(traits = NULL, ind.plot = NULL, sp = NULL, col.ind = rgb(0
 
 				options(warn = -1)
 				if (class(try( interm <- lm(y.pop[spplot == levels(sp)[s]] ~ x.pop[spplot == levels(sp)[s]]), silent = silent)) == "lm"){
-					if (!is.na(summary(interm)$coefficient[,4])){
+					if (sum(!is.na(summary(interm)$coefficient[,4]))>0){
 						if (summary(interm)$coefficients[2,4]<p.val & length(interm$fitted.values)>min.ind.signif){
 							lty.lm = 1
 							lwd.lm = 3
@@ -3185,7 +3184,7 @@ plotSpVar <- function(traits = NULL, ind.plot = NULL, sp = NULL, variable = NULL
 
 				options(warn = -1)
 				if (class(try( interm <- lm(y.pop[spplot == levels(sp)[s]] ~ x.pop[spplot == levels(sp)[s]]), silent = silent)) == "lm"){
-					if (!is.na(summary(interm)$coefficient[,4])){
+					if (sum(!is.na(summary(interm)$coefficient[,4]))>0){
 						if (summary(interm)$coefficients[2,4]<p.val & length(interm$fitted.values)>min.ind.signif){
 							lty.lm = 1
 							lwd.lm = 3
@@ -3218,8 +3217,8 @@ plotSpVar <- function(traits = NULL, ind.plot = NULL, sp = NULL, variable = NULL
 			color.lm2 <- col.nonsignif.lm
 
 			if (class(try(lm(traits_by_sites[match(plotsp,rownames(traits_by_sites)),t] ~ traits_by_pop[,t]), silent = silent)) == "lm"){
-				if (!is.na(summary(interm2)$coefficient[,4])){
-					if (summary(interm2)$coefficients[2,4]<p.val & length(interm2$fitted.values)>min.ind.signif){
+			  if (sum(!is.na(summary(interm2)$coefficient[,4])>0)){
+			    if (summary(interm2)$coefficients[2,4]<p.val & length(interm2$fitted.values)>min.ind.signif){
 						color.lm2 <- col.signif.lm
 					}
 					else{}
@@ -3249,7 +3248,7 @@ plotSpVar <- function(traits = NULL, ind.plot = NULL, sp = NULL, variable = NULL
 
 				options(warn = -1)
 				if (class(try( interm <- lm(y.pop[spplot == levels(sp)[s]] ~ x.pop[spplot == levels(sp)[s]]), silent = silent)) == "lm"){
-					if (!is.na(summary(interm)$coefficient[,4])){
+					if (sum(!is.na(summary(interm)$coefficient[,4]))>0){
 						if (summary(interm)$coefficients[2,4]<p.val & length(interm$fitted.values)>min.ind.signif){
 							lty.lm = 1
 							lwd.lm = 3
