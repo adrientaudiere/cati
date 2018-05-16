@@ -1,0 +1,35 @@
+exportPattern("^[^\\.]")
+
+## Import all packages listed as Imports or Depends
+
+import(ape)
+import(ade4)
+import(nlme)
+import(graphics)
+
+import(e1071)
+import(rasterVis)
+import(hypervolume)
+import(geometry)
+import(FD)
+
+importFrom(vegan, treeheight)
+importFrom("grDevices", "col2rgb", "gray.colors", "palette", "rgb", "terrain.colors")
+importFrom("stats", "aov", "as.dist", "as.formula", "density", "dist", "hclust", "lm", "model.matrix", "na.exclude", "na.omit", "quantile", "rlnorm", "rnorm", "runif", "sd", "var")
+importFrom("utils", "combn", "head", "setTxtProgressBar", "txtProgressBar")
+
+# Registered S3 methods
+S3method(barplot, Tstats)
+S3method(summary, Tstats)
+S3method(print, Tstats)
+S3method(plot, Tstats)
+S3method(plot, ComIndex)
+S3method(print, ComIndex)
+S3method(summary, ComIndex)
+S3method(plot, ComIndexMulti)
+S3method(summary, ComIndexMulti)
+S3method(print, ComIndexMulti)
+S3method(plot, listofindex)
+S3method(plot, traitflex)
+S3method(barplot, decompCTRE)
+S3method(print, traitflex)
