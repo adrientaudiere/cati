@@ -68,8 +68,10 @@
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9)
 	
-	plotCorTstats(res.finch, bysite = FALSE)
-	plotCorTstats(res.finch, bysite = TRUE)
+	\dontrun{
+		plotCorTstats(res.finch, bysite = FALSE)
+		plotCorTstats(res.finch, bysite = TRUE)
+	}
 }
 
 

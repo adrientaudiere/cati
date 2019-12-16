@@ -93,6 +93,7 @@
 
 \examples{
 	data(finch.ind)
+	\dontrun{
 	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE)
 
 	#If we change the value of the threshold 
@@ -121,6 +122,7 @@
 	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE, 
 	resume = TRUE, col.pop = "grey", col.sp = "black", 
 	p.val = 0.1,  min.ind.signif = 3)
+	}
 }
 
 

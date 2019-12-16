@@ -62,7 +62,7 @@
 	data(finch.ind)
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, sp = sp.finch, 
 	nperm = 9)
-
+\dontrun{
 	par(mfrow = c(2,2))
 	species.richness <- table(ind.plot.finch)
 	plotSESvar(as.listofindex(list(res.finch)), species.richness, 
@@ -74,6 +74,7 @@
 	plotSESvar(as.listofindex(list(res.finch)), species.richness, 
 	resume = TRUE, multipanel = FALSE)
 	par(mfrow = c(1,1))
+	}
 }
 
 

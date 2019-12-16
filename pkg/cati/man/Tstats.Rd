@@ -199,7 +199,8 @@
 
 \examples{
 	data(finch.ind)
-
+	
+\dontrun{
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9, print = FALSE)
 	
@@ -209,13 +210,13 @@
 	
 	plot(res.finch)
 	
-	\dontrun{
+	
 	plot(res.finch, type = "simple")
 	plot(res.finch, type = "simple_range")
 	plot(res.finch, type = "barplot")
 	plot(res.finch, type = "bysites")
 	plot(res.finch, type = "bytraits")
-	}
+
 	
 	sum_Tstats(res.finch, type = "binary")
 	sum_Tstats(res.finch, type = "site")
@@ -235,44 +236,40 @@
 	levelplot(t(ses(res.finch$Tstats$T_IP.IC,res.finch$Tstats$T_IP.IC_nm)$ses), 
 	colorkey = my.ckey, par.settings = my.theme,border = "black")
 	
+	#### Use a different regional pool than the binding of studied communities
+	#create a random regional pool for the example
 	
-	\dontrun{
-		#### Use a different regional pool than the binding of studied communities
-		#create a random regional pool for the example
+	reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
 	
-		reg.p <- rbind(traits.finch, traits.finch[sample(1:2000,300), ])
-	
-		res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-	    sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
+	res.finch2 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	   sp = sp.finch, reg.pool=reg.p, nperm = 9, print = FALSE)	
 	    
-	    plot(as.listofindex(list(res.finch,res.finch2)))
-    
-    
-	    #### Use a different regional pool for each communities
-		#create a random regional pool for each communities for the example
-		list.reg.p <- list(
-		traits.finch[sample(1:290,200), ], traits.finch[sample(100:1200,300), ], 
-		traits.finch[sample(100:1500, 1000), ], traits.finch[sample(300:800,300), ],
-		traits.finch[sample(1000:2000, 500), ], traits.finch[sample(100:900, 700), ] )
+	plot(as.listofindex(list(res.finch,res.finch2)))
+  
+	#### Use a different regional pool for each communities
+	#create a random regional pool for each communities for the example
+	
+	list.reg.p <- list(
+	traits.finch[sample(1:290,200), ], traits.finch[sample(100:1200,300), ], 
+	traits.finch[sample(100:1500, 1000), ], traits.finch[sample(300:800,300), ],
+	traits.finch[sample(1000:2000, 500), ], traits.finch[sample(100:900, 700), ] )
 
-		# Warning: the regional pool need to be larger than the observed communities
-		table(ind.plot.finch)
-		# For exemple, the third community need a regional pool of more than 981 individuals
+	# Warning: the regional pool need to be larger than the observed communities
+	table(ind.plot.finch)
+	# For exemple, the third community need a regional pool of more than 981 individuals
 		
-		res.finch3 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-	    sp = sp.finch, reg.pool=list.reg.p, nperm = 9, print = FALSE)	
+	res.finch3 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	   sp = sp.finch, reg.pool=list.reg.p, nperm = 9, print = FALSE)	
 	    
-	    plot(as.listofindex(list(res.finch, res.finch2, res.finch3)))	
-	}
+	plot(as.listofindex(list(res.finch, res.finch2, res.finch3)))	
 
 	#### Use the standard errors of measure in the analysis (argument SE)
-	\dontrun{
-		res.finch.SE0 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-		sp = sp.finch, SE = 0, print = FALSE)
+	res.finch.SE0 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	sp = sp.finch, SE = 0, print = FALSE)
 		
-		res.finch.SE5 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-		sp = sp.finch, SE = 5, print = FALSE)
+	res.finch.SE5 <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
+	sp = sp.finch, SE = 5, print = FALSE)
 	
-		plot(as.listofindex(list(res.finch.SE0, res.finch.SE5)))
+	plot(as.listofindex(list(res.finch.SE0, res.finch.SE5)))
 	}
 }

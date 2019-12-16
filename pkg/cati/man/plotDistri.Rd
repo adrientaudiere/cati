@@ -120,14 +120,14 @@ data(finch.ind)
 	plotDistri(traits.finch, rep("region", times = dim(traits.finch)[1]), 
 	sp.finch, ylim.cex = 6, plot.ask = FALSE, leg = FALSE)
 	
+	### You can also plot trait distribution for all sites
+	#without taking into account species identity
+
+	plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]), 
+	ind.plot.finch, ylim.cex = 3, plot.ask = FALSE)
+
 }
 	
-### You can also plot trait distribution for all sites
-#without taking into account species identity
-
-plotDistri(traits.finch, rep("toutes_sp", times = dim(traits.finch)[1]), 
-ind.plot.finch, ylim.cex = 3, plot.ask = FALSE)
-
 }
 
 

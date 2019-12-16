@@ -53,8 +53,9 @@
 	
 	res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
 	sp = sp.finch, nperm = 9)
-
-	ses(res.finch$Tstats$T_IP.IC, res.finch$Tstats$T_IP.IC_nm)
+	\dontrun{
+		ses(res.finch$Tstats$T_IP.IC, res.finch$Tstats$T_IP.IC_nm)
+	}
 }
 
 
