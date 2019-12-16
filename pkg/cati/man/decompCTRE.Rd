@@ -73,15 +73,16 @@
 
 \examples{
 data(finch.ind)
+\dontrun{
+  res.decomp <- decompCTRE(traits = traits.finch, sp = sp.finch, 
+  ind.plot = ind.plot.finch, print = FALSE)
 
-res.decomp <- decompCTRE(traits = traits.finch, sp = sp.finch, 
-ind.plot = ind.plot.finch, print = FALSE)
+  barplot.decompCTRE(res.decomp)
 
-barplot.decompCTRE(res.decomp)
-
-par(mfrow = c(2,2))
-barplot.decompCTRE(res.decomp, resume = FALSE)
-par(mfrow = c(1,1))
+  par(mfrow = c(2,2))
+  barplot.decompCTRE(res.decomp, resume = FALSE)
+  par(mfrow = c(1,1))
+  }
 }
 
 

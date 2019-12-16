@@ -217,19 +217,11 @@
 	plot(res.finch, type = "bytraits")
 	}
 	
-	attributes(sum_Tstats(res.finch))
-	head(sum_Tstats(res.finch)$p.value, 10)
-	
 	sum_Tstats(res.finch, type = "binary")
-	sum_Tstats(res.finch, type = "percent")
 	sum_Tstats(res.finch, type = "site")
 	sum_Tstats(res.finch, type = "p.value")
-	sum_Tstats(res.finch, type = "all")
-	
+
 	barplot(res.finch)
-	
-	attributes(sum_Tstats(res.finch))
-	head(sum_Tstats(res.finch)$p.value, 10)
 	
 	#### An other way to see "ses values" of T-statistics
 	
