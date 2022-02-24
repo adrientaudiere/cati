@@ -3,7 +3,21 @@ Type: Package
 Title: Community Assembly by Traits: Individuals and Beyond
 Version: 0.99.3
 Date: 2019-16-12 
-Author: Adrien Taudiere, Cyrille Violle with contribution by Francois Munoz
+Authors@R:
+    c(person(given = "Adrien",
+             family = "Taudiere",
+             role = c("aut", "cre"),
+             email = "adrien.taudiere@tutanota.com",
+             comment = c(ORCID = "0000-0003-1088-1182")),
+      person(given = "Cyrille",
+             family = "Violle",
+             role = "aut",
+             comment = c(ORCID = "0000-0002-2471-9226")),
+      person(given = "François",
+             family = "Munoz",
+             role = "ctb",
+             comment = c(ORCID = "0000-0001-8776-4705"))
+      )         
 Maintainer: Adrien Taudiere <adrien.taudiere@tutanota.com>
 Depends:
     R (>= 3.5.0),
