@@ -26,10 +26,9 @@ devtools::install_github("adrientaudiere/cati/pkg/cati")
 ```
 
 ### Install cati's cran version:
-Note that the CRAN version is not available anymore. Please use the installation using devtools::install_github (see above).
 
 ```r
-# install.packages("cati")
+install.packages("cati")
 ```
 
 ### Attach the package and you are ready to start:
