@@ -2404,7 +2404,7 @@ traitflex.anova <- function(formula, specif.avg, const.avg, ...) {
 		stop("No residual DFs left in (specif-const) ANOVA, cannot continue")
   }
 
-  if ((dim(res.1) != dim(res.2)) || (dim(res.1) != dim(res.3))){
+  if (sum(dim(res.1) != dim(res.2)) > 0 || sum(dim(res.1) != dim(res.3)) >0){
   stop("Tables from the three ANOVAs have incompatible sizes")
   }
 
