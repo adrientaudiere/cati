@@ -212,13 +212,11 @@ res.sum.1
 library(hypervolume)
 
 hv<-hypervolume(traits.finch.mice, 
-        reps = 100,bandwidth = 0.2, 
-        verbose = F, warnings = F)
+        samples.per.point = 10)
 plot(hv)
 
 hv.1<-ComIndexMulti(traits.finch.mice, 
-             index = c("as.numeric(try(hypervolume(na.omit(x), reps = 100, 
-                 bandwidth = 0.2, verbose = F, warnings = F)@Volume))"),
+             index = c("as.numeric(try(hypervolume(na.omit(x), samples.per.point = 10)@Volume))"),
              by.factor = rep(1,length(n_sp_plot)), nullmodels = "regional.ind",
              ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch) 
 
