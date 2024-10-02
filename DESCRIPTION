@@ -42,5 +42,5 @@ Suggests:
     knitr
 Description: Detect and quantify community assembly processes using trait values of individuals or populations, the T-statistics and other metrics, and dedicated null models.
 License: GPL (>= 2)
-URL: https://github.com/adrientaudiere/cati
+URL: https://github.com/adrientaudiere/cati, http://adrientaudiere.github.io/cati/
 RoxygenNote: 6.0.1
