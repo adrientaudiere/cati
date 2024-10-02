@@ -21,7 +21,7 @@ install.packages(c("devtools", "e1071", "mice", "rasterVis", "hypervolume", "FD"
 ### Install cati's current development version from Github:
 
 ```r
-devtools::install_github("adrientaudiere/cati/pkg/cati")
+devtools::install_github("adrientaudiere/cati")
 ```
 
 ### Install cati's cran version:

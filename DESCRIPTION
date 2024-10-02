@@ -24,7 +24,7 @@ Depends:
     R (>= 3.5.0),
     nlme,
     ade4,
-    ape, 
+    ape
 Imports:
     e1071,
     rasterVis,
@@ -34,7 +34,6 @@ Imports:
     vegan
 Suggests:
     lattice,
-    spacodiR,
     entropart,
     fBasics,
     picante,
