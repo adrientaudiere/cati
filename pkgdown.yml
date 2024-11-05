@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-10-02T09:20Z
+last_built: 2024-11-05T16:17Z
 urls:
   reference: http://adrientaudiere.github.io/cati/reference
   article: http://adrientaudiere.github.io/cati/articles
