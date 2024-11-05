@@ -2251,7 +2251,7 @@ plot.ComIndexMulti <- function(x, type = "normal", col.index = c("red","purple",
 
 decompCTRE <- function(traits = NULL , formula = ~ 1, ind.plot = NULL, sp = NULL, printprogress = TRUE, ...) {
 
-	form.string <- deparse(substitute(formula))
+	form.string <- deparse(formula)
 
  	ntr <- dim(traits)[2]
 	namestraits <- colnames(traits)
@@ -2323,7 +2323,7 @@ barplot.decompCTRE <- function(height, resume = TRUE, ...) {
 traitflex.anova <- function(formula, specif.avg, const.avg, ...) {
 
   # Formula into string form
-  form.string <- deparse(substitute(formula))
+  form.string <- deparse(formula)
 
   # Check formula parameter
   form.parts <- unlist(strsplit(form.string,"~"))
