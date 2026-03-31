@@ -1,5 +1,7 @@
 # Changelog
 
+## cati 0.99.6
+
 ## cati 0.99.5
 
 - [`MinMaxMST()`](https://adrientaudiere.github.io/cati/reference/MinMaxMST.md)
