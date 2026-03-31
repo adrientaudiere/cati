@@ -257,30 +257,22 @@ data(finch.ind)
 
 # \donttest{
 #A simple example to illustrate the concept of the function ComIndexMulti
-
-n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_"))
-res.sum.1<-ComIndexMulti(traits.finch,
-              index = "sum(x, na.rm = TRUE)",
-              by.factor = n_sp_plot, nullmodels = "regional.ind",
-              ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
-#> Warning: This function exclude 1137 Na value
-#> [1] "creating null models"
-#> [1] "regional.ind 25 %"
-#> [1] "regional.ind 50 %"
-#> [1] "regional.ind 75 %"
-#> [1] "regional.ind 100 %"
-#> [1] "calculation of null values using null models"
-#> [1] "sum(x, na.rm = TRUE) 100 %"
-#> [1] "calculation of observed values"
-#> [1] "100 %"
+idx <- 1:150
+n_sp_plot <- as.factor(paste(sp.finch[idx], ind.plot.finch[idx], sep = "_"))
+res.sum.1 <- ComIndexMulti(traits.finch[idx, ],
+               index = "sum(x, na.rm = TRUE)",
+               by.factor = n_sp_plot, nullmodels = "regional.ind",
+               ind.plot = ind.plot.finch[idx], nperm = 9, sp = sp.finch[idx],
+               printprogress = FALSE)
+#> Warning: This function exclude 96 Na value
 res.sum.1
 #>  #################################
 #>  # Community metrics calculation #
 #>  #################################
 #> class: ComIndexMulti
-#> $call: ComIndexMulti(traits = traits.finch, index = "sum(x, na.rm = TRUE)", 
-#>     by.factor = n_sp_plot, nullmodels = "regional.ind", ind.plot = ind.plot.finch, 
-#>     sp = sp.finch, nperm = 9)
+#> $call: ComIndexMulti(traits = traits.finch[idx, ], index = "sum(x, na.rm = TRUE)", 
+#>     by.factor = n_sp_plot, nullmodels = "regional.ind", ind.plot = ind.plot.finch[idx], 
+#>     sp = sp.finch[idx], nperm = 9, printprogress = FALSE)
 #> 
 #> ###############
 #> $obs: list of observed values
@@ -292,10 +284,10 @@ res.sum.1
 #> 
 #> ###############
 #> data used
-#>   data      class  dim    content                                    
-#> 1 $traits   matrix 2513,4 traits data                                
-#> 2 $ind.plot factor 2513   name of the plot in which the individual is
-#> 3 $sp       factor 2513   individuals' groups (e.g. species)         
+#>   data      class  dim   content                                    
+#> 1 $traits   matrix 150,4 traits data                                
+#> 2 $ind.plot factor 150   name of the plot in which the individual is
+#> 3 $sp       factor 150   individuals' groups (e.g. species)         
 #> 
 #> ###############
 #> others
@@ -304,15 +296,19 @@ res.sum.1
 #> 
 #>  $sites_richness:
 #>      DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
-#>       50      267      981      258      270      687 
+#>       50      100        0        0        0        0 
 #> 
+# }
 
+if (FALSE) { # \dontrun{
 #A more interesting example using the function hypervolume with imputed data.
 #Requires the 'mice' and 'hypervolume' packages.
 if (requireNamespace("mice", quietly = TRUE) &&
     requireNamespace("hypervolume", quietly = TRUE)) {
+  data(finch.ind)
   mice_imp <- mice::mice(traits.finch, printFlag = FALSE)
   traits.finch.mice <- mice::complete(mice_imp)
+  n_sp_plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "_"))
   hv.1 <- ComIndexMulti(traits.finch.mice,
                index = paste0("as.numeric(try(hypervolume::hypervolume(",
                               "na.omit(x), samples.per.point = 10)@Volume))"),
@@ -320,180 +316,5 @@ if (requireNamespace("mice", quietly = TRUE) &&
                ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
   hv.1
 }
-#> [1] "creating null models"
-#> [1] "regional.ind 25 %"
-#> [1] "regional.ind 50 %"
-#> [1] "regional.ind 75 %"
-#> [1] "regional.ind 100 %"
-#> [1] "calculation of null values using null models"
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.948713 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.945760 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.947148 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Warning: 
-#> Consider removing some axes.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.941739 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.943558 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.949018 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.947398 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.949909 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.948000 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.947677 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> [1] "as.numeric(try(hypervolume::hypervolume(na.omit(x), samples.per.point = 10)@Volume)) 100 %"
-#> [1] "calculation of observed values"
-#> Warning: 
-#> Consider removing some axes.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.946630 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> Warning: 
-#> Consider removing some axes.
-#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
-#> Use method='silverman-1d' to replicate prior behavior.
-#> 
-#> Building tree... 
-#> done.
-#> Ball query... 
-#> 
-#> done.
-#> Requested probability quantile 0.950000, obtained 0.945933 - setting threshold value 0.000000.
-#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
-#> [1] "100 %"
-#>  #################################
-#>  # Community metrics calculation #
-#>  #################################
-#> class: ComIndexMulti
-#> $call: ComIndexMulti(traits = traits.finch.mice, index = paste0("as.numeric(try(hypervolume::hypervolume(", 
-#>     "na.omit(x), samples.per.point = 10)@Volume))"), by.factor = rep(1, 
-#>     length(n_sp_plot)), nullmodels = "regional.ind", ind.plot = ind.plot.finch, 
-#>     sp = sp.finch, nperm = 9)
-#> 
-#> ###############
-#> $obs: list of observed values
-#>  $as.numeric(try(hypervolume::hypervolume(na.omit(x), samples.per.point = 10)@Volume))
-#> 
-#> ###############
-#> $null: list of null values, number of permutations: NA 
-#>  $as.numeric(try(hypervolume::hypervolume(na.omit(x), samples.per.point = 10)@Volume))_nm ... null model = regional.ind
-#> 
-#> ###############
-#> data used
-#>   data      class  dim    content                                    
-#> 1 $traits   matrix 2513,4 traits data                                
-#> 2 $ind.plot factor 2513   name of the plot in which the individual is
-#> 3 $sp       factor 2513   individuals' groups (e.g. species)         
-#> 
-#> ###############
-#> others
-#>  $namestraits: 4 traits
-#> [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
-#> 
-#>  $sites_richness:
-#>      DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
-#>       50      267      981      258      270      687 
-#> 
-
-# }
+} # }
 ```

@@ -47,12 +47,17 @@ Adrien Taudiere
 ## Examples
 
 ``` r
-  data(finch.ind)
-  # \donttest{
-    res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch,
-    sp = sp.finch, nperm = 9, printprogress = FALSE)
-#> Warning: This function exclude 1137 Na values
-  plotRandtest(res.finch)
+# \donttest{
+  # Simulate a small NA-free dataset to avoid empty null distributions
+  set.seed(42)
+  n <- 60
+  traits_sim <- matrix(rnorm(n * 2), nrow = n, ncol = 2,
+                       dimnames = list(NULL, c("T1", "T2")))
+  sp_sim <- factor(rep(paste0("sp", 1:10), each = 6))
+  plot_sim <- factor(rep(paste0("P", 1:3), each = 20))
+  res_sim <- Tstats(traits_sim, ind.plot = plot_sim,
+                   sp = sp_sim, nperm = 9, printprogress = FALSE)
+  plotRandtest(res_sim)
 
 
 
@@ -77,65 +82,5 @@ Adrien Taudiere
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  # }
+# }
 ```

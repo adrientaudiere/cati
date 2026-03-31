@@ -59,15 +59,14 @@ Sebastien Villeger sligthy modified by Adrien Taudiere
 ## Examples
 
 ``` r
-data(finch.ind)
 # \donttest{
-#For most multivariate functions we need to replace (or exclude) NA values.
-#For this example, we use the package mice to complete the data.
-if (requireNamespace("mice", quietly = TRUE)) {
-  mice_imp <- mice::mice(traits.finch, printFlag = FALSE)
-  traits.finch.mice <- mice::complete(mice_imp)
-  fred <- Fred(traits.finch.mice, ind.plot.finch)
-}
+  # Simulate a small dataset: 6 plots x 10 individuals, 4 traits, no NAs
+  set.seed(42)
+  n <- 60
+  traits_sim <- matrix(rnorm(n * 4), nrow = n, ncol = 4,
+                       dimnames = list(NULL, c("T1", "T2", "T3", "T4")))
+  plot_sim <- factor(rep(paste0("P", 1:6), each = 10))
+  fred <- Fred(traits_sim, plot_sim)
 #>   |                                                                              |                                                                      |   0%  |                                                                              |==============                                                        |  20%  |                                                                              |============================                                          |  40%  |                                                                              |==========================================                            |  60%  |                                                                              |========================================================              |  80%  |                                                                              |======================================================================| 100%
 # }
 ```

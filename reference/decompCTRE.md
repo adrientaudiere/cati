@@ -71,7 +71,7 @@ Adrien Taudiere Jan Leps
 
 ## See also
 
-`barplot.decompCTRE`;
+[`barplot`](https://rdrr.io/r/graphics/barplot.html);
 [`traitflex.anova`](https://adrientaudiere.github.io/cati/reference/traitflex.anova.md)
 
 ## Examples
@@ -86,12 +86,12 @@ data(finch.ind)
 #> Warning: All individuals with one NA ( 668 individual value(s)) are excluded for the trait 3 : UBeakL
 #> Warning: All individuals with one NA ( 23 individual value(s)) are excluded for the trait 4 : N.UBkL
 
-  barplot.decompCTRE(res.decomp)
-#> Error in barplot.decompCTRE(res.decomp): could not find function "barplot.decompCTRE"
+  barplot(res.decomp)
+
 
   par(mfrow = c(2,2))
-  barplot.decompCTRE(res.decomp, resume = FALSE)
-#> Error in barplot.decompCTRE(res.decomp, resume = FALSE): could not find function "barplot.decompCTRE"
+  barplot(res.decomp, resume = FALSE)
+
   par(mfrow = c(1,1))
   # }
 ```
