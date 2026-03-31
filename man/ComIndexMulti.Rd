@@ -187,20 +187,25 @@ data(finch.ind)
 
 \donttest{
 #A simple example to illustrate the concept of the function ComIndexMulti
-
-n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_"))
-res.sum.1<-ComIndexMulti(traits.finch,
-              index = "sum(x, na.rm = TRUE)",
-              by.factor = n_sp_plot, nullmodels = "regional.ind",
-              ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+idx <- 1:150
+n_sp_plot <- as.factor(paste(sp.finch[idx], ind.plot.finch[idx], sep = "_"))
+res.sum.1 <- ComIndexMulti(traits.finch[idx, ],
+               index = "sum(x, na.rm = TRUE)",
+               by.factor = n_sp_plot, nullmodels = "regional.ind",
+               ind.plot = ind.plot.finch[idx], nperm = 9, sp = sp.finch[idx],
+               printprogress = FALSE)
 res.sum.1
+}
 
+\dontrun{
 #A more interesting example using the function hypervolume with imputed data.
 #Requires the 'mice' and 'hypervolume' packages.
 if (requireNamespace("mice", quietly = TRUE) &&
     requireNamespace("hypervolume", quietly = TRUE)) {
+  data(finch.ind)
   mice_imp <- mice::mice(traits.finch, printFlag = FALSE)
   traits.finch.mice <- mice::complete(mice_imp)
+  n_sp_plot <- as.factor(paste(sp.finch, ind.plot.finch, sep = "_"))
   hv.1 <- ComIndexMulti(traits.finch.mice,
                index = paste0("as.numeric(try(hypervolume::hypervolume(",
                               "na.omit(x), samples.per.point = 10)@Volume))"),
@@ -208,6 +213,5 @@ if (requireNamespace("mice", quietly = TRUE) &&
                ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
   hv.1
 }
-
 }
 }

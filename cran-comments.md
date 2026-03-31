@@ -22,6 +22,12 @@ The maintainer email has changed to adrien.taudiere@zaclys.net.
 * NOTE: "unable to verify current time" — network issue in local check
   environment; not reproducible on CRAN infrastructure.
 
+## Notes on urlchecker
+
+* `urlchecker::url_check()` reports a 403 for `https://doi.org/10.1111/ecog.01433`
+  (README.md line 11). This is a false positive: the DOI resolves correctly in a
+  browser; the publisher's server blocks automated HEAD requests.
+
 ## Downstream dependencies
 
 There are no downstream dependencies for this package.

@@ -7113,8 +7113,9 @@ Fred <- function(traits, ind.plot = NULL) {
     FRic[i] <- round(convhulln(tr, "FA")$vol, 6)
 
     # identity of vertices
-    vert0 <- convhulln(tr, "Fx TO 'vert.txt'")
-    vert1 <- scan("vert.txt", quiet = T)
+    vert_file <- tempfile(fileext = ".txt")
+    vert0 <- convhulln(tr, paste0("Fx TO '", vert_file, "'"))
+    vert1 <- scan(vert_file, quiet = TRUE)
     vert2 <- vert1 + 1
     vertices <- vert2[-1]
 
@@ -7189,7 +7190,7 @@ Fred <- function(traits, ind.plot = NULL) {
   if (C > 1) {
     close(pb)
   }
-  unlink("vert.txt")
+  unlink(vert_file)
   res <- list(nbind = nbsp, FRic = FRic, FEve = FEve, FDiv = FDiv)
   invisible(res)
 } # end of function

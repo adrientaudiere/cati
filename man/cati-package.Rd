@@ -6,13 +6,14 @@
 \alias{cati-package}
 \title{cati: Community Assembly by Traits: Individuals and Beyond}
 \description{
-Detect and quantify community assembly processes using trait values of individuals or populations, the T-statistics and other metrics, and dedicated null models. Provides tools to analyse intraspecific trait variability and its consequences for community assembly. Implements a framework using individual-level trait data to decompose variance at the population, species, and community levels. Methods are described in Taudiere and Violle (2016) \doi{10.1111/ecog.01433}.
+Detect and quantify community assembly processes using trait values of individuals or populations, the T-statistics and other metrics, and dedicated null models. Provides tools to analyse 'intraspecific' trait variability and its consequences for community assembly. Implements a framework using individual-level trait data to decompose variance at the population, species, and community levels. Methods are described in 'Taudiere' and 'Violle' (2016) \doi{10.1111/ecog.01433}.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/adrientaudiere/cati}
   \item \url{https://adrientaudiere.github.io/cati/}
+  \item Report bugs at \url{https://github.com/adrientaudiere/cati/issues}
 }
 
 }
