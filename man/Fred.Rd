@@ -47,17 +47,14 @@
 
 \examples{
 data(finch.ind)
-\dontrun{
-#For most multivariate functions we need to replace (or exclude) NA values. 
+\donttest{
+#For most multivariate functions we need to replace (or exclude) NA values.
 #For this example, we use the package mice to complete the data.
-
-comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
-
-library(mice)
-traits = traits.finch
-mice<-mice(traits.finch)
-traits.finch.mice<-complete(mice)
-fred<-Fred(traits.finch.mice, ind.plot.finch)
+if (requireNamespace("mice", quietly = TRUE)) {
+  mice_imp <- mice::mice(traits.finch, printFlag = FALSE)
+  traits.finch.mice <- mice::complete(mice_imp)
+  fred <- Fred(traits.finch.mice, ind.plot.finch)
+}
 }
 }
 

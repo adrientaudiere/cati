@@ -85,7 +85,7 @@
 \examples{
 	data(finch.ind)
 	
-	\dontrun{
+	\donttest{
 		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
 		comm.sp <- table(sp.finch, ind.plot.finch)
 		class(comm.sp) <- "matrix"
@@ -96,17 +96,9 @@
 		
 		mat.dist <- (as.matrix(dist(traits.finch.sp))^2)/2
 		
-		res.rao <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL, 
+		res.rao <- RaoRel(sample = as.matrix(comm.sp), dfunc = mat.dist, dphyl = NULL,
 		weight = FALSE, Jost = FALSE, structure = NULL)
 
-		function(x) tapply(x, sp.finch, mean, na.rm=TRUE))
-		
-		mat.dist <- as.matrix(dist(traits.finch.sp))^2
-		
-		res.rao <- RaoRel(sample=as.matrix(comm.sp), dfunc=mat.dist, dphyl=NULL, 
-		weight=FALSE, Jost=FALSE, structure=NULL)
-
-		
 		witRao <- res.rao$FD$Mean_Alpha  #overall within species variance
 		betRao <- res.rao$FD$Beta_add    #between species variance
 		totRao <- res.rao$FD$Gamma       #the total variance
@@ -137,42 +129,33 @@
 		ylab = "Rao", ylim = c(0,10))
 		
 		
-		#We can do this analysis for each trait separately. 
-		#First we need to replace (or exclude) NA values. 
+		#We can do this analysis for each trait separately.
+		#First we need to replace (or exclude) NA values.
 		#For this example, we use the package mice to complete the data.
-		
-		comm <- t(table(ind.plot.finch,1:length(ind.plot.finch)))
-		
-		library(mice)
+		if (requireNamespace("mice", quietly = TRUE)) {
+		  mice_imp <- mice::mice(traits.finch, printFlag = FALSE)
+		  traits.finch.mice <- mice::complete(mice_imp)
 
-		traits = traits.finch
+		  traits.finch.mice.sp <- apply(apply(traits.finch.mice, 2, scale), 2,
+		  function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
 
-		mice <- mice(traits.finch)
-		traits.finch.mice <- complete(mice)
-		
-		traits.finch.mice.sp <- apply(apply(traits.finch.mice, 2, scale ), 2, 
-		function(x) tapply(x, sp.finch, mean, na.rm = TRUE))
+		  trait.rao.w <- list()
+		  witRao.w.bytrait <- c()
+		  betRao.w.bytrait <- c()
 
+		  for (t in 1:4) {
+		    trait.rao.w[[t]] <- RaoRel(sample = as.matrix(comm.sp),
+		    dfunc = (dist(traits.finch.mice.sp[, t])^2) / 2, dphyl = NULL,
+		    weight = TRUE, Jost = FALSE, structure = NULL)
+		    witRao.w.bytrait <- c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
+		    betRao.w.bytrait <- c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
+		  }
 
-		trait.rao.w <- list()
-		witRao.w.bytrait <- c()
-		betRao.w.bytrait <- c()
-
-		for (t in 1 : 4){
-		  trait.rao.w[[t]] <- RaoRel(sample = as.matrix(comm.sp), 
-		  dfunc = (dist(traits.finch.mice.sp[,t])^2)/2, dphyl = NULL, weight = TRUE, 
-		  Jost = FALSE, structure = NULL)
-				  
-		  witRao.w.bytrait <- c(witRao.w.bytrait, trait.rao.w[[t]]$FD$Mean_Alpha)
-		  betRao.w.bytrait <- c(betRao.w.bytrait, trait.rao.w[[t]]$FD$Beta_add)
+		  barplot(t(cbind(witRao.w.bytrait, betRao.w.bytrait)),
+		  names.arg = colnames(traits.finch),
+		  legend.text = c("within species", "between species"),
+		  ylab = "Rao", ylim = c(0, 1.5))
 		}
-		
-		#Plot the results by traits.
-		
-		barplot(t(cbind( witRao.w.bytrait, betRao.w.bytrait)), 
-		names.arg = colnames(traits.finch),
-		legend.text = c("within species", "between species"), 
-		ylab = "Rao", ylim = c(0,1.5))	
 	}
 }
 

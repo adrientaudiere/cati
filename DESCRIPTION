@@ -2,13 +2,13 @@ Package: cati
 Type: Package
 Title: Community Assembly by Traits: Individuals and Beyond
 Version: 0.99.5
-Date: 2024-13-02 
+Date: 2026-03-30 
 Encoding: UTF-8
 Authors@R:
     c(person(given = "Adrien",
              family = "Taudiere",
-             role = c("aut", "cre"),
-             email = "adrien.taudiere@tutanota.com",
+             role = c("aut", "cre", "cph"),
+             email = "adrien.taudiere@zaclys.net",
              comment = c(ORCID = "0000-0003-1088-1182")),
       person(given = "Cyrille",
              family = "Violle",
@@ -19,7 +19,7 @@ Authors@R:
              role = "ctb",
              comment = c(ORCID = "0000-0001-8776-4705"))
       )         
-Maintainer: Adrien Taudiere <adrien.taudiere@tutanota.com>
+Maintainer: Adrien Taudiere <adrien.taudiere@zaclys.net>
 Depends:
     R (>= 3.5.0),
     nlme,
@@ -29,7 +29,7 @@ Imports:
     e1071,
     rasterVis,
     hypervolume,
-    FD,
+    cluster,
     geometry,
     vegan
 Suggests:
@@ -38,8 +38,10 @@ Suggests:
     fBasics,
     picante,
     mice,
-    knitr
-Description: Detect and quantify community assembly processes using trait values of individuals or populations, the T-statistics and other metrics, and dedicated null models.
+    knitr,
+    testthat (>= 3.0.0)
+Description: Detect and quantify community assembly processes using trait values of individuals or populations, the T-statistics and other metrics, and dedicated null models. Provides tools to analyse intraspecific trait variability and its consequences for community assembly. Implements a framework using individual-level trait data to decompose variance at the population, species, and community levels. Methods are described in Taudiere and Violle (2016) <doi:10.1111/ecog.01433>.
 License: GPL (>= 2)
-URL: https://github.com/adrientaudiere/cati, http://adrientaudiere.github.io/cati/
-RoxygenNote: 6.0.1
+URL: https://github.com/adrientaudiere/cati, https://adrientaudiere.github.io/cati/
+RoxygenNote: 7.3.3
+BugReports: https://github.com/adrientaudiere/cati/issues

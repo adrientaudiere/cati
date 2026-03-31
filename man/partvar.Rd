@@ -68,7 +68,7 @@
 \examples{
 
 	data(finch.ind)
-	\dontrun{
+	\donttest{
 	cond<-seq(1,length(sp.finch)*2, by = 2)
 	genus <- as.vector(unlist(strsplit(as.vector(sp.finch),"_"))[cond])
 

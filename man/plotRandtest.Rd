@@ -46,14 +46,10 @@
 
 \examples{
 	data(finch.ind)
-	\dontrun{
-		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch, 
-		sp = sp.finch, nperm = 99, print = FALSE)
-	
-	par(mfrow = c(4,4))
-	
+	\donttest{
+		res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch,
+		sp = sp.finch, nperm = 9, printprogress = FALSE)
 	plotRandtest(res.finch)
-	plotRandtest(res.finch, alter = "less")
 	}
 }
 

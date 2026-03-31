@@ -4,3 +4,9 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^\.travis\.yml$
+^\.claude$
+^Documentation$
+^audits$
+^cran-comments\.md$
+^LICENSE\.md$

@@ -97,7 +97,7 @@
 	
 	#Random variable for this example
 	variable <- c(1,5,15,6,3,25)
-	\dontrun{
+	\donttest{
 	plotSpVar(traits.finch, ind.plot.finch, sp.finch, variable, 
 	silent = TRUE)
 

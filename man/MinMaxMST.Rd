@@ -19,7 +19,7 @@
 	}
 	
 	\item{gower.dist}{
-		Calculate gower distance using the function gowdis from package FD.
+		Calculate Gower distance using the function \code{daisy} from package \pkg{cluster}.
 	}	
 	
 	\item{scale.tr}{
@@ -45,7 +45,7 @@
 }
 
 \examples{
-\dontrun{
+\donttest{
 
 	data(finch.ind)
 	

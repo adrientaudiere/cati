@@ -184,7 +184,7 @@
 \examples{	
 data(finch.ind)
 
-\dontrun{
+\donttest{
 #Define the functions that will be calculating
 funct<-c("mean(x, na.rm = TRUE)", "kurtosis(x, na.rm = TRUE)",
      "max(x, na.rm = TRUE) - min(x, na.rm = TRUE)" )

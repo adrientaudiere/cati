@@ -31,6 +31,10 @@
 	Adrien Taudiere
 }
 
+\examples{
+IndexByGroups(c("mean(x)", "sd(x)"), "pop")
+}
+
 
 
 

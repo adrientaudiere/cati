@@ -185,42 +185,29 @@
 \examples{
 data(finch.ind)
 
-\dontrun{
-#For most multivariate functions we need to replace (or exclude) NA values. 
-#For this example, we use the package mice to complete the data.
-
-comm<-t(table(ind.plot.finch,1:length(ind.plot.finch)))
-
-library(mice)
-traits = traits.finch
-mice<-mice(traits.finch)
-traits.finch.mice<-complete(mice)
-
-
+\donttest{
 #A simple example to illustrate the concept of the function ComIndexMulti
 
-n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_")) 
-res.sum.1<-ComIndexMulti(traits.finch, 
-              index = c("sum(scale(x), na.rm = T)", "sum(x, na.rm = T)"), 
-              by.factor = n_sp_plot, nullmodels = "regional.ind", 
+n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_"))
+res.sum.1<-ComIndexMulti(traits.finch,
+              index = "sum(x, na.rm = TRUE)",
+              by.factor = n_sp_plot, nullmodels = "regional.ind",
               ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
 res.sum.1
 
-
-
-#A more interesting example using the function hypervolume
-library(hypervolume)
-
-hv<-hypervolume(traits.finch.mice, 
-        samples.per.point = 10)
-plot(hv)
-
-hv.1<-ComIndexMulti(traits.finch.mice, 
-             index = c("as.numeric(try(hypervolume(na.omit(x), samples.per.point = 10)@Volume))"),
-             by.factor = rep(1,length(n_sp_plot)), nullmodels = "regional.ind",
-             ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch) 
-
-hv.1
+#A more interesting example using the function hypervolume with imputed data.
+#Requires the 'mice' and 'hypervolume' packages.
+if (requireNamespace("mice", quietly = TRUE) &&
+    requireNamespace("hypervolume", quietly = TRUE)) {
+  mice_imp <- mice::mice(traits.finch, printFlag = FALSE)
+  traits.finch.mice <- mice::complete(mice_imp)
+  hv.1 <- ComIndexMulti(traits.finch.mice,
+               index = paste0("as.numeric(try(hypervolume::hypervolume(",
+                              "na.omit(x), samples.per.point = 10)@Volume))"),
+               by.factor = rep(1, length(n_sp_plot)), nullmodels = "regional.ind",
+               ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+  hv.1
+}
 
 }
 }

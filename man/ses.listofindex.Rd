@@ -38,3 +38,13 @@
 	\code{\link{as.listofindex}};
 	\code{\link{ses}}
 }
+
+\examples{
+\donttest{
+data(finch.ind)
+res.finch <- Tstats(traits.finch, ind.plot = ind.plot.finch,
+  sp = sp.finch, nperm = 9, print = FALSE)
+index.list <- as.listofindex(list(res.finch))
+ses.listofindex(index.list)
+}
+}

@@ -91,3 +91,14 @@
 	\code{\link{plot.traitflex}};
 	\code{\link{decompCTRE}}
 }
+
+\examples{
+\donttest{
+data(finch.ind)
+res.decomp <- decompCTRE(traits = traits.finch, sp = sp.finch,
+  ind.plot = ind.plot.finch, printprogress = FALSE)
+tf <- res.decomp[[1]]
+print(tf)
+plot(tf)
+}
+}

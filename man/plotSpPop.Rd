@@ -93,7 +93,7 @@
 
 \examples{
 	data(finch.ind)
-	\dontrun{
+	\donttest{
 	plotSpPop(traits.finch, ind.plot.finch, sp.finch, silent = TRUE)
 
 	#If we change the value of the threshold 

@@ -57,3 +57,11 @@
 \author{
 	Adrien Taudiere
 }
+
+\examples{
+\donttest{
+data(finch.ind)
+samplingSubsetData(d = traits.finch, sampUnit = sp.finch, nperm = 3,
+  prop = c(50, 100))
+}
+}

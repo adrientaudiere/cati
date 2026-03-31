@@ -20,7 +20,7 @@
 	}
 	
 	\item{gower.dist}{
-		Calculate gower distance using the function gowdis from package FD.
+		Calculate Gower distance using the function \code{daisy} from package \pkg{cluster}.
 	}	
 	
 	\item{method.hclust}{
@@ -50,7 +50,7 @@ Petchey, OL., and Gaston, KJ. 2002. Functional diversity (FD), species richness 
 
 \examples{
 
-\dontrun{
+\donttest{
 
 data(finch.ind)
 SumBL(traits.finch)
