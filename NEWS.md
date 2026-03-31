@@ -1,3 +1,5 @@
+# cati 0.99.6
+
 # cati 0.99.5
 
 * `MinMaxMST()` and `SumBL()` now use `cluster::daisy()` instead of `FD::gowdis()` for Gower distance computation, replacing the FD dependency which is scheduled for CRAN archival.
