@@ -1,0 +1,499 @@
+# Computing multitraits metrics to test and quantify the non-random assembly of communities
+
+Computing multitraits metrics to test and quantify the non-random
+assembly of communities
+
+## Usage
+
+``` r
+ComIndexMulti(traits = NULL, index = NULL, by.factor = NULL, 
+  nullmodels = NULL, ind.plot = NULL, sp = NULL, com = NULL,
+  SE = 0, namesindex = NULL, reg.pool = NULL, SE.reg.pool = NULL,
+  nperm = 99, printprogress = TRUE, independantTraits = TRUE, 
+  type.sp.val = "count")
+  
+  # S3 method for class 'ComIndexMulti'
+plot(x, type = "normal", 
+  col.index = c("red", "purple", "olivedrab3"), add.conf = TRUE, 
+  color.cond = TRUE, val.quant = c(0.025, 0.975), ...)
+    
+  # S3 method for class 'ComIndexMulti'
+print(x, ...)
+    
+  # S3 method for class 'ComIndexMulti'
+summary(object, ...)
+```
+
+## Arguments
+
+- traits:
+
+  Individual Matrix of traits with traits in column (or species matrix
+  when using "com" instead of "ind.plot").
+
+- index:
+
+  A vector of functions to apply to traits vectors in the form "mean(x,
+  na.rm = TRUE)" or "range(x)".
+
+- by.factor:
+
+  A factor to split the Matrix of traits and compute index for each
+  subset eg for each site.
+
+- nullmodels:
+
+  A vector of names corresponding to null models tu use for each index.
+  **local** (or 1) corresponds to a randomization of individual values
+  within a given community. **regional.ind** (or 2) corresponds to
+  randomization of individual values within region, ie within all the
+  dataset. A value of **regional.pop** (or 2sp) corresponds to
+  randomization of population values (each individual value are replaced
+  by the mean value of it population) within region. Finally a value of
+  **regional.pop.prab** (or 2sp.prab) mirror null model **regional.pop**
+  but without taking indo account species abundance. For example, if
+  nullmodels = c("local", "regional.ind"), the first index will be
+  calculated on the null model **local** and the second index on the
+  null model **regional.ind**.
+
+  If only one value is given, all the the null model will be determined
+  by this value.
+
+- ind.plot:
+
+  Factor defining the name of the plot (site or community) in which the
+  individual is.
+
+- sp:
+
+  Factor defining the species which the individual belong to.
+
+- com:
+
+  Community data matrix with species (or populations) in rows and sites
+  in column. Use only if ind.plot = NULL. "traits" matrix and "com"
+  matrix must have the same number of rows.
+
+- SE:
+
+  A single value or vector of standard errors associated with each
+  traits. Especially allow to handle measurement errors. Not used with
+  populational null model.
+
+- namesindex:
+
+  A vector of names for metrics.
+
+- reg.pool:
+
+  Regional pool data for traits. If not informed, traits is considere as
+  the regional pool. This matrix need to be larger (more rows) than the
+  matrix "traits". Use only for null model 2.
+
+- SE.reg.pool:
+
+  A single value or vector of standard errors associated with each
+  traits in each regional pool. Use only if reg.pool is used. Need to
+  have the same dimension as reg.pool.
+
+- nperm:
+
+  Number of permutations. If NULL, only observed values are returned.
+
+- printprogress:
+
+  Logical value; print progress during the calculation or not.
+
+- independantTraits:
+
+  Logical value (default: TRUE). If independantTraits is true (default),
+  each traits is sample independently in null models, if not, each lines
+  of the matrix are randomized, keeping the relation (and trade-off)
+  among traits.
+
+- type.sp.val:
+
+  Only if ind.plot = NULL. Either "count" or "abundance". Use abundance
+  when all values in the com matrix are not superior to one.
+
+- x:
+
+  An object of class ComIndexMulti.
+
+- object:
+
+  An object of class ComIndexMulti.
+
+- type:
+
+  Type of plot. Possible type = "simple", "simple_range", "normal",
+  "barplot" and "bytraits".
+
+- col.index:
+
+  Vector of colors for index.
+
+- add.conf:
+
+  Logical value; Add confidence intervals or not.
+
+- color.cond:
+
+  Logical value; If color.cond = TRUE, color points indicate
+  T-statistics values significatively different from the null model and
+  grey points are not different from null model.
+
+- val.quant:
+
+  Numeric vectors of length 2, giving the quantile to calculate
+  confidence interval. By default val.quant = c(0.025,0.975) for a
+  bilateral test with alpha = 5%.
+
+- ...:
+
+  Any additional arguments are passed to the plot, print or summary
+  function creating the core of the plot and can be used to adjust the
+  look of resulting graph. See
+  [`plot.listofindex`](https://adrientaudiere.github.io/cati/reference/plot.listofindex.md)
+  for more arguments.
+
+## Details
+
+This function implement four null models which keep unchanged the number
+of individual per community. Model **local** (1) corresponds to
+randomization of individual values within community. Model
+**regional.ind** (2) corresponds to randomization of individual values
+within region. Model **regional.pop** (2sp) corresponds to randomization
+of population values within region. Model **regional.pop.prab**
+(2sp.prab) corresponds to randomization of population values within
+region but whitout taking into account for abundance.
+
+S3 method plot for class listofindex:
+
+-Normal type plot means, standard deviations, ranges and confidence
+intervals of T-statistics.
+
+-Simple_range type plot means, standard deviations and range of
+T-statistics
+
+-Simple type plot T-statistics for each site and traits and the mean
+confidence intervals by traits
+
+-Barplot type plot means, standard deviations and confidence intervals
+of T-statistics in a barplot fashion
+
+-Bysites type plot each metrics for each sites
+
+-Bytraits type plot each metrics for each traits
+
+## Value
+
+A list of lists:
+
+- \$obs:
+
+  List of observed values for each trait in each community. Each
+  component of the list correspond to a matrix containing the result for
+  each custom function.
+
+- \$null:
+
+  List of null values for each trait in each community. Each component
+  of the list correspond to an array containing the result of the
+  permutations for each custom function.
+
+- \$sites_richness:
+
+  Number of species per site.
+
+- \$namestraits:
+
+  Names of traits.
+
+- \$traits:
+
+  traits data
+
+- \$ind.plot:
+
+  name of the plot in which the individual is
+
+- \$sp:
+
+  groups (e.g. species) which the individual belong to
+
+- \$nullmodels:
+
+  List of null models used for each indices.
+
+- \$call:
+
+  call of the function Tstats
+
+- \$list.index:
+
+  List of index values and associate null models. Internal use in other
+  function. Traits in columns.
+
+- \$list.index.t:
+
+  List of index values and associate null models. Internal use in other
+  function. Traits in rows.
+
+## Author
+
+Adrien Taudiere
+
+## See also
+
+[`ComIndex`](https://adrientaudiere.github.io/cati/reference/ComIndex.md);
+[`plot.listofindex`](https://adrientaudiere.github.io/cati/reference/plot.listofindex.md);
+[`ses`](https://adrientaudiere.github.io/cati/reference/ses.md)
+
+## Examples
+
+``` r
+data(finch.ind)
+
+# \donttest{
+#A simple example to illustrate the concept of the function ComIndexMulti
+
+n_sp_plot<-as.factor(paste(sp.finch, ind.plot.finch, sep = "_"))
+res.sum.1<-ComIndexMulti(traits.finch,
+              index = "sum(x, na.rm = TRUE)",
+              by.factor = n_sp_plot, nullmodels = "regional.ind",
+              ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+#> Warning: This function exclude 1137 Na value
+#> [1] "creating null models"
+#> [1] "regional.ind 25 %"
+#> [1] "regional.ind 50 %"
+#> [1] "regional.ind 75 %"
+#> [1] "regional.ind 100 %"
+#> [1] "calculation of null values using null models"
+#> [1] "sum(x, na.rm = TRUE) 100 %"
+#> [1] "calculation of observed values"
+#> [1] "100 %"
+res.sum.1
+#>  #################################
+#>  # Community metrics calculation #
+#>  #################################
+#> class: ComIndexMulti
+#> $call: ComIndexMulti(traits = traits.finch, index = "sum(x, na.rm = TRUE)", 
+#>     by.factor = n_sp_plot, nullmodels = "regional.ind", ind.plot = ind.plot.finch, 
+#>     sp = sp.finch, nperm = 9)
+#> 
+#> ###############
+#> $obs: list of observed values
+#>  $sum(x, na.rm = TRUE)
+#> 
+#> ###############
+#> $null: list of null values, number of permutations: NA 
+#>  $sum(x, na.rm = TRUE)_nm ... null model = regional.ind
+#> 
+#> ###############
+#> data used
+#>   data      class  dim    content                                    
+#> 1 $traits   matrix 2513,4 traits data                                
+#> 2 $ind.plot factor 2513   name of the plot in which the individual is
+#> 3 $sp       factor 2513   individuals' groups (e.g. species)         
+#> 
+#> ###############
+#> others
+#>  $namestraits: 4 traits
+#> [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
+#> 
+#>  $sites_richness:
+#>      DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
+#>       50      267      981      258      270      687 
+#> 
+
+#A more interesting example using the function hypervolume with imputed data.
+#Requires the 'mice' and 'hypervolume' packages.
+if (requireNamespace("mice", quietly = TRUE) &&
+    requireNamespace("hypervolume", quietly = TRUE)) {
+  mice_imp <- mice::mice(traits.finch, printFlag = FALSE)
+  traits.finch.mice <- mice::complete(mice_imp)
+  hv.1 <- ComIndexMulti(traits.finch.mice,
+               index = paste0("as.numeric(try(hypervolume::hypervolume(",
+                              "na.omit(x), samples.per.point = 10)@Volume))"),
+               by.factor = rep(1, length(n_sp_plot)), nullmodels = "regional.ind",
+               ind.plot = ind.plot.finch, nperm = 9, sp = sp.finch)
+  hv.1
+}
+#> [1] "creating null models"
+#> [1] "regional.ind 25 %"
+#> [1] "regional.ind 50 %"
+#> [1] "regional.ind 75 %"
+#> [1] "regional.ind 100 %"
+#> [1] "calculation of null values using null models"
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.948713 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.945760 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.947148 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Warning: 
+#> Consider removing some axes.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.941739 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.943558 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.949018 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.947398 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.949909 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.948000 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.947677 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> [1] "as.numeric(try(hypervolume::hypervolume(na.omit(x), samples.per.point = 10)@Volume)) 100 %"
+#> [1] "calculation of observed values"
+#> Warning: 
+#> Consider removing some axes.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.946630 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> Warning: 
+#> Consider removing some axes.
+#> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.
+#> Use method='silverman-1d' to replicate prior behavior.
+#> 
+#> Building tree... 
+#> done.
+#> Ball query... 
+#> 
+#> done.
+#> Requested probability quantile 0.950000, obtained 0.945933 - setting threshold value 0.000000.
+#>  For a closer match, you can increase num.thresholds in hypervolume_threshold.
+#> [1] "100 %"
+#>  #################################
+#>  # Community metrics calculation #
+#>  #################################
+#> class: ComIndexMulti
+#> $call: ComIndexMulti(traits = traits.finch.mice, index = paste0("as.numeric(try(hypervolume::hypervolume(", 
+#>     "na.omit(x), samples.per.point = 10)@Volume))"), by.factor = rep(1, 
+#>     length(n_sp_plot)), nullmodels = "regional.ind", ind.plot = ind.plot.finch, 
+#>     sp = sp.finch, nperm = 9)
+#> 
+#> ###############
+#> $obs: list of observed values
+#>  $as.numeric(try(hypervolume::hypervolume(na.omit(x), samples.per.point = 10)@Volume))
+#> 
+#> ###############
+#> $null: list of null values, number of permutations: NA 
+#>  $as.numeric(try(hypervolume::hypervolume(na.omit(x), samples.per.point = 10)@Volume))_nm ... null model = regional.ind
+#> 
+#> ###############
+#> data used
+#>   data      class  dim    content                                    
+#> 1 $traits   matrix 2513,4 traits data                                
+#> 2 $ind.plot factor 2513   name of the plot in which the individual is
+#> 3 $sp       factor 2513   individuals' groups (e.g. species)         
+#> 
+#> ###############
+#> others
+#>  $namestraits: 4 traits
+#> [1] "WingL"  "BeakH"  "UBeakL" "N.UBkL"
+#> 
+#>  $sites_richness:
+#>      DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
+#>       50      267      981      258      270      687 
+#> 
+
+# }
+```
