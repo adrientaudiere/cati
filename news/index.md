@@ -1,6 +1,10 @@
 # Changelog
 
+## cati (development version)
+
 ## cati 0.99.6
+
+CRAN release: 2026-03-31
 
 ## cati 0.99.5
 
