@@ -407,7 +407,7 @@ summary(res.finch.withIV)
 #>    8.50   11.20   15.45   19.88   23.02   39.00 
 #> 
 #> $`tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))`
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
 #>  0.7009  2.5260  3.7846  6.2333  7.7401 31.0644       4 
 #> 
 plot(res.finch.withIV)

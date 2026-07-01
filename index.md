@@ -16,24 +16,28 @@ processes](https://doi.org/10.1111/ecog.01433)**.
 ### Install the latest versions of all dependencies from CRAN:
 
 ``` r
+
 install.packages(c("devtools", "e1071", "mice", "rasterVis", "hypervolume", "cluster", "geometry", "vegan", "nlme", "ade4", "ape"))
 ```
 
 ### Install cati’s current development version from Github:
 
 ``` r
+
 devtools::install_github("adrientaudiere/cati")
 ```
 
 ### Install cati’s cran version:
 
 ``` r
+
 install.packages("cati")
 ```
 
 ### Attach the package and you are ready to start:
 
 ``` r
+
 library(cati)
 ```
 

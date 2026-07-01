@@ -67,6 +67,7 @@ Adrien Taudiere Julie Messier
 ## Examples
 
 ``` r
+
   data(finch.ind)
   # \donttest{
   cond<-seq(1,length(sp.finch)*2, by = 2)
@@ -87,9 +88,9 @@ Adrien Taudiere Julie Messier
   
   res.partvar.finch
 #>                WingL        BeakH       UBeakL       N.UBkL
-#> sites   9.115560e-08 5.585495e-08 1.134778e-07 8.753975e-08
-#> species 4.683656e-01 4.837630e-01 4.770527e-01 4.763556e-01
-#> genus   4.683653e-01 4.837618e-01 4.770511e-01 4.763569e-01
+#> sites   9.536858e-08 4.373588e-08 9.505711e-08 5.237196e-08
+#> species 4.683641e-01 4.837627e-01 4.770516e-01 4.758448e-01
+#> genus   4.683669e-01 4.837622e-01 4.770522e-01 4.768678e-01
 #> within  6.326897e-02 3.247506e-02 4.589606e-02 4.728743e-02
 #> attr(,"class")
 #> [1] "partvar"
