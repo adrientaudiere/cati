@@ -16,7 +16,7 @@
 
 \arguments{
 	\item{x}{
-		An object of class Tstats, ComIndex, ComIndexMulti or listofindex. 
+		An object of class Tstats, ComIndex, ComIndexMulti or listofindex. Objects made by these functions or by \code{\link{as.listofindex}} carry the layout of their null values. For a hand-built list whose numbers of plots, traits or permutations are equal, the layout is guessed from sizes and may be wrong; use \code{\link{ses}} with \code{null.dims} in that case.
 	}
 	
 	\item{na.rm}{
@@ -25,7 +25,7 @@
 }
 
 \value{
-	A list of p-value for each metrics, traits and grouping if needed (e.g. sites) 
+	A list of p-value for each metrics, traits and grouping if needed (e.g. sites). \code{pval.inf} is small when the observed value is lower than the null values, \code{pval.sup} when it is higher. Ties count against significance; NA null values are dropped; the p-value is NA when the observed value or all null values are NA.
 }
 
 \author{

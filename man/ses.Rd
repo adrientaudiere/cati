@@ -9,7 +9,7 @@
 }
 
 \usage{
-	ses(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975))
+	ses(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975), null.dims = NULL)
 }
 
 \arguments{
@@ -25,10 +25,14 @@
 		Numeric vectors of length 2, giving the quantile to calculation confidence interval. By default val.quant = c(0.025,0.975) for a bilateral test with alpha = 5\%.
 	}
 
+	\item{null.dims}{
+		Integer vector of length 2 giving the dimensions of the \code{nullmodel} array that match the rows and the columns of \code{obs}; the remaining dimension holds the permutations. For example \code{c(3, 2)} for a null array of permutations x traits x plots and an observed matrix of plots x traits. By default (NULL), the layout stored by \code{\link{as.listofindex}} is used, or the dimensions are guessed from their sizes.
+	}
+
 }
 
 \details{
-	Warning: to detect automatically the correspondence between dimension of observed matrix and null model list or array, observed matrix needs to have different numbers of rows and columns. In the case of same row and column number, please verify manually the correspondance beatween the rows of the observed matrix and the null model array.
+	Warning: to detect automatically the correspondence between dimension of observed matrix and null model list or array, observed matrix, null model and permutations need to have different sizes. When two sizes are equal, give the layout with \code{null.dims}. Objects converted with \code{\link{as.listofindex}} (as done by \code{ses.listofindex}, \code{Pval} and the plot functions) carry their layout and need no \code{null.dims}.
 }
 
 \value{

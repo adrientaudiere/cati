@@ -36,7 +36,7 @@
 	}
 	
 	\item{index}{
-		A vector of function to apply to traits vectors in the form "mean(x, na.rm = TRUE)" or "range(x)", see examples for more complexe functions.
+		A vector of function to apply to traits vectors in the form "mean(x, na.rm = TRUE)" or "range(x)", see examples for more complexe functions. Rows are sorted by \code{ind.plot} inside the function, so to group by plot or species inside \code{index} use the internal variables \code{ind.plot} and \code{sp} (e.g. "tapply(x, ind.plot, mean)"), not vectors from your workspace.
 	}
 	
 	\item{nullmodels}{
@@ -215,10 +215,10 @@ sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), split = 
 
 #New list of function "funct"
 
-funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
-     "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
-     "tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-     "tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))" )
+funct.1<-c("tapply(x, ind.plot, function(x) mean(x, na.rm = TRUE))",
+     "tapply(x, ind.plot, function(x) kurtosis(x, na.rm = TRUE))",
+     "tapply(x, ind.plot, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
+     "tapply(x, ind.plot, function(x) CVNND(x, na.rm = TRUE))" )
 
 fact<-unlist(sites_bypop)  
 funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = TRUE))",
