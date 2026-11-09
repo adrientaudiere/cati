@@ -15,6 +15,7 @@ This release fixes the bugs found in an external audit of cati 0.99.6 (GH-11 to 
 * `ComIndex()` and `ComIndexMulti()` draw each trait from its own values in the `regional.pop` null model (GH-14).
 * `ComIndex()` and `ComIndexMulti()` use the regional pool of each community when `reg.pool` is a list, apply `SE` in the `local` null model, accept `SE.reg.pool` as a list, report the number of species in `$sites_richness`, sample correctly in plots with a single individual, and give different draws to plots of equal size when `independantTraits = FALSE` (GH-21).
 * `ComIndex()` and `ComIndexMulti()` work with a single trait.
+* `ComIndex()` with `nullmodels = "regional.pop"` or `"regional.pop.prab"` evaluates `index` on one value per population with `ind.plot` and `sp` giving the plot and species of each population, so indices such as `"tapply(x, ind.plot, mean)"` work with every null model. The `ComIndex()` example no longer needs a workspace variable.
 * `ComIndexMulti()` builds the null values of each trait from that trait only (GH-13).
 * `ComIndexMulti()` with `nullmodels = "regional.pop.prab"` no longer errors, and groups population-level values with `by.factor`.
 * `CVNND()` no longer returns `NA` when `na.rm = FALSE` (GH-21).

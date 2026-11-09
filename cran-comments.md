@@ -1,32 +1,22 @@
-## Resubmission
+## Submission
 
-This is a resubmission. Changes in this version:
-
-* Replaced the `FD` dependency (scheduled for CRAN archival on 2026-04-15)
-  with `cluster::daisy()` in `SumBL()` and `MinMaxMST()`.
-* Fixed R >= 4.5 compatibility: `class(matrix) == "string"` comparisons in
-  `if` conditions now cause errors in R 4.5; replaced with `is.list()`,
-  `inherits()`, and `identical(class(x), "list")` throughout.
-* Fixed `ses()` / `ses.Tstats()`: non-conformable array error when the number
-  of communities equals the number of traits.
-* Fixed `sum_Tstats()` type "percent"/"all": NA subscript error with missing
-  trait values.
-
-The maintainer email has changed to adrien.taudiere@zaclys.net.
+This is a bug-fix release (0.99.6 -> 0.99.7). It fixes the bugs reported in an
+external audit of 0.99.6, several of which gave wrong numerical results in
+`Tstats()`, `ComIndex()`, `ComIndexMulti()`, `ses()` and `Pval()`. NEWS.md lists
+every change, including a breaking-changes section (`Pval()` tail names now
+match `sum_Tstats()`, `Pval()` returns every trait, `Tstats()` rows follow
+`levels(ind.plot)`).
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+Local check with `--as-cran`, `--run-donttest` and remote incoming checks:
 
-* NOTE: New maintainer email address (intentional change).
-* NOTE: "unable to verify current time" — network issue in local check
-  environment; not reproducible on CRAN infrastructure.
+0 errors | 0 warnings | 0 notes
 
 ## Notes on urlchecker
 
-* `urlchecker::url_check()` reports a 403 for `https://doi.org/10.1111/ecog.01433`
-  (README.md line 11). This is a false positive: the DOI resolves correctly in a
-  browser; the publisher's server blocks automated HEAD requests.
+* `urlchecker::url_check()` timed out on `https://CRAN.R-project.org/package=cati`
+  (README.md badges) from the local network. The URL is valid.
 
 ## Downstream dependencies
 

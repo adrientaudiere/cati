@@ -235,3 +235,28 @@ test_that("ComIndex works with a single trait", {
   )
   expect_equal(as.vector(r$obs[[1]]), as.vector(tapply(tr[, 1], plot, mean)))
 })
+
+test_that("regional.pop and regional.pop.prab group population values with ind.plot and sp", {
+  set.seed(1)
+  tr <- cbind(t1 = runif(60), t2 = runif(60))
+  plot <- factor(rep(c("P1", "P2", "P3"), each = 20))
+  sp <- factor(rep(c("a", "b", "c", "d"), 15))
+  pop_mean <- apply(tr, 2, \(x) tapply(x, paste(sp, plot), mean))
+  pop_plot <- sub(".* ", "", rownames(pop_mean))
+  expected <- apply(pop_mean, 2, \(x) tapply(x, pop_plot, mean))
+
+  for (nm in c("regional.pop", "regional.pop.prab")) {
+    r <- ComIndex(
+      tr,
+      index = c("tapply(x, ind.plot, mean)", "tapply(x, sp, length)"),
+      nullmodels = c(nm, nm),
+      ind.plot = plot,
+      sp = sp,
+      nperm = 5,
+      printprogress = FALSE
+    )
+    expect_equal(unname(r$obs[[1]]), unname(expected))
+    expect_equal(dim(r$null[[1]]), c(2, 3, 5))
+    expect_true(all(r$obs[[2]] == 3))
+  }
+})

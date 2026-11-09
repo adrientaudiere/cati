@@ -2091,6 +2091,16 @@ ComIndex <- function(
   sp <- sp[o]
 
   name_sp_sites <- paste(sp, ind.plot, sep = "_")
+  # plot and species of each population, in the row order of tapply(x, name_sp_sites):
+  # inside index, regional.pop and regional.pop.prab see them as ind.plot and sp
+  pop_rows <- match(levels(as.factor(name_sp_sites)), name_sp_sites)
+  ind.plot_pop <- ind.plot[pop_rows]
+  sp_pop <- sp[pop_rows]
+  eval_pop <- function(x) {
+    ind.plot <- ind.plot_pop
+    sp <- sp_pop
+    eval(parse(text = functionindex))
+  }
   comm <- NULL
   comm <- t(table(ind.plot, 1:length(ind.plot)))
 
@@ -2427,9 +2437,7 @@ ComIndex <- function(
           tapply(x, name_sp_sites, mean, na.rm = T)
         })
 
-        dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, function(x) {
-          eval(parse(text = functionindex))
-        }))[1]
+        dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, eval_pop))[1]
         null[[eval(namesindex[i])]] <- array(NA, dim = c(ntr, dim2, nperm))
         if (is.null(dim2)) {
           null[[eval(namesindex[i])]] <- array(NA, dim = c(ntr, 1, nperm))
@@ -2439,9 +2447,7 @@ ComIndex <- function(
           tapply(x, rownames(traits_by_sp), mean, na.rm = T)
         })
 
-        dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, function(x) {
-          eval(parse(text = functionindex))
-        }))[1]
+        dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, eval_pop))[1]
         null[[eval(namesindex[i])]] <- array(NA, dim = c(ntr, dim2, nperm))
         if (is.null(dim2)) {
           null[[eval(namesindex[i])]] <- array(NA, dim = c(ntr, 1, nperm))
@@ -2479,7 +2485,7 @@ ComIndex <- function(
           null[[eval(namesindex[i])]][t, , ] <- apply(
             nm_bypop[[eval(namesindex[i])]],
             2,
-            function(x) eval(parse(text = functionindex))
+            eval_pop
           )
         } else if (nullmodels[i] == "2sp.prab") {
           nm_bypop[[eval(namesindex[i])]] <- apply(nm, 2, function(x) {
@@ -2489,7 +2495,7 @@ ComIndex <- function(
           null[[eval(namesindex[i])]][t, , ] <- apply(
             nm_bypop[[eval(namesindex[i])]],
             2,
-            function(x) eval(parse(text = functionindex))
+            eval_pop
           )
         } else {
           null[[eval(namesindex[i])]][t, , ] <- apply(nm, 2, function(x) {
@@ -2538,14 +2544,10 @@ ComIndex <- function(
         obs[[eval(namesindex[i])]] <- array(
           dim = c(
             ntr,
-            dim(apply(traits_by_pop, 2, function(x) {
-              eval(parse(text = functionindex))
-            }))[1]
+            dim(apply(traits_by_pop, 2, eval_pop))[1]
           )
         )
-        obs[[eval(namesindex[i])]] <- apply(traits_by_pop, 2, function(x) {
-          eval(parse(text = functionindex))
-        })
+        obs[[eval(namesindex[i])]] <- apply(traits_by_pop, 2, eval_pop)
       }
 
       if (nullmodels[i] == "2sp.prab") {
@@ -2555,14 +2557,10 @@ ComIndex <- function(
         obs[[eval(namesindex[i])]] <- array(
           dim = c(
             ntr,
-            dim(apply(traits_by_sp, 2, function(x) {
-              eval(parse(text = functionindex))
-            }))[1]
+            dim(apply(traits_by_sp, 2, eval_pop))[1]
           )
         )
-        obs[[eval(namesindex[i])]] <- apply(traits_by_sp, 2, function(x) {
-          eval(parse(text = functionindex))
-        })
+        obs[[eval(namesindex[i])]] <- apply(traits_by_sp, 2, eval_pop)
       } else if (nullmodels[i] == "1" | nullmodels[i] == "2") {
         obs[[eval(namesindex[i])]] <- array(
           dim = c(
