@@ -5,7 +5,7 @@
 }
 
 \description{
-	calculation standardized effect size and confidence interval for a matrix of statistics and the related null model expressed as a list or as an array. Internal function use by other functions of the package. You can transpose the observed matrix to represent either the SES by traits or by plots. 
+	calculation standardized effect size and confidence interval for a matrix of statistics and the related null model expressed as a list or as an array. Internal function use by other functions of the package. You can transpose the observed matrix to represent either the SES by traits or by plots; the result is transposed in the same way, except for a square matrix, whose transposition cannot be detected.
 }
 
 \usage{

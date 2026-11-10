@@ -98,3 +98,16 @@ test_that("ses and Pval use the null layout when sizes collide (GH-20)", {
     unname(expected)
   )
 })
+
+test_that("ses accepts a transposed obs with a null from as.listofindex", {
+  res <- Tstats(
+    traits.finch,
+    ind.plot = ind.plot.finch,
+    sp = sp.finch,
+    nperm = 9,
+    printprogress = FALSE
+  )
+  loi <- as.listofindex(list(res))
+  s <- ses(loi[[1]], loi[[2]])$ses
+  expect_equal(ses(t(loi[[1]]), loi[[2]])$ses, t(s))
+})

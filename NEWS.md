@@ -9,7 +9,7 @@ Results that do not change:
 * Observed values of `Tstats()`, when no plot name is contained in another one and the levels of `ind.plot` are in alphabetical order.
 * `ComIndex()` with the `local` and `regional.ind` null models, when the rows are sorted by plot, `reg.pool` is not a list, `SE = 0`, `independantTraits = TRUE` and the index does not compute nearest-neighbour distances on tied values. On `finch.ind`, observed values, null values and SES are identical.
 * Null values of `T_IC.IR` and `T_PC.PR` in `Tstats()` when `reg.pool` is not a list, the rows are sorted by plot and the traits have no `NA`: the differences are within noise.
-* P-values of `sum_Tstats()`, except when the observed value equals null values or is `NA`.
+* P-values of `sum_Tstats()`, except when the observed value equals null values or is `NA`, or when some null values are `NA`.
 
 Results that change:
 
@@ -23,7 +23,7 @@ Results that change:
 * `ComIndex()` and `ComIndexMulti()` when the rows are not sorted by plot (GH-15): indices using `sp` or `by.factor`, and the observed values of `regional.pop`, were computed on misaligned species.
 * `MNND()`, `MinNND()`, `SDNND()` and `MinMaxMST()` when trait values are tied (GH-21): zero distances were dropped. Tied values are the rule in `finch.ind` (92% to 98% of the values), and the significance of `MNND` under `regional.ind` changes in 13 of 24 cells.
 * `ComIndex()` and `ComIndexMulti()` null values when `reg.pool` is a list, `SE` is not 0 with the `local` null model, or `independantTraits = FALSE` (GH-21).
-* `ses()`, `ses.Tstats()`, `plot.Tstats()` and `Pval()` when the number of plots equals the number of traits, or, for `ComIndex()`, when the number of permutations equals one of them (GH-20): rows and columns were swapped.
+* `ses()`, `ses.Tstats()`, `plot.Tstats()` and `Pval()` when the number of plots equals the number of traits, or, for `ComIndex()`, when the number of permutations equals one of them (GH-20): rows and columns were swapped. For a `ComIndex()` index that returns one value per trait, such as `"mean(x)"`, the layout is still guessed from sizes.
 * `Pval()`: `pval.inf` and `pval.sup` are swapped, and the traits after the first one were missing (GH-19, GH-20).
 * `sum_Tstats()`: the site list of `T_IC.IR.inf` and the binary row of `T_PC.PR.sup` showed another statistic (GH-16).
 
@@ -32,6 +32,7 @@ Results that change:
 * `Pval()`: `pval.inf` and `pval.sup` are swapped to match `sum_Tstats()`, so `pval.inf` is now small when the observed value is lower than the null values. Scripts that read `pval.inf` or `pval.sup` silently get the other tail; swap the two names to keep the previous meaning (GH-19).
 * `Pval()` now returns one element per trait instead of only the first trait (GH-20).
 * `Tstats()`: rows of `T_IP.IC`, `T_IC.IR` and `T_PC.PR` follow `levels(ind.plot)`, the order already used by `reg.pool` lists, instead of the alphabetical order. When the levels of `ind.plot` are not alphabetical, the rows of `T_PC.PR` move; index rows by name rather than by position (GH-17).
+* `MNND()`, `MinNND()`, `SDNND()` and `MinMaxMST()` keep the zero distances between individuals with the same trait values, and only exclude the distance of an individual to itself, as `CVNND()` already did. They used to drop every zero distance, which ignored tied values. With traits measured at a coarse resolution, `MinNND()` and `MinMaxMST()` are now often 0 (GH-21).
 
 ## Bug fixes
 
@@ -45,22 +46,18 @@ Results that change:
 * `ComIndexMulti()` with `nullmodels = "regional.pop.prab"` no longer errors, and groups population-level values with `by.factor`.
 * `CVNND()` no longer returns `NA` when `na.rm = FALSE` (GH-21).
 * `decompCTRE()` excludes individuals with `NA` traits from the weights (GH-21).
-* `MinMaxMST()`, `MinNND()`, `MNND()` and `SDNND()` count zero distances between tied trait values (GH-21).
 * `plotDistri()` draws populations of a single individual at their value and builds its legend with any number of levels (GH-21).
-* `plotRandtest()` reads the null values of `ComIndex` objects and of any `listofindex` in the right layout, and its per-trait plot now tests the mean of the index over communities (GH-21).
+* `plotRandtest()` reads the null values of `Tstats` objects and of `ComIndex` indices that return one value per community in the right layout, and its per-trait plot now tests the mean of the index over communities (GH-21). It still fails on `ComIndexMulti` objects and on `ComIndex` indices that return one value per trait.
 * `plotSESvar()` works with one or two traits and no longer changes the global palette (GH-21).
 * `plotSpPop()` and `plotSpVar()` keep species and traits aligned when the rows are not sorted by plot (GH-15), match populations without splitting names on `_`, and no longer fail on `color.lm` with the default `min.ind.signif` (GH-21).
-* `Pval()`: `pval.inf` and `pval.sup` are swapped to match `sum_Tstats()`, so `pval.inf` is now small when the observed value is lower than the null values. Scripts that read `pval.inf` or `pval.sup` silently get the other tail; swap the two names to keep the previous meaning (GH-19).
-* `Pval()` now returns one element per trait instead of only the first trait (GH-20).
 * `Pval()` and `sum_Tstats(type = "p.value")` count ties with the null values against significance, drop `NA` null values from the denominator, and return `NA` when the observed value or all null values are `NA` (GH-19).
 * `RandCom()` gives distinct names to species beyond the 26th (GH-21).
 * `RaoRel()` returns `FD$Beta_add` and `FD$Beta_prop` with `Jost = TRUE` (GH-21).
 * `samplingSubsetData()` samples correctly from units of one individual with `type = "count"`, keeps the largest units first with `type = "factorBySize"`, and respects `MinSample` with `type = "propBySize"` (GH-21).
-* `ses()` gains a `null.dims` argument to give the layout of a bare null array. `ses()`, `ses.listofindex()` and `Pval()` use the layout of `Tstats` and `ComIndex` null values instead of guessing it from sizes, which gave wrong values when the numbers of plots, traits or permutations were equal (GH-20).
+* `ses()` gains a `null.dims` argument to give the layout of a bare null array. `ses()`, `ses.listofindex()` and `Pval()` use the layout of `Tstats` and `ComIndex` null values instead of guessing it from sizes, which gave wrong values when the numbers of plots, traits or permutations were equal (GH-20). The layout is still guessed for `ComIndex` indices that return one value per trait.
 * `sum_Tstats()`: the `T_IC.IR.inf` row of `type = "site"` and the `T_PC.PR.sup` row of `type = "binary"` (and of `type = "all"`) report their own statistic (GH-16).
 * `Tstats()` matches the populations of a plot by exact name, so plot `p1` no longer pools the populations of `p10` and plot names may contain regex characters (GH-11).
 * `Tstats()` null models 1, 2 and 2sp keep each permutation and plot together, so null values no longer mix individuals of other plots or other permutations (GH-12, GH-18).
-* `Tstats()`: rows of `T_IP.IC`, `T_IC.IR` and `T_PC.PR` follow `levels(ind.plot)`, the order already used by `reg.pool` lists, instead of the alphabetical order. When the levels of `ind.plot` are not alphabetical, the rows of `T_PC.PR` move; index rows by name rather than by position (GH-17).
 * `Tstats()` accepts a character `ind.plot`, unused levels, and `@` in species or plot names, and gives different draws to plots of equal size when `independantTraits = FALSE` (GH-21).
 * `Tstats()` computes the population means of null model 2sp with `na.rm = TRUE`, and stores `NA` instead of the string `"NA"` for plots with a single individual (GH-12, GH-19).
 

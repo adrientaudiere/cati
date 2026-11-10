@@ -6120,6 +6120,15 @@ ses <- function(
 
   # as.listofindex() stores the layout of Tstats and ComIndex null arrays in attr "cond"
   layout <- if (is.null(null.dims)) attr(nullmodel, "cond") else null.dims
+  # a transposed obs (allowed, see ?ses) reverses the recorded layout
+  if (
+    is.null(null.dims) &&
+      !is.null(layout) &&
+      !all(dim(obs) == dim(nullmodel)[layout]) &&
+      all(dim(obs) == rev(dim(nullmodel)[layout]))
+  ) {
+    layout <- rev(layout)
+  }
 
   if (dim(obs)[1] == dim(obs)[2] && is.null(layout)) {
     warning(
