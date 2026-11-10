@@ -11,3 +11,6 @@
 ^cran-comments\.md$
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
+^CLAUDE\.md$
+^CONTEXT\.md$
+^ROADMAP\.md$

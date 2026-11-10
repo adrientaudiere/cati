@@ -81,11 +81,11 @@ test_that("SumBL with different hclust methods works", {
 
 # ── MinMaxMST ─────────────────────────────────────────────────────────────────
 
-test_that("MinMaxMST with gower.dist = TRUE returns value in (0, 1]", {
+test_that("MinMaxMST with gower.dist = TRUE returns value in [0, 1]", {
   tr <- na.omit(traits.finch[1:50, 1, drop = FALSE])
   val <- MinMaxMST(tr)
   expect_length(val, 1)
-  expect_true(is.numeric(val) && val > 0 && val <= 1)
+  expect_true(is.numeric(val) && val >= 0 && val <= 1) # 0 when tied values give a zero-length edge
 })
 
 test_that("MinMaxMST with gower.dist = FALSE works", {

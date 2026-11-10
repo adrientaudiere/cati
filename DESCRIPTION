@@ -1,8 +1,8 @@
 Package: cati
 Type: Package
 Title: Community Assembly by Traits: Individuals and Beyond
-Version: 0.99.6.9000
-Date: 2026-03-30 
+Version: 0.99.7
+Date: 2026-11-09
 Encoding: UTF-8
 Authors@R:
     c(person(given = "Adrien",

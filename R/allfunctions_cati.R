@@ -140,11 +140,14 @@ Tstats <- function(
     traits <- as.matrix(traits)
   }
 
+  ind.plot <- droplevels(as.factor(ind.plot))
+
   names_sp_ind.plot <- as.factor(paste(sp, ind.plot, sep = "@"))
-  Tplosp <- unlist(
-    strsplit(levels(names_sp_ind.plot), split = "@"),
-    use.names = FALSE
-  )[2 * (1:nlevels(names_sp_ind.plot))]
+  # factor with the levels of ind.plot, so tapply() over Tplosp follows levels(ind.plot) like var_IC
+  Tplosp <- factor(
+    as.character(ind.plot)[match(levels(names_sp_ind.plot), names_sp_ind.plot)],
+    levels = levels(ind.plot)
+  )
   names(Tplosp) <- levels(names_sp_ind.plot)
   #Tplosp is the plot in wich the population is
 
@@ -194,7 +197,7 @@ Tstats <- function(
 
     for (s in 1:nlevels(ind.plot)) {
       T_IP.IC[s, t] <- mean(
-        var_IP[grepl(levels(ind.plot)[s], Tplosp), t],
+        var_IP[Tplosp == levels(ind.plot)[s], t],
         na.rm = T
       ) /
         var_IC[s, t]
@@ -257,11 +260,11 @@ Tstats <- function(
       SE.reg.pool <- SE
     }
 
-    if (length(SE.reg.pool) == 1) {
+    if (!is.list(SE.reg.pool) && length(SE.reg.pool) == 1) {
       SE.reg.pool <- rep(SE.reg.pool, times = ncol(traits))
     }
 
-    if (is.vector(SE.reg.pool)) {
+    if (!is.list(SE.reg.pool)) {
       SE.reg.pool <- rep(list(SE.reg.pool), nlevels(ind.plot))
     }
 
@@ -297,7 +300,11 @@ Tstats <- function(
     }
 
     if (!independantTraits) {
-      seed <- sample(.Machine$integer.max, size = nperm)
+      # one seed per (permutation, community), shared by all traits
+      seed <- matrix(
+        sample(.Machine$integer.max, size = nperm * nlevels(ind.plot)),
+        nrow = nperm
+      )
     }
 
     #________________________________________
@@ -321,7 +328,7 @@ Tstats <- function(
           # Sample individual traits values within communities
           if (length(traits[ind.plot == levels(ind.plot)[s], t]) != 1) {
             if (!independantTraits) {
-              set.seed(seed[i])
+              set.seed(seed[i, s])
             }
             perm_ind.plot1 <- sample(
               trait.intern[ind.plot == levels(ind.plot)[s]],
@@ -329,7 +336,7 @@ Tstats <- function(
             )
             traits.nm1[[t]][[s]][[i]] <- perm_ind.plot1
           } else {
-            traits.nm1[[t]][[s]][[i]] <- "NA"
+            traits.nm1[[t]][[s]][[i]] <- NA_real_
           }
         }
       }
@@ -358,7 +365,7 @@ Tstats <- function(
 
           # Sample individual traits values in the region
           if (!independantTraits) {
-            set.seed(seed[i])
+            set.seed(seed[i, s])
           }
           perm_ind.plot2 <- sample(trait.intern, table(ind.plot)[s])
           traits.nm2[[t]][[s]][[i]] <- perm_ind.plot2
@@ -373,7 +380,7 @@ Tstats <- function(
     # Null model 2sp: Sample populationnal traits values in the region
 
     traits_by_sp <- apply(traits, 2, function(x) {
-      tapply(x, names_sp_ind.plot, mean)
+      tapply(x, names_sp_ind.plot, mean, na.rm = TRUE)
     })
     traits_by_pop <- traits_by_sp[
       match(names_sp_ind.plot, rownames(traits_by_sp)),
@@ -399,7 +406,7 @@ Tstats <- function(
 
           # Sample populationnal traits values in the region
           if (!independantTraits) {
-            set.seed(seed[i])
+            set.seed(seed[i, s])
           }
           perm_ind.plot2sp <- sample(traits_by_pop[, t], table(ind.plot)[s])
           traits.nm2sp[[t]][[s]][[i]] <- perm_ind.plot2sp
@@ -421,12 +428,19 @@ Tstats <- function(
     }
 
     yy <- length(names_sp_ind.plot)
+    # Permutation i of a null model, put back in the row order of traits
+    # (traits.nmX[[t]] is stored plot by plot, then permutation by permutation)
+    perm_rows <- function(nm, i) {
+      x <- rep(NA_real_, yy)
+      for (s in 1:nlevels(ind.plot)) {
+        x[ind.plot == levels(ind.plot)[s]] <- nm[[s]][[i]]
+      }
+      x
+    }
     for (t in 1:ncol(traits)) {
       for (i in 1:nperm) {
         mean_IP_nm2sp[i, t, ] <- tapply(
-          unlist(traits.nm2sp[[t]], use.names = FALSE)[
-            (1 + (i - 1) * yy):(i * yy)
-          ],
+          perm_rows(traits.nm2sp[[t]], i),
           names_sp_ind.plot,
           function(x) mean(x, na.rm = T)
         )
@@ -445,9 +459,7 @@ Tstats <- function(
     for (t in 1:ncol(traits)) {
       for (i in 1:nperm) {
         var_IP_nm1[i, t, ] <- tapply(
-          unlist(traits.nm1[[t]], use.names = FALSE)[
-            (1 + (i - 1) * yy):(i * yy)
-          ],
+          perm_rows(traits.nm1[[t]], i),
           names_sp_ind.plot,
           function(x) var(x, na.rm = T)
         )
@@ -458,24 +470,18 @@ Tstats <- function(
           na.rm = T
         )
         var_IC_nm1[i, t, ] <- tapply(
-          unlist(traits.nm1[[t]], use.names = FALSE)[
-            (1 + (i - 1) * yy):(i * yy)
-          ],
+          perm_rows(traits.nm1[[t]], i),
           ind.plot,
           function(x) var(x, na.rm = T)
         )
         var_IC_nm2[i, t, ] <- tapply(
-          unlist(traits.nm2[[t]], use.names = FALSE)[
-            (1 + (i - 1) * yy):(i * yy)
-          ],
+          perm_rows(traits.nm2[[t]], i),
           ind.plot,
           function(x) var(x, na.rm = T)
         )
         var_PR_nm2sp[i, t] <- var(as.vector(mean_IP_nm2sp[i, t, ]), na.rm = T)
         var_IR_nm2[i, t] <- var(
-          unlist(traits.nm2[[t]], use.names = FALSE)[
-            (1 + (i - 1) * yy):(i * yy)
-          ],
+          perm_rows(traits.nm2[[t]], i),
           na.rm = T
         )
       }
@@ -488,7 +494,7 @@ Tstats <- function(
       for (i in 1:nperm) {
         for (s in 1:nlevels(ind.plot)) {
           T_IP.IC_nm1[i, t, s] <- mean(
-            var_IP_nm1[i, t, grepl(levels(ind.plot)[s], Tplosp)],
+            var_IP_nm1[i, t, Tplosp == levels(ind.plot)[s]],
             na.rm = T
           ) /
             var_IC_nm1[i, t, s]
@@ -512,9 +518,9 @@ Tstats <- function(
     colnames(T_PC.PR_nm2sp) <- colnames(traits)
   }
 
-  rownames(T_IP.IC) <- levels(as.factor(Tplosp))
-  rownames(T_IC.IR) <- levels(as.factor(Tplosp))
-  rownames(T_PC.PR) <- levels(as.factor(Tplosp))
+  rownames(T_IP.IC) <- levels(ind.plot)
+  rownames(T_IC.IR) <- levels(ind.plot)
+  rownames(T_PC.PR) <- levels(ind.plot)
 
   #________________________________________
   res <- list()
@@ -1011,43 +1017,36 @@ sum_Tstats <- function(x, val.quant = c(0.025, 0.975), type = "all") {
 
     for (t in 1:ncol(res$Tstats$T_IP.IC)) {
       for (s in 1:nrow(res$Tstats$T_IP.IC)) {
-        p.valueT_IP.IC.sup[s, t] <- (sum(
-          res$Tstats$T_IP.IC[s, t] < res$Tstats$T_IP.IC_nm[, t, s],
-          na.rm = T
-        ) +
-          1) /
-          (1 + length(res$Tstats$T_IP.IC_nm[, t, s]))
-        p.valueT_IC.IR.sup[s, t] <- (sum(
-          res$Tstats$T_IC.IR[s, t] < res$Tstats$T_IC.IR_nm[, t, s],
-          na.rm = T
-        ) +
-          1) /
-          (1 + length(res$Tstats$T_IC.IR_nm[, t, s]))
-        p.valueT_PC.PR.sup[s, t] <- (sum(
-          res$Tstats$T_PC.PR[s, t] < res$Tstats$T_PC.PR_nm[, t, s],
-          na.rm = T
-        ) +
-          1) /
-          (1 + length(res$Tstats$T_PC.PR_nm[, t, s]))
-
-        p.valueT_IP.IC.inf[s, t] <- (sum(
-          res$Tstats$T_IP.IC[s, t] > res$Tstats$T_IP.IC_nm[, t, s],
-          na.rm = T
-        ) +
-          1) /
-          (1 + length(res$Tstats$T_IP.IC_nm[, t, s]))
-        p.valueT_IC.IR.inf[s, t] <- (sum(
-          res$Tstats$T_IC.IR[s, t] > res$Tstats$T_IC.IR_nm[, t, s],
-          na.rm = T
-        ) +
-          1) /
-          (1 + length(res$Tstats$T_IC.IR_nm[, t, s]))
-        p.valueT_PC.PR.inf[s, t] <- (sum(
-          res$Tstats$T_PC.PR[s, t] > res$Tstats$T_PC.PR_nm[, t, s],
-          na.rm = T
-        ) +
-          1) /
-          (1 + length(res$Tstats$T_PC.PR_nm[, t, s]))
+        p.valueT_IP.IC.inf[s, t] <- perm_pval(
+          res$Tstats$T_IP.IC[s, t],
+          res$Tstats$T_IP.IC_nm[, t, s],
+          "inf"
+        )
+        p.valueT_IC.IR.inf[s, t] <- perm_pval(
+          res$Tstats$T_IC.IR[s, t],
+          res$Tstats$T_IC.IR_nm[, t, s],
+          "inf"
+        )
+        p.valueT_PC.PR.inf[s, t] <- perm_pval(
+          res$Tstats$T_PC.PR[s, t],
+          res$Tstats$T_PC.PR_nm[, t, s],
+          "inf"
+        )
+        p.valueT_IP.IC.sup[s, t] <- perm_pval(
+          res$Tstats$T_IP.IC[s, t],
+          res$Tstats$T_IP.IC_nm[, t, s],
+          "sup"
+        )
+        p.valueT_IC.IR.sup[s, t] <- perm_pval(
+          res$Tstats$T_IC.IR[s, t],
+          res$Tstats$T_IC.IR_nm[, t, s],
+          "sup"
+        )
+        p.valueT_PC.PR.sup[s, t] <- perm_pval(
+          res$Tstats$T_PC.PR[s, t],
+          res$Tstats$T_PC.PR_nm[, t, s],
+          "sup"
+        )
       }
     }
 
@@ -1091,7 +1090,7 @@ sum_Tstats <- function(x, val.quant = c(0.025, 0.975), type = "all") {
       cond.T_IC.IR.inf.mean,
       cond.T_IC.IR.sup.mean,
       cond.T_PC.PR.inf.mean,
-      cond.T_IC.IR.sup.mean
+      cond.T_PC.PR.sup.mean
     )
     rownames(summ.Tstats) <- c(
       "T_IP.IC.inf",
@@ -1403,7 +1402,7 @@ sum_Tstats <- function(x, val.quant = c(0.025, 0.975), type = "all") {
 
       if (sum(cond.T_IC.IR.inf[, t], na.rm = T) > 0) {
         summ.Tstats[3, t] <- paste(
-          na.exclude(rownames(cond.T_IC.IR.inf)[cond.T_IP.IC.inf[, t]]),
+          na.exclude(rownames(cond.T_IC.IR.inf)[cond.T_IC.IR.inf[, t]]),
           collapse = " "
         )
       } else {
@@ -1782,7 +1781,7 @@ sum_Tstats <- function(x, val.quant = c(0.025, 0.975), type = "all") {
 
       if (sum(cond.T_IC.IR.inf[, t], na.rm = T) > 0) {
         summ.Tstats$sites[3, t] <- paste(
-          na.exclude(rownames(cond.T_IC.IR.inf)[cond.T_IP.IC.inf[, t]]),
+          na.exclude(rownames(cond.T_IC.IR.inf)[cond.T_IC.IR.inf[, t]]),
           collapse = " "
         )
       } else {
@@ -1830,7 +1829,7 @@ sum_Tstats <- function(x, val.quant = c(0.025, 0.975), type = "all") {
       cond.T_IC.IR.inf.mean,
       cond.T_IC.IR.sup.mean,
       cond.T_PC.PR.inf.mean,
-      cond.T_IC.IR.sup.mean
+      cond.T_PC.PR.sup.mean
     )
 
     #__________
@@ -2085,12 +2084,23 @@ ComIndex <- function(
     )
   }
 
-  traits <- traits[order(ind.plot), ]
-
-  ind.plot <- ind.plot[order(ind.plot)]
-  sp <- sp[order(ind.plot)]
+  # sort all row-aligned inputs with one permutation (GH-15)
+  o <- order(ind.plot)
+  traits <- traits[o, , drop = FALSE]
+  ind.plot <- ind.plot[o]
+  sp <- sp[o]
 
   name_sp_sites <- paste(sp, ind.plot, sep = "_")
+  # plot and species of each population, in the row order of tapply(x, name_sp_sites):
+  # inside index, regional.pop and regional.pop.prab see them as ind.plot and sp
+  pop_rows <- match(levels(as.factor(name_sp_sites)), name_sp_sites)
+  ind.plot_pop <- ind.plot[pop_rows]
+  sp_pop <- sp[pop_rows]
+  eval_pop <- function(x) {
+    ind.plot <- ind.plot_pop
+    sp <- sp_pop
+    eval(parse(text = functionindex))
+  }
   comm <- NULL
   comm <- t(table(ind.plot, 1:length(ind.plot)))
 
@@ -2181,11 +2191,11 @@ ComIndex <- function(
       SE.reg.pool <- SE
     }
 
-    if (length(SE.reg.pool) == 1) {
+    if (!is.list(SE.reg.pool) && length(SE.reg.pool) == 1) {
       SE.reg.pool <- rep(SE.reg.pool, times = ncol(traits))
     }
 
-    if (is.vector(SE.reg.pool)) {
+    if (!is.list(SE.reg.pool)) {
       SE.reg.pool <- rep(list(SE.reg.pool), nlevels(ind.plot))
     }
 
@@ -2225,7 +2235,11 @@ ComIndex <- function(
     }
 
     if (!independantTraits) {
-      seed <- sample(.Machine$integer.max, size = nperm)
+      # one seed per (permutation, community), shared by all traits
+      seed <- matrix(
+        sample(.Machine$integer.max, size = nperm * nlevels(ind.plot)),
+        nrow = nperm
+      )
     }
 
     if (sum(nullmodels == "1") > 0) {
@@ -2243,14 +2257,22 @@ ComIndex <- function(
         perm_ind.plot <- list()
 
         for (n in 1:nperm) {
+          # Take measurement standard error into account
+          trait.intern <- traits[, t]
+          if (SE[t] != 0) {
+            trait.intern <- rnorm(
+              length(trait.intern),
+              mean = trait.intern,
+              sd = SE[t]
+            )
+          }
           for (s in 1:ncom) {
             if (!independantTraits) {
-              set.seed(seed[n])
+              set.seed(seed[n, s])
             }
-            perm_ind.plot[[s]] <- sample(
-              traits[ind.plot == levels(ind.plot)[s], t],
-              table(ind.plot)[s]
-            )
+            # sample.int(): sample() on a single value x would draw from 1:x
+            trait.com <- trait.intern[ind.plot == levels(ind.plot)[s]]
+            perm_ind.plot[[s]] <- trait.com[sample.int(length(trait.com))]
           }
 
           traits.nm1[[eval(namestraits[t])]][, n] <- unlist(
@@ -2277,23 +2299,20 @@ ComIndex <- function(
         )
         perm_ind.plot <- list()
 
-        # Take measurement standard error into account
-        for (s in 1:ncom) {
-          trait.intern <- reg.pool[[s]][, t]
-          SE.reg.pool.intern <- SE.reg.pool[[s]][t]
-          if (SE.reg.pool.intern != 0) {
-            trait.intern <- rnorm(
-              length(trait.intern),
-              mean = trait.intern,
-              sd = SE.reg.pool.intern
-            )
-          }
-        }
-
         for (n in 1:nperm) {
           for (s in 1:ncom) {
+            # Take measurement standard error into account
+            trait.intern <- reg.pool[[s]][, t]
+            SE.reg.pool.intern <- SE.reg.pool[[s]][t]
+            if (SE.reg.pool.intern != 0) {
+              trait.intern <- rnorm(
+                length(trait.intern),
+                mean = trait.intern,
+                sd = SE.reg.pool.intern
+              )
+            }
             if (!independantTraits) {
-              set.seed(seed[n])
+              set.seed(seed[n, s])
             }
             perm_ind.plot[[s]] <- sample(trait.intern, table(ind.plot)[s])
           }
@@ -2320,6 +2339,8 @@ ComIndex <- function(
 
       traits_by_pop <- traits_by_sp[
         match(name_sp_sites, rownames(traits_by_sp)),
+        ,
+        drop = FALSE
       ]
 
       for (t in 1:ntr) {
@@ -2333,9 +2354,9 @@ ComIndex <- function(
         for (n in 1:nperm) {
           for (s in 1:ncom) {
             if (!independantTraits) {
-              set.seed(seed[n])
+              set.seed(seed[n, s])
             }
-            perm_ind.plot[[s]] <- sample(traits_by_pop, table(ind.plot)[s])
+            perm_ind.plot[[s]] <- sample(traits_by_pop[, t], table(ind.plot)[s])
           }
 
           traits.nm2sp[[eval(namestraits[t])]][, n] <- unlist(
@@ -2367,7 +2388,7 @@ ComIndex <- function(
 
         for (n in 1:nperm) {
           if (!independantTraits) {
-            set.seed(seed[n])
+            set.seed(seed[n, 1])
           }
           perm_ind.plot <- sample(traits_by_sp[, t], dim(traits_by_sp)[1])
 
@@ -2416,9 +2437,7 @@ ComIndex <- function(
           tapply(x, name_sp_sites, mean, na.rm = T)
         })
 
-        dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, function(x) {
-          eval(parse(text = functionindex))
-        }))[1]
+        dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, eval_pop))[1]
         null[[eval(namesindex[i])]] <- array(NA, dim = c(ntr, dim2, nperm))
         if (is.null(dim2)) {
           null[[eval(namesindex[i])]] <- array(NA, dim = c(ntr, 1, nperm))
@@ -2428,9 +2447,7 @@ ComIndex <- function(
           tapply(x, rownames(traits_by_sp), mean, na.rm = T)
         })
 
-        dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, function(x) {
-          eval(parse(text = functionindex))
-        }))[1]
+        dim2 <- dim(apply(nm_bypop.bis[[eval(namesindex[i])]], 2, eval_pop))[1]
         null[[eval(namesindex[i])]] <- array(NA, dim = c(ntr, dim2, nperm))
         if (is.null(dim2)) {
           null[[eval(namesindex[i])]] <- array(NA, dim = c(ntr, 1, nperm))
@@ -2468,7 +2485,7 @@ ComIndex <- function(
           null[[eval(namesindex[i])]][t, , ] <- apply(
             nm_bypop[[eval(namesindex[i])]],
             2,
-            function(x) eval(parse(text = functionindex))
+            eval_pop
           )
         } else if (nullmodels[i] == "2sp.prab") {
           nm_bypop[[eval(namesindex[i])]] <- apply(nm, 2, function(x) {
@@ -2478,7 +2495,7 @@ ComIndex <- function(
           null[[eval(namesindex[i])]][t, , ] <- apply(
             nm_bypop[[eval(namesindex[i])]],
             2,
-            function(x) eval(parse(text = functionindex))
+            eval_pop
           )
         } else {
           null[[eval(namesindex[i])]][t, , ] <- apply(nm, 2, function(x) {
@@ -2527,14 +2544,10 @@ ComIndex <- function(
         obs[[eval(namesindex[i])]] <- array(
           dim = c(
             ntr,
-            dim(apply(traits_by_pop, 2, function(x) {
-              eval(parse(text = functionindex))
-            }))[1]
+            dim(apply(traits_by_pop, 2, eval_pop))[1]
           )
         )
-        obs[[eval(namesindex[i])]] <- apply(traits_by_pop, 2, function(x) {
-          eval(parse(text = functionindex))
-        })
+        obs[[eval(namesindex[i])]] <- apply(traits_by_pop, 2, eval_pop)
       }
 
       if (nullmodels[i] == "2sp.prab") {
@@ -2544,14 +2557,10 @@ ComIndex <- function(
         obs[[eval(namesindex[i])]] <- array(
           dim = c(
             ntr,
-            dim(apply(traits_by_sp, 2, function(x) {
-              eval(parse(text = functionindex))
-            }))[1]
+            dim(apply(traits_by_sp, 2, eval_pop))[1]
           )
         )
-        obs[[eval(namesindex[i])]] <- apply(traits_by_sp, 2, function(x) {
-          eval(parse(text = functionindex))
-        })
+        obs[[eval(namesindex[i])]] <- apply(traits_by_sp, 2, eval_pop)
       } else if (nullmodels[i] == "1" | nullmodels[i] == "2") {
         obs[[eval(namesindex[i])]] <- array(
           dim = c(
@@ -2607,7 +2616,7 @@ ComIndex <- function(
   names(ComIndex$list.index.t) <- name.ComIndex_list.index
   names(ComIndex$list.index) <- name.ComIndex_list.index
 
-  ComIndex$sites_richness <- S
+  ComIndex$sites_richness <- colSums(table(sp, ind.plot) > 0)
   ComIndex$namestraits <- namestraits
 
   ComIndex$traits <- traits
@@ -2737,10 +2746,12 @@ ComIndexMulti <- function(
   #___________________________
 
   #___________________________
-  traits <- traits[order(ind.plot), ]
-
-  ind.plot <- ind.plot[order(ind.plot)]
-  sp <- sp[order(ind.plot)]
+  # sort all row-aligned inputs with one permutation (GH-15)
+  o <- order(ind.plot)
+  traits <- traits[o, , drop = FALSE]
+  ind.plot <- ind.plot[o]
+  sp <- sp[o]
+  by.factor <- by.factor[o]
 
   name_sp_sites <- paste(sp, ind.plot, sep = "_")
   comm <- NULL
@@ -2770,6 +2781,11 @@ ComIndexMulti <- function(
   if (is.null(by.factor)) {
     by.factor = rep("Region", length(ind.plot))
   }
+  # by.factor of each population, in the row order of the regional.pop.prab pool (tapply over name_sp_sites)
+  by.factor_pop <- by.factor[match(
+    levels(as.factor(name_sp_sites)),
+    name_sp_sites
+  )]
 
   ###############################################################
   if (is.numeric(nperm)) {
@@ -2798,11 +2814,11 @@ ComIndexMulti <- function(
       SE.reg.pool <- SE
     }
 
-    if (length(SE.reg.pool) == 1) {
+    if (!is.list(SE.reg.pool) && length(SE.reg.pool) == 1) {
       SE.reg.pool <- rep(SE.reg.pool, times = ncol(traits))
     }
 
-    if (is.vector(SE.reg.pool)) {
+    if (!is.list(SE.reg.pool)) {
       SE.reg.pool <- rep(list(SE.reg.pool), nlevels(ind.plot))
     }
 
@@ -2842,7 +2858,11 @@ ComIndexMulti <- function(
     }
 
     if (!independantTraits) {
-      seed <- sample(.Machine$integer.max, size = nperm)
+      # one seed per (permutation, community), shared by all traits
+      seed <- matrix(
+        sample(.Machine$integer.max, size = nperm * nlevels(ind.plot)),
+        nrow = nperm
+      )
     }
 
     if (sum(nullmodels == "1") > 0) {
@@ -2860,14 +2880,22 @@ ComIndexMulti <- function(
         perm_ind.plot <- list()
 
         for (n in 1:nperm) {
+          # Take measurement standard error into account
+          trait.intern <- traits[, t]
+          if (SE[t] != 0) {
+            trait.intern <- rnorm(
+              length(trait.intern),
+              mean = trait.intern,
+              sd = SE[t]
+            )
+          }
           for (s in 1:ncom) {
             if (!independantTraits) {
-              set.seed(seed[n])
+              set.seed(seed[n, s])
             }
-            perm_ind.plot[[s]] <- sample(
-              traits[ind.plot == levels(ind.plot)[s], t],
-              table(ind.plot)[s]
-            )
+            # sample.int(): sample() on a single value x would draw from 1:x
+            trait.com <- trait.intern[ind.plot == levels(ind.plot)[s]]
+            perm_ind.plot[[s]] <- trait.com[sample.int(length(trait.com))]
           }
 
           traits.nm1[[eval(namestraits[t])]][, n] <- unlist(
@@ -2894,23 +2922,20 @@ ComIndexMulti <- function(
         )
         perm_ind.plot <- list()
 
-        for (s in 1:ncom) {
-          # Take measurement standard error into account
-          trait.intern <- reg.pool[[s]][, t]
-          SE.reg.pool.intern <- SE.reg.pool[[s]][t]
-          if (SE.reg.pool.intern != 0) {
-            trait.intern <- rnorm(
-              length(trait.intern),
-              mean = trait.intern,
-              sd = SE.reg.pool.intern
-            )
-          }
-        }
-
         for (n in 1:nperm) {
           for (s in 1:ncom) {
+            # Take measurement standard error into account
+            trait.intern <- reg.pool[[s]][, t]
+            SE.reg.pool.intern <- SE.reg.pool[[s]][t]
+            if (SE.reg.pool.intern != 0) {
+              trait.intern <- rnorm(
+                length(trait.intern),
+                mean = trait.intern,
+                sd = SE.reg.pool.intern
+              )
+            }
             if (!independantTraits) {
-              set.seed(seed[n])
+              set.seed(seed[n, s])
             }
             perm_ind.plot[[s]] <- sample(trait.intern, table(ind.plot)[s])
           }
@@ -2936,6 +2961,8 @@ ComIndexMulti <- function(
 
       traits_by_pop <- traits_by_sp[
         match(name_sp_sites, rownames(traits_by_sp)),
+        ,
+        drop = FALSE
       ]
 
       for (t in 1:ntr) {
@@ -2949,9 +2976,9 @@ ComIndexMulti <- function(
         for (n in 1:nperm) {
           for (s in 1:ncom) {
             if (!independantTraits) {
-              set.seed(seed[n])
+              set.seed(seed[n, s])
             }
-            perm_ind.plot[[s]] <- sample(traits_by_pop, table(ind.plot)[s])
+            perm_ind.plot[[s]] <- sample(traits_by_pop[, t], table(ind.plot)[s])
           }
 
           traits.nm2sp[[eval(namestraits[t])]][, n] <- unlist(
@@ -2983,7 +3010,7 @@ ComIndexMulti <- function(
 
         for (n in 1:nperm) {
           if (!independantTraits) {
-            set.seed(seed[n])
+            set.seed(seed[n, 1])
           }
           perm_ind.plot <- sample(traits_by_sp[, t], dim(traits_by_sp)[1])
 
@@ -3010,36 +3037,55 @@ ComIndexMulti <- function(
 
     for (i in 1:nindex) {
       if (nullmodels[i] == "1") {
-        nm <- array(
-          unlist(traits.nm1, use.names = FALSE),
-          dim = c(ncol(traits), dim(traits)[1], nperm)
+        nm <- aperm(
+          array(
+            unlist(traits.nm1, use.names = FALSE),
+            dim = c(dim(traits)[1], nperm, ncol(traits))
+          ),
+          c(3, 1, 2)
         )
       } else if (nullmodels[i] == "2") {
-        nm <- array(
-          unlist(traits.nm2, use.names = FALSE),
-          dim = c(ncol(traits), dim(traits)[1], nperm)
+        nm <- aperm(
+          array(
+            unlist(traits.nm2, use.names = FALSE),
+            dim = c(dim(traits)[1], nperm, ncol(traits))
+          ),
+          c(3, 1, 2)
         )
       } else if (nullmodels[i] == "2sp") {
-        nm <- array(
-          unlist(traits.nm2sp, use.names = FALSE),
-          dim = c(ncol(traits), dim(traits)[1], nperm)
+        nm <- aperm(
+          array(
+            unlist(traits.nm2sp, use.names = FALSE),
+            dim = c(dim(traits)[1], nperm, ncol(traits))
+          ),
+          c(3, 1, 2)
         )
       } else if (nullmodels[i] == "2sp.prab") {
-        nm <- array(
-          unlist(traits.nm2sp.prab, use.names = FALSE),
-          dim = c(ncol(traits), dim(traits_by_sp)[1], nperm)
+        nm <- aperm(
+          array(
+            unlist(traits.nm2sp.prab, use.names = FALSE),
+            dim = c(dim(traits_by_sp)[1], nperm, ncol(traits))
+          ),
+          c(3, 1, 2)
         )
       } else {
         print("nullmodels need 1, 2, 2sp or 2sp.prab")
       }
 
-      nm_n <- nm[,, n]
-      colnames(nm_n) <- rownames(comm)
-      rownames(nm_n) <- colnames(traits)
+      # 2sp.prab null values have one row per population, not per individual
+      bf <- if (nullmodels[i] == "2sp.prab") by.factor_pop else by.factor
+      # matrix() keeps the traits x rows shape when there is a single trait
+      nm_perm <- function(n) {
+        matrix(
+          nm[,, n],
+          nrow = ncol(traits),
+          dimnames = list(colnames(traits), NULL)
+        )
+      }
 
       functionindex = eval(index[i])
 
-      dim2 <- dim(by(t(nm_n), by.factor, function(x) {
+      dim2 <- dim(by(t(nm_perm(1)), bf, function(x) {
         eval(parse(text = functionindex))
       }))[1]
       null[[eval(namesindex[i])]] <- array(NA, dim = c(dim2, nperm))
@@ -3050,8 +3096,8 @@ ComIndexMulti <- function(
 
       for (n in 1:nperm) {
         null[[eval(namesindex[i])]][, n] <- as.vector(by(
-          t(nm[,, n]),
-          by.factor,
+          t(nm_perm(n)),
+          bf,
           function(x) eval(parse(text = functionindex))
         ))
       }
@@ -3092,6 +3138,8 @@ ComIndexMulti <- function(
         })
         traits_by_pop <- traits_by_sp[
           match(name_sp_sites, rownames(traits_by_sp)),
+          ,
+          drop = FALSE
         ]
 
         obs[[eval(namesindex[i])]] <- as.vector(by(
@@ -3107,7 +3155,7 @@ ComIndexMulti <- function(
         })
         obs[[eval(namesindex[i])]] <- as.vector(by(
           traits_by_sp,
-          by.factor,
+          by.factor_pop,
           function(x) eval(parse(text = functionindex))
         ))
       } else if (nullmodels[i] == "1" | nullmodels[i] == "2") {
@@ -3160,7 +3208,7 @@ ComIndexMulti <- function(
   names(ComIndex$list.index.t) <- name.ComIndex_list.index
   names(ComIndex$list.index) <- name.ComIndex_list.index
 
-  ComIndex$sites_richness <- S
+  ComIndex$sites_richness <- colSums(table(sp, ind.plot) > 0)
   ComIndex$namestraits <- namestraits
 
   ComIndex$traits <- traits
@@ -3206,11 +3254,21 @@ as.listofindex <- function(x, namesindex = NULL) {
   for (l in 1:nlist) {
     if (inherits(x[[l]], "Tstats")) {
       for (i in c(1, 4, 2, 5, 3, 6)) {
-        res <- c(res, list(x[[l]][[1]][[i]]))
+        xi <- x[[l]][[1]][[i]]
+        if (i > 3) {
+          # Tstats null arrays are permutations x traits x plots (GH-20)
+          attr(xi, "cond") <- c(3, 2)
+        }
+        res <- c(res, list(xi))
       }
     } else if (inherits(x[[l]], c("ComIndex", "ComIndexMulti"))) {
       for (i in 1:nindex[l]) {
-        res <- c(res, list(x[[l]]$obs[[i]]), list(x[[l]]$null[[i]]))
+        null_i <- x[[l]]$null[[i]]
+        if (is.matrix(x[[l]]$obs[[i]]) && length(dim(null_i)) == 3) {
+          # ComIndex null arrays are traits x communities x permutations (GH-20)
+          attr(null_i, "cond") <- c(2, 1)
+        }
+        res <- c(res, list(x[[l]]$obs[[i]]), list(null_i))
       }
     } else {
       stop(
@@ -4125,10 +4183,12 @@ decompCTRE <- function(
       ))
     }
 
-    interm <- apply(comm, 2, function(x) {
+    # abundances count only individuals measured for this trait
+    comm.t <- comm * !is.na(traits[, t])
+    interm <- apply(comm.t, 2, function(x) {
       tapply(x, paste(ind.plot, sp, sep = "."), sum, na.rm = T)
     })[!is.na(moy_pop[, t]), 1:ncom]
-    interm2 <- apply(comm, 2, function(x) tapply(x, sp, sum, na.rm = T))[
+    interm2 <- apply(comm.t, 2, function(x) tapply(x, sp, sum, na.rm = T))[
       !is.na(moy_sp[, t]),
       1:ncom
     ]
@@ -4187,7 +4247,7 @@ barplot.decompCTRE <- function(height, resume = TRUE, ...) {
   } else if (resume == FALSE) {
     par(cex = 2 / length(x$traits))
 
-    for (i in 1:dim(x[[1]]$SumSq)[2]) {
+    for (i in seq_along(x$traits)) {
       plot.traitflex(x[[i]], main = x$traits[i], ...)
       abline(v = 0, lty = 2)
     }
@@ -5039,7 +5099,7 @@ plotSESvar <- function(
   ntr <- dim(index.list[[1]])[2]
 
   if (is.null(color.traits)) {
-    color.traits <- palette(terrain.colors(ntr))
+    color.traits <- terrain.colors(ntr)
   }
 
   #________________________________________
@@ -5154,7 +5214,7 @@ plotSESvar <- function(
       legend = namestraits,
       fill = color.traits,
       bty = "n",
-      ncol = round(sqrt(nlevels(as.factor(namestraits))) - 1)
+      ncol = max(1, round(sqrt(nlevels(as.factor(namestraits))) - 1))
     )
   }
 
@@ -5366,7 +5426,7 @@ plotDistri <- function(
             fill = col.dens,
             cex = cex.leg,
             bty = "n",
-            ncol = round(sqrt(nlevels(as.factor((var.2)))) - 1)
+            ncol = max(1, round(sqrt(nlevels(as.factor((var.2)))) - 1))
           )
         }
 
@@ -5401,12 +5461,12 @@ plotDistri <- function(
               1
           ) {
             points(
-              0,
               na.omit(traits[
                 as.factor(var.1) == levels(as.factor(var.1))[co] &
                   as.factor(var.2) == levels(as.factor(var.2))[s],
                 t
               ]),
+              0,
               col = col.dens[s]
             )
           }
@@ -5441,10 +5501,11 @@ plotSpPop <- function(
   ntr <- dim(traits)[2]
   namestraits <- colnames(traits)
 
-  traits <- traits[order(ind.plot), ]
-
-  ind.plot <- ind.plot[order(ind.plot)]
-  sp <- sp[order(ind.plot)]
+  # sort all row-aligned inputs with one permutation (GH-15)
+  o <- order(ind.plot)
+  traits <- traits[o, , drop = FALSE]
+  ind.plot <- ind.plot[o]
+  sp <- sp[o]
 
   name_sp_sites = paste(sp, ind.plot, sep = "_")
   comm <- t(table(ind.plot, 1:length(ind.plot)))
@@ -5452,30 +5513,12 @@ plotSpPop <- function(
   S <- colSums(comm > 0)
   ncom <- length(S)
 
-  plotsp = unlist(strsplit(levels(as.factor(name_sp_sites)), split = "_"))[seq(
-    3,
-    3 * nlevels(as.factor(name_sp_sites)),
-    by = 3
-  )]
+  # look species and plot up by population instead of splitting names on "_"
+  first_ind <- match(levels(as.factor(name_sp_sites)), name_sp_sites)
+  plotsp <- as.character(ind.plot)[first_ind]
   #plosp is the plot in wich the population is
-  plotind = unlist(strsplit(name_sp_sites, split = "_"))[seq(
-    3,
-    3 * length(name_sp_sites),
-    by = 3
-  )]
-  spplot = paste(
-    unlist(strsplit(levels(as.factor(name_sp_sites)), split = "_"))[seq(
-      1,
-      3 * nlevels(as.factor(name_sp_sites)),
-      by = 3
-    )],
-    unlist(strsplit(levels(as.factor(name_sp_sites)), split = "_"))[seq(
-      2,
-      3 * nlevels(as.factor(name_sp_sites)),
-      by = 3
-    )],
-    sep = "_"
-  )
+  plotind <- as.character(ind.plot)
+  spplot <- as.character(sp)[first_ind]
 
   traits_by_pop <- apply(traits, 2, function(x) {
     tapply(x, name_sp_sites, mean, na.rm = T)
@@ -5546,6 +5589,7 @@ plotSpPop <- function(
             } else {
               lty.lm = 0
               lwd.lm = 0
+              color.lm <- col.nonsignif.lm
             }
             options(warn = 0)
           } else {
@@ -5740,10 +5784,11 @@ plotSpVar <- function(
   ntr <- dim(traits)[2]
   namestraits <- colnames(traits)
 
-  traits <- traits[order(ind.plot), ]
-
-  ind.plot <- ind.plot[order(ind.plot)]
-  sp <- sp[order(ind.plot)]
+  # sort all row-aligned inputs with one permutation (GH-15)
+  o <- order(ind.plot)
+  traits <- traits[o, , drop = FALSE]
+  ind.plot <- ind.plot[o]
+  sp <- sp[o]
 
   name_sp_sites = paste(sp, ind.plot, sep = "_")
   comm <- t(table(ind.plot, 1:length(ind.plot)))
@@ -5751,30 +5796,12 @@ plotSpVar <- function(
   S <- colSums(comm > 0)
   ncom <- length(S)
 
-  plotsp = unlist(strsplit(levels(as.factor(name_sp_sites)), split = "_"))[seq(
-    3,
-    3 * nlevels(as.factor(name_sp_sites)),
-    by = 3
-  )]
+  # look species and plot up by population instead of splitting names on "_"
+  first_ind <- match(levels(as.factor(name_sp_sites)), name_sp_sites)
+  plotsp <- as.character(ind.plot)[first_ind]
   #plosp is the plot in wich the population is
-  plotind = unlist(strsplit(name_sp_sites, split = "_"))[seq(
-    3,
-    3 * length(name_sp_sites),
-    by = 3
-  )]
-  spplot = paste(
-    unlist(strsplit(levels(as.factor(name_sp_sites)), split = "_"))[seq(
-      1,
-      3 * nlevels(as.factor(name_sp_sites)),
-      by = 3
-    )],
-    unlist(strsplit(levels(as.factor(name_sp_sites)), split = "_"))[seq(
-      2,
-      3 * nlevels(as.factor(name_sp_sites)),
-      by = 3
-    )],
-    sep = "_"
-  )
+  plotind <- as.character(ind.plot)
+  spplot <- as.character(sp)[first_ind]
 
   traits_by_pop <- apply(traits, 2, function(x) {
     tapply(x, name_sp_sites, mean, na.rm = T)
@@ -5854,6 +5881,7 @@ plotSpVar <- function(
             } else {
               lty.lm = 0
               lwd.lm = 0
+              color.lm <- col.nonsignif.lm
             }
             options(warn = 0)
           } else {
@@ -6076,7 +6104,12 @@ ses.Tstats <- function(x, val.quant = c(0.025, 0.975)) {
 
 ### Function to calculation SES
 #' @export
-ses <- function(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975)) {
+ses <- function(
+  obs = NULL,
+  nullmodel = NULL,
+  val.quant = c(0.025, 0.975),
+  null.dims = NULL
+) {
   if (is.vector(obs)) {
     obs <- as.matrix(obs)
   }
@@ -6085,9 +6118,21 @@ ses <- function(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975)) {
     obs <- as.matrix(obs)
   }
 
-  if (dim(obs)[1] == dim(obs)[2]) {
+  # as.listofindex() stores the layout of Tstats and ComIndex null arrays in attr "cond"
+  layout <- if (is.null(null.dims)) attr(nullmodel, "cond") else null.dims
+  # a transposed obs (allowed, see ?ses) reverses the recorded layout
+  if (
+    is.null(null.dims) &&
+      !is.null(layout) &&
+      !all(dim(obs) == dim(nullmodel)[layout]) &&
+      all(dim(obs) == rev(dim(nullmodel)[layout]))
+  ) {
+    layout <- rev(layout)
+  }
+
+  if (dim(obs)[1] == dim(obs)[2] && is.null(layout)) {
     warning(
-      "Observed matrix have the same number of rows and columns. The function is not able to detect automatically the correspondance between dimension of observed matrix and null model. You need to be sure that the null model is in the form of an array within the first and second dimension corresespond respectively to the first and second dimension of the observed matrix and the third dimension correspond to permutations"
+      "Observed matrix have the same number of rows and columns. The function is not able to detect automatically the correspondance between dimension of observed matrix and null model. Use the argument null.dims, or be sure that the null model is in the form of an array within the first and second dimension corresespond respectively to the first and second dimension of the observed matrix and the third dimension correspond to permutations"
     )
 
     if (is.list(nullmodel)) {
@@ -6189,6 +6234,9 @@ ses <- function(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975)) {
     }
   }
 
+  if (!is.null(layout)) {
+    cond <- layout
+  }
   cond <- na.omit(cond)
 
   res <- list()
@@ -6497,7 +6545,7 @@ RaoRel <- function(
       FD$Mean_Alpha = 1 / (1 - temp_qdec$Mean_alpha)
       FD$Alpha = 1 / (1 - temp_qdec$Alpha)
       FD$Gamma = 1 / (1 - temp_qdec$Gamma)
-      #FD$Beta_add = (FD$Gamma -FD$Mean_Alpha )
+      FD$Beta_add = (FD$Gamma - FD$Mean_Alpha)
       FD$Beta_prop = 100 * FD$Beta_add / FD$Gamma
       #Call the disc function for alpha, gamma and beta estimations for each pair of samples
       FD$Pairwise_samples <- disc(
@@ -6628,6 +6676,16 @@ plotRandtest <- function(x, alternative = "two-sided", ...) {
   }
 
   index.list <- x
+  # put each null array in Tstats layout [perm, trait, plot], from the layout stored by as.listofindex() (GH-20)
+  for (i in seq(2, length(index.list), by = 2)) {
+    cond <- attr(index.list[[i]], "cond")
+    if (!is.null(cond)) {
+      index.list[[i]] <- aperm(
+        index.list[[i]],
+        c(setdiff(1:3, cond), cond[2], cond[1])
+      )
+    }
+  }
 
   oldpar <- par(no.readonly = TRUE)
 
@@ -6679,9 +6737,15 @@ plotRandtest <- function(x, alternative = "two-sided", ...) {
         )
       }
 
+      # per-trait test of the mean over communities
       rt <- as.randtest(
-        sim = index.list[[i + 1]][t, , ],
-        obs = index.list[[i]][t],
+        sim = apply(
+          index.list[[i + 1]][, t, , drop = FALSE],
+          1,
+          mean,
+          na.rm = TRUE
+        ),
+        obs = mean(index.list[[i]][, t], na.rm = TRUE),
         alter = alternative
       )
 
@@ -6690,6 +6754,7 @@ plotRandtest <- function(x, alternative = "two-sided", ...) {
         main = paste(
           namesindex.all[i],
           namestraits[t],
+          "mean over communities",
           "p.value = ",
           round(rt$pvalue, digits = 5)
         ),
@@ -6782,7 +6847,7 @@ CVNND <- function(
   }
 
   mat.dist <- as.matrix(dist(traits, method = method.dist))
-  diag(mat.dist) <- NA
+  diag(mat.dist) <- Inf
   nnd <- apply(mat.dist, 1, function(x) min(x, na.rm = na.rm))
 
   #Metric calculation
@@ -6815,8 +6880,9 @@ MNND <- function(
     traits <- apply(traits, 2, scale)
   }
 
-  mat.dist <- dist(traits, method = method.dist)
-  nnd <- apply(as.matrix(mat.dist), 1, function(x) min(x[x > 0], na.rm = T))
+  mat.dist <- as.matrix(dist(traits, method = method.dist))
+  diag(mat.dist) <- Inf # exclude self-distance only, keep ties at 0
+  nnd <- apply(mat.dist, 1, min, na.rm = TRUE)
 
   #Metric calculation
   MNND <- mean(nnd[is.finite(nnd)], na.rm = na.rm)
@@ -6847,8 +6913,9 @@ SDNND <- function(
     traits <- apply(traits, 2, scale)
   }
 
-  mat.dist <- dist(traits, method = method.dist)
-  nnd <- apply(as.matrix(mat.dist), 1, function(x) min(x[x > 0], na.rm = T))
+  mat.dist <- as.matrix(dist(traits, method = method.dist))
+  diag(mat.dist) <- Inf # exclude self-distance only, keep ties at 0
+  nnd <- apply(mat.dist, 1, min, na.rm = TRUE)
 
   #Metric calculation
   SDNND <- sd(nnd[is.finite(nnd)], na.rm = na.rm)
@@ -6879,8 +6946,9 @@ MinNND <- function(
     traits <- apply(traits, 2, scale)
   }
 
-  mat.dist <- dist(traits, method = method.dist)
-  nnd <- apply(as.matrix(mat.dist), 1, function(x) min(x[x > 0], na.rm = T))
+  mat.dist <- as.matrix(dist(traits, method = method.dist))
+  diag(mat.dist) <- Inf # exclude self-distance only, keep ties at 0
+  nnd <- apply(mat.dist, 1, min, na.rm = TRUE)
 
   #Metric calculation
   MinNND <- min(nnd[is.finite(nnd)], na.rm = na.rm)
@@ -6983,9 +7051,7 @@ MinMaxMST <- function(
   }
 
   traits.mst <- mst(as.matrix(tree.dist))
-  res.mst <- as.matrix(tree.dist) * as.matrix(traits.mst)
-
-  res.mst <- apply(res.mst, 1, function(x) as.numeric(sub("^0$", NA, x)))
+  res.mst <- as.matrix(tree.dist)[as.matrix(traits.mst) == 1] # MST edge lengths
   res <- min(res.mst, na.rm = T) / max(res.mst, na.rm = T)
   return(res)
 }
@@ -7195,6 +7261,17 @@ Fred <- function(traits, ind.plot = NULL) {
   invisible(res)
 } # end of function
 
+# One-tailed permutation p-value: "inf" is small when obs is low, "sup" when obs is high.
+# Ties count against significance, NA null values are dropped, NA if nothing can be tested.
+perm_pval <- function(obs, null, tail) {
+  null <- null[!is.na(null)]
+  if (is.na(obs) || length(null) == 0) {
+    return(NA_real_)
+  }
+  hits <- if (tail == "inf") null <= obs else null >= obs
+  (1 + sum(hits)) / (1 + length(null))
+}
+
 #Calcul pvalue for a list of index. This test equates to finding the quantile in exp in which obs would be found (under a one-tailed test)
 #' @export
 Pval <- function(x, na.rm = TRUE) {
@@ -7216,7 +7293,9 @@ Pval <- function(x, na.rm = TRUE) {
       obs <- t(as.matrix(obs))
     }
 
-    if (dim(obs)[1] == dim(obs)[2]) {
+    layout <- attr(nullmodel, "cond")
+
+    if (dim(obs)[1] == dim(obs)[2] && is.null(layout)) {
       warning(
         "Observed matrix have the same number of rows and columns. The function is not able to detect automatically the correspondance between dimension of observed matrix and null model. You need to be sure that the null model is in the form of an array which the first and second dimension correspond respectively to the first and second dimension of the observed matrix and the third dimension correspond to the permutations"
       )
@@ -7287,17 +7366,15 @@ Pval <- function(x, na.rm = TRUE) {
       }
     }
 
+    if (!is.null(layout)) {
+      cond <- layout
+    }
     cond <- na.omit(cond)
 
     nullmodel <- aperm(nullmodel, c(cond, (1:3)[!1:3 %in% cond]))
 
-    ni_tot <- names(x[[1]])[1]
-    if (is.null(ni_tot)) {
-      ni_tot <- dimnames(x[[1]])[[2]][1]
-    }
-
     res[[eval(names(x[i]))]] <- list()
-    for (t in 1:length(eval(ni_tot))) {
+    for (t in seq_len(ncol(obs))) {
       ni <- names(x[[i]])[t]
       if (is.null(ni)) {
         ni <- dimnames(x[[i]])[[2]][t]
@@ -7306,12 +7383,16 @@ Pval <- function(x, na.rm = TRUE) {
       res[[eval(names(x[i]))]][[eval(ni)]] <- list()
 
       for (g in 1:length(obs[, t])) {
-        res[[eval(names(x[i]))]][[eval(ni)]]$pval.inf[g] <- (1 +
-          sum(obs[g, t] < nullmodel[g, t, ], na.rm = T)) /
-          (dim(nullmodel)[3] + 1)
-        res[[eval(names(x[i]))]][[eval(ni)]]$pval.sup[g] <- (1 +
-          sum(obs[g, t] > nullmodel[g, t, ], na.rm = T)) /
-          (dim(nullmodel)[3] + 1)
+        res[[eval(names(x[i]))]][[eval(ni)]]$pval.inf[g] <- perm_pval(
+          obs[g, t],
+          nullmodel[g, t, ],
+          "inf"
+        )
+        res[[eval(names(x[i]))]][[eval(ni)]]$pval.sup[g] <- perm_pval(
+          obs[g, t],
+          nullmodel[g, t, ],
+          "sup"
+        )
       }
 
       if (!is.null(dimnames(x[[1]])[[1]])) {
@@ -7376,13 +7457,9 @@ RandCom <- function(
 ) {
   Filter <- match.arg(Filter, c("None", "External", "Internal", "Both"))
 
-  set <- letters
-  SET <- LETTERS
-  sp_Letters <- combn(set, round(Nsp / 26 / 26) + 1)
-  com_Letters <- combn(SET, round(Ncom / 26 / 26) + 1)
-
-  com <- paste("com", com_Letters[seq(1:Ncom)], sep = "_")
-  sp <- paste("sp", sp_Letters[seq(1:Nsp)], sep = "_")
+  # unchanged names up to 26, then "a.1", "b.1", ...
+  com <- paste("com", make.unique(rep_len(LETTERS, Ncom)), sep = "_")
+  sp <- paste("sp", make.unique(rep_len(letters, Nsp)), sep = "_")
 
   Nind <- Ncom * Nind.com
   trait_distri <- c("rnorm", "rlnorm") #For latter: may be an argument of the function
@@ -7610,9 +7687,12 @@ samplingSubsetData <- function(
         d.intern[[j]] <- list()
         for (i in levels(sampUnit)) {
           jj <- round(j * sum(sampUnit == i) / 100)
+          if (jj == 0) {
+            jj <- MinSample
+          }
           d.intern[[j]][[i]] <- d[sampUnit == i, ][
             order(Size[sampUnit == i], decreasing = TRUE),
-          ][1:jj, ]
+          ][seq_len(jj), ]
         }
         subsets_interm[[j]] <- lapply(
           d.intern[lapply(d.intern, length) > 0],
@@ -7660,16 +7740,20 @@ samplingSubsetData <- function(
             ## type count
             stock[[j]][[i]] <- c()
             if (j <= sum(sampUnit == i)) {
-              stock[[j]][[i]] <- c(sample((1:nrow(d))[sampUnit == i], j))
+              toSample <- (1:nrow(d))[sampUnit == i]
+              stock[[j]][[i]] <- toSample[sample.int(length(toSample), j)]
             } else {
               stock[[j]][[i]] <- c((1:nrow(d))[sampUnit == i])
             }
           } else if (type == "factorBySize") {
             #calculate the rank of the factor using the SizeFactor
             if (length(Size) == nlevels(sampUnit)) {
-              rank_fact <- order(Size)
+              rank_fact <- rank(-Size, ties.method = "first") # 1 = largest
             } else {
-              rank_fact <- order(tapply(Size, sampUnit, mean, na.rm = TRUE))
+              rank_fact <- rank(
+                -tapply(Size, sampUnit, mean, na.rm = TRUE),
+                ties.method = "first"
+              )
             }
 
             #Choose if we sample this level of factor thanks to the prop argument

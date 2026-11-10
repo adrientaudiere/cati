@@ -24,6 +24,10 @@
 	MND : Mean of the neigbourhood distance
 }
 
+\details{
+	The nearest neighbour of an individual is the closest other individual, so the distance between two individuals with the same trait values is 0 and is kept. Only the distance of an individual to itself is excluded. Before cati 0.99.7, MNND, MinNND and SDNND excluded every zero distance, so tied values were ignored, while CVNND already kept them. With traits measured at a coarse resolution, ties are common and MinNND is often 0.
+}
+
 \usage{
 	CVNND(traits, div_range =  FALSE, na.rm = FALSE, scale.tr = TRUE,
 	method.dist = "euclidian")

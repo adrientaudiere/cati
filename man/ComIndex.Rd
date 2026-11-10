@@ -36,7 +36,7 @@
 	}
 	
 	\item{index}{
-		A vector of function to apply to traits vectors in the form "mean(x, na.rm = TRUE)" or "range(x)", see examples for more complexe functions.
+		A vector of function to apply to traits vectors in the form "mean(x, na.rm = TRUE)" or "range(x)", see examples for more complexe functions. Rows are sorted by \code{ind.plot} inside the function, so to group by plot or species inside \code{index} use the internal variables \code{ind.plot} and \code{sp} (e.g. "tapply(x, ind.plot, mean)"), not vectors from your workspace. With the null models regional.pop and regional.pop.prab, \code{x} holds one value per population (the mean of its individuals), and \code{ind.plot} and \code{sp} give the plot and the species of each population, so the same index works with every null model.
 	}
 	
 	\item{nullmodels}{
@@ -202,36 +202,19 @@ res.finch.sp_regional.pop<-ComIndex(traits = traits.finch, index = funct, sp = s
 
 
 #We can calculate index with or without intraspecific variance.
+#With regional.pop, x holds one value per population, and ind.plot and sp
+#give the plot and the species of each population.
 
-#calculate  of means by population (name_sp_site is a name of a population) 
-#determine the site for each population (sites_bypop)
- 
-name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
-traits.by.pop<-apply(traits.finch, 2 , 
-           function (x) tapply(x, name_sp_sites, mean, na.rm = TRUE))
-
-sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), split = "_"), 
-          function(x) x[3])
-
-#New list of function "funct"
-
-funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
-     "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
-     "tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-     "tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))" )
-
-fact<-unlist(sites_bypop)  
-funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = TRUE))",
-          "tapply(x, fact, function(x) kurtosis(x, na.rm = TRUE))",
-          "tapply(x, fact, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-          "tapply(x, fact, function(x) CVNND(x, na.rm = TRUE))")
-
+funct.1<-c("tapply(x, ind.plot, function(x) mean(x, na.rm = TRUE))",
+     "tapply(x, ind.plot, function(x) kurtosis(x, na.rm = TRUE))",
+     "tapply(x, ind.plot, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
+     "tapply(x, ind.plot, function(x) CVNND(x, na.rm = TRUE))" )
 
 res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.1,
                sp = sp.finch, nullmodels = "regional.ind",
                ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 
-res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.2, 
+res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.1, 
                sp = sp.finch, nullmodels = "regional.pop", 
                ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 
