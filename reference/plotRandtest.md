@@ -1,7 +1,9 @@
 # Plot result of observed indices values against null distribution
 
 Function to plot result of observed indices values against null
-distribution.
+distribution. For each index and trait, one plot is drawn per community,
+then one plot tests the mean of the index over all communities against
+the mean of each permutation.
 
 ## Usage
 

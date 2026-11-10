@@ -34,7 +34,13 @@ summary(object, ...)
 
   A vector of function to apply to traits vectors in the form "mean(x,
   na.rm = TRUE)" or "range(x)", see examples for more complexe
-  functions.
+  functions. Rows are sorted by `ind.plot` inside the function, so to
+  group by plot or species inside `index` use the internal variables
+  `ind.plot` and `sp` (e.g. "tapply(x, ind.plot, mean)"), not vectors
+  from your workspace. With the null models regional.pop and
+  regional.pop.prab, `x` holds one value per population (the mean of its
+  individuals), and `ind.plot` and `sp` give the plot and the species of
+  each population, so the same index works with every null model.
 
 - nullmodels:
 
@@ -279,41 +285,23 @@ res.finch.sp_regional.pop<-ComIndex(traits = traits.finch, index = funct, sp = s
 
 
 #We can calculate index with or without intraspecific variance.
+#With regional.pop, x holds one value per population, and ind.plot and sp
+#give the plot and the species of each population.
 
-#calculate  of means by population (name_sp_site is a name of a population) 
-#determine the site for each population (sites_bypop)
- 
-name_sp_sites = paste(sp.finch, ind.plot.finch,sep = "_")
-traits.by.pop<-apply(traits.finch, 2 , 
-           function (x) tapply(x, name_sp_sites, mean, na.rm = TRUE))
-
-sites_bypop<-lapply(strsplit(paste(rownames(traits.by.pop), sep = "_"), split = "_"), 
-          function(x) x[3])
-
-#New list of function "funct"
-
-funct.1<-c("tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))",
-     "tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))",
-     "tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-     "tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))" )
-
-fact<-unlist(sites_bypop)  
-funct.2<-c("tapply(x, fact, function(x) mean(x, na.rm = TRUE))",
-          "tapply(x, fact, function(x) kurtosis(x, na.rm = TRUE))",
-          "tapply(x, fact, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
-          "tapply(x, fact, function(x) CVNND(x, na.rm = TRUE))")
-
+funct.1<-c("tapply(x, ind.plot, function(x) mean(x, na.rm = TRUE))",
+     "tapply(x, ind.plot, function(x) kurtosis(x, na.rm = TRUE))",
+     "tapply(x, ind.plot, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))", 
+     "tapply(x, ind.plot, function(x) CVNND(x, na.rm = TRUE))" )
 
 res.finch.withIV<-ComIndex(traits = traits.finch, index = funct.1,
                sp = sp.finch, nullmodels = "regional.ind",
                ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 #> Warning: This function exclude 1137 Na value
 
-res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.2, 
+res.finch.withoutIV<-ComIndex(traits = traits.finch, index = funct.1, 
                sp = sp.finch, nullmodels = "regional.pop", 
                ind.plot = ind.plot.finch, nperm = 9, print = FALSE)
 #> Warning: This function exclude 1137 Na value
-#> Error in eval(parse(text = functionindex)): object 'fact' not found
 
 #ComIndex class are associated to S3 methods plot, print and summary.
 
@@ -327,17 +315,17 @@ res.finch.withIV
 #> 
 #> ###############
 #> $obs: list of observed values
-#>  $tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))
-#>  $tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))
-#>  $tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))
-#>  $tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))
+#>  $tapply(x, ind.plot, function(x) mean(x, na.rm = TRUE))
+#>  $tapply(x, ind.plot, function(x) kurtosis(x, na.rm = TRUE))
+#>  $tapply(x, ind.plot, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))
+#>  $tapply(x, ind.plot, function(x) CVNND(x, na.rm = TRUE))
 #> 
 #> ###############
 #> $null: list of null values, number of permutations: 9 
-#>  $tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))_nm ... null model = regional.ind
-#>  $tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))_nm ... null model = regional.ind
-#>  $tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))_nm ... null model = regional.ind
-#>  $tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))_nm ... null model = regional.ind
+#>  $tapply(x, ind.plot, function(x) mean(x, na.rm = TRUE))_nm ... null model = regional.ind
+#>  $tapply(x, ind.plot, function(x) kurtosis(x, na.rm = TRUE))_nm ... null model = regional.ind
+#>  $tapply(x, ind.plot, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))_nm ... null model = regional.ind
+#>  $tapply(x, ind.plot, function(x) CVNND(x, na.rm = TRUE))_nm ... null model = regional.ind
 #> 
 #> ###############
 #> data used
@@ -353,11 +341,11 @@ res.finch.withIV
 #> 
 #>  $sites_richness:
 #>      DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
-#>       50      267      981      258      270      687 
+#>        3        4       10        5        7       10 
 #> 
 summary(res.finch.withIV)
 #> [1] "Observed values"
-#> $`tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))`
+#> $`tapply(x, ind.plot, function(x) mean(x, na.rm = TRUE))`
 #>      WingL           BeakH            UBeakL          N.UBkL     
 #>  Min.   :66.96   Min.   : 9.715   Min.   :14.82   Min.   :10.11  
 #>  1st Qu.:67.61   1st Qu.: 9.989   1st Qu.:15.41   1st Qu.:10.74  
@@ -366,7 +354,7 @@ summary(res.finch.withIV)
 #>  3rd Qu.:67.79   3rd Qu.:11.360   3rd Qu.:17.98   3rd Qu.:11.57  
 #>  Max.   :68.32   Max.   :11.711   Max.   :18.68   Max.   :12.15  
 #> 
-#> $`tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))`
+#> $`tapply(x, ind.plot, function(x) kurtosis(x, na.rm = TRUE))`
 #>      WingL             BeakH             UBeakL            N.UBkL       
 #>  Min.   :-1.4661   Min.   :-1.3600   Min.   :-1.5999   Min.   :-1.7517  
 #>  1st Qu.:-1.2523   1st Qu.:-0.6418   1st Qu.:-1.1848   1st Qu.:-1.4487  
@@ -375,7 +363,7 @@ summary(res.finch.withIV)
 #>  3rd Qu.:-0.2742   3rd Qu.: 0.6464   3rd Qu.:-0.8763   3rd Qu.:-0.9456  
 #>  Max.   : 0.8648   Max.   : 1.0872   Max.   : 2.4142   Max.   : 1.9503  
 #> 
-#> $`tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))`
+#> $`tapply(x, ind.plot, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))`
 #>      WingL           BeakH           UBeakL          N.UBkL      
 #>  Min.   :11.00   Min.   : 4.30   Min.   : 8.70   Min.   : 6.500  
 #>  1st Qu.:34.25   1st Qu.:14.65   1st Qu.:11.12   1st Qu.: 8.875  
@@ -384,7 +372,7 @@ summary(res.finch.withIV)
 #>  3rd Qu.:36.75   3rd Qu.:17.52   3rd Qu.:13.25   3rd Qu.:10.325  
 #>  Max.   :38.00   Max.   :19.40   Max.   :13.60   Max.   :10.500  
 #> 
-#> $`tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))`
+#> $`tapply(x, ind.plot, function(x) CVNND(x, na.rm = TRUE))`
 #>      WingL            BeakH            UBeakL           N.UBkL      
 #>  Min.   : 7.071   Min.   : 2.960   Min.   : 2.689   Min.   : 2.700  
 #>  1st Qu.: 7.611   1st Qu.: 3.322   1st Qu.: 3.231   1st Qu.: 4.034  
@@ -394,28 +382,28 @@ summary(res.finch.withIV)
 #>  Max.   :31.145   Max.   :16.664   Max.   :19.325   Max.   :31.129  
 #> 
 #> [1] "null values"
-#> $`tapply(x, ind.plot.finch, function(x) mean(x, na.rm = TRUE))`
+#> $`tapply(x, ind.plot, function(x) mean(x, na.rm = TRUE))`
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>   9.571  10.525  13.113  26.235  29.372  68.803 
+#>   9.128  10.637  13.434  26.265  29.839  69.820 
 #> 
-#> $`tapply(x, ind.plot.finch, function(x) kurtosis(x, na.rm = TRUE))`
-#>      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#> -1.367139 -0.917785 -0.568552 -0.426036 -0.007055  1.343496 
-#> 
-#> $`tapply(x, ind.plot.finch, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))`
+#> $`tapply(x, ind.plot, function(x) kurtosis(x, na.rm = TRUE))`
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>    8.50   11.20   15.45   19.88   23.02   39.00 
+#> -1.4321 -0.9177 -0.6536 -0.4516 -0.2136  1.0148 
 #> 
-#> $`tapply(x, ind.plot.finch, function(x) CVNND(x, na.rm = TRUE))`
+#> $`tapply(x, ind.plot, function(x) max(x, na.rm = TRUE)-min(x, na.rm = TRUE))`
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>    8.50   11.40   15.50   19.86   22.02   39.00 
+#> 
+#> $`tapply(x, ind.plot, function(x) CVNND(x, na.rm = TRUE))`
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
-#>  0.7009  2.5260  3.7846  6.2333  7.7401 31.0644       4 
+#>   1.084   2.529   4.000   6.421   8.042  31.064       3 
 #> 
 plot(res.finch.withIV)
 
 plot(res.finch.withoutIV)
-#> Error: object 'res.finch.withoutIV' not found
+
 
 plot(as.listofindex(list(res.finch.withIV, res.finch.withoutIV)))
-#> Error: object 'res.finch.withoutIV' not found
+
 # }
 ```

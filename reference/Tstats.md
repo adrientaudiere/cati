@@ -368,39 +368,39 @@ Adrien Taudiere and Cyrille Violle
 #>             WingL BeakH UBeakL N.UBkL
 #> T_IP.IC.inf  TRUE  TRUE   TRUE   TRUE
 #> T_IP.IC.sup FALSE FALSE  FALSE  FALSE
-#> T_IC.IR.inf FALSE FALSE   TRUE  FALSE
-#> T_IC.IR.sup  TRUE FALSE  FALSE  FALSE
-#> T_PC.PR.inf FALSE    NA     NA  FALSE
-#> T_PC.PR.sup  TRUE FALSE  FALSE  FALSE
+#> T_IC.IR.inf FALSE FALSE   TRUE   TRUE
+#> T_IC.IR.sup FALSE FALSE  FALSE  FALSE
+#> T_PC.PR.inf FALSE FALSE  FALSE  FALSE
+#> T_PC.PR.sup FALSE FALSE  FALSE  FALSE
   sum_Tstats(res.finch, type = "site")
 #>             WingL                                          
 #> T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
 #> T_IP.IC.sup "H0 not rejected"                              
-#> T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+#> T_IC.IR.inf "DMaj FlorChrl"                                
 #> T_IC.IR.sup "EspHd GnovTwr MrchBndl"                       
 #> T_PC.PR.inf "DMaj"                                         
-#> T_PC.PR.sup "H0 not rejected"                              
+#> T_PC.PR.sup "MrchBndl SCruInde"                            
 #>             BeakH                                     
 #> T_IP.IC.inf "EspHd FlorChrl GnovTwr MrchBndl SCruInde"
 #> T_IP.IC.sup "H0 not rejected"                         
-#> T_IC.IR.inf "EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+#> T_IC.IR.inf "DMaj FlorChrl SCruInde"                  
 #> T_IC.IR.sup "EspHd GnovTwr MrchBndl"                  
-#> T_PC.PR.inf "H0 not rejected"                         
-#> T_PC.PR.sup "GnovTwr"                                 
+#> T_PC.PR.inf "DMaj FlorChrl"                           
+#> T_PC.PR.sup "EspHd GnovTwr MrchBndl SCruInde"         
 #>             UBeakL                                         
 #> T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
 #> T_IP.IC.sup "H0 not rejected"                              
-#> T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+#> T_IC.IR.inf "DMaj FlorChrl MrchBndl"                       
 #> T_IC.IR.sup "EspHd GnovTwr"                                
 #> T_PC.PR.inf "H0 not rejected"                              
-#> T_PC.PR.sup "H0 not rejected"                              
+#> T_PC.PR.sup "EspHd MrchBndl"                               
 #>             N.UBkL                                         
 #> T_IP.IC.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
 #> T_IP.IC.sup "H0 not rejected"                              
-#> T_IC.IR.inf "DMaj EspHd FlorChrl GnovTwr MrchBndl SCruInde"
+#> T_IC.IR.inf "DMaj FlorChrl"                                
 #> T_IC.IR.sup "EspHd GnovTwr"                                
 #> T_PC.PR.inf "H0 not rejected"                              
-#> T_PC.PR.sup "H0 not rejected"                              
+#> T_PC.PR.sup "EspHd SCruInde"                               
   sum_Tstats(res.finch, type = "p.value")
 #>                      WingL BeakH UBeakL N.UBkL
 #> T_IP.IC.inf DMaj       0.1   0.2    0.1    0.1
@@ -420,25 +420,25 @@ Adrien Taudiere and Cyrille Violle
 #> T_IC.IR.inf FlorChrl   0.1   0.1    0.1    0.1
 #> T_IC.IR.inf GnovTwr    1.0   1.0    1.0    1.0
 #> T_IC.IR.inf MrchBndl   1.0   1.0    0.1    0.5
-#> T_IC.IR.inf SCruInde   0.2   0.1    0.1    0.4
+#> T_IC.IR.inf SCruInde   0.3   0.1    0.4    0.7
 #> T_IC.IR.sup DMaj       1.0   1.0    1.0    1.0
 #> T_IC.IR.sup EspHd      0.1   0.1    0.1    0.1
 #> T_IC.IR.sup FlorChrl   1.0   1.0    1.0    1.0
 #> T_IC.IR.sup GnovTwr    0.1   0.1    0.1    0.1
 #> T_IC.IR.sup MrchBndl   0.1   0.1    1.0    0.6
-#> T_IC.IR.sup SCruInde   0.9   1.0    1.0    0.7
-#> T_PC.PR.inf DMaj       0.1   0.1    0.2    0.2
-#> T_PC.PR.inf EspHd      0.9   0.9    0.8    0.9
-#> T_PC.PR.inf FlorChrl   0.5   0.7    0.7    0.8
-#> T_PC.PR.inf GnovTwr    0.9   0.9    0.9    0.7
-#> T_PC.PR.inf MrchBndl   0.9   0.7    0.5    0.9
-#> T_PC.PR.inf SCruInde   0.7   0.5    0.8    0.9
-#> T_PC.PR.sup DMaj       1.0   0.1    0.1    0.9
-#> T_PC.PR.sup EspHd      0.2   0.2    0.3    0.2
-#> T_PC.PR.sup FlorChrl   0.6   0.4    0.4    0.3
-#> T_PC.PR.sup GnovTwr    0.2   0.1    0.2    0.4
-#> T_PC.PR.sup MrchBndl   0.2   0.4    0.6    0.2
-#> T_PC.PR.sup SCruInde   0.4   0.6    0.3    0.2
+#> T_IC.IR.sup SCruInde   0.8   1.0    0.7    0.4
+#> T_PC.PR.inf DMaj       0.1   0.1    0.6    0.2
+#> T_PC.PR.inf EspHd      0.9   1.0    1.0    1.0
+#> T_PC.PR.inf FlorChrl   0.4   0.1    0.3    0.4
+#> T_PC.PR.inf GnovTwr    0.7   0.9    0.7    0.6
+#> T_PC.PR.inf MrchBndl   1.0   1.0    1.0    0.9
+#> T_PC.PR.inf SCruInde   1.0   0.9    0.9    1.0
+#> T_PC.PR.sup DMaj       1.0   1.0    0.5    0.9
+#> T_PC.PR.sup EspHd      0.2   0.1    0.1    0.1
+#> T_PC.PR.sup FlorChrl   0.7   1.0    0.8    0.7
+#> T_PC.PR.sup GnovTwr    0.4   0.2    0.4    0.5
+#> T_PC.PR.sup MrchBndl   0.1   0.1    0.1    0.2
+#> T_PC.PR.sup SCruInde   0.1   0.2    0.2    0.1
 
   barplot(res.finch)
 

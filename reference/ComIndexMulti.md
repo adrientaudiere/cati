@@ -296,7 +296,7 @@ res.sum.1
 #> 
 #>  $sites_richness:
 #>      DMaj    EspHd FlorChrl  GnovTwr MrchBndl SCruInde 
-#>       50      100        0        0        0        0 
+#>        3        2        0        0        0        0 
 #> 
 # }
 

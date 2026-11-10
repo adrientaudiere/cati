@@ -4,12 +4,13 @@ calculation standardized effect size and confidence interval for a
 matrix of statistics and the related null model expressed as a list or
 as an array. Internal function use by other functions of the package.
 You can transpose the observed matrix to represent either the SES by
-traits or by plots.
+traits or by plots; the result is transposed in the same way, except for
+a square matrix, whose transposition cannot be detected.
 
 ## Usage
 
 ``` r
-ses(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975))
+ses(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975), null.dims = NULL)
 ```
 
 ## Arguments
@@ -29,13 +30,25 @@ ses(obs = NULL, nullmodel = NULL, val.quant = c(0.025, 0.975))
   confidence interval. By default val.quant = c(0.025,0.975) for a
   bilateral test with alpha = 5%.
 
+- null.dims:
+
+  Integer vector of length 2 giving the dimensions of the `nullmodel`
+  array that match the rows and the columns of `obs`; the remaining
+  dimension holds the permutations. For example `c(3, 2)` for a null
+  array of permutations x traits x plots and an observed matrix of plots
+  x traits. By default (NULL), the layout stored by
+  [`as.listofindex`](https://adrientaudiere.github.io/cati/reference/as.listofindex.md)
+  is used, or the dimensions are guessed from their sizes.
+
 ## Details
 
 Warning: to detect automatically the correspondence between dimension of
-observed matrix and null model list or array, observed matrix needs to
-have different numbers of rows and columns. In the case of same row and
-column number, please verify manually the correspondance beatween the
-rows of the observed matrix and the null model array.
+observed matrix and null model list or array, observed matrix, null
+model and permutations need to have different sizes. When two sizes are
+equal, give the layout with `null.dims`. Objects converted with
+[`as.listofindex`](https://adrientaudiere.github.io/cati/reference/as.listofindex.md)
+(as done by `ses.listofindex`, `Pval` and the plot functions) carry
+their layout and need no `null.dims`.
 
 ## Value
 
@@ -100,31 +113,31 @@ Adrien Taudiere
   # \donttest{
     ses(res.finch$Tstats$T_IP.IC, res.finch$Tstats$T_IP.IC_nm)
 #> $ses
-#>               WingL      BeakH     UBeakL     N.UBkL
-#> DMaj      -2.827416  -1.336514  -2.074583  -6.751185
-#> EspHd    -10.068256 -11.006279 -13.611751 -12.631524
-#> FlorChrl -21.789018 -25.929804 -20.774729 -32.547878
-#> GnovTwr  -59.454754 -56.663400 -39.220716 -58.351808
-#> MrchBndl -38.246567 -15.386426 -15.512534 -50.037458
-#> SCruInde -15.142589 -22.065564 -20.213692 -52.348914
+#>              WingL      BeakH     UBeakL     N.UBkL
+#> DMaj      -1.76691  -0.903734  -1.167335  -1.156339
+#> EspHd    -15.84097 -17.859382 -13.095555 -13.995191
+#> FlorChrl -18.45305 -18.815011 -28.493314 -23.606919
+#> GnovTwr  -56.59361 -35.355044 -38.500926 -62.313121
+#> MrchBndl -26.19813 -40.636798 -31.019195 -34.914073
+#> SCruInde -20.82683 -15.783407 -21.487047 -31.636154
 #> 
 #> $ses.inf
-#>          WingL      BeakH     UBeakL    N.UBkL
-#> [1,] -1.007129 -1.2381827 -1.0524118 -1.563383
-#> [2,] -1.393112 -0.9323729 -1.4059753 -1.458427
-#> [3,] -1.612186 -1.2769546 -1.1530722 -1.911265
-#> [4,] -1.180486 -1.9737183 -1.3388203 -1.215090
-#> [5,] -1.312835 -1.4099973 -1.9800838 -1.116999
-#> [6,] -1.088765 -1.3031209 -0.8208645 -1.215098
+#>          WingL      BeakH     UBeakL     N.UBkL
+#> [1,] -1.324734 -0.9374337 -0.8486808 -0.7224897
+#> [2,] -1.452535 -1.2248389 -1.2746699 -1.4012941
+#> [3,] -1.103680 -0.9775635 -1.4152969 -0.7871146
+#> [4,] -1.148153 -1.4881243 -1.7508124 -1.6390433
+#> [5,] -1.618993 -0.9108882 -1.6348139 -1.5728830
+#> [6,] -1.285682 -0.9874584 -1.5181695 -1.4771161
 #> 
 #> $ses.sup
-#>         WingL     BeakH   UBeakL   N.UBkL
-#> [1,] 1.657229 1.6205856 1.896485 1.420843
-#> [2,] 1.216337 2.0328700 1.503473 1.182347
-#> [3,] 1.486941 1.5023207 1.551035 1.212148
-#> [4,] 1.919877 0.8223272 1.495129 1.531954
-#> [5,] 1.202252 1.2602863 1.068857 1.524495
-#> [6,] 1.894855 1.3727849 2.012200 1.734555
+#>         WingL    BeakH   UBeakL   N.UBkL
+#> [1,] 1.354442 1.908563 1.768731 1.932252
+#> [2,] 1.265432 1.650857 1.330751 1.793144
+#> [3,] 1.787032 1.821697 1.802264 2.054830
+#> [4,] 1.442650 1.615314 1.203176 1.119197
+#> [5,] 1.588414 1.319962 1.480829 1.450005
+#> [6,] 1.277500 1.733321 1.173477 1.129879
 #> 
 #> attr(,"class")
 #> [1] "ses"

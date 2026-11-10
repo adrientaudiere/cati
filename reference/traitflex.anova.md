@@ -138,12 +138,12 @@ print(tf)
 #> 
 #>  Decomposing trait sum of squares into composition turnover
 #>  effect, intraspecific trait variability, and their covariation:
-#>       Turnover Intraspec. Covariation  Total
-#> Total   4.4935     8.3772     -11.268 1.6022
+#>       Turnover Intraspec. Covariation   Total
+#> Total    4.612     8.3879     -12.035 0.96517
 #> 
 #>  Relative contributions:
 #>       Turnover Intraspec. Covariation Total
-#> Total    2.805      5.228      -7.033     1
+#> Total    4.778      8.691      -12.47     1
 plot(tf)
 
 # }

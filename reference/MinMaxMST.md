@@ -9,6 +9,12 @@ spanning tree.
 MinMaxMST(traits, gower.dist = TRUE, scale.tr = TRUE, method.dist = "euclidian")
 ```
 
+## Details
+
+Individuals with the same trait values are at distance 0 and are kept in
+the tree, so the ratio is 0 as soon as two individuals have the same
+trait values. Before cati 0.99.7, zero distances were excluded.
+
 ## Arguments
 
 - traits:

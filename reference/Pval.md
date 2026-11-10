@@ -15,6 +15,13 @@ Pval(x, na.rm = TRUE)
 - x:
 
   An object of class Tstats, ComIndex, ComIndexMulti or listofindex.
+  Objects made by these functions or by
+  [`as.listofindex`](https://adrientaudiere.github.io/cati/reference/as.listofindex.md)
+  carry the layout of their null values. For a hand-built list whose
+  numbers of plots, traits or permutations are equal, the layout is
+  guessed from sizes and may be wrong; use
+  [`ses`](https://adrientaudiere.github.io/cati/reference/ses.md) with
+  `null.dims` in that case.
 
 - na.rm:
 
@@ -24,7 +31,10 @@ Pval(x, na.rm = TRUE)
 ## Value
 
 A list of p-value for each metrics, traits and grouping if needed (e.g.
-sites)
+sites). `pval.inf` is small when the observed value is lower than the
+null values, `pval.sup` when it is higher. Ties count against
+significance; NA null values are dropped; the p-value is NA when the
+observed value or all null values are NA.
 
 ## Author
 
