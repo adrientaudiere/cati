@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/adrientaudiere/cati/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/adrientaudiere/cati/blob/v0.99.7/inst/CITATION)
 
 Taudiere A. & Violle C. 2015. cati: an R package using functional traits
 to detect and quantify multi-level community assembly processes.
