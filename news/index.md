@@ -2,6 +2,8 @@
 
 ## cati 0.99.7
 
+CRAN release: 2026-11-10
+
 This release fixes the bugs found in an external audit of cati 0.99.6
 (GH-11 to GH-21). Many of them change numerical results. The section
 below says which analyses are affected and by how much; the figures come
